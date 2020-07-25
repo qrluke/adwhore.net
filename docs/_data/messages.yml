@@ -1,0 +1,38 @@
+locales:
+  en: &DEFAULT_EN
+    about: "About"
+    site_description: "My personal pages."
+    btn_more: "More..."
+    posts: "Blog"
+    pages: "Pages"
+    projects: "Projects"
+    tags: "Tags"
+    home: "Home"
+    languages: "Languages"
+    lang_name: "English"
+    credit: "This project is maintained by"
+    post_title: "Read this post in English..."
+    page_title: "Read this page in English..."
+
+  en_US:
+    <<: *DEFAULT_EN     # use English translation for en_US
+  en_UK:
+    <<: *DEFAULT_EN     # use English translation for en_UK
+
+  ru: &DEFAULT_RU
+    <<: *DEFAULT_EN     # load English values as default
+    about: "&Uuml;ber"
+    site_description: "Meine pers&ouml;nlichen Seiten."
+    btn_more: "Mehr..."
+    posts: "Blog"
+    pages: "Seiten"
+    projects: "Projekte"
+    home: "Startseite"
+    languages: "Sprachen"
+    credit: "Этот проект поддерживается"
+    post_title: "Diesen Artikel auf Deutsch lesen..."
+    page_title: "Diese Seite auf Deutsch lesen..."
+  ru_RU:
+    <<: *DEFAULT_RU
+  ru_ru:
+    <<: *DEFAULT_RU
