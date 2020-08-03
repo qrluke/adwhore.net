@@ -1,6 +1,7 @@
 * {
   padding:0;
   margin:0px;
+  font:inherit;
 }
 
 html, body{
@@ -113,12 +114,4 @@ section:hover > .testdiv {
   background-color: #f4511e;
   color: #FFFFFF;
   font-size: 200%;
-
 }
-
-/*
-  background-color: #f4511e;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  margin: 5px;

@@ -1,9 +1,9 @@
 {
-  "chrome_extension_name": {
+  "extension_name": {
     "message": "ADWHORE.NET"
   },
-  "chrome_extension_description": {
-    "message": "Collaborative YouTube adblocker"
+  "extension_description": {
+    "message": "Collaborative smart YouTube adblocker"
   },
   "thank_you_title": {
     "message": "THANK YOU!"
@@ -18,8 +18,8 @@
     "message": "You can close this window right now or go through a brief tutorial to learn more about extension!"
   },
   "welcome_info_3": {
-  "message": "To make your contribution fun, please choose your side!"
-},
+    "message": "To make your contribution fun, please choose your side!"
+  },
   "faction_1_name": {
     "message": "United Nations"
   },
@@ -32,7 +32,6 @@
   "faction_1_button": {
     "message": "Join"
   },
-
   "faction_2_name": {
     "message": "NATO"
   },
@@ -45,7 +44,6 @@
   "faction_2_button": {
     "message": "Sir, yes, sir!"
   },
-
   "faction_3_name": {
     "message": "SOVIET"
   },
@@ -58,21 +56,208 @@
   "faction_3_button": {
     "message": "I serve the Soviet Union!"
   },
-
   "browser_action_title": {
     "message": "Click Me"
   },
-  "chrome_accept_languages": {
-    "message": "$CHROME$ accepts $languages$ languages",
-    "placeholders": {
-      "chrome": {
-        "content": "Chrome",
-        "example": "Chrome"
-      },
-      "languages": {
-        "content": "$1",
-        "example": "en-US,sr,de"
-      }
-    }
+  "note_the_alpha": {
+    "message": "<p>Please remember that <b>ADN</b> is still young and stupid.<br>Don't expect much, okay? Thanks.</p>"
+  },
+  "skip_trust_selector": {
+    "message": "Autoskip (?)"
+  },
+  "skip_trust_selector_title": {
+    "message": "This system is being actively improved. The concept is as follows: for each report, a confidence level is calculated, what is the probability that there is exactly what the user reported: from 0 to 100 percent. The level depends on many factors: the reputation of the reporter, the number of likes and reports, as well as the level of reputation of those who liked and those who reported, whether the report was checked by a moderator, etc. If the level of trust is higher than the one specified here, it will be skipped automatically, if not, an unobtrusive button will be offered to skip. "
+  },
+  "acceptable_selector": {
+    "message": "Tolerance (?)"
+  },
+  "acceptable_selector_title": {
+    "message": "An acceptability level is calculated for each known ad: from 0 to 100 percent. It depends on many factors: the type of ad, the attempt to abuse trust, and the blogger's overall rating based on previously known integrations. For example, if a blogger tries to fit to advertising is creative and does not try to deceive his viewer, the level of tolerance for any of his ads will be higher. And if he was involved in advertising scammers, the level of tolerance for any of his ads (even honest) will be less and such ads will be scrolled automatically. in active development."
+  },
+  "table_title": {
+    "message": "Auto skip setting (?)"
+  },
+  "table_title_title": {
+    "message": "If the checkbox is checked and the ad segment has a sufficient confidence level for autoskip, it will be skipped."
+  },
+  "bad_ads_title": {
+    "message": "Condemned ads: scammers, abuse of trust, as well as ads that do not correspond to the topic of the channel"
+  },
+  "acceptable_ads_title": {
+    "message": "Acceptable advertising: admitting the fact of advertising, and advertising other YouTube channels similar to this one"
+  },
+  "awesome_ads_title": {
+    "message": "Approved ads: advertising your side projects, collaborations with other bloggers"
+  },
+  "bad_youtuber": {
+    "message": "<b>No ad tagged</b>"
+  },
+  "bad_youtuber_title": {
+    "message": "If a blogger has inserted an ad into his video but ignored the YouTube rule."
+  },
+  "good_youtuber": {
+    "message": "<b>There is an ad tag</b>"
+  },
+  "good_youtuber_title": {
+    "message": "If a blogger has inserted an ad into his video and mentioned it in video's settings."
+  },
+  "bad_ambassador": {
+    "message": "<b>Ambassador, no tag</b>"
+  },
+  "bad_ambassador_title": {
+    "message": "Ambassadors are ADN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
+  },
+  "good_ambassador": {
+    "message": "<b>Ambassador, there is an ad tag</b>"
+  },
+  "good_ambassador_title": {
+    "message": "Ambassadors are ADN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
+  },
+  "sponsorBlock": {
+    "message": "SponsorBlock is a similar project, started a year before ADN. Auto-skipping from SB is disabled because ADN cannot guarantee the validity of segments received from the API. In general, ADN and SB are similar, but have completely different goals. The main purpose of ADN - to replay and destroy the adwhores on YouTube, collect data on advertising integrations of all bloggers, process them and highlight conscientious youtubers among the corrupt ones, provide them with all kinds of information support, along the way destroying the reputation and income of those bloggers who have already exhausted themselves long ago. ADN's main priority is Russian YouTube, then English, then the rest world. SB is more focused on English-speaking YouTube and simply blocks sponsored ads, not understanding its types and quality. You can read more about the fundamental differences between ADN and SB on GitHub"
+  },
+  "inlineSponsorBlock": {
+    "message": "Enable <a target=\"_blank\" href=\"https://sponsor.ajay.app/\">SponsorBlock API</a> (?): <input id=\"sb\" type=\"checkbox\">"
+  },
+  "category0Text": {
+    "message": "🎲🤬🤮 | SSL: advertising of scammers, bookmakers, casinos, pyramids, investments"
+  },
+  "category0Title": {
+    "message": "Select this item if your ad is designed to find a random victim among your audience."
+  },
+  "category1Text": {
+    "message": "🥱🥵😔 | Prescribed ad insert not voiced by blogger"
+  },
+  "category1Title": {
+    "message": "Who is this unrecognized genius that invented this?"
+  },
+  "category2Text": {
+    "message": "🤮🥱😴 | Blogger-voiced pre-recorded ad insert"
+  },
+  "category2Title": {
+    "message": "Select this item if your ad is designed to find a random sucker among your audience."
+  },
+  "category3Text": {
+    "message": "🥴🥱🤔 | Original insert by blogger"
+  },
+  "category3Title": {
+    "message": "Select this item if the author himself recorded the advertising integration, came up with a creative approach to its implementation."
+  },
+  "category4Text": {
+    "message": "🤔🤨🧐 | The blogger has received a product from the advertiser and is reviewing it"
+  },
+  "category4Title": {
+    "message": "Select this item if the content consists of a review of a product for which the blogger did not pay. The blogger's marketability in this case is determined by the second checkbox"
+  },
+  "category5Text": {
+    "message": "😡🧑‍🎤👩‍🎤 | Advertising of other channels with dissimilar topics"
+  },
+  "category5Title": {
+    "message": "Select this option if the author advertises another channel on YouTube, which is not related to the topic"
+  },
+  "category6Text": {
+    "message": "🤔👨‍🎤👨‍🎤 | Ads for other channels with similar topics ❤️️‍"
+  },
+  "category6Title": {
+    "message": "We do not have the right to automatically skip such advertisements, collaboration in related fields is normal. But we will, if you want, of course."
+  },
+  "category7Text": {
+    "message": "🤔👭👌 | Advertising of another blogger who starred in the video (collaboration) ❤️‍"
+  },
+  "category7Title": {
+    "message": "Select this option if the blogger is advertising another blogger with whom he has recorded a joint video."
+  },
+  "category8Text": {
+    "message": "👌👌👌 | Advertising of your projects, social networks, channels ❤️‍"
+  },
+  "category8Title": {
+    "message": "Select this item if the blogger has advertised his own project, it can be twitch, merch or a second channel."
+  },
+  "category9Text": {
+    "message": "👍😍😇 | A masterpiece integration worth seeing ❤️️‍"
+  },
+  "category9Title": {
+    "message": "Select this item if you really liked the way the blogger got creative with advertising."
+  },
+  "category10Text": {
+    "message": "🤔🤔🤔 | I can't describe what it was, but I thought it was an advertisement"
+  },
+  "category10Title": {
+    "message": "Check this box if you spot an ad but it doesn't fit into any category."
+  },
+  "close": {
+    "message": "Close"
+  },
+  "edit": {
+    "message": "Edit snippet"
+  },
+  "addsegment": {
+    "message": "Report advertisement"
+  },
+  "send": {
+    "message": "Send"
+  },
+  "checkBeforeSend": {
+    "message": "Check before sending"
+  },
+  "markIn": {
+    "message": "Click to start at the beginning of the segment"
+  },
+  "markOut": {
+    "message": "Click to start at the end of the segment"
+  },
+  "previewInside": {
+    "message": "Play fragment"
+  },
+  "previewOutside": {
+    "message": "Test fragment skipping"
+  },
+  "selectCategory": {
+    "message": "Please select an ad category"
+  },
+  "checkOne": {
+    "message": "Click the checkbox if the blogger did not notify that there will now be an advertisement. An example of a correct notification: a signature on the installation, or a warning in the spirit: and now there is a my sponsor blablabla.."
+  },
+  "checkTwo": {
+    "message": "Click the checkbox if a blogger, advertising something, seemed insincere to you. Example: monotonous reading of a ready-made text at gunpoint, obvious insincerity. the product he just saw"
+  },
+  "checkThree": {
+    "message": "Click the checkbox if you think the blogger received money for his ad"
+  },
+  "pleaseEnterComment": {
+    "message": "Please enter comment, just 2-3 words.\nExample: 'VPN', 'shit F2P', '1xbet', 'Fraud'\nIt will be useful for ADN in the future."
+  },
+  "categoryMissing": {
+    "message": "You have not selected a category.\n\nPlease select an ad category and check the checkboxes.\nThis will help us determine whether an ad is acceptable or not"
+  },
+  "countryStatsWIP": {
+    "message": "There should be statistics for your country, but I'm still working on it! Check it out later."
+  },
+  "404": {
+    "message": "Our users haven't watched this video yet. You can be the first! Click on the button to learn how to send a report!"
+  },
+  "clickToViewColdWarStats": {
+    "message": ". Click to view Cold War statistics"
+  },
+  "UN_date": {
+    "message": " discovered the ad first. It happened: "
+  },
+  "NATO_date": {
+    "message": " cleared the video from the communists. It happened: "
+  },
+  "SOV_date": {
+    "message": " finished censoring first. It happened: "
+  },
+  "UN_pathfinder_prefix": {
+    "message": "Peacemaker "
+  },
+  "NATO_pathfinder_prefix": {
+    "message": "NATO soldier "
+  },
+  "SOV_pathfinder_prefix": {
+    "message": "Comrade "
+  },
+  "pathfinder_from": {
+    "message": " from "
   }
 }

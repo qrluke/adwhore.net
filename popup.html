@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Adwhore chrome extension</title>
+    <meta charset="UTF-8">
+    <title>ADN client extension</title>
     <link
             href="https://fonts.googleapis.com/css?family=Open+Sans"
             rel="stylesheet"
             type="text/css"
     />
-    <link
-            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            rel="stylesheet"
-            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-            crossorigin="anonymous"
-    />
-    <style>
-        /* Modal Structure */
+    <script src="https://kit.fontawesome.com/5de7f46166.js" crossorigin="anonymous" SameSite="none Secure"></script>
 
+    <style>
         html,
         body {
             font-family: "Open Sans", sans-serif;
@@ -23,7 +18,15 @@
             margin: 0;
             min-height: 180px;
             padding: 0;
-            width: 384px;
+            width: 460px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        td {
+            text-align: center;
         }
 
         h1 {
@@ -36,22 +39,26 @@
 
         a:link,
         a:visited {
-            color: #000000;
+            color: #2f5876;
             outline: 0;
             text-decoration: none;
         }
 
-        img {
-            width: 30px;
-        }
 
         .modal-header {
+            text-align: center;
             align-items: center;
             border-bottom: 0.5px solid #dadada;
         }
 
         .modal-content {
             padding: 0 22px;
+            margin-top: 8px;
+        }
+
+        .alpha-notice {
+            padding: 0 22px;
+            border-top: 0.5px solid #dadada;
         }
 
         .modal-icons {
@@ -61,12 +68,7 @@
         }
 
         .logo {
-            padding: 16px;
-        }
-
-        .logo-icon {
-            vertical-align: text-bottom;
-            margin-right: 12px;
+            padding: 6px;
         }
 
         .version {
@@ -74,7 +76,24 @@
             font-size: 18px;
         }
 
+        .moto {
+            color: #444;
+            font-size: 14px;
+            margin-block-start: 2px;
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .centerY {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
         .flex-container {
+            text-align: center;
             display: flex;
             justify-content: space-between;
             padding: 10px 22px;
@@ -90,52 +109,188 @@
             opacity: 0.4;
         }
 
-        .flex .fa {
-            font-size: 40px;
+        .fas {
+            font-size: 35px;
+            color: #2f5876;
+        }
+
+        .fab {
+            font-size: 35px;
             color: #2f5876;
         }
     </style>
-    <script src="popup.js"></script>
 </head>
 
 <body>
+
 <div class="modal-header">
     <h1 class="logo">
-        <img class="logo-icon" src="images/adwhore-logo.png"/>Adwhore Client
-        <span class="version">(1.0.0)</span>
+        <span class="version">ADN v0.1 active:<input id="enableCheck" type="checkbox"></span>
     </h1>
+    <img style="margin-bottom: 3px; width: 110px;" border="1px" src="img/adwhore-logo.png"/>
+    <p class="moto" style="">better youtube for everyone</p>
 </div>
-<div class="modal-content">
-    <p>Block youtube ads</p>
+<br>
+<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px ">
+    <div style="flex:1;">
+
+        <table class="center">
+            <tr>
+                <td id="skip_trust_selector" colspan="3"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="decreaseButton1">-</button>
+                </td>
+                <td>
+                    <div style="width: 50px; border-style: solid; border-width: 1px" id="displayDiv1">100</div>
+                </td>
+                <td>
+                    <button type="button" id="increaseButton1">+</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="switchButton" role="button" style="flex:1;">
+        <center>
+            <br>
+            <button id="switchButtonAction">
+            <i class="center fas fa-key"></i>
+        </button>
+        </center>
+    </div>
+    <div style="flex:1;">
+
+        <table class="center">
+            <tr>
+                <td id="acceptable_selector" colspan="3"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="decreaseButton2">-</button>
+                </td>
+                <td>
+                    <div style="width: 50px; border-style: solid; border-width: 1px" id="displayDiv2">100</div>
+                </td>
+                <td>
+                    <button type="button" id="increaseButton2">+</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+
+<div id="blockSettings" class="modal-content" style="display: block">
+    <table style="width:100%">
+        <tr>
+            <th id="table_title"></th>
+            <th id="bad_ads">
+                <i class="fas fa-angry"></i></th>
+            <th id="acceptable_ads" title=""><i
+                    class="fas fa-thumbs-up"></i></th>
+            <th id="awesome_ads"><i
+                    class="fas fa-heart"></i></th>
+        </tr>
+        <tr>
+            <td id="bad_youtuber"></td>
+            <td><input id="hate-y1" type="checkbox"></td>
+            <td><input id="fine-y1" type="checkbox"></td>
+            <td><input id="love-y1" type="checkbox"></td>
+        </tr>
+        <tr>
+            <td id="good_youtuber"></td>
+            <td><input id="hate-y2" type="checkbox"></td>
+            <td><input id="fine-y2" type="checkbox"></td>
+            <td><input id="love-y2" type="checkbox"></td>
+        </tr>
+        <tr>
+            <td id="bad_ambassador"></td>
+            <td><input id="hate-a1" type="checkbox"></td>
+            <td><input id="fine-a1" type="checkbox"></td>
+            <td><input id="love-a1" type="checkbox"></td>
+        </tr>
+        <tr>
+            <td id="good_ambassador"></td>
+            <td><input id="hate-a2" type="checkbox"></td>
+            <td><input id="fine-a2" type="checkbox"></td>
+            <td><input id="love-a2" type="checkbox"></td>
+        </tr>
+    </table>
+    <p id="sponsorBlock" style="padding: 0 3px;">
+    </p>
+</div>
+
+<div id="blockSecret" class="modal-content" style="display: none; margin-bottom: 9px">
+    <center>
+        <small>Это ваш никнейм. Он используется в списках лидеров.</small><br>
+        <input id="nickname" style="width: 65%" maxlength="20"  type="text">
+        <input id="buttonSave1" type="button" style="width: 12%"  value="Save"><br>
+        <small>Это ваш секретный ключ. Он играет роль логина и пароля.</small><br>
+        <small>По нему сервер считает для вас статистику и репутацию.</small><br>
+        <input id="secret" name="secret" style="width: 52%"  type="password">
+        <input id="buttonSave2" type="button" style="width: 12%"  value="Save">
+        <input id="buttonNew" type="button" style="width: 12%" value="New">
+    </center>
+</div>
+
+<div id="note_the_alpha" class="alpha-notice" style="margin-block-end: 1em;">
+
+</div>
+
 <div class="modal-icons">
     <div class="flex-container">
         <div class="flex">
-            <a href="https://www.traversymedia.com" target="_blank">
-                <i class="fa fa-globe" style="color:darksalmon "></i>
+            <a href="https://www.adwhore.net" target="_blank">
+                <i class="fas fa-globe"></i>
             </a>
         </div>
         <div class="flex">
-            <a href="https://www.youtube.com/traversymedia" target="_blank">
-                <i class="fa fa-youtube" style="color:darksalmon "></i>
+            <a href="https://www.youtube.com/playlist?list=PLGMUJFEpJY5DtpnxpL6A1b3M0jHE3-yJh" target="_blank">
+                <i class="fab fa-youtube"></i>
             </a>
         </div>
         <div class="flex">
-            <a href="https://www.twitter.com/traversymedia" target="_blank">
-                <i class="fa fa-twitter" style="color:darksalmon "></i>
+            <a href="https://www.patreon.com/qrlk" target="_blank">
+                <i class="fab fa-patreon"></i>
             </a>
         </div>
         <div class="flex">
-            <a href="https://www.facebook.com/traversymedia" target="_blank">
-                <i class="fa fa-facebook" style="color:darksalmon "></i>
+            <a href="https://www.keybase.io/team/adwhore_net" target="_blank">
+                <i class="fab fa-keybase"></i>
             </a>
         </div>
         <div class="flex">
-            <a href="https://www.github.com/bradtraversy" target="_blank">
-                <i class="fa fa-github" style="color:darksalmon "></i>
+            <a href="https://www.vk.com/adwhore.net" target="_blank">
+                <i class="fab fa-vk"></i>
+            </a>
+        </div>
+        <div class="flex">
+            <a href="https://www.twitter.com/ADWHORE_NET" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+        <div class="flex">
+            <a href="https://www.t.me/adwhore" target="_blank">
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+        <div class="flex">
+            <a href="https://www.github.com/qrlk/adwhore.net" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <div class="flex">
+            <a href="https://www.adwhore.net" target="_blank">
+                <i class="fas fa-question-circle"></i>
             </a>
         </div>
     </div>
 </div>
+<script src="localise/popup-settings.js"></script>
+<script src="jquery.min.js"></script>
+<script src="popup.js"></script>
+
 </body>
 </html>

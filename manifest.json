@@ -1,15 +1,44 @@
 {
-  "manifest_version": 2,
-  "name": "__MSG_chrome_extension_name__",
-  "version": "0.0.1",
+  "name": "__MSG_extension_name__",
+  "version": "0.0.0.1",
   "version_name": "alpha",
-  "default_locale": "en_US",
-
-  "description": "__MSG_chrome_extension_description__",
-  "icons": {"128": "icon_128.png"},
+  "description": "__MSG_extension_description__",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "content_security_policy": "script-src 'self' https://kit.fontawesome.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.youtube.com/*",
+        "*://www.youtube.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "adwhore.js",
+        "jquery.min.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "128": "img/adwhore-logo.png"
+  },
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "img/adwhore-logo.png",
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab"]
+  "permissions": [
+    "activeTab", "storage", "https://karma.adwhore.net:47976/*", "https://sponsor.ajay.app/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "img/*"
+  ]
 }

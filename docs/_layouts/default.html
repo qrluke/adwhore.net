@@ -3,6 +3,7 @@
 <html lang="{{ navlang }}">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     {% if page.lang %}
     {% assign navlang = page.lang %}
     {% else %}
@@ -41,6 +42,8 @@ ga('create', '{{ site.google_analytics }}', 'auto');
 ga('send', 'pageview');
 </script>
 {% endif %}
+
+
 
 {% unless page.lang %}
 <script type="text/javascript">

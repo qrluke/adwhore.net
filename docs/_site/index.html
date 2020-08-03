@@ -3,15 +3,16 @@
 <html lang="">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Minimal theme | Minimal is a theme for GitHub Pages.</title>
+<title>The Minimal theme | Minimal theme</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="Minimal theme" />
+<meta property="og:title" content="The Minimal theme" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Minimal is a theme for GitHub Pages." />
 <meta property="og:description" content="Minimal is a theme for GitHub Pages." />
@@ -19,10 +20,10 @@
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="Minimal theme" />
 <script type="application/ld+json">
-{"headline":"Minimal theme","url":"http://localhost:4000/","name":"Minimal theme","description":"Minimal is a theme for GitHub Pages.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"}},"@type":"WebSite","@context":"https://schema.org"}</script>
+{"headline":"The Minimal theme","url":"http://localhost:4000/","name":"Minimal theme","description":"Minimal is a theme for GitHub Pages.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"}},"@type":"WebSite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=a335e34fa0316a738340f91cfc80a2105fe8ba46">
+    <link rel="stylesheet" href="/assets/css/style.css?v=228bf6e2ceff4615d7f94aa4278bbf3f726c4208">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -31,47 +32,178 @@
 <div class="wrapper">
 
     <header>
-    <h1><a href="http://localhost:4000/">Minimal theme</a></h1>
 
-    
-    <img src="/assets/img/logo.png" alt="Logo" border="1" />
-    
 
-    <center>
-        <p>Let's make YouTube a better place. Together.</p>
-
-    <ul class="langswitch">
         
-    </ul>
+        <center>
+        <img src="/assets/img/logo.png" alt="Logo" border="1" />
+        </center>
+        
+    <div style="text-align: center;">
 
-    
-    <ul class="downloads">
-        <li><a href="https://github.com/qrlk/qrlk.github.io/zipball/gh-pages">Download <strong>CHROME</strong></a></li>
-        <li><a href="https://github.com/qrlk/qrlk.github.io/tarball/gh-pages">Download <strong>FIREFOX</strong></a></li>
-        <li><a href="https://github.com/qrlk/qrlk.github.io">View On <strong>GitHub</strong></a></li>
-    </ul>
-    
-</center>
+    <p style="margin-top: 5px">better youtube for everyone<br><br><b>Users:</b> <span id="global_users">Loading</span><br><b>Segments:</b> <span id="global_segs">Loading</span><br><b>Skips:</b> <span id="global_skips">Loading</span><br><b>Time saved:</b> <span id="global_time">Loading</span>s</p>
+        <script type="text/javascript">
 
+            /***********
+             Animates element's number to new number with commas
+             Parameters:
+             stop (number): number to stop on
+             commas (boolean): turn commas on/off (default is true)
+             duration (number): how long in ms (default is 1000)
+             ease (string): type of easing (default is "swing", others are avaiable from jQuery's easing plugin
+             Examples:
+             $("#div").animateNumbers(1234, false, 500, "linear"); // half second linear without commas
+             $("#div").animateNumbers(1234, true, 2000); // two second swing with commas
+             $("#div").animateNumbers(4321); // one second swing with commas
+             This fully expects an element containing an integer
+             If the number is within copy then separate it with a span and target the span
+             Will work in appropriate inputs
+             Inserts and accounts for commas during animation by default
+
+             https://github.com/talmand/jquery-animate-numbers
+             ***********/
+
+            !function(e){e.fn.animateNumbers=function(t,a,n,l){return this.each(function(){var i=e(this),r=i.is("input"),v=parseInt(r?i.val().replace(/,/g,""):i.text().replace(/,/g,"")),u=/(\d)(?=(\d\d\d)+(?!\d))/g;a=void 0===a?!0:a,r&&"number"===i[0].type&&(a=!1),e({value:v}).animate({value:t},{duration:void 0===n?1e3:n,easing:void 0===l?"swing":l,step:function(){r?i.val(Math.floor(this.value)):i.text(Math.floor(this.value)),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,")))},complete:function(){(parseInt(i.text())!==t||parseInt(i.val())!==t)&&(r?i.val(t):i.text(t),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,"))))}})})}}(jQuery);
+            function get_request() {
+                $.getJSON("https://karma.adwhore.net:47976/statsMini", function (data) {
+                    $("#global_users").animateNumbers(data["global"]["users"]);
+                    $("#global_segs").animateNumbers(data["global"]["reports"]);
+                    $("#global_skips").animateNumbers(data["global"]["skips"]);
+                    $("#global_time").animateNumbers(data["global"]["duration"]);
+
+                    setTimeout(get_request, 1100); // <-- when you ge a response, call it
+                });
+            }
+            get_request();
+        </script>
+        <center>
+        <ul class="langswitch">
+        
+        </ul>
+        </center>
+        
+        <center>
+            <ul class="downloads">
+                <li><a href="https://github.com/qrlk/adwhore.net/zipball/gh-pages">Download <strong>CHROME</strong></a></li>
+                <li><a href="https://github.com/qrlk/adwhore.net/tarball/gh-pages">Download <strong>FIREFOX</strong></a></li>
+                <li><a href="https://github.com/qrlk/adwhore.net">View On <strong>GitHub</strong></a></li>
+            </ul>
+        </center>
+        
+    </div>
+    <p><small>This project is maintained by <a href="https://github.com/qrlk">qrlk</a> <br>Contact me: <a href="mailto: hi@qrlk.me">hi@qrlk.me</a></small></p>
 </header>
 
 
 
     <section>
 
-        
+        <h1 id="the-minimal-theme">The Minimal theme</h1>
+
+<p><a href="https://travis-ci.org/pages-themes/minimal"><img src="https://travis-ci.org/pages-themes/minimal.svg?branch=master" alt="Build Status" /></a> <a href="https://badge.fury.io/rb/jekyll-theme-minimal"><img src="https://badge.fury.io/rb/jekyll-theme-minimal.svg" alt="Gem Version" /></a></p>
+
+<p><em>Minimal is a Jekyll theme for GitHub Pages. You can <a href="http://pages-themes.github.io/minimal">preview the theme to see what it looks like</a>, or even <a href="#usage">use it today</a>.</em></p>
+
+<p><img src="thumbnail.png" alt="Thumbnail of minimal" /></p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use the Minimal theme:</p>
+
+<ol>
+  <li>
+    <p>Add the following to your site’s <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="na">theme</span><span class="pi">:</span> <span class="s">jekyll-theme-minimal</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Optionally, if you’d like to preview your site on your computer, add the following to your site’s <code class="language-plaintext highlighter-rouge">Gemfile</code>:</p>
+
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="ss">group: :jekyll_plugins</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="customizing">Customizing</h2>
+
+<h3 id="configuration-variables">Configuration variables</h3>
+
+<p>Minimal will respect the following variables, if set in your site’s <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">The title of your site</span><span class="pi">]</span>
+<span class="na">description</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">A short description of your site's purpose</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>Additionally, you may choose to set the following optional variables:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">logo</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Location of the logo</span><span class="pi">]</span>
+<span class="na">show_downloads</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">true"</span> <span class="nv">or "false" to indicate whether to provide a download URL</span><span class="pi">]</span>
+<span class="na">google_analytics</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Your Google Analytics tracking ID</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h3 id="stylesheet">Stylesheet</h3>
+
+<p>If you’d like to add your own custom styles:</p>
+
+<ol>
+  <li>Create a file called <code class="language-plaintext highlighter-rouge">/assets/css/style.scss</code> in your site</li>
+  <li>Add the following content to the top of the file, exactly as shown:
+    <div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">---</span>
+ <span class="nt">---</span>
+
+ <span class="o">@</span><span class="nt">import</span> <span class="s2">"jekyll-theme-primer"</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Add any custom CSS (or Sass, including imports) you’d like immediately after the <code class="language-plaintext highlighter-rouge">@import</code> line</li>
+</ol>
+
+<h3 id="layouts">Layouts</h3>
+
+<p>If you’d like to change the theme’s HTML layout:</p>
+
+<ol>
+  <li><a href="https://github.com/pages-themes/minimal/blob/master/_layouts/default.html">Copy the original template</a> from the theme’s repository<br />(<em>Pro-tip: click “raw” to make copying easier</em>)</li>
+  <li>Create a file called <code class="language-plaintext highlighter-rouge">/_layouts/default.html</code> in your site</li>
+  <li>Paste the default layout content copied in the first step</li>
+  <li>Customize the layout as you’d like</li>
+</ol>
+
+<h2 id="roadmap">Roadmap</h2>
+
+<p>See the <a href="https://github.com/pages-themes/minimal/issues">open issues</a> for a list of proposed features (and known issues).</p>
+
+<h2 id="project-philosophy">Project philosophy</h2>
+
+<p>The Minimal theme is intended to make it quick and easy for GitHub Pages users to create their first (or 100th) website. The theme should meet the vast majority of users’ needs out of the box, erring on the side of simplicity rather than flexibility, and provide users the opportunity to opt-in to additional complexity if they have specific needs or wish to further customize their experience (such as adding custom CSS or modifying the default layout). It should also look great, but that goes without saying.</p>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>Interested in contributing to Minimal? We’d love your help. Minimal is an open source project, built one contribution at a time by users like you. See <a href="docs/CONTRIBUTING.md">the CONTRIBUTING file</a> for instructions on how to contribute.</p>
+
+<h3 id="previewing-the-theme-locally">Previewing the theme locally</h3>
+
+<p>If you’d like to preview the theme locally (for example, in the process of proposing a change):</p>
+
+<ol>
+  <li>Clone down the theme’s repository (<code class="language-plaintext highlighter-rouge">git clone https://github.com/pages-themes/minimal</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">cd</code> into the theme’s directory</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">script/bootstrap</code> to install the necessary dependencies</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> to start the preview server</li>
+  <li>Visit <a href="http://localhost:4000"><code class="language-plaintext highlighter-rouge">localhost:4000</code></a> in your browser to preview the theme</li>
+</ol>
+
+<h3 id="running-tests">Running tests</h3>
+
+<p>The theme contains a minimal test suite, to ensure a site with the theme would build successfully. To run the tests, simply run <code class="language-plaintext highlighter-rouge">script/cibuild</code>. You’ll need to run <code class="language-plaintext highlighter-rouge">script/bootstrap</code> one before the test script will work.</p>
 
 
     </section>
-  <footer>
-    
-    <p>This project is maintained by <a href="https://github.com/qrlk">qrlk</a> <br>Contact me: <a href="mailto: hi@qrlk.me">hi@qrlk.me</a></p>
-    
-    <p><small>Hosted on GitHub Pages &mdash; Theme by <a
-            href="https://github.com/orderedlist">orderedlist</a></small></p>
-</footer>
+  
 </div>
 <script src="/assets/js/scale.fix.js"></script>
+
+
 
 
 

@@ -1,14 +1,50 @@
 <header>
-    <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
 
-    {% if site.logo %}
-    <img src="{{site.logo | relative_url}}" alt="Logo" border="1" />
-    {% endif %}
 
-    <center>
-        <p>Let's make YouTube a better place. Together.</p>
+        {% if site.logo %}
+        <center>
+        <img src="{{site.logo | relative_url}}" alt="Logo" border="1" />
+        </center>
+        {% endif %}
+    <div style="text-align: center;">
 
-    <ul class="langswitch">
+    <p style="margin-top: 5px">better youtube for everyone<br><br><b>Users:</b> <span id="global_users">Loading</span><br><b>Segments:</b> <span id="global_segs">Loading</span><br><b>Skips:</b> <span id="global_skips">Loading</span><br><b>Time saved:</b> <span id="global_time">Loading</span>s</p>
+        <script type="text/javascript">
+
+            /***********
+             Animates element's number to new number with commas
+             Parameters:
+             stop (number): number to stop on
+             commas (boolean): turn commas on/off (default is true)
+             duration (number): how long in ms (default is 1000)
+             ease (string): type of easing (default is "swing", others are avaiable from jQuery's easing plugin
+             Examples:
+             $("#div").animateNumbers(1234, false, 500, "linear"); // half second linear without commas
+             $("#div").animateNumbers(1234, true, 2000); // two second swing with commas
+             $("#div").animateNumbers(4321); // one second swing with commas
+             This fully expects an element containing an integer
+             If the number is within copy then separate it with a span and target the span
+             Will work in appropriate inputs
+             Inserts and accounts for commas during animation by default
+
+             https://github.com/talmand/jquery-animate-numbers
+             ***********/
+
+            !function(e){e.fn.animateNumbers=function(t,a,n,l){return this.each(function(){var i=e(this),r=i.is("input"),v=parseInt(r?i.val().replace(/,/g,""):i.text().replace(/,/g,"")),u=/(\d)(?=(\d\d\d)+(?!\d))/g;a=void 0===a?!0:a,r&&"number"===i[0].type&&(a=!1),e({value:v}).animate({value:t},{duration:void 0===n?1e3:n,easing:void 0===l?"swing":l,step:function(){r?i.val(Math.floor(this.value)):i.text(Math.floor(this.value)),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,")))},complete:function(){(parseInt(i.text())!==t||parseInt(i.val())!==t)&&(r?i.val(t):i.text(t),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,"))))}})})}}(jQuery);
+            function get_request() {
+                $.getJSON("https://karma.adwhore.net:47976/statsMini", function (data) {
+                    $("#global_users").animateNumbers(data["global"]["users"]);
+                    $("#global_segs").animateNumbers(data["global"]["reports"]);
+                    $("#global_skips").animateNumbers(data["global"]["skips"]);
+                    $("#global_time").animateNumbers(data["global"]["duration"]);
+
+                    setTimeout(get_request, 1100); // <-- when you ge a response, call it
+                });
+            }
+            get_request();
+        </script>
+        <center>
+        <ul class="langswitch">
         {% for link in site.data.navigation.locales[navlang].languages %}
         {% assign ref_page=lang_ref_pages | where:"lang", link.lang | first %}
         {% if ref_page %}
@@ -17,16 +53,18 @@
         <li><a href="{{ site.url }}{{ link.url }}"><strong>{{ link.title }}</strong></a></li>
         {% endif %}
         {% endfor %}
-    </ul>
-
-    {% if site.show_downloads %}
-    <ul class="downloads">
-        <li><a href="{{ site.github.zip_url }}">Download <strong>CHROME</strong></a></li>
-        <li><a href="{{ site.github.tar_url }}">Download <strong>FIREFOX</strong></a></li>
-        <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
-    </ul>
-    {% endif %}
-</center>
-
+        </ul>
+        </center>
+        {% if site.show_downloads %}
+        <center>
+            <ul class="downloads">
+                <li><a href="{{ site.github.zip_url }}">Download <strong>CHROME</strong></a></li>
+                <li><a href="{{ site.github.tar_url }}">Download <strong>FIREFOX</strong></a></li>
+                <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
+            </ul>
+        </center>
+        {% endif %}
+    </div>
+    <p><small>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a> <br>Contact me: <a href="mailto: hi@qrlk.me">hi@qrlk.me</a></small></p>
 </header>
 
