@@ -8,11 +8,14 @@ ref: homepage
 **ADWHORE.NET** is an extension for **YouTube** that highlights and skips ads from corrupt bloggers.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 **Скачать:**
-* <a href = "">Chrome/Brave/Chromium (на модерации)</a>
-* <a href = "">Firefox (на модерации)</a>
-* <a href = "">Safari (жду сертификата от Apple)</a>
-* <a href = "">Opera, Yandex Browser (запланировано)</a>
+* <a href = "">Chrome/Brave/Chromium (on moderation)</a>
+* <a href = "">Firefox (on moderation)</a>
+* Safari - extension's ready, need time to get it published
+* Opera, Yandex Browser - in development
+* Android - planned for beta release
+* iOS - planned for beta release
 
 <a href = "https://adwhore.net/stats.html">Stats</a>
 ### Why?
