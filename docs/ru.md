@@ -8,9 +8,9 @@ ref: homepage
 **ADWHORE.NET** - это расширение для **YouTube**, которое блокирует рекламу продажных блогеров.  
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<a href = "http://localhost:4000/stats.html">Статистика</a>  <a href = "http://localhost:4000/stats.html">Статистика</a>  <a href = "http://localhost:4000/stats.html">Статистика</a>
+<a href = "">Chrome/Brave/Chromium (на модерации)</a>  <a href = "">Firefox (на модерации)</a>  <a href = "">Safari (жду сертификата от Apple)</a> <a href = "">Opera, Yandex Browser (запланировано)</a>
 
-<a href = "http://localhost:4000/stats.html">Статистика</a>
+<a href = "https://adwhore.net/stats.html">Статистика</a>
 
 ### Зачем?
 

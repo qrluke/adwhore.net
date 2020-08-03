@@ -8,8 +8,9 @@ ref: homepage
 **ADWHORE.NET** is an extension for **YouTube** that highlights and skips ads from corrupt bloggers.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href = "">Chrome/Brave/Chromium (on moderation)</a>  <a href = "">Firefox (on moderation)</a>  <a href = "">Safari (waiting for Apple to approve me as dev)</a> <a href = "">Opera, Yandex Browser (planned)</a>
 
-<a href = "http://localhost:4000/stats.html">Статистика</a>
+<a href = "https://adwhore.net/stats.html">Stats</a>
 ### Why?
 
 In 2020, the "personal opinion" of almost any popular youtuber is sold and bought, adwhores put it on stream: no one cares about reputation. This confidence bubble will burst and all will suffer: and adwhores, and honest youtubers. We're going to stop it.
