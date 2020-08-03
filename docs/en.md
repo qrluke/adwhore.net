@@ -7,9 +7,9 @@ ref: homepage
 # What is it?
 **ADWHORE.NET** is an extension for **YouTube** that highlights and skips ads from corrupt bloggers.
 
-<iframe allowFullScreen="allowFullScreen" src="https://www.youtube.com/embed/VYuJY3qBn9E?ecver=1&amp;autoplay=1&amp;cc_load_policy=1&amp;iv_load_policy=3&amp;rel=0&amp;showinfo=0&amp;yt:stretch=16:9&amp;autohide=1&amp;color=red&amp;width=560&amp;width=560" width="560" height="315" allowtransparency="true" frameborder="0">
-<script type="text/javascript">function execute_YTvideo(){return youtube.query({ids:"channel==MINE",startDate:"2019-01-01",endDate:"2019-12-31",metrics:"views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,subscribersGained",dimensions:"day",sort:"day"}).then(function(e){},function(e){console.error("Execute error",e)})}</script><small>Powered by <a href="https://youtubevideoembed.com/ ">Embed YouTube Video</a></small></iframe><a href = "http://localhost:4000/stats.html">More stats</a>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<a href = "http://localhost:4000/stats.html">Статистика</a>
 ### Why?
 
 In 2020, the "personal opinion" of almost any popular youtuber is sold and bought, adwhores put it on stream: no one cares about reputation. This confidence bubble will burst and all will suffer: and adwhores, and honest youtubers. We're going to stop it.

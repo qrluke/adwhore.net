@@ -7,7 +7,7 @@ ref: homepage
 # Что это?
 **ADWHORE.NET** - это расширение для **YouTube**, которое блокирует рекламу продажных блогеров.  
 
-<iframe allowFullScreen="allowFullScreen" src="https://www.youtube.com/embed/0JTH5gG9vek?ecver=1&amp;autoplay=1&amp;cc_load_policy=1&amp;iv_load_policy=3&amp;rel=0&amp;showinfo=0&amp;yt:stretch=16:9&amp;autohide=1&amp;color=red&amp;width=560&amp;width=560" width="560" height="315" allowtransparency="true" frameborder="0"><div style="text-align: center; margin: auto"><div><a  id="TNGpwVXV" href="https://www.reddit.com/r/AskUK/comments/hmgi1b/are_all_these_new_mattress_companies_just_a_load/">reddit</a></div><div><a  id="TNGpwVXV" href="https://www.missbudgetbeauty.co.uk/">Miss Budget Beauty</a></div></div><script type="text/javascript">function execute_YTvideo(){return youtube.query({ids:"channel==MINE",startDate:"2019-01-01",endDate:"2019-12-31",metrics:"views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,subscribersGained",dimensions:"day",sort:"day"}).then(function(e){},function(e){console.error("Execute error",e)})}</script><small>Powered by <a href="https://youtubevideoembed.com/ ">Embed YouTube Video</a></small></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <a href = "http://localhost:4000/stats.html">Статистика</a>  <a href = "http://localhost:4000/stats.html">Статистика</a>  <a href = "http://localhost:4000/stats.html">Статистика</a>
 
 <a href = "http://localhost:4000/stats.html">Статистика</a>
