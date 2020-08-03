@@ -32,7 +32,6 @@ document.getElementById('buttonSave1').onclick = function () {
                     type: "POST",
                     data: JSON.stringify({"secret": result["secret"], "name": document.getElementById("nickname").value}),
                     contentType: 'application/json',
-                    async: false,
                     success: function (data) {
                         chrome.storage.sync.set({"name": data["name"]});
                         document.getElementById("nickname").value = data["name"];
@@ -57,7 +56,6 @@ document.getElementById('buttonSave2').onclick = function () {
                     type: "POST",
                     data: JSON.stringify({"secret": document.getElementById("secret").value}),
                     contentType: 'application/json',
-                    async: false,
                     success: function (data) {
                         chrome.storage.sync.set({"name": data["name"], "secret": data["secret"]});
                         document.getElementById("secret").value = data["secret"];
@@ -83,7 +81,6 @@ document.getElementById('buttonNew').onclick = function () {
                 type: "POST",
                 data: JSON.stringify({"secret": document.getElementById("secret").value}),
                 contentType: 'application/json',
-                async: false,
                 success: function (data) {
                     chrome.storage.sync.set({"name": data["name"], "secret": data["secret"]});
                     document.getElementById("secret").value = data["secret"];
@@ -174,11 +171,11 @@ document.getElementById("switchButtonAction").addEventListener("click", function
     if (document.getElementById("blockSettings").style.display.includes("block")) {
         document.getElementById("blockSettings").style.display = "none"
         document.getElementById("blockSecret").style.display = "block"
-        document.getElementById("switchButtonAction").innerHTML = "<i class='center fas fa-cog'></i>"
+        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
     } else {
         document.getElementById("blockSecret").style.display = "none"
         document.getElementById("blockSettings").style.display = "block"
-        document.getElementById("switchButtonAction").innerHTML = "<i class='center fas fa-key'></i>"
+        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/key.svg'>"
     }
 })
 

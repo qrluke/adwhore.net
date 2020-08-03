@@ -6,7 +6,6 @@ chrome.storage.sync.get(["uuid", "secret"], function (result) {
                 type: "POST",
                 data: JSON.stringify({"uuid": result["uuid"]}),
                 contentType: 'application/json',
-                async: false,
                 success: function (data) {
                     chrome.storage.sync.set({"secret": data["secret"], "name": data["name"]});
                     //alert("Registered\n"+JSON.stringify(data));
@@ -29,7 +28,6 @@ function selectSide(id) {
                     type: "POST",
                     data: JSON.stringify({"secret": result["secret"], "side": id}),
                     contentType: 'application/json',
-                    async: false,
                     success: function (data) {
                         chrome.storage.sync.set({"secret": data["secret"], "name": data["name"]});
                         alert("side selected\n" + JSON.stringify(data));

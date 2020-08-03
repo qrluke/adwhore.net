@@ -1,11 +1,10 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.0.0.1",
+  "version": "0.0.0.2",
   "version_name": "alpha",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
   "default_locale": "en",
-  "content_security_policy": "script-src 'self' https://kit.fontawesome.com; object-src 'self'",
   "content_scripts": [
     {
       "matches": [
@@ -31,7 +30,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab", "storage", "https://karma.adwhore.net:47976/*", "https://sponsor.ajay.app/*"
+    "activeTab", "storage", "https://karma.adwhore.net/*", "https://sponsor.ajay.app/*"
   ],
   "background": {
     "scripts": [

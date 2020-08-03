@@ -88,7 +88,6 @@ let youtubeMutation = setTimeout(function tick() {
 
                 $.ajax({
                     dataType: "json",
-                    async: false,
                     url: "https://karma.adwhore.net:47976/getVideoData",
                     data: {vID: currentVideoId},
                     success: function (sb) {
@@ -105,82 +104,117 @@ let youtubeMutation = setTimeout(function tick() {
                             timestamps.push(sb["data"][i])
                             console.log("insert")
                         }
+                    },
+                    complete: function () {
+                        if (settings["sb"]) {
+                            $.ajax({
+                                dataType: "json",
+                                url: "https://sponsor.ajay.app/api/skipSegments",
+                                data: {
+                                    videoID: currentVideoId,
+                                    category: "sponsor"
+                                },
+                                success: function (sb) {
+                                    for (let i = 0; i < sb.length; i++) {
+                                        const item = sb[i];
+                                        let isOverflow = false;
+
+                                        let a1 = item["segment"][0]
+                                        let a2 = item["segment"][1]
+                                        for (let i = 0; i < timestamps.length; i++) {
+                                            const it = timestamps[i];
+                                            if (it["source"] === "adn") {
+                                                let b1 = it["data"]["timestamps"]["start"]
+                                                let b2 = it["data"]["timestamps"]["end"]
+                                                if (((a1 >= b1) && (a1 < b2)) || ((a2 > b1) && (a2 <= b2))) {
+                                                    isOverflow = true;
+                                                }
+                                            }
+                                        }
+                                        if (!isOverflow) {
+                                            timestamps.push({
+                                                "source": "sb",
+                                                "data": {
+                                                    "timestamps": {
+                                                        "start": item["segment"][0],
+                                                        "end": item["segment"][1]
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    }
+                                },
+                                complete: function () {
+                                    timestamps.sort(function (a, b) {
+                                        if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                                            return 1;
+                                        }
+                                        if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                                            return -1;
+                                        }
+                                        // a должно быть равным b
+                                        return 0;
+                                    });
+                                    console.log(timestamps)
+                                    //yt ads walkaround
+                                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                        set(timestamps, v.duration)
+                                    } else {
+                                        let stoper = document.URL;
+                                        let currentDuration = v.duration;
+                                        setTimeout(function run() {
+                                            if (stoper === document.URL) {
+                                                if (v.duration && currentDuration !== v.duration) {
+                                                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                                        set(timestamps, v.duration);
+                                                    } else {
+                                                        setTimeout(run, 50);
+                                                    }
+                                                } else {
+                                                    setTimeout(run, 100);
+                                                }
+                                            }
+                                        }, 1000);
+                                    }
+                                }
+                            });
+                        } else {
+                            timestamps.sort(function (a, b) {
+                                if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                                    return 1;
+                                }
+                                if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                                    return -1;
+                                }
+                                // a должно быть равным b
+                                return 0;
+                            });
+                            console.log(timestamps)
+                            //yt ads walkaround
+                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                set(timestamps, v.duration)
+                            } else {
+                                let stoper = document.URL;
+                                let currentDuration = v.duration;
+                                setTimeout(function run() {
+                                    if (stoper === document.URL) {
+                                        if (v.duration && currentDuration !== v.duration) {
+                                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                                set(timestamps, v.duration);
+                                            } else {
+                                                setTimeout(run, 50);
+                                            }
+                                        } else {
+                                            setTimeout(run, 100);
+                                        }
+                                    }
+                                }, 1000);
+                            }
+                        }
                     }
                 });
 
-                if (settings["sb"]) {
-                    $.ajax({
-                        dataType: "json",
-                        async: false,
-                        url: "https://sponsor.ajay.app/api/skipSegments",
-                        data: {
-                            videoID: currentVideoId,
-                            category: "sponsor"
-                        },
-                        success: function (sb) {
-                            for (let i = 0; i < sb.length; i++) {
-                                const item = sb[i];
-                                let isOverflow = false;
 
-                                let a1 = item["segment"][0]
-                                let a2 = item["segment"][1]
-                                for (let i = 0; i < timestamps.length; i++) {
-                                    const it = timestamps[i];
-                                    if (it["source"] === "adn") {
-                                        let b1 = it["data"]["timestamps"]["start"]
-                                        let b2 = it["data"]["timestamps"]["end"]
-                                        if (((a1 >= b1) && (a1 < b2)) || ((a2 > b1) && (a2 <= b2))) {
-                                            isOverflow = true;
-                                        }
-                                    }
-                                }
-                                if (!isOverflow) {
-                                    timestamps.push({
-                                        "source": "sb",
-                                        "data": {
-                                            "timestamps": {
-                                                "start": item["segment"][0],
-                                                "end": item["segment"][1]
-                                            }
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                    });
-           
-                }
-				         timestamps.sort(function (a, b) {
-                        if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                            return 1;
-                        }
-                        if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                            return -1;
-                        }
-                        // a должно быть равным b
-                        return 0;
-                    });
-                    console.log(timestamps)
-                    //yt ads walkaround
-                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                        set(timestamps, v.duration)
-                    } else {
-                        let stoper = document.URL;
-                        let currentDuration = v.duration;
-                        setTimeout(function run() {
-                            if (stoper === document.URL) {
-                                if (v.duration && currentDuration !== v.duration) {
-                                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                        set(timestamps, v.duration);
-                                    } else {
-                                        setTimeout(run, 50);
-                                    }
-                                } else {
-                                    setTimeout(run, 100);
-                                }
-                            }
-                        }, 1000);
-                    }
             } else {
                 currentUrl = "";
                 if (v) {
@@ -792,7 +826,7 @@ function inject() {
 
 function addEvents() {
     flagButton.addEventListener("click", function () {
-		window.open("https://adwhore.net", '_blank');
+        window.open("https://adwhore.net", '_blank');
     });
 
     mainButton.addEventListener("click", function () {
@@ -817,8 +851,8 @@ function addEvents() {
         v.currentTime = segEndInput.value;
         v.play();
     });
-	
-	sideButton.addEventListener("click", function () {
+
+    sideButton.addEventListener("click", function () {
         window.open("https://adwhore.net/stats", '_blank');
     });
 
