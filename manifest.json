@@ -30,7 +30,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab", "storage", "https://karma.adwhore.net/*", "https://sponsor.ajay.app/*"
+    "activeTab", "storage", "https://karma.adwhore.net/*", "https://karma.adwhore.net:47976/*", "https://adwhore.net/*", "https://sponsor.ajay.app/*"
   ],
   "background": {
     "scripts": [
