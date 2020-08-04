@@ -8,7 +8,7 @@ better youtube for everyone</br>
 **ADN** is an open source browser extension designed to **rid YouTube of corrupt ads** and **support honest YouTubers**.  
 <p align="center">
 <img src="https://i.imgur.com/LyEw8OZ.png" alt="ads in progress bar" width="500"></img></br>
-<b>ADN in action</b>
+<b>in action</b>
 </p>
 
 **ADN**'s available for [Firefox](https://addons.mozilla.org/ru/firefox/addon/adwhore-net/).  
