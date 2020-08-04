@@ -126,7 +126,10 @@ let youtubeMutation = setTimeout(function tick() {
                                             if (it["source"] === "adn") {
                                                 let b1 = it["data"]["timestamps"]["start"]
                                                 let b2 = it["data"]["timestamps"]["end"]
-                                                if (((a1 >= b1) && (a1 < b2)) || ((a2 > b1) && (a2 <= b2))) {
+                                                if (((a1 >= b1) && (a1 <= b2)) || ((a2 >= b1) && (a2 <= b2))) {
+                                                    isOverflow = true;
+                                                }
+                                                if (((b1 >= a1) && (b1 <= a2)) || ((b2 >= a1) && (b2 <= a2))) {
                                                     isOverflow = true;
                                                 }
                                             }
