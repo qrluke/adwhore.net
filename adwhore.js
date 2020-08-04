@@ -898,7 +898,7 @@ function addEvents() {
                                 adButton3.style.display = "";
                                 clearTimeout(skipTimer);
                                 skipTimer = setTimeout(function () {
-                                    adplayer.style.display = "none",
+                                    adplayer.style.display = "none";
                                         adskip.style.display = "none";
                                 }, 8000);
                             } else if (whatshouldido === 1) {
