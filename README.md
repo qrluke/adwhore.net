@@ -8,7 +8,7 @@ better youtube for everyone</br>
 **ADN** is an open source browser extension designed to **rid YouTube of corrupt ads** and **support honest YouTubers**.  
 <p align="center">
 <img src="https://i.imgur.com/LyEw8OZ.png" alt="ads in progress bar" width="500"></img></br>
-ADN in action
+<b>ADN in action</b>
 </p>
 
 **ADN**'s available for [Firefox](https://addons.mozilla.org/ru/firefox/addon/adwhore-net/).  
@@ -20,7 +20,7 @@ I'm also trying to win a fight with Apple support to publish extension for Safar
 When you watch a video that our agents have already studied, all ad inserts will be marked in it so you can skip if you want to.**
 <p align="center">
 <img src="https://i.imgur.com/oBqAp8E.png" alt="report ad" width="500"></img></br>
-ADN has a cool start & end selector
+<b>ADN has a cool start & end selector</b>
 </p>
 
 The **acceptance level** is being calculated for each ad.  
@@ -43,11 +43,11 @@ You can adjust settings however you want.
 ## More screenshots
 <p align="center">
 <img src="https://i.imgur.com/RfkQTWd.png" alt="report ad" width="500"></img></br>
-We use category to determine if ad is acceptable.</br></br>
+<b>We use category to determine if ad is acceptable.</b></br></br>
 <img src="https://i.imgur.com/C2OshAA.png" alt="report ad" width="500"></img></br>
-Skip ad with a simple click and automatically.</br></br>
+<b>Skip ad with a simple click and automatically.</b></br></br>
 <img src="https://i.imgur.com/uDAAwnr.png" alt="report ad" width="500"></img></br>
-Become the pathfinder. Be the hero!</br>Cool stats will arrive later!</br>
+<b>Become the pathfinder. Be the hero!</br>Cool stats will arrive later!</b></br>
 </p>
 
 ## Data stored
