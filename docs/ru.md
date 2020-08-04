@@ -6,14 +6,15 @@ ref: homepage
 ---
 # Что это?
 **ADWHORE.NET** - это расширение для **YouTube**, которое блокирует рекламу продажных блогеров.  
-
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%">
+<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<br>
 **Скачать:**
-* <a href = "">Chrome/Brave/Chromium (на модерации)</a>
-* <a href = "">Firefox (на модерации)</a>
+* <a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/">Firefox</a>
+* <a href = "{{ site.github.zip_url }}">Chrome/Brave/Chromium (на модерации, ручная установка распакованного расширения)</a>
+* <a href = "https://addons.opera.com/ru/extensions/details/adwhorenet/">Opera, Yandex Browser (на модерации, установка только через Opera Next/Developer)
 * Safari - расширение готово, для публикации нужно 1-2 недели
-* Opera, Yandex Browser - в разработке
 * Android - запланировано на beta релиз
 * iOS - запланировано на beta релиз
 
