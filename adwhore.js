@@ -44,7 +44,7 @@ let youtubeMutation = setTimeout(function tick() {
                 if (!didWeChangeYouTubeQuestionMark) {
                     control = document.createElement("div");
                     control.className = "ytp-right-controls"
-                    document.getElementsByClassName("ytp-chrome-controls")[0].insertBefore(control, document.getElementsByClassName(" ytp-right-controls")[0])
+                    $(control).insertAfter(document.getElementsByClassName("ytp-right-controls")[0])
                     console.log("creating html");
                     createElemets();
                     console.log("adding layout");
