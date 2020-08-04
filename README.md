@@ -17,6 +17,7 @@ I'm also trying to win a fight with Apple support to publish extension for Safar
 
 ## How does it work?
 <p align="center">
+   </br>
 <b>Users report ads in videos, select its category and honesty, moderate each other's reports and compete.</br>
 When you watch a video that our agents have already studied, all ad inserts will be marked in it so you can skip.</b></br></br>
 <img src="https://i.imgur.com/oBqAp8E.png" alt="report ad" width="500"></img></br>
