@@ -56,7 +56,7 @@ Statictics will evolve with time I promise!<br>Personal, Countries and Teams's l
      ***********/
 
     !function(e){e.fn.animateNumbers=function(t,a,n,l){return this.each(function(){var i=e(this),r=i.is("input"),v=parseInt(r?i.val().replace(/,/g,""):i.text().replace(/,/g,"")),u=/(\d)(?=(\d\d\d)+(?!\d))/g;a=void 0===a?!0:a,r&&"number"===i[0].type&&(a=!1),e({value:v}).animate({value:t},{duration:void 0===n?1e3:n,easing:void 0===l?"swing":l,step:function(){r?i.val(Math.floor(this.value)):i.text(Math.floor(this.value)),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,")))},complete:function(){(parseInt(i.text())!==t||parseInt(i.val())!==t)&&(r?i.val(t):i.text(t),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,"))))}})})}}(jQuery);
-    function get_request() {
+    function get_faction_stats() {
         $.getJSON("https://karma.adwhore.net:47976/stats", function (data) {
             $("#users_fraction_0").animateNumbers(data["f0"]["users"]);
             $("#users_fraction_1").animateNumbers(data["f1"]["users"]);
@@ -75,8 +75,8 @@ Statictics will evolve with time I promise!<br>Personal, Countries and Teams's l
             $("#skips_for_fraction_2").animateNumbers(data["f2"]["skips_by"]);
 
 
-            setTimeout(get_request, 2200); // <-- when you ge a response, call it
+            setTimeout(get_faction_stats, 2200); // <-- when you ge a response, call it
         });
     }
-    get_request();
+    get_faction_stats();
 </script>
