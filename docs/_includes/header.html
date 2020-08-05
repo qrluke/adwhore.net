@@ -8,7 +8,7 @@
         {% endif %}
     <div style="text-align: center;">
 
-    <p style="margin-top: 5px">better youtube for everyone<br><br><b>Users:</b> <span id="global_users">Loading</span><br><b>Segments:</b> <span id="global_segs">Loading</span><br><b>Skips:</b> <span id="global_skips">Loading</span><br><b>Time saved:</b> <span id="global_time">Loading</span>s</p>
+    <p style="margin-top: 5px">better youtube for everyone<br><br><b>Users:</b> <span id="global_users">Loading</span><br><b>Segments:</b> <span id="global_segs">Loading</span><br><b>Moderated:</b> <span id="global_moderated">Loading</span><br><b>Skips:</b> <span id="global_skips">Loading</span><br><b>Time saved:</b> <span id="global_time">Loading</span>s</p>
         <script type="text/javascript">
 
             /***********
@@ -36,6 +36,7 @@
                     $("#global_users").animateNumbers(data["global"]["users"]);
                     $("#global_segs").animateNumbers(data["global"]["reports"]);
                     $("#global_skips").animateNumbers(data["global"]["skips"]);
+                    $("#global_moderated").animateNumbers(data["global"]["moderated"]);
                     $("#global_time").animateNumbers(data["global"]["duration"]);
 
                     setTimeout(get_mini_stats, 2000); // <-- when you ge a response, call it
