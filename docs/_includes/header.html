@@ -8,8 +8,22 @@
         {% endif %}
     <div style="text-align: center;">
 
-    <p style="margin-top: 5px">better youtube for everyone<br><br><b>Users:</b> <span id="global_users">Loading</span><br><b>Segments:</b> <span id="global_segs">Loading</span><br><b>Moderated:</b> <span id="global_moderated">Loading</span><br><b>Skips:</b> <span id="global_skips">Loading</span><br><b>Time saved:</b> <span id="global_time">Loading</span>s</p>
+        <p style="margin-top: 5px">better youtube for everyone<br><small id="serving">loading...<br></small><br><br><b>Users:</b> <span id="global_users">Loading</span><br><b>Segments:</b> <span id="global_segs">Loading</span><br><b>Moderated:</b> <span id="global_moderated">Loading</span><br><b>Skips:</b> <span id="global_skips">Loading</span><br><b>Time saved:</b> <span id="global_time">Loading</span>s</p>
         <script type="text/javascript">
+
+            function secondsToDhms(seconds) {
+                seconds = Number(seconds);
+                var d = Math.floor(seconds / (3600*24));
+                var h = Math.floor(seconds % (3600*24) / 3600);
+                var m = Math.floor(seconds % 3600 / 60);
+                var s = Math.floor(seconds % 60);
+
+                var dDisplay = d > 0 ? d + (d === 1 ? " day, " : " days, ") : "";
+                var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
+                var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
+                var sDisplay = s >= 0 ? s + (s === 1 ? " second" : " seconds") : "";
+                return dDisplay + hDisplay + mDisplay + sDisplay;
+            }
 
             /***********
              Animates element's number to new number with commas
@@ -38,8 +52,9 @@
                     $("#global_skips").animateNumbers(data["global"]["skips"]);
                     $("#global_moderated").animateNumbers(data["global"]["moderated"]);
                     $("#global_time").animateNumbers(data["global"]["duration"]);
+                    document.getElementById("serving").innerText = secondsToDhms(data["global"]["serving"])
 
-                    setTimeout(get_mini_stats, 2000); // <-- when you ge a response, call it
+                    setTimeout(get_mini_stats, 1000); // <-- when you ge a response, call it
                 });
             }
             get_mini_stats();
