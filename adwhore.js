@@ -94,7 +94,6 @@ let youtubeMutation = setTimeout(function tick() {
                         pathFinder = sb["pathfinder"];
                         pathFinderSide = sb["pathfinder"]["side"];
                         pathFinderCountry = sb["pathfinder"]["country"];
-                        flagButtonImage.style.padding = "3px 0";
                         flagButtonImage.src = getFlagByCode(pathFinderCountry);
                         sideButton.style.display = "block";
                         sideButtonImage.src = getParty(pathFinderSide);
@@ -514,28 +513,28 @@ function addStyles() {
     replayButton.setAttribute("role", "button");
     replayButton.style.height = "100%";
     replayButton.style.float = "right";
-    replayButton.style.marginRight = "10px";
+    replayButton.style.marginRight = "5px";
     replayButton.style.cursor = "pointer";
 
     replayButtonImage.style.boxSizing = "border-box";
     replayButtonImage.style.height = "100%";
     replayButtonImage.style.filter = "invert(89%)";
     replayButtonImage.style.float = "right";
-    replayButtonImage.style.padding = "4px 0";
+    replayButtonImage.style.padding = "8px 0px";
     replayButtonImage.src = getIconPath("report-button.svg");
 
     flagButton.id = "flagButton";
     flagButton.setAttribute("role", "button");
     flagButton.style.height = "100%";
     flagButton.style.float = "right";
-    flagButton.style.marginRight = "10px";
+    flagButton.style.marginRight = "8px";
     flagButton.style.cursor = "pointer";
 
     flagButtonImage.style.boxSizing = "border-box";
     flagButtonImage.style.height = "100%";
     flagButtonImage.style.border = "1";
     flagButtonImage.style.float = "right";
-    flagButtonImage.style.padding = "2px 0";
+    flagButtonImage.style.padding = "8px 0px";
     flagButtonImage.src = getFlagByCode("unknown");
 
     sideButton.id = "sideButton";
@@ -899,7 +898,7 @@ function addEvents() {
                                 clearTimeout(skipTimer);
                                 skipTimer = setTimeout(function () {
                                     adplayer.style.display = "none";
-                                        adskip.style.display = "none";
+                                    adskip.style.display = "none";
                                 }, 8000);
                             } else if (whatshouldido === 1) {
                                 currentSkipSource = "adn";
