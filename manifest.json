@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.0.0.4",
+  "version": "0.0.2.0",
   "version_name": "alpha",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
