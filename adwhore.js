@@ -907,7 +907,7 @@ function addEvents() {
                                 adplayer.style.display = "block";
                                 _adSkip.style.display = "block";
                                 adButton3.style.display = "";
-                                _skipImage1.src = getIconPath("adwhore-logo.png");
+                                _skipImage1.src = getIconPath("128.png");
                                 skipImage2.src = getIconPath("like.svg");
                                 skipImage1.style.transform = "rotate(180deg)";
                                 clearTimeout(skipTimer);
