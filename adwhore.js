@@ -61,6 +61,8 @@ let youtubeMutation = setTimeout(function tick() {
                 }
 
                 /* RESET AFTER URL CHANGE HERE */
+                flagButtonImage.style.padding = "8px 0px";
+
                 isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
                 timestamps = [];
                 if (typeof (barList) == "object") {
@@ -95,6 +97,7 @@ let youtubeMutation = setTimeout(function tick() {
                         pathFinder = sb["pathfinder"];
                         pathFinderSide = sb["pathfinder"]["side"];
                         pathFinderCountry = sb["pathfinder"]["country"];
+                        flagButtonImage.style.padding = "10px 0px";
                         flagButtonImage.src = getFlagByCode(pathFinderCountry);
                         sideButton.style.display = "block";
                         sideButtonImage.src = getParty(pathFinderSide);
@@ -514,7 +517,7 @@ function addStyles() {
     replayButton.setAttribute("role", "button");
     replayButton.style.height = "100%";
     replayButton.style.float = "right";
-    replayButton.style.marginRight = "5px";
+    replayButton.style.marginRight = "8px";
     replayButton.style.cursor = "pointer";
 
     replayButtonImage.style.boxSizing = "border-box";
@@ -528,7 +531,7 @@ function addStyles() {
     flagButton.setAttribute("role", "button");
     flagButton.style.height = "100%";
     flagButton.style.float = "right";
-    flagButton.style.marginRight = "8px";
+    flagButton.style.marginRight = "12px";
     flagButton.style.cursor = "pointer";
 
     flagButtonImage.style.boxSizing = "border-box";
@@ -543,15 +546,15 @@ function addStyles() {
     sideButton.style.height = "100%";
     sideButton.style.float = "right";
     sideButton.style.display = "none";
-    sideButton.style.marginRight = "6px";
-    sideButton.style.marginTop = "1px";
+    sideButton.style.marginRight = "12px";
+    //sideButton.style.marginTop = "1px";
     sideButton.style.cursor = "pointer";
 
     sideButtonImage.style.boxSizing = "border-box";
     sideButtonImage.style.height = "100%";
     sideButtonImage.style.border = "2";
     sideButtonImage.style.float = "right";
-    sideButtonImage.style.padding = "7px 0";
+    sideButtonImage.style.padding = "10px 0";
     sideButtonImage.src = getFlagByCode("SOV.svg");
 
     awesomeTooltip.id = "replayButtonTooltip";
@@ -803,19 +806,18 @@ function addStyles() {
     uploadButtonImage.style.height = "100%";
     uploadButtonImage.style.filter = "invert(89%)";
     uploadButtonImage.style.float = "right";
-    uploadButtonImage.style.padding = "4px 0";
+    uploadButtonImage.style.padding = "8px 0";
     uploadButtonImage.src = getIconPath("cloud-upload.svg");
 
-    mark1.style.marginRight = "5px";
-    mark2.style.marginRight = "5px";
     option01b.style.fontSize = "150%";
 
-    mark3.style.marginRight = "5px";
-    mark4.style.marginRight = "5px";
     option02b.style.fontSize = "150%";
 
-    mark5.style.marginRight = "5px";
+    mark2.style.paddingTop = "4px";
+    mark4.style.paddingTop = "4px";
+
     mark6.style.marginRight = "8px";
+    mark6.style.paddingTop = "4px";
     option03b.style.fontSize = "150%";
 
 }
@@ -1578,7 +1580,6 @@ function addEvents() {
 
 
                 set_preview();
-
             } else {
                 clearInterval(keepControlsOpen)
                 v.removeEventListener('timeupdate', updateProgressBar)
