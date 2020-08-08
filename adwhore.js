@@ -15,6 +15,8 @@ let isReportStage1 = false,
     pathFinder,
     settings,
     keepControlsOpen,
+    updateProgressBar,
+    updateBufferProgress,
     timestamps = [];
 
 chrome.storage.sync.get(null, function (result) {
@@ -59,168 +61,7 @@ let youtubeMutation = setTimeout(function tick() {
                     console.log("ADN inserted. Let's roll!");
                     didWeChangeYouTubeQuestionMark = true;
                 }
-
-                /* RESET AFTER URL CHANGE HERE */
-                flagButtonImage.style.padding = "8px 0px";
-
-                isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
-                timestamps = [];
-                if (typeof (barList) == "object") {
-                    if (barList.firstChild) {
-                        while (barList.firstChild) {
-                            barList.removeChild(barList.firstChild);
-                        }
-                    }
-                }
-                if (typeof (barList) == "object") {
-                    if (barListPreview.firstChild) {
-                        while (barListPreview.firstChild) {
-                            barListPreview.removeChild(barListPreview.firstChild);
-                        }
-                    }
-                }
-                sideButton.style.display = "none";
-
-                /* GET NEW SEGMENTS */
-                flagButtonImage.src = getFlagByCode("unknown");
-                pathFinder = {};
-                isSideActive = false;
-                timestamps = [];
-                currentVideoId = getYouTubeID(currentUrl);
-
-
-                $.ajax({
-                    dataType: "json",
-                    url: "https://karma.adwhore.net:47976/getVideoData",
-                    data: {vID: currentVideoId},
-                    success: function (sb) {
-                        pathFinder = sb["pathfinder"];
-                        pathFinderSide = sb["pathfinder"]["side"];
-                        pathFinderCountry = sb["pathfinder"]["country"];
-                        flagButtonImage.style.padding = "10px 0px";
-                        flagButtonImage.src = getFlagByCode(pathFinderCountry);
-                        sideButton.style.display = "block";
-                        sideButtonImage.src = getParty(pathFinderSide);
-                        isSideActive = true;
-                        for (let i = 0; i < sb["data"].length; i++) {
-                            sb["data"][i]["source"] = "adn"
-                            timestamps.push(sb["data"][i])
-                            console.log("insert")
-                        }
-                    },
-                    complete: function () {
-                        if (settings["sb"]) {
-                            $.ajax({
-                                dataType: "json",
-                                url: "https://sponsor.ajay.app/api/skipSegments",
-                                data: {
-                                    videoID: currentVideoId,
-                                    category: "sponsor"
-                                },
-                                success: function (sb) {
-                                    for (let i = 0; i < sb.length; i++) {
-                                        const item = sb[i];
-                                        let isOverflow = false;
-
-                                        let a1 = item["segment"][0]
-                                        let a2 = item["segment"][1]
-                                        for (let i = 0; i < timestamps.length; i++) {
-                                            const it = timestamps[i];
-                                            if (it["source"] === "adn") {
-                                                let b1 = it["data"]["timestamps"]["start"]
-                                                let b2 = it["data"]["timestamps"]["end"]
-                                                if (((a1 >= b1) && (a1 <= b2)) || ((a2 >= b1) && (a2 <= b2))) {
-                                                    isOverflow = true;
-                                                }
-                                                if (((b1 >= a1) && (b1 <= a2)) || ((b2 >= a1) && (b2 <= a2))) {
-                                                    isOverflow = true;
-                                                }
-                                            }
-                                        }
-                                        if (!isOverflow) {
-                                            timestamps.push({
-                                                "source": "sb",
-                                                "data": {
-                                                    "timestamps": {
-                                                        "start": item["segment"][0],
-                                                        "end": item["segment"][1]
-                                                    }
-                                                }
-                                            })
-                                        }
-                                    }
-                                },
-                                complete: function () {
-                                    timestamps.sort(function (a, b) {
-                                        if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                                            return 1;
-                                        }
-                                        if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                                            return -1;
-                                        }
-                                        // a должно быть равным b
-                                        return 0;
-                                    });
-                                    console.log(timestamps)
-                                    //yt ads walkaround
-                                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                        set(timestamps, v.duration)
-                                    } else {
-                                        let stoper = document.URL;
-                                        let currentDuration = v.duration;
-                                        setTimeout(function run() {
-                                            if (stoper === document.URL) {
-                                                if (v.duration && currentDuration !== v.duration) {
-                                                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                                        set(timestamps, v.duration);
-                                                    } else {
-                                                        setTimeout(run, 50);
-                                                    }
-                                                } else {
-                                                    setTimeout(run, 100);
-                                                }
-                                            }
-                                        }, 1000);
-                                    }
-                                }
-                            });
-                        } else {
-                            timestamps.sort(function (a, b) {
-                                if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                                    return 1;
-                                }
-                                if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                                    return -1;
-                                }
-                                // a должно быть равным b
-                                return 0;
-                            });
-                            console.log(timestamps)
-                            //yt ads walkaround
-                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                set(timestamps, v.duration)
-                            } else {
-                                let stoper = document.URL;
-                                let currentDuration = v.duration;
-                                setTimeout(function run() {
-                                    if (stoper === document.URL) {
-                                        if (v.duration && currentDuration !== v.duration) {
-                                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                                set(timestamps, v.duration);
-                                            } else {
-                                                setTimeout(run, 50);
-                                            }
-                                        } else {
-                                            setTimeout(run, 100);
-                                        }
-                                    }
-                                }, 1000);
-                            }
-                        }
-                    }
-                });
-
-
+                resetAndFetch();
             } else {
                 currentUrl = "";
                 if (v) {
@@ -235,6 +76,171 @@ let youtubeMutation = setTimeout(function tick() {
     }
     youtubeMutation = setTimeout(tick, 250);
 }, 0);
+
+function resetAndFetch() {
+    /* RESET AFTER URL CHANGE HERE */
+    flagButtonImage.style.padding = "8px 0px";
+
+    disableStage2()
+    disableStage1()
+
+    isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
+    timestamps = [];
+    if (typeof (barList) == "object") {
+        if (barList.firstChild) {
+            while (barList.firstChild) {
+                barList.removeChild(barList.firstChild);
+            }
+        }
+    }
+    if (typeof (barList) == "object") {
+        if (barListPreview.firstChild) {
+            while (barListPreview.firstChild) {
+                barListPreview.removeChild(barListPreview.firstChild);
+            }
+        }
+    }
+    sideButton.style.display = "none";
+
+    /* GET NEW SEGMENTS */
+    flagButtonImage.src = getFlagByCode("unknown");
+    pathFinder = {};
+    isSideActive = false;
+    timestamps = [];
+    currentVideoId = getYouTubeID(currentUrl);
+
+
+    $.ajax({
+        dataType: "json",
+        url: "https://karma.adwhore.net:47976/getVideoData",
+        data: {vID: currentVideoId},
+        success: function (sb) {
+            pathFinder = sb["pathfinder"];
+            pathFinderSide = sb["pathfinder"]["side"];
+            pathFinderCountry = sb["pathfinder"]["country"];
+            flagButtonImage.style.padding = "10px 0px";
+            flagButtonImage.src = getFlagByCode(pathFinderCountry);
+            sideButton.style.display = "block";
+            sideButtonImage.src = getParty(pathFinderSide);
+            isSideActive = true;
+            for (let i = 0; i < sb["data"].length; i++) {
+                sb["data"][i]["source"] = "adn"
+                timestamps.push(sb["data"][i])
+                console.log("insert")
+            }
+        },
+        complete: function () {
+            if (settings["sb"]) {
+                $.ajax({
+                    dataType: "json",
+                    url: "https://sponsor.ajay.app/api/skipSegments",
+                    data: {
+                        videoID: currentVideoId,
+                        category: "sponsor"
+                    },
+                    success: function (sb) {
+                        for (let i = 0; i < sb.length; i++) {
+                            const item = sb[i];
+                            let isOverflow = false;
+
+                            let a1 = item["segment"][0]
+                            let a2 = item["segment"][1]
+                            for (let i = 0; i < timestamps.length; i++) {
+                                const it = timestamps[i];
+                                if (it["source"] === "adn") {
+                                    let b1 = it["data"]["timestamps"]["start"]
+                                    let b2 = it["data"]["timestamps"]["end"]
+                                    if (((a1 >= b1) && (a1 <= b2)) || ((a2 >= b1) && (a2 <= b2))) {
+                                        isOverflow = true;
+                                    }
+                                    if (((b1 >= a1) && (b1 <= a2)) || ((b2 >= a1) && (b2 <= a2))) {
+                                        isOverflow = true;
+                                    }
+                                }
+                            }
+                            if (!isOverflow) {
+                                timestamps.push({
+                                    "source": "sb",
+                                    "data": {
+                                        "timestamps": {
+                                            "start": item["segment"][0],
+                                            "end": item["segment"][1]
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    },
+                    complete: function () {
+                        timestamps.sort(function (a, b) {
+                            if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                                return 1;
+                            }
+                            if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                                return -1;
+                            }
+                            // a должно быть равным b
+                            return 0;
+                        });
+                        console.log(timestamps)
+                        //yt ads walkaround
+                        if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                            set(timestamps, v.duration)
+                        } else {
+                            let stoper = document.URL;
+                            let currentDuration = v.duration;
+                            setTimeout(function run() {
+                                if (stoper === document.URL) {
+                                    if (v.duration && currentDuration !== v.duration) {
+                                        if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                            set(timestamps, v.duration);
+                                        } else {
+                                            setTimeout(run, 50);
+                                        }
+                                    } else {
+                                        setTimeout(run, 100);
+                                    }
+                                }
+                            }, 1000);
+                        }
+                    }
+                });
+            } else {
+                timestamps.sort(function (a, b) {
+                    if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                        return 1;
+                    }
+                    if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                        return -1;
+                    }
+                    // a должно быть равным b
+                    return 0;
+                });
+                console.log(timestamps)
+                //yt ads walkaround
+                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                    set(timestamps, v.duration)
+                } else {
+                    let stoper = document.URL;
+                    let currentDuration = v.duration;
+                    setTimeout(function run() {
+                        if (stoper === document.URL) {
+                            if (v.duration && currentDuration !== v.duration) {
+                                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                    set(timestamps, v.duration);
+                                } else {
+                                    setTimeout(run, 50);
+                                }
+                            } else {
+                                setTimeout(run, 100);
+                            }
+                        }
+                    }, 1000);
+                }
+            }
+        }
+    });
+}
 
 function createElemets() {
     mainButton = document.createElement("div");
@@ -988,71 +994,12 @@ function addEvents() {
                 skipImage2.src = getIconPath("like.svg");
             }, 1000);
         } else {
-            segStartInput.value = +(currentSkip[0]).toFixed(2);
-            segEndInput.value = +(currentSkip[1]).toFixed(2);
+            disableStage2()
+            disableStage1()
 
-            segStartInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
-            segEndInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
-
-            uploadButton.style.display = "block";
-            flagButton.style.display = "none";
-            sideButton.style.display = "none";
-
-            segControlsNumberInput.style.display = "none";
-            segStartInput.style.display = "block";
-            segEndInput.style.display = "block";
-            previewInside.style.display = "none";
-            previewOutside.style.display = "none";
-
-            mark1.style.display = "none";
-            mark2.style.display = "none";
-            mark3.style.display = "none";
-            mark4.style.display = "none";
-            mark5.style.display = "none";
-            mark6.style.display = "none";
-
-            markInButton.style.display = "block";
-            markOutButton.style.display = "block";
-            mainButton.style.display = "block";
-            isToggle = false;
-            segControlsNumberInput.value = "Select";
-
-            replayButtonImage.src = getIconPath("close-button.svg");
-            segControls.style.display = "flex";
-
-            isFirstInputSelect = true;
-
-            set_preview();
-
-            replayButtonImage.src = getIconPath("back.svg");
-
-            isFirstInputSelect = true;
-
-            segControlsNumberInput.style.display = "block";
-            uploadButton.style.display = "block";
-            flagButton.style.display = "none";
-            sideButton.style.display = "none";
-
-            segStartInput.style.display = "none";
-            segEndInput.style.display = "none";
-            previewInside.style.display = "block";
-            previewOutside.style.display = "block";
-            mark1.style.display = "block";
-            mark2.style.display = "block";
-            mark3.style.display = "block";
-            mark4.style.display = "block";
-
-            mark5.style.display = "block";
-            mark6.style.display = "block";
-
-            segControlsNumberInput.value = "Select";
-            markInButton.style.display = "none";
-            mainButton.style.display = "none";
-            markOutButton.style.display = "none";
-            isReportStage2 = true;
-            isReportStage1 = true;
-
-            v.pause();
+            enableStage1(currentSkip[0], currentSkip[1])
+            enableStage2()
+            v.pause()
         }
     });
 
@@ -1436,31 +1383,7 @@ function addEvents() {
     uploadButton.addEventListener("click", function () {
         isReportStage2 = !isReportStage2;
         if (isReportStage2) {
-            replayButtonImage.src = getIconPath("back.svg");
-
-            isFirstInputSelect = true;
-
-            segControlsNumberInput.style.display = "block";
-            uploadButton.style.display = "block";
-            flagButton.style.display = "none";
-            sideButton.style.display = "none";
-
-            segStartInput.style.display = "none";
-            segEndInput.style.display = "none";
-            previewInside.style.display = "block";
-            previewOutside.style.display = "block";
-            mark1.style.display = "block";
-            mark2.style.display = "block";
-            mark3.style.display = "block";
-            mark4.style.display = "block";
-
-            mark5.style.display = "block";
-            mark6.style.display = "block";
-
-            segControlsNumberInput.value = "Select";
-            markInButton.style.display = "none";
-            mainButton.style.display = "none";
-            markOutButton.style.display = "none";
+            enableStage2();
         } else {
             if (segControlsNumberInput.value !== "Select") {
                 let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"));
@@ -1472,7 +1395,6 @@ function addEvents() {
                     "end": +segEndInput.value,
                     "pizdabol": option02.checked,
                     "honest": option02.checked,
-
                     "paid": option03.checked,
                     "comment": comment
                 };
@@ -1485,10 +1407,14 @@ function addEvents() {
                     contentType: 'application/json',
                     async: false,
                     success: function (data) {
-                        alert("Success\n" + JSON.stringify(data));
+                        alert("Success | Удачно\n" + JSON.stringify(data));
+                        disableStage2()
+                        disableStage1()
+                        resetAndFetch()
                     },
                     error: function (s, status, error) {
                         alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                        isReportStage2 = !isReportStage2;
                     }
                 })
 
@@ -1517,133 +1443,175 @@ function addEvents() {
 
     replayButtonImage.addEventListener("click", function () {
         if (isReportStage2) {
-            uploadButton.style.display = "block";
-            flagButton.style.display = "none";
-            sideButton.style.display = "none";
-
-            segControlsNumberInput.style.display = "none";
-            segStartInput.style.display = "block";
-            segEndInput.style.display = "block";
-            previewInside.style.display = "none";
-            previewOutside.style.display = "none";
-            mark1.style.display = "none";
-            mark2.style.display = "none";
-            mark3.style.display = "none";
-            mark4.style.display = "none";
-            mark5.style.display = "none";
-            mark6.style.display = "none";
-
-            markInButton.style.display = "block";
-            markOutButton.style.display = "block";
-            mainButton.style.display = "block";
-            replayButtonImage.src = getIconPath("close-button.svg");
-            isReportStage2 = false;
+            disableStage2()
         } else {
             isReportStage1 = !isReportStage1;
             if (isReportStage1) {
-
-                const ytplayer = document.querySelector('.html5-video-player')
-                const progressbar = ytplayer.querySelector('.ytp-play-progress')
-                const loadbar = ytplayer.querySelector('.ytp-load-progress')
-
-                function updateProgressBar() {
-                    progressbar.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'
-                    $('.ytp-time-current').text(formatTime(v.currentTime))
-                }
-
-                function updateBufferProgress() {
-                    loadbar.style.transform = 'scaleX(' + (v.buffered.end(v.buffered.length - 1) / v.duration) + ')'
-                }
-
-                v.addEventListener('timeupdate', updateProgressBar)
-                v.addEventListener('progress', updateBufferProgress)
-
-                keepControlsOpen = setInterval(function () {
-                    $('.html5-video-player').removeClass('ytp-autohide')
-                }, 100)
-
-
-                segStartInput.value = +v.currentTime.toFixed(2);
-
-                segEndInput.value = +(v.currentTime + 40).toFixed(2);
-
-                if (+segEndInput.value >= v.duration) {
-                    segEndInput.value = +(v.duration).toFixed(2) - 0.5;
-                }
-
-                segStartInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
-                segEndInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
-
-                uploadButton.style.display = "block";
-                flagButton.style.display = "none";
-                sideButton.style.display = "none";
-
-                segControlsNumberInput.style.display = "none";
-                segStartInput.style.display = "block";
-                segEndInput.style.display = "block";
-                previewInside.style.display = "none";
-                previewOutside.style.display = "none";
-
-                mark1.style.display = "none";
-                mark2.style.display = "none";
-                mark3.style.display = "none";
-                mark4.style.display = "none";
-                mark5.style.display = "none";
-                mark6.style.display = "none";
-
-                markInButton.style.display = "block";
-                markOutButton.style.display = "block";
-                mainButton.style.display = "block";
-                isToggle = false;
-                segControlsNumberInput.value = "Select";
-
-                replayButtonImage.src = getIconPath("close-button.svg");
-                segControls.style.display = "flex";
-
-                isFirstInputSelect = true;
-
-
-                set_preview();
+                enableStage1(v.currentTime, v.currentTime + 40)
             } else {
-                clearInterval(keepControlsOpen)
-                v.removeEventListener('timeupdate', updateProgressBar)
-                v.removeEventListener('progress', updateBufferProgress)
-
-                uploadButton.style.display = "none";
-                flagButton.style.display = "block";
-                if (isSideActive) {
-                    sideButton.style.display = "block";
-                }
-
-                while (barListPreview.firstChild) {
-                    barListPreview.removeChild(barListPreview.firstChild);
-                }
-
-                segControlsNumberInput.style.display = "none";
-                segStartInput.style.display = "none";
-                segEndInput.style.display = "none";
-                previewInside.style.display = "none";
-                previewOutside.style.display = "none";
-
-                mark1.style.display = "none";
-                mark2.style.display = "none";
-
-                mark3.style.display = "none";
-                mark4.style.display = "none";
-                mark5.style.display = "none";
-                mark6.style.display = "none";
-
-                mainButton.style.display = "none";
-                markInButton.style.display = "none";
-                markOutButton.style.display = "none";
-
-                uploadButton.style.display = "none";
-                segEndInput.style.display = "none";
-                replayButtonImage.src = getIconPath("report-button.svg");
-                segControls.style.display = "none";
+                disableStage1()
             }
         }
     });
+}
+
+function enableStage2() {
+    replayButtonImage.src = getIconPath("back.svg");
+
+    isFirstInputSelect = true;
+
+    segControlsNumberInput.style.display = "block";
+    uploadButton.style.display = "block";
+    flagButton.style.display = "none";
+    sideButton.style.display = "none";
+
+    segStartInput.style.display = "none";
+    segEndInput.style.display = "none";
+    previewInside.style.display = "block";
+    previewOutside.style.display = "block";
+    mark1.style.display = "block";
+    mark2.style.display = "block";
+    mark3.style.display = "block";
+    mark4.style.display = "block";
+
+    mark5.style.display = "block";
+    mark6.style.display = "block";
+
+    segControlsNumberInput.value = "Select";
+    markInButton.style.display = "none";
+    mainButton.style.display = "none";
+    markOutButton.style.display = "none";
+    isReportStage2 = true;
+}
+
+function disableStage2() {
+    uploadButton.style.display = "block";
+    flagButton.style.display = "none";
+    sideButton.style.display = "none";
+
+    segControlsNumberInput.style.display = "none";
+    segStartInput.style.display = "block";
+    segEndInput.style.display = "block";
+    previewInside.style.display = "none";
+    previewOutside.style.display = "none";
+    mark1.style.display = "none";
+    mark2.style.display = "none";
+    mark3.style.display = "none";
+    mark4.style.display = "none";
+    mark5.style.display = "none";
+    mark6.style.display = "none";
+
+    markInButton.style.display = "block";
+    markOutButton.style.display = "block";
+    mainButton.style.display = "block";
+    replayButtonImage.src = getIconPath("close-button.svg");
+    isReportStage2 = false;
+}
+
+function enableStage1(start, end) {
+    const ytplayer = document.querySelector('.html5-video-player')
+    const progressbar = ytplayer.querySelector('.ytp-play-progress')
+    const loadbar = ytplayer.querySelector('.ytp-load-progress')
+
+    updateProgressBar = function () {
+        progressbar.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'
+        $('.ytp-time-current').text(formatTime(v.currentTime))
+    }
+
+    updateBufferProgress = function () {
+        loadbar.style.transform = 'scaleX(' + (v.buffered.end(v.buffered.length - 1) / v.duration) + ')'
+    }
+
+    v.addEventListener('timeupdate', updateProgressBar)
+    v.addEventListener('progress', updateBufferProgress)
+
+    keepControlsOpen = setInterval(function () {
+        $('.html5-video-player').removeClass('ytp-autohide')
+    }, 100)
+
+
+    segStartInput.value = +start.toFixed(2);
+
+    segEndInput.value = +end.toFixed(2);
+
+    if (+segEndInput.value >= v.duration) {
+        segEndInput.value = +(v.duration).toFixed(2) - 0.5;
+    }
+
+    segStartInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
+    segEndInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
+
+    uploadButton.style.display = "block";
+    flagButton.style.display = "none";
+    sideButton.style.display = "none";
+
+    segControlsNumberInput.style.display = "none";
+    segStartInput.style.display = "block";
+    segEndInput.style.display = "block";
+    previewInside.style.display = "none";
+    previewOutside.style.display = "none";
+
+    mark1.style.display = "none";
+    mark2.style.display = "none";
+    mark3.style.display = "none";
+    mark4.style.display = "none";
+    mark5.style.display = "none";
+    mark6.style.display = "none";
+
+    markInButton.style.display = "block";
+    markOutButton.style.display = "block";
+    mainButton.style.display = "block";
+    isToggle = false;
+    segControlsNumberInput.value = "Select";
+
+    replayButtonImage.src = getIconPath("close-button.svg");
+    segControls.style.display = "flex";
+
+    isFirstInputSelect = true;
+
+
+    set_preview();
+    isReportStage1 = true;
+}
+
+function disableStage1() {
+    clearInterval(keepControlsOpen)
+    v.removeEventListener('timeupdate', updateProgressBar)
+    v.removeEventListener('progress', updateBufferProgress)
+
+    uploadButton.style.display = "none";
+    flagButton.style.display = "block";
+    if (isSideActive) {
+        sideButton.style.display = "block";
+    }
+
+    while (barListPreview.firstChild) {
+        barListPreview.removeChild(barListPreview.firstChild);
+    }
+
+    segControlsNumberInput.style.display = "none";
+    segStartInput.style.display = "none";
+    segEndInput.style.display = "none";
+    previewInside.style.display = "none";
+    previewOutside.style.display = "none";
+
+    mark1.style.display = "none";
+    mark2.style.display = "none";
+
+    mark3.style.display = "none";
+    mark4.style.display = "none";
+    mark5.style.display = "none";
+    mark6.style.display = "none";
+
+    mainButton.style.display = "none";
+    markInButton.style.display = "none";
+    markOutButton.style.display = "none";
+
+    uploadButton.style.display = "none";
+    segEndInput.style.display = "none";
+    replayButtonImage.src = getIconPath("report-button.svg");
+    segControls.style.display = "none";
+    isReportStage1 = false;
 }
 
 function getYouTubeID(url) {
