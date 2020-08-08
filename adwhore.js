@@ -1173,6 +1173,16 @@ function addEvents() {
             e.preventDefault();
             e.stopPropagation();
             return true;
+        } else if (e.keyCode === 9) {
+            document.getElementById('toggleButton').click();
+            if (isToggle) {
+                document.getElementById('replayStart').focus();
+            } else {
+                document.getElementById('replayEnd').focus();
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
         } else {
             e.preventDefault();
             e.stopPropagation();
@@ -1253,6 +1263,16 @@ function addEvents() {
             if (segEndInput.value > parseFloat(segStartInput.value) + 2) {
                 segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(2);
                 v.currentTime = +parseFloat(segEndInput.value);
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        } else if (e.keyCode === 9) {
+            document.getElementById('toggleButton').click();
+            if (isToggle) {
+                document.getElementById('replayStart').focus();
+            } else {
+                document.getElementById('replayEnd').focus();
             }
             e.preventDefault();
             e.stopPropagation();
