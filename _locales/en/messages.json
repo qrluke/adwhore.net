@@ -215,6 +215,24 @@
   "helpMePlease": {
     "message": "Click on the button to my right and follow the instructions of the button with the question mark.\n\nIf you don't see anything, make the player wider."
   },
+  "stats_users": {
+    "message": "users - "
+  },
+  "stats_seg": {
+    "message": "segments - "
+  },
+  "stats_mod": {
+    "message": "moderated - "
+  },
+  "stats_skip": {
+    "message": "skips"
+  },
+  "stats_saved": {
+    "message": "time saved: "
+  },
+  "stats_sec": {
+    "message": " sec"
+  },
   "markIn": {
     "message": "Click to start at the beginning of the segment"
   },

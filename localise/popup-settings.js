@@ -44,7 +44,15 @@ function init() {
   setChildTextNode('valueString', chrome.i18n.getMessage("valueString"));
   setChildTextNode('showFlagSetting', chrome.i18n.getMessage("showFlagSetting"));
 
+  setChildTextNode('stats_users', chrome.i18n.getMessage("stats_users"));
+  setChildTextNode('stats_seg', chrome.i18n.getMessage("stats_seg"));
+  setChildTextNode('stats_mod', chrome.i18n.getMessage("stats_mod"));
+  setChildTextNode('stats_skip', chrome.i18n.getMessage("stats_skip"));
+  setChildTextNode('stats_saved', chrome.i18n.getMessage("stats_saved"));
+  setChildTextNode('stats_sec', chrome.i18n.getMessage("stats_sec"));
 }
 
 init();
+
+
 
