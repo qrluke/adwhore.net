@@ -275,5 +275,24 @@
   },
   "pathfinder_from": {
     "message": " из "
+  },
+  "nicknameDesc": {
+    "message": "Это ваш никнейм. Он используется в списках лидеров."
+  },
+  "secretDesc1": {
+    "message": "Это ваш секретный ключ. Он играет роль логина и пароля."
+  },
+  "secretDesc2": {
+    "message": "По нему сервер считает для вас статистику и репутацию."
+  },
+  "settingsString": {
+    "message": "Настройка"
+  },
+  "valueString": {
+    "message": "Значение"
+  },
+  "show-flag-setting": {
+    "message": "Показывать флаг страны и фракции"
   }
+
 }

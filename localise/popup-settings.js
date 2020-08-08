@@ -36,6 +36,14 @@ function init() {
 
   setTitle('settingSponsorBlock', chrome.i18n.getMessage("sponsorBlock"));
   setChildTextNode('settingSponsorBlock', chrome.i18n.getMessage("settingSponsorBlock"));
+
+  setChildTextNode('nicknameDesc', chrome.i18n.getMessage("nicknameDesc"));
+  setChildTextNode('secretDesc1', chrome.i18n.getMessage("secretDesc1"));
+  setChildTextNode('secretDesc2', chrome.i18n.getMessage("secretDesc2"));
+  setChildTextNode('settingsString', chrome.i18n.getMessage("settingsString"));
+  setChildTextNode('valueString', chrome.i18n.getMessage("valueString"));
+  setChildTextNode('how-flag-setting', chrome.i18n.getMessage("how-flag-setting"));
+
 }
 
 init();

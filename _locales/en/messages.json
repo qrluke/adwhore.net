@@ -259,5 +259,23 @@
   },
   "pathfinder_from": {
     "message": " from "
+  },
+  "nicknameDesc": {
+    "message": "This is your nickname. It is used on the leaderboards."
+  },
+  "secretDesc1": {
+    "message": "This is your secret key. It acts as a username and password."
+  },
+  "secretDesc2": {
+    "message": "The server uses it to calculate statistics and reputation for you."
+  },
+  "settingsString": {
+    "message": "Setting"
+  },
+  "valueString": {
+    "message": "Value"
+  },
+  "show-flag-setting": {
+    "message": "Show country and faction flag"
   }
 }

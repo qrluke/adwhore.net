@@ -212,25 +212,25 @@
 
 <div id="blockSecret" class="modal-content" style="display: none; margin-bottom: 9px">
     <center>
-        <small>Это ваш никнейм. Он используется в списках лидеров.</small><br>
+        <small id="nicknameDesc"></small><br>
         <input id="nickname" style="width: 65%" maxlength="20"  type="text">
         <input id="buttonSave1" type="button" style="width: 12%"  value="Save"><br>
-        <small>Это ваш секретный ключ. Он играет роль логина и пароля.</small><br>
-        <small>По нему сервер считает для вас статистику и репутацию.</small><br>
+        <small id="secretDesc1"></small><br>
+        <small id="secretDesc2"></small><br>
         <input id="secret" name="secret" style="width: 52%"  type="password">
         <input id="buttonSave2" type="button" style="width: 12%"  value="Save">
         <input id="buttonNew" type="button" style="width: 12%" value="New"><br>
         <table style="width:100%">
             <tr>
-                <th>Настройка</th>
-                <th>Значение</th>
+                <th id="settingsString"></th>
+                <th id="valueString"></th>
             </tr>
             <tr>
-                <td>Показывать флаг страны и фракции</td>
+                <td id="show-flag-setting"></td>
                 <td><input id="show-flags" type="checkbox"></td>
             </tr>
             <tr>
-                <td id="settingSponsorBlock">Показывать флаг страны и фракции</td>
+                <td id="settingSponsorBlock"></td>
                 <td><input id="sb" type="checkbox"></td>
             </tr>
             <p id="sponsorBlock" style="padding: 0 3px;">
