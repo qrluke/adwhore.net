@@ -33,6 +33,12 @@ Statictics will evolve with time I promise!<br>Personal, Countries and Teams's l
         </div>
     </div>
 </div>
+<br>
+Basic user/segment stats. Does not autoupdate. Limited to 100/hour per ip.
+<br><br>
+<div id="top10mini" class="divTable">
+    Loading...
+</div>
 
 <script type="text/javascript">
 
@@ -79,4 +85,8 @@ Statictics will evolve with time I promise!<br>Personal, Countries and Teams's l
         });
     }
     get_faction_stats();
+
+    $.getJSON("https://karma.adwhore.net:47976/top10mini", function (data) {
+        document.getElementById("top10mini").innerHTML = data["text"]
+    });
 </script>
