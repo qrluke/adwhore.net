@@ -34,8 +34,8 @@ function init() {
   setChildTextNode('good_ambassador', chrome.i18n.getMessage("good_ambassador"));
   setTitle('good_ambassador', chrome.i18n.getMessage("good_ambassador_title"));
 
-  setTitle('sponsorBlock', chrome.i18n.getMessage("sponsorBlock"));
-  setChildTextNode('sponsorBlock', chrome.i18n.getMessage("inlineSponsorBlock"));
+  setTitle('settingSponsorBlock', chrome.i18n.getMessage("sponsorBlock"));
+  setChildTextNode('settingSponsorBlock', chrome.i18n.getMessage("settingSponsorBlock"));
 }
 
 init();

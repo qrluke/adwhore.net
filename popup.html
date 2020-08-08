@@ -124,9 +124,8 @@
     <img style="margin-bottom: 3px; width: 110px;" border="1px" src="img/adwhore-logo.png"/>
     <p class="moto" style="">better youtube for everyone</p>
 </div>
-<br>
-<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px ">
-    <div style="flex:1;">
+<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px ">
+    <div id="trust_table" style="flex:1;">
 
         <table class="center">
             <tr>
@@ -150,13 +149,13 @@
         <center>
             <br>
             <button id="switchButtonAction">
-                <img class="icon" src="img/popup/key.svg">
+                <img class="icon" src="img/popup/cog.svg">
             </button>
         </center>
     </div>
-    <div style="flex:1;">
+    <div id="acceptable_table" style="flex:1;">
 
-        <table class="center">
+        <table  class="center">
             <tr>
                 <td id="acceptable_selector" colspan="3"></td>
             </tr>
@@ -208,9 +207,7 @@
             <td><input id="fine-a2" type="checkbox"></td>
             <td><input id="love-a2" type="checkbox"></td>
         </tr>
-    </table>
-    <p id="sponsorBlock" style="padding: 0 3px;">
-    </p>
+    </table><br>
 </div>
 
 <div id="blockSecret" class="modal-content" style="display: none; margin-bottom: 9px">
@@ -222,7 +219,23 @@
         <small>По нему сервер считает для вас статистику и репутацию.</small><br>
         <input id="secret" name="secret" style="width: 52%"  type="password">
         <input id="buttonSave2" type="button" style="width: 12%"  value="Save">
-        <input id="buttonNew" type="button" style="width: 12%" value="New">
+        <input id="buttonNew" type="button" style="width: 12%" value="New"><br>
+        <table style="width:100%">
+            <tr>
+                <th>Настройка</th>
+                <th>Значение</th>
+            </tr>
+            <tr>
+                <td>Показывать флаг страны и фракции</td>
+                <td><input id="show-flags" type="checkbox"></td>
+            </tr>
+            <tr>
+                <td id="settingSponsorBlock">Показывать флаг страны и фракции</td>
+                <td><input id="sb" type="checkbox"></td>
+            </tr>
+            <p id="sponsorBlock" style="padding: 0 3px;">
+            </p>
+        </table>
     </center>
 </div>
 
@@ -230,7 +243,7 @@
 
 </div>
 
-<div class="modal-icons">
+<div id = "links" class="modal-icons">
     <div class="flex-container">
         <div class="flex">
             <a href="https://www.adwhore.net" target="_blank">

@@ -378,11 +378,15 @@ function addLayout() {
 
     control.appendChild(replayButton);
     replayButton.appendChild(replayButtonImage);
-    control.appendChild(flagButton);
-    flagButton.appendChild(flagButtonImage);
-    control.appendChild(sideButton);
 
-    sideButton.appendChild(sideButtonImage);
+
+    if (settings["show_flags"]) {
+        control.appendChild(flagButton);
+        flagButton.appendChild(flagButtonImage);
+        control.appendChild(sideButton);
+        sideButton.appendChild(sideButtonImage);
+    }
+
 
     adplayer.appendChild(adskip);
     adskip.appendChild(adSkipButton);

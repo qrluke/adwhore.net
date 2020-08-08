@@ -129,6 +129,7 @@ chrome.storage.sync.get(null, function (result) {
     document.getElementById('displayDiv1').innerText = result["trust"];
     document.getElementById('displayDiv2').innerText = result["accept"];
     document.getElementById("enableCheck").checked = result["enable"];
+    document.getElementById("show-flags").checked = result["show_flags"];
 });
 
 checkboxes = document.querySelectorAll("input[type=checkbox]");
@@ -159,6 +160,7 @@ function savePopupSettings() {
             "a1": document.getElementById("hate-a1").checked,
             "a2": document.getElementById("hate-a2").checked
         },
+        "show_flags": document.getElementById("show-flags").checked,
         "trust": +document.getElementById('displayDiv1').innerText,
         "accept": +document.getElementById('displayDiv2').innerText,
         "enable": document.getElementById("enableCheck").checked
@@ -171,11 +173,19 @@ document.getElementById("switchButtonAction").addEventListener("click", function
     if (document.getElementById("blockSettings").style.display.includes("block")) {
         document.getElementById("blockSettings").style.display = "none"
         document.getElementById("blockSecret").style.display = "block"
-        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
+        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+        document.getElementById("note_the_alpha").style.display = "none"
+        document.getElementById("links").style.display = "none"
+        document.getElementById("acceptable_table").style.display = "none"
+        document.getElementById("trust_table").style.display = "none"
     } else {
         document.getElementById("blockSecret").style.display = "none"
         document.getElementById("blockSettings").style.display = "block"
-        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/key.svg'>"
+        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
+        document.getElementById("note_the_alpha").style.display = ""
+        document.getElementById("links").style.display = ""
+        document.getElementById("acceptable_table").style.display = ""
+        document.getElementById("trust_table").style.display = ""
     }
 })
 

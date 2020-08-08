@@ -15,7 +15,7 @@
     "message": "You're ready to block annoying 3rd party advertisements that adwhores bomb you on Youtube!"
   },
   "welcome_info_2": {
-    "message": "You can close this window right now or go through a brief tutorial to learn more about extension!"
+    "message": "You can close this window right now or go through a brief tutorial to learn more about extension! (not aval. at the moment)"
   },
   "welcome_info_3": {
     "message": "To make your contribution fun, please choose your side!"
@@ -116,8 +116,8 @@
   "sponsorBlock": {
     "message": "SponsorBlock is a similar project, started a year before ADN. Auto-skipping from SB is disabled because ADN cannot guarantee the validity of segments received from the API. In general, ADN and SB are similar, but have completely different goals. The main purpose of ADN - to replay and destroy the adwhores on YouTube, collect data on advertising integrations of all bloggers, process them and highlight conscientious youtubers among the corrupt ones, provide them with all kinds of information support, along the way destroying the reputation and income of those bloggers who have already exhausted themselves long ago. ADN's main priority is Russian YouTube, then English, then the rest world. SB is more focused on English-speaking YouTube and simply blocks sponsored ads, not understanding its types and quality. You can read more about the fundamental differences between ADN and SB on GitHub"
   },
-  "inlineSponsorBlock": {
-    "message": "Enable <a target=\"_blank\" href=\"https://sponsor.ajay.app/\">SponsorBlock API</a> (?): <input id=\"sb\" type=\"checkbox\">"
+  "settingSponsorBlock": {
+    "message": "Enable <a target=\"_blank\" href=\"https://sponsor.ajay.app/\">SponsorBlock API</a> (?)"
   },
   "category0Text": {
     "message": "🎲🤬🤮 | SSL: advertising of scammers, bookmakers, casinos, pyramids, investments"
@@ -192,7 +192,7 @@
     "message": "Edit snippet"
   },
   "addsegment": {
-    "message": "Report advertisement"
+    "message": "Report advertisement (ADWHORE.NET extension)"
   },
   "send": {
     "message": "Send"
@@ -231,13 +231,13 @@
     "message": "You have not selected a category.\n\nPlease select an ad category and check the checkboxes.\nThis will help us determine whether an ad is acceptable or not"
   },
   "countryStatsWIP": {
-    "message": "There should be statistics for your country, but I'm still working on it! Check it out later."
+    "message": "There should be statistics for your country, but I'm still working on it! Check it out later. P.S. You can hide flags in ADWHORE.NET extension settings."
   },
   "404": {
-    "message": "Our users haven't watched this video yet. You can be the first! Click on the button to learn how to send a report!"
+    "message": "Our users haven't watched this video yet. You can be the first! Click on the button to learn how to send a report! P.S. You can hide flags in ADWHORE.NET extension settings."
   },
   "clickToViewColdWarStats": {
-    "message": ". Click to view Cold War statistics"
+    "message": ". Click to view Cold War statistics. P.S. You can hide flags in ADWHORE.NET extension settings."
   },
   "UN_date": {
     "message": " discovered the ad first. It happened: "
