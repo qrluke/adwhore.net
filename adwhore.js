@@ -14,6 +14,7 @@ let isReportStage1 = false,
     skipTimer,
     pathFinder,
     settings,
+    keepControlsOpen,
     timestamps = [];
 
 chrome.storage.sync.get(null, function (result) {
@@ -1515,6 +1516,27 @@ function addEvents() {
             isReportStage1 = !isReportStage1;
             if (isReportStage1) {
 
+                const ytplayer = document.querySelector('.html5-video-player')
+                const progressbar = ytplayer.querySelector('.ytp-play-progress')
+                const loadbar = ytplayer.querySelector('.ytp-load-progress')
+
+                function updateProgressBar() {
+                    progressbar.style.transform = 'scaleX(' + (v.currentTime / v.duration) + ')'
+                    $('.ytp-time-current').text(formatTime(v.currentTime))
+                }
+
+                function updateBufferProgress() {
+                    loadbar.style.transform = 'scaleX(' + (v.buffered.end(v.buffered.length - 1) / v.duration) + ')'
+                }
+
+                v.addEventListener('timeupdate', updateProgressBar)
+                v.addEventListener('progress', updateBufferProgress)
+
+                keepControlsOpen = setInterval(function () {
+                    $('.html5-video-player').removeClass('ytp-autohide')
+                }, 100)
+
+
                 segStartInput.value = +v.currentTime.toFixed(2);
 
                 segEndInput.value = +(v.currentTime + 40).toFixed(2);
@@ -1558,11 +1580,13 @@ function addEvents() {
                 set_preview();
 
             } else {
+                clearInterval(keepControlsOpen)
+                v.removeEventListener('timeupdate', updateProgressBar)
+                v.removeEventListener('progress', updateBufferProgress)
+
                 uploadButton.style.display = "none";
                 flagButton.style.display = "block";
                 if (isSideActive) {
-
-
                     sideButton.style.display = "block";
                 }
 
@@ -1814,4 +1838,16 @@ function addSegmentSkip(segment) {
             //alert(`Success. Reason: ${sb}`);
         }
     });
+}
+
+
+function formatTime(time) {
+    time = Math.round(time)
+
+    const minutes = Math.floor(time / 60)
+    let seconds = time - minutes * 60
+
+    seconds = seconds < 10 ? '0' + seconds : seconds
+
+    return minutes + ':' + seconds
 }
