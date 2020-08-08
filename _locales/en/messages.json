@@ -275,7 +275,7 @@
   "valueString": {
     "message": "Value"
   },
-  "show-flag-setting": {
+  "showFlagSetting": {
     "message": "Show country and faction flag"
   }
 }

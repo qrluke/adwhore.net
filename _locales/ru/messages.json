@@ -291,7 +291,7 @@
   "valueString": {
     "message": "Значение"
   },
-  "show-flag-setting": {
+  "showFlagSetting": {
     "message": "Показывать флаг страны и фракции"
   }
 

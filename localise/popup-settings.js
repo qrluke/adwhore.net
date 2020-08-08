@@ -42,7 +42,7 @@ function init() {
   setChildTextNode('secretDesc2', chrome.i18n.getMessage("secretDesc2"));
   setChildTextNode('settingsString', chrome.i18n.getMessage("settingsString"));
   setChildTextNode('valueString', chrome.i18n.getMessage("valueString"));
-  setChildTextNode('how-flag-setting', chrome.i18n.getMessage("how-flag-setting"));
+  setChildTextNode('showFlagSetting', chrome.i18n.getMessage("showFlagSetting"));
 
 }
 
