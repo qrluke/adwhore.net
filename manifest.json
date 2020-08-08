@@ -16,9 +16,6 @@
         "adwhore.js",
         "jquery.min.js"
       ],
-      "css": [
-        "style.css"
-      ],
       "run_at": "document_end"
     }
   ],
