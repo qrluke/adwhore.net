@@ -1386,38 +1386,43 @@ function addEvents() {
             enableStage2();
         } else {
             if (segControlsNumberInput.value !== "Select") {
-                let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"));
-                let json = {
-                    "vID": currentVideoId,
-                    "secret": settings["secret"],
-                    "category": segControlsNumberInput.value,
-                    "start": +segStartInput.value,
-                    "end": +segEndInput.value,
-                    "pizdabol": option02.checked,
-                    "honest": option02.checked,
-                    "paid": option03.checked,
-                    "comment": comment
-                };
 
-                $.ajax
-                ({
-                    url: "https://karma.adwhore.net:47976/addSegment",
-                    type: "POST",
-                    data: JSON.stringify(json),
-                    contentType: 'application/json',
-                    async: false,
-                    success: function (data) {
-                        alert("Success | Удачно\n" + JSON.stringify(data));
-                        disableStage2()
-                        disableStage1()
-                        resetAndFetch()
-                    },
-                    error: function (s, status, error) {
-                        alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
-                        isReportStage2 = !isReportStage2;
-                    }
-                })
+                if ((+segEndInput.value - +segStartInput.value)/90 * 101 > v.duration) {
+                    isReportStage2 = !isReportStage2;
+                    alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
+                } else {
+                    let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"));
+                    let json = {
+                        "vID": currentVideoId,
+                        "secret": settings["secret"],
+                        "category": segControlsNumberInput.value,
+                        "start": +segStartInput.value,
+                        "end": +segEndInput.value,
+                        "pizdabol": option02.checked,
+                        "honest": option02.checked,
+                        "paid": option03.checked,
+                        "comment": comment
+                    };
 
+                    $.ajax
+                    ({
+                        url: "https://karma.adwhore.net:47976/addSegment",
+                        type: "POST",
+                        data: JSON.stringify(json),
+                        contentType: 'application/json',
+                        async: false,
+                        success: function (data) {
+                            alert("Success | Удачно\n" + JSON.stringify(data));
+                            disableStage2()
+                            disableStage1()
+                            resetAndFetch()
+                        },
+                        error: function (s, status, error) {
+                            alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                            isReportStage2 = !isReportStage2;
+                        }
+                    })
+                }
             } else {
                 isReportStage2 = !isReportStage2;
                 alert(chrome.i18n.getMessage("categoryMissing"));

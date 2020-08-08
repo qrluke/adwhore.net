@@ -230,6 +230,9 @@
   "categoryMissing": {
     "message": "You have not selected a category.\n\nPlease select an ad category and check the checkboxes.\nThis will help us determine whether an ad is acceptable or not"
   },
+  "plsDontSendWholeVideo": {
+    "message": "You seem to be trying to send an ad segment longer than 90% of the video.\nWe cannot accept such a segment.\nADN is sent with ad integrations, and you are sending a whole ad video.\nA person opening a video wants to watch it but not skip completely.\nPerhaps in the future we will make a special notion that the video is a commercial.\nSoryan :("
+  },
   "countryStatsWIP": {
     "message": "There should be statistics for your country, but I'm still working on it! Check it out later. P.S. You can hide flags in ADWHORE.NET extension settings."
   },
