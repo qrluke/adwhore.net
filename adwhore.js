@@ -375,6 +375,9 @@ function createElemets() {
 
     uploadButton = document.createElement("div");
     uploadButtonImage = document.createElement("img");
+
+    helpButton = document.createElement("div");
+    helpButtonImage = document.createElement("img");
 }
 
 function addLayout() {
@@ -471,6 +474,8 @@ function addLayout() {
     segControls.appendChild(mainButton);
     segControls.appendChild(segEndInput);
     segControls.appendChild(markOutButton);
+    segControls.appendChild(helpButton);
+    helpButton.appendChild(helpButtonImage);
     segControls.appendChild(uploadButton);
     uploadButton.appendChild(uploadButtonImage);
 }
@@ -789,10 +794,13 @@ function addStyles() {
     segStartInput.max = v.duration - 1;
     segStartInput.step = "0.01"
     segStartInput.style.marginRight = "0px";
+    segStartInput.style.marginTop = "2px";
+    segStartInput.style.marginBottom = "2px";
+
     segStartInput.style.borderRadius = "2px";
     segStartInput.style.display = "none";
     segStartInput.style.width = "60px";
-    segStartInput.style.height = "26px";
+    segStartInput.style.height = "23px";
 
     segEndInput.id = "replayEnd";
     segEndInput.type = "number";
@@ -800,9 +808,11 @@ function addStyles() {
     segEndInput.max = v.duration;
     segEndInput.step = "0.01"
     segEndInput.style.marginRight = "3px";
+    segEndInput.style.marginTop = "2px";
+    segEndInput.style.marginBottom = "2px";
     segEndInput.style.width = "60px";
     segEndInput.style.borderRadius = "2px";
-    segEndInput.style.height = "26px";
+    segEndInput.style.height = "23px";
 
     uploadButton.id = "uploadButton";
     uploadButton.setAttribute("role", "button");
@@ -818,6 +828,21 @@ function addStyles() {
     uploadButtonImage.style.float = "right";
     uploadButtonImage.style.padding = "8px 0";
     uploadButtonImage.src = getIconPath("cloud-upload.svg");
+
+    helpButton.id = "helpButton";
+    helpButton.setAttribute("role", "button");
+    helpButton.style.height = "100%";
+    helpButton.style.display = "none";
+    helpButton.style.float = "right";
+    helpButton.style.marginRight = "10px";
+    helpButton.style.cursor = "pointer";
+
+    helpButtonImage.style.boxSizing = "border-box";
+    helpButtonImage.style.height = "100%";
+    helpButtonImage.style.filter = "invert(89%)";
+    helpButtonImage.style.float = "right";
+    helpButtonImage.style.padding = "8px 0";
+    helpButtonImage.src = getIconPath("help.svg");
 
     option01b.style.fontSize = "150%";
 
@@ -841,7 +866,11 @@ function inject() {
 
 function addEvents() {
     flagButton.addEventListener("click", function () {
-        window.open("https://adwhore.net", '_blank');
+        if (isSideActive) {
+
+        } else {
+            alert(chrome.i18n.getMessage("helpMePlease"));
+        }
     });
 
     mainButton.addEventListener("click", function () {
@@ -1286,6 +1315,22 @@ function addEvents() {
         awesomeTooltip.style.display = "none";
     });
 
+    helpButton.addEventListener("mouseover", function () {
+        if (isReportStage2) {
+            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("clickHelp2");
+        } else {
+            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("clickHelp1");
+        }
+
+        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.left = (helpButtonImage.offsetLeft + (helpButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
+        awesomeTooltip.style.display = "block";
+    });
+
+    helpButton.addEventListener("mouseleave", function () {
+        awesomeTooltip.style.display = "none";
+    });
+
     markInButton.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("markIn");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
@@ -1430,6 +1475,14 @@ function addEvents() {
         }
     });
 
+    helpButton.addEventListener("click", function () {
+        if (isReportStage2) {
+            alert(chrome.i18n.getMessage("help2"))
+        } else {
+            alert(chrome.i18n.getMessage("help1"))
+        }
+    });
+
     adskip.addEventListener("mouseover", function () {
         clearTimeout(skipTimer);
     });
@@ -1467,6 +1520,8 @@ function enableStage2() {
 
     segControlsNumberInput.style.display = "block";
     uploadButton.style.display = "block";
+    helpButton.style.display = "block";
+
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
@@ -1491,6 +1546,8 @@ function enableStage2() {
 
 function disableStage2() {
     uploadButton.style.display = "block";
+    helpButton.style.display = "block";
+
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
@@ -1547,6 +1604,8 @@ function enableStage1(start, end) {
     segEndInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
 
     uploadButton.style.display = "block";
+    helpButton.style.display = "block";
+
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
@@ -1585,6 +1644,8 @@ function disableStage1() {
     v.removeEventListener('progress', updateBufferProgress)
 
     uploadButton.style.display = "none";
+    helpButton.style.display = "none";
+
     flagButton.style.display = "block";
     if (isSideActive) {
         sideButton.style.display = "block";
@@ -1613,6 +1674,8 @@ function disableStage1() {
     markOutButton.style.display = "none";
 
     uploadButton.style.display = "none";
+    helpButton.style.display = "none";
+
     segEndInput.style.display = "none";
     replayButtonImage.src = getIconPath("report-button.svg");
     segControls.style.display = "none";
