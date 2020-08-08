@@ -927,7 +927,7 @@ function addEvents() {
                                 skipTimer = setTimeout(function () {
                                     adplayer.style.display = "none";
                                     _adSkip.style.display = "none";
-                                }, 6000);
+                                }, 13000);
                             } else {
                                 //nothing
                             }
@@ -942,7 +942,7 @@ function addEvents() {
                             skipTimer = setTimeout(function () {
                                 adplayer.style.display = "none";
                                 _adSkip.style.display = "none";
-                            }, 6000);
+                            }, 13000);
                         }
                     }
                 }
