@@ -19,7 +19,7 @@ ref: homepage
 * Android - planned for beta release
 * iOS - planned for beta release
 
-<a href = "https://adwhore.net/stats.html">Stats</a>
+<a href = "{{ site.url }}/en/stats">Stats</a>
 ### Why?
 
 In 2020, the "personal opinion" of almost any popular youtuber is sold and bought, adwhores put it on stream: no one cares about reputation. This confidence bubble will burst and all will suffer: and adwhores, and honest youtubers. We're going to stop it.

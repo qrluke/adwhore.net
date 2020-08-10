@@ -23,15 +23,34 @@
 
 <div class="wrapper">
 
-    {% include header.html %}
+    {% if page.lang == "ru" %}
+        {% include header_ru.html %}
+    {% else %}
+        {% include header.html %}
+    {% endif %}
 
     <section>
-
-        {% include stats.html %}
-
+        {% if navlang == "ru" %}
+            {% include stats_ru.html %}
+        {% else %}
+            {% include stats_en.html %}
+        {% endif %}
     </section>
   {% include footer.html %}
 </div>
+{% unless page.lang %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var userLang = window.navigator.userLanguage || window.navigator.language;
+        userLang = userLang.substr(0, 2);
+        if (userLang === "ru") {
+            window.location.href = "{{ site.url }}/ru/stats"
+        } else {
+            window.location.href = "{{ site.url }}/en/stats"
+        }
+    });
+</script>
+{% endunless %}
 
 </body>
 </html>

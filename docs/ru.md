@@ -20,7 +20,7 @@ ref: homepage
 * Android - запланировано на beta релиз
 * iOS - запланировано на beta релиз
 
-<a href = "https://adwhore.net/stats.html">Статистика</a>
+<a href = "{{ site.url }}/ru/stats">Статистика</a>
 
 ### Зачем?
 
