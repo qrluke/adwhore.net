@@ -11,8 +11,8 @@ ref: homepage
 </div>
 <br>
 **Скачать:**
-* <a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/">Firefox</a>
-* <a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a>
+* <b><a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/">Firefox Add-ons</a></b>
+* <b><a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a></b>
     - Google Chrome, Opera, Microsoft Edge, Яндекс.Браузер...
 
 **В разработке:**
