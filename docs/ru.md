@@ -11,9 +11,11 @@ ref: homepage
 </div>
 <br>
 **Скачать:**
-* <a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a> (Yandex.Browser)
 * <a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/">Firefox</a>
-* <a href = "https://addons.opera.com/ru/extensions/details/adwhorenet/">Opera (на модерации, установка только через Opera Next/Developer)
+* <a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a>
+    - Google Chrome, Opera, Microsoft Edge, Яндекс.Браузер...
+
+**В разработке:**
 * Safari - расширение готово, для публикации нужно 1-2 недели
 * Android - запланировано на beta релиз
 * iOS - запланировано на beta релиз

@@ -11,9 +11,10 @@ ref: homepage
 </div>
 <br>
 **Download:**
-* <a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a> (Yandex.Browser)
 * <a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/">Firefox</a>
-* <a href = "https://addons.opera.com/ru/extensions/details/adwhorenet/">Opera(on moderation, install over Opera Next/Developer)
+* <a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a>
+    - Google Chrome, Opera, Microsoft Edge etc.
+**In development:**
 * Safari - extension's ready, need 1-2 weeks to publish
 * Android - planned for beta release
 * iOS - planned for beta release
