@@ -11,8 +11,7 @@ better youtube for everyone</br>
 <b>in action</b>
 </p>
 
-**ADN**'s available for [Firefox](https://addons.mozilla.org/ru/firefox/addon/adwhore-net/).  
-There is a pending extension for the Chrome Web Store and Opera.  
+**ADN** can be installed from [Firefox Add-ons](https://addons.mozilla.org/ru/firefox/addon/adwhore-net/) and [Chrome Web Store](https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm).  
 I'm also trying to win a fight with Apple support to publish an extension for Safari.
 
 ## How does it work?
