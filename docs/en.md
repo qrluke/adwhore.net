@@ -22,12 +22,27 @@ ref: homepage
 
 <a href = "{{ site.url }}/en/stats">Stats</a>
 ### Why?
+YouTube is slowly but surely turning from an awesome independent platform into a commercial dumpster.
 
-In 2020, the "personal opinion" of almost any popular YouTuber is sold and bought, adwhores put it on the stream: no one cares about reputation. This confidence bubble will burst and all will suffer: and adwhores, and honest YouTubers. We're going to stop it.
+In 2020, the "personal opinion” of almost any popular youtuber is sold and bought on special exchanges, and adwhores put it on stream: no one cares about reputation.
 
-The main task of **ADN** is to identify honest bloggers, as well as to make others stop abusing the trust of their audience, improve the overall quality of advertising for all YouTube viewers and turn off the information noise of those who are not interested in it.
+It's huge problem in Post-Soviet states and some countries of the world.
 
-**ADN** starts with Russia and ends with the whole world.
+Adwhores advertise absolutely everything that they are willing to pay for: from quality products of world-famous brands to outright slag, casinos and high-risk investments.
+
+This confidence bubble will soon burst and affect everything: and adwhores, and honest youtubers.
+
+We are going to prevent this and for this we need Your help!
+
+The main task of ADN is a guerrilla warfare with [influence marketing](https://en.wikipedia.org/wiki/Influencer_marketing).
+
+Our partisans report every ad integration in YouTube videos so that extension users can skip it.
+
+Whether the ad is blocked or not depends on how the blogger approaches the ad and the extension user settings.
+
+We want to single out conscientious bloggers among others, force adwhores stop abusing the trust of its audience and turn off the information noise of those who are not interested in it.
+
+ADN starts with the CIS and ends with the whole world.
 
 ### How can I help?
 * Download the extension and distribute it to your friends and residents of your utility.
