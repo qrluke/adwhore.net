@@ -1,6 +1,6 @@
 ---
 layout: stats
-title: Home
+title: Статистика
 lang: ru
 ref: homepage
 ---

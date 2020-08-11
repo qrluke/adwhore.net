@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Главная
 lang: ru
 ref: homepage
 ---

@@ -1,6 +1,6 @@
 ---
 layout: stats
-title: Home
+title: Stats
 lang: en
 ref: homepage
 ---
