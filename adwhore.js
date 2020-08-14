@@ -47,7 +47,7 @@ let youtubeMutation = setTimeout(function tick() {
                 if (!didWeChangeYouTubeQuestionMark) {
                     control = document.createElement("div");
                     control.className = "ytp-right-controls"
-                    $(control).insertAfter(document.getElementsByClassName("ytp-right-controls")[0])
+                    $(control).insertAfter(document.getElementsByClassName("ytp-left-controls")[0])
                     console.log("creating html");
                     createElemets();
                     console.log("adding layout");
@@ -532,7 +532,7 @@ function addStyles() {
     replayButton.setAttribute("role", "button");
     replayButton.style.height = "100%";
     replayButton.style.float = "right";
-    replayButton.style.marginRight = "8px";
+    replayButton.style.marginRight = "4px";
     replayButton.style.cursor = "pointer";
 
     replayButtonImage.style.boxSizing = "border-box";

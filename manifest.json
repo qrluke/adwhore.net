@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.0.2.0",
+  "version": "0.0.2.2",
   "version_name": "alpha",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
@@ -19,11 +19,6 @@
       "run_at": "document_end"
     }
   ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{97a94cb5-bae9-4a72-ac7a-e7fbe5940adf}"
-    }
-  },
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
@@ -34,7 +29,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab", "storage", "https://karma.adwhore.net/*", "https://karma.adwhore.net:47976/*", "https://adwhore.net/*", "https://sponsor.ajay.app/*"
+    "activeTab", "storage", "https://karma.adwhore.net/*", "https://sponsor.ajay.app/*"
   ],
   "background": {
     "scripts": [
