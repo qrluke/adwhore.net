@@ -7,7 +7,7 @@ ref: homepage
 # Что это?
 **ADWHORE.NET** --- это расширение для **YouTube**, которое блокирует рекламные интеграции продажных блогеров.  
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%">
-<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube-nocookie.com/embed/zaFx5RpZ-3Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube-nocookie.com/embed/ze3YVsI1gpc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <br>
 **Скачать:**
