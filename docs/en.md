@@ -7,7 +7,7 @@ ref: homepage
 # What is it?
 **ADWHORE.NET** is an extension for **YouTube** that highlights and skips ads from corrupt bloggers.
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%">
-<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube-nocookie.com/embed/0JTH5gG9vek" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<img style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://raw.githubusercontent.com/qrlk/adwhore.net/master/img/1280x800/en/1.png">
 </div>
 <br>
 **Download:**
