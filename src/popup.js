@@ -231,7 +231,6 @@ function get_mini_stats() {
         $("#global_skips").animateNumbers(data["global"]["skips"]);
         $("#global_moderated").animateNumbers(data["global"]["moderated"]);
         $("#global_time").animateNumbers(data["global"]["duration"]);
-        document.getElementById("serving").innerText = secondsToDhms(data["global"]["serving"])
 
         setTimeout(get_mini_stats, 1000); // <-- when you ge a response, call it
     });
