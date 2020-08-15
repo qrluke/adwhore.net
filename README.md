@@ -1,7 +1,7 @@
 <p align="center">
 <a href="https://adwhore.net"><img src="https://i.imgur.com/siqpaEu.png" alt="logo" width="300"></img></a> </br>
 better youtube for everyone</br>
-<b>alpha</b>
+<b>Public Alpha</b>
 </p>
 
 # ADWHORE.NET
