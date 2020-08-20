@@ -45,14 +45,14 @@ You can adjust settings however you want.
 <img src="https://i.imgur.com/RfkQTWd.png" alt="report ad" width="500"></img></br>
 <b>We use category to determine if ad is acceptable.</b></br></br>
 <img src="https://i.imgur.com/C2OshAA.png" alt="report ad" width="500"></img></br>
-<b>Automagically skip an ad with a simple click.</b></br></br>
+<b>Skip an ad automagically or with a simple click.</b></br></br>
 <img src="https://i.imgur.com/uDAAwnr.png" alt="report ad" width="500"></img></br>
 <b>Become the pathfinder. Be the hero!</br>Cool stats will arrive later!</b></br>
 </p>
 
 ## Data stored
-tl;dr bare minimum, no tails
-* Hashed + salted IP address. We can still identify and disable all your contributions but no one can get IP from the salted hash and identify you. 
+tl;dr bare minimum, nothing than can be traced back to you.
+* Hashed + salted IP address. We can still identify and disable all your contributions but no one else will be able to get the IP from the salted hash and identify you. 
 * We also store your country and city code assigned to the hashed + salted IP.
 * All information you submit (likes, reports, skips and uploads).
 * Time of contribution.
