@@ -133,7 +133,7 @@
 
 
 </div>
-<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px ">
+<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px;height:53px  ">
     <div id="trust_table" style="flex:1;">
 
         <table class="center">
@@ -154,9 +154,20 @@
         </table>
     </div>
 
-    <div id="switchButton" role="button" style="flex:1;">
+    <div id="switchButton" role="button" style="flex:1; position: relative">
         <center>
-            <button id="switchButtonAction" style="border: 1px outset; height:42px; width:42px; cursor:pointer; padding-left: 0px; padding-right: 0px;">
+            <button id="switchButtonAction" style="
+    border: 1px outset black;
+    height:42px;
+    width:42px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding-left: 0px;
+    padding-right: 0px;    ">
                 <img class="icon" src="img/popup/cog.svg">
             </button>
         </center>
@@ -182,7 +193,7 @@
     </div>
 </div>
 
-<div class="modal-content" id="blockSettings" style="display: block">
+<div class="modal-content" id="blockSettings" style="display: block; margin-top: 5px; margin-bottom: 5px;">
     <table style="width:100%">
         <tr>
             <th id="table_title"></th>
@@ -216,7 +227,6 @@
             <td><input id="love-a2" type="checkbox"></td>
         </tr>
     </table>
-    <br>
 </div>
 
 <div class="modal-content" id="blockSecret" style="display: none; margin-bottom: 9px">
