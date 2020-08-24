@@ -79,6 +79,14 @@ let youtubeMutation = setTimeout(function tick() {
 
 function resetAndFetch() {
     /* RESET AFTER URL CHANGE HERE */
+
+    try {
+        document.getElementsByClassName("ytp-fullerscreen-edu-text")[0].style.display = "none";
+        document.getElementsByClassName("ytp-fullerscreen-edu-chevron")[0].style.display = "none";
+    } catch (error) {
+        console.error(error);
+    }
+
     flagButtonImage.style.padding = "8px 0px";
 
     disableStage2()
