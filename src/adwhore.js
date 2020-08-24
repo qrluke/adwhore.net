@@ -792,7 +792,7 @@ function addStyles() {
     segStartInput.type = "number";
     segStartInput.min = "0";
     segStartInput.max = v.duration - 1;
-    segStartInput.step = "0.01"
+    segStartInput.step = "0.25"
     segStartInput.style.marginRight = "0px";
     segStartInput.style.marginTop = "2px";
     segStartInput.style.marginBottom = "2px";
@@ -806,7 +806,7 @@ function addStyles() {
     segEndInput.type = "number";
     segEndInput.min = "1";
     segEndInput.max = v.duration;
-    segEndInput.step = "0.01"
+    segEndInput.step = "0.25"
     segEndInput.style.marginRight = "3px";
     segEndInput.style.marginTop = "2px";
     segEndInput.style.marginBottom = "2px";
