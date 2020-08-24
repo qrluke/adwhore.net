@@ -94,28 +94,8 @@ So I experimented with collaborative pet-projects on my SA:MP script users (1k a
 
 22 July 2020 is a start for active development, 4 August 2020 - alpha release date.
 
-## Differences from SponsorBlock
-[SponsorBlock](https://github.com/ajayyy/SponsorBlock) is the most active similar project that was lucky to appear before ADN.  
-
-* ADN also provides optional support for fetching segments from SponsorBlock's database.  
-
-It's more stable and has an active community, but it doesn't care if the ad is acceptable or not: it just blocks it.  
-
-I disagree with such an approach, so I didn't stop ADN development when discovered the SB project and never will.  
-
-ADN's project goal is to keep a balance between a commercial clusterfuck and club of altruists: think of it as The Middle Way.  
-
-ADN's main focus is Russian speaking youtube, 2nd priority is English speaking community. When the ADN reputation system and the client will come out of beta, ADN will support every major language.
-
-> It's also important to mention that while both ADN and SB clients are OSS, SB also provides a source for server and keeps its simple database open.  
-ADN keeps server-side code closed to prevent vandalism and don't share a database to prevent it from being illegally sold by SMM agencies.  
-SB's API is unlimited. ADN's API is limited and intended only for building clients for other platforms.
-
-In the case of maintainer's death/inactivity: server code and DB will be  [uploaded here](https://github.com/qrlk/am-i-dead)
-
 ## Similar project
-TODO: mention projects before sb like videosegments etc
+TODO: mention all projects related to skipping commercial segments in YouTube's videos
 
 ## Credit
-ADN provide optional support for [SponsorBlock API](https://github.com/ajayyy/SponsorBlock/wiki/API-Docs)  
 TODO: add icons references
