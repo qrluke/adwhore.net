@@ -236,3 +236,5 @@ function get_mini_stats() {
     });
 }
 get_mini_stats();
+
+document.getElementById('switchSide').href = chrome.extension.getURL("thank-you.html");

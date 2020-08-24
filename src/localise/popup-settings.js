@@ -50,6 +50,7 @@ function init() {
   setChildTextNode('stats_skip', chrome.i18n.getMessage("stats_skip"));
   setChildTextNode('stats_saved', chrome.i18n.getMessage("stats_saved"));
   setChildTextNode('stats_sec', chrome.i18n.getMessage("stats_sec"));
+  setChildTextNode('switchSide', chrome.i18n.getMessage("switchSide"));
 }
 
 init();

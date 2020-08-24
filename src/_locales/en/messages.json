@@ -313,5 +313,8 @@
   },
   "showFlagSetting": {
     "message": "Show country and faction flag"
+  },
+  "switchSide": {
+    "message": "Click to switch your 'team'"
   }
 }
