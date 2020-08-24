@@ -8,7 +8,6 @@ function selectSide(id) {
                     data: JSON.stringify({"secret": result["secret"], "side": id}),
                     contentType: 'application/json',
                     success: function (data) {
-                        chrome.storage.sync.set({"secret": data["secret"], "name": data["name"]});
                         alert("side selected\n" + JSON.stringify(data));
                         window.open("https://www.youtube.com", "_self")
                     },
