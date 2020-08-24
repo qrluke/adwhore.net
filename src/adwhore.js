@@ -130,7 +130,7 @@ function resetAndFetch() {
             }
         },
         complete: function () {
-            if (settings["sb"]) {
+            /*if (settings["sb"]) {
                 $.ajax({
                     dataType: "json",
                     url: "https://sponsor.ajay.app/api/skipSegments",
@@ -205,40 +205,40 @@ function resetAndFetch() {
                         }
                     }
                 });
-            } else {
-                timestamps.sort(function (a, b) {
-                    if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                        return 1;
-                    }
-                    if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                        return -1;
-                    }
-                    // a должно быть равным b
-                    return 0;
-                });
-                console.log(timestamps)
-                //yt ads walkaround
-                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                    set(timestamps, v.duration)
-                } else {
-                    let stoper = document.URL;
-                    let currentDuration = v.duration;
-                    setTimeout(function run() {
-                        if (stoper === document.URL) {
-                            if (v.duration && currentDuration !== v.duration) {
-                                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                    set(timestamps, v.duration);
-                                } else {
-                                    setTimeout(run, 50);
-                                }
-                            } else {
-                                setTimeout(run, 100);
-                            }
-                        }
-                    }, 1000);
+            } else {*/
+            timestamps.sort(function (a, b) {
+                if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                    return 1;
                 }
+                if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                    return -1;
+                }
+                // a должно быть равным b
+                return 0;
+            });
+            console.log(timestamps)
+            //yt ads walkaround
+            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                set(timestamps, v.duration)
+            } else {
+                let stoper = document.URL;
+                let currentDuration = v.duration;
+                setTimeout(function run() {
+                    if (stoper === document.URL) {
+                        if (v.duration && currentDuration !== v.duration) {
+                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                set(timestamps, v.duration);
+                            } else {
+                                setTimeout(run, 50);
+                            }
+                        } else {
+                            setTimeout(run, 100);
+                        }
+                    }
+                }, 1000);
             }
         }
+        /* }*/
     });
 }
 
@@ -1432,7 +1432,7 @@ function addEvents() {
         } else {
             if (segControlsNumberInput.value !== "Select") {
 
-                if ((+segEndInput.value - +segStartInput.value)/90 * 101 > v.duration) {
+                if ((+segEndInput.value - +segStartInput.value) / 90 * 101 > v.duration) {
                     isReportStage2 = !isReportStage2;
                     alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                 } else {
