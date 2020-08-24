@@ -1757,10 +1757,12 @@ function set(segs, duration) {
 
     for (var i = 0; i < segs.length; i++) {
 
-        addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"], getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
 
         if ((i + 1) < segs.length) {
-            addBarToList(segs[i]["data"]["timestamps"]["end"], segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration)
+            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"] - 0.7, getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
+            addBarToList(segs[i]["data"]["timestamps"]["end"] - 0.7, segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration)
+        } else {
+            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"], getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
         }
     }
 }
@@ -1777,7 +1779,7 @@ function set_preview() {
     var preview_seg = [0];
 
     preview_seg[1] = segStartInput.value;
-    preview_seg[2] = segEndInput.value;
+    preview_seg[2] = segEndInput.value - 0.7;
 
 
     for (var i = 0; i < preview_seg.length; i++) {
