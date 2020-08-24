@@ -38,7 +38,7 @@
   ],
   "background": {
     "scripts": [
-      "background.js"
+      "background.js", "jquery.min.js"
     ]
   },
   "web_accessible_resources": [
