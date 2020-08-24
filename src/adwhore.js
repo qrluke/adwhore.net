@@ -447,14 +447,14 @@ function addLayout() {
 
     segControls.appendChild(segControlsNumberInput);
 
-    segControls.appendChild(mark1);
     segControls.appendChild(mark2);
+    segControls.appendChild(mark1);
 
-    segControls.appendChild(mark3);
     segControls.appendChild(mark4);
+    segControls.appendChild(mark3);
 
-    segControls.appendChild(mark5);
     segControls.appendChild(mark6);
+    segControls.appendChild(mark5);
 
     mark1.appendChild(option01b);
 
@@ -695,7 +695,7 @@ function addStyles() {
 
     segControlsNumberInput.name = "reportType";
     segControlsNumberInput.style.display = "none";
-    segControlsNumberInput.style.marginRight = "10px";
+    segControlsNumberInput.style.marginRight = "5px";
     segControlsNumberInput.style.width = "40px";
     segControlsNumberInput.style.height = "25px";
 
@@ -856,11 +856,15 @@ function addStyles() {
 
     option02b.style.fontSize = "150%";
 
-    mark2.style.paddingTop = "4px";
-    mark4.style.paddingTop = "4px";
+    mark1.style.marginRight = "4px";
+    mark3.style.marginRight = "4px";
 
-    mark6.style.marginRight = "8px";
-    mark6.style.paddingTop = "4px";
+    mark2.style.marginTop = "4px";
+    mark4.style.marginTop = "4px";
+    mark6.style.marginTop = "4px";
+
+
+    mark5.style.marginRight = "8px";
     option03b.style.fontSize = "150%";
 
 }
@@ -873,6 +877,15 @@ function inject() {
 }
 
 function addEvents() {
+    mark1.addEventListener("click", function () {
+        option01.checked = !option01.checked
+    });
+    mark3.addEventListener("click", function () {
+        option02.checked = !option02.checked
+    });
+    mark5.addEventListener("click", function () {
+        option03.checked = !option03.checked
+    });
     flagButton.addEventListener("click", function () {
         if (isSideActive) {
 
