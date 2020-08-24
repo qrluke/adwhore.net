@@ -501,7 +501,7 @@ function addStyles() {
 
     mainButtonImage.style.boxSizing = "border-box";
     mainButtonImage.style.height = "100%";
-    mainButtonImage.style.filter = "invert(89%)";
+    mainButtonImage.style.filter = "invert(96%)";
     mainButtonImage.style.float = "right";
     mainButtonImage.style.padding = "2px 2px";
     mainButtonImage.src = getIconPath("toggle-on.svg");
@@ -516,7 +516,7 @@ function addStyles() {
 
     markInImage2.style.boxSizing = "border-box";
     markInImage2.style.height = "100%";
-    markInImage2.style.filter = "invert(89%)";
+    markInImage2.style.filter = "invert(96%)";
     markInImage2.style.float = "right";
     markInImage2.style.padding = "4px 0";
     markInImage2.src = getIconPath("mark-out.svg");
@@ -531,7 +531,7 @@ function addStyles() {
 
     markOutImage2.style.boxSizing = "border-box";
     markOutImage2.style.height = "100%";
-    markOutImage2.style.filter = "invert(89%)";
+    markOutImage2.style.filter = "invert(96%)";
     markOutImage2.style.float = "right";
     markOutImage2.style.padding = "4px 0";
     markOutImage2.src = getIconPath("mark-in.svg");
@@ -545,7 +545,7 @@ function addStyles() {
 
     replayButtonImage.style.boxSizing = "border-box";
     replayButtonImage.style.height = "100%";
-    replayButtonImage.style.filter = "invert(89%)";
+    replayButtonImage.style.filter = "invert(96%)";
     replayButtonImage.style.float = "right";
     replayButtonImage.style.padding = "8px 0px";
     replayButtonImage.src = getIconPath("report-button.svg");
@@ -614,7 +614,7 @@ function addStyles() {
 
     skipImage1.style.boxSizing = "border-box";
     skipImage1.style.height = "30px";
-    skipImage1.style.filter = "invert(89%)";
+    skipImage1.style.filter = "invert(96%)";
     skipImage1.style.transform = "";
     skipImage1.style.float = "right";
     skipImage1.style.padding = "4px 0";
@@ -624,7 +624,7 @@ function addStyles() {
 
     skipImage2.style.boxSizing = "border-box";
     skipImage2.style.height = "30px";
-    skipImage2.style.filter = "invert(89%)";
+    skipImage2.style.filter = "invert(96%)";
     skipImage2.style.float = "right";
     skipImage2.style.padding = "4px 0";
     skipImage2.src = getIconPath("like.svg");
@@ -633,7 +633,7 @@ function addStyles() {
 
     skipImage3.style.boxSizing = "border-box";
     skipImage3.style.height = "30px";
-    skipImage3.style.filter = "invert(89%)";
+    skipImage3.style.filter = "invert(96%)";
     skipImage3.style.float = "right";
     skipImage3.style.padding = "4px 0";
     skipImage3.src = getIconPath("dislike.svg");
@@ -643,7 +643,7 @@ function addStyles() {
 
     skipImage4.style.boxSizing = "border-box";
     skipImage4.style.height = "30px";
-    skipImage4.style.filter = "invert(89%)";
+    skipImage4.style.filter = "invert(96%)";
     skipImage4.style.float = "right";
     skipImage4.style.padding = "4px 0";
     skipImage4.src = getIconPath("close-button.svg");
@@ -669,7 +669,7 @@ function addStyles() {
 
     _skipImage2.style.boxSizing = "border-box";
     _skipImage2.style.height = "30px";
-    _skipImage2.style.filter = "invert(89%)";
+    _skipImage2.style.filter = "invert(96%)";
     _skipImage2.style.float = "right";
     _skipImage2.style.padding = "4px 0";
     _skipImage2.src = getIconPath("forward.svg");
@@ -762,14 +762,14 @@ function addStyles() {
 
     markInImage.style.boxSizing = "border-box";
     markInImage.style.height = "100%";
-    markInImage.style.filter = "invert(89%)";
+    markInImage.style.filter = "invert(96%)";
     markInImage.style.float = "right";
     markInImage.style.padding = "4px 0";
     markInImage.src = getIconPath("mark-out.svg");
 
     markOutImage.style.boxSizing = "border-box";
     markOutImage.style.height = "100%";
-    markOutImage.style.filter = "invert(88%)";
+    markOutImage.style.filter = "invert(96%)";
     markOutImage.style.float = "right";
     markOutImage.style.padding = "4px 0";
     markOutImage.src = getIconPath("mark-in.svg");
@@ -784,14 +784,14 @@ function addStyles() {
 
     markInImage1.style.boxSizing = "border-box";
     markInImage1.style.height = "100%";
-    markInImage1.style.filter = "invert(89%)";
+    markInImage1.style.filter = "invert(96%)";
     markInImage1.style.float = "right";
     markInImage1.style.padding = "4px 0";
     markInImage1.src = getIconPath("mark-in.svg");
 
     markOutImage1.style.boxSizing = "border-box";
     markOutImage1.style.height = "100%";
-    markOutImage1.style.filter = "invert(88%)";
+    markOutImage1.style.filter = "invert(96%)";
     markOutImage1.style.float = "right";
     markOutImage1.style.padding = "4px 0";
     markOutImage1.src = getIconPath("mark-out.svg");
@@ -832,7 +832,7 @@ function addStyles() {
 
     uploadButtonImage.style.boxSizing = "border-box";
     uploadButtonImage.style.height = "100%";
-    uploadButtonImage.style.filter = "invert(89%)";
+    uploadButtonImage.style.filter = "invert(96%)";
     uploadButtonImage.style.float = "right";
     uploadButtonImage.style.padding = "8px 0";
     uploadButtonImage.src = getIconPath("cloud-upload.svg");
@@ -847,7 +847,7 @@ function addStyles() {
 
     helpButtonImage.style.boxSizing = "border-box";
     helpButtonImage.style.height = "100%";
-    helpButtonImage.style.filter = "invert(89%)";
+    helpButtonImage.style.filter = "invert(96%)";
     helpButtonImage.style.float = "right";
     helpButtonImage.style.padding = "8px 0";
     helpButtonImage.src = getIconPath("help.svg");
