@@ -919,59 +919,61 @@ function addEvents() {
     v.addEventListener("timeupdate", function () {
         if ((!isReportStage1) && (!isReportStage2)) {
             if (timestamps.length > 0) {
-                for (var i = 0; i < timestamps.length; i++) {
-                    if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
-                        if (timestamps[i]["source"] === "adn") {
-                            let whatshouldido = whatShouldIDo(timestamps[i]);
-                            console.log(whatshouldido)
-                            if (whatshouldido) {
-                                whatshouldido = 2
-                            } else {
-                                whatshouldido = 1
-                            }
-                            if (whatshouldido === 2) {
-                                currentSkipSource = "adn";
-                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
-                                addSegmentSkip(currentSkip)
-                                v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
-                                adplayer.style.display = "block";
-                                adskip.style.display = "block";
-                                adButton3.style.display = "";
-                                clearTimeout(skipTimer);
-                                skipTimer = setTimeout(function () {
-                                    adplayer.style.display = "none";
-                                    adskip.style.display = "none";
-                                }, 8000);
-                            } else if (whatshouldido === 1) {
-                                currentSkipSource = "adn";
-                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
+                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                    for (var i = 0; i < timestamps.length; i++) {
+                        if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
+                            if (timestamps[i]["source"] === "adn") {
+                                let whatshouldido = whatShouldIDo(timestamps[i]);
+                                console.log(whatshouldido)
+                                if (whatshouldido) {
+                                    whatshouldido = 2
+                                } else {
+                                    whatshouldido = 1
+                                }
+                                if (whatshouldido === 2) {
+                                    currentSkipSource = "adn";
+                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
+                                    addSegmentSkip(currentSkip)
+                                    v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
+                                    adplayer.style.display = "block";
+                                    adskip.style.display = "block";
+                                    adButton3.style.display = "";
+                                    clearTimeout(skipTimer);
+                                    skipTimer = setTimeout(function () {
+                                        adplayer.style.display = "none";
+                                        adskip.style.display = "none";
+                                    }, 8000);
+                                } else if (whatshouldido === 1) {
+                                    currentSkipSource = "adn";
+                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
 
+                                    adplayer.style.display = "block";
+                                    _adSkip.style.display = "block";
+                                    adButton3.style.display = "";
+                                    _skipImage1.src = getIconPath("128.png");
+                                    skipImage2.src = getIconPath("like.svg");
+                                    skipImage1.style.transform = "rotate(180deg)";
+                                    clearTimeout(skipTimer);
+                                    skipTimer = setTimeout(function () {
+                                        adplayer.style.display = "none";
+                                        _adSkip.style.display = "none";
+                                    }, 13000);
+                                } else {
+                                    //nothing
+                                }
+                            } else {
+                                currentSkipSource = "sb";
+                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
                                 adplayer.style.display = "block";
                                 _adSkip.style.display = "block";
-                                adButton3.style.display = "";
-                                _skipImage1.src = getIconPath("128.png");
-                                skipImage2.src = getIconPath("like.svg");
-                                skipImage1.style.transform = "rotate(180deg)";
+                                _skipImage1.src = getIconPath("LogoSponsorBlock256px.png");
                                 clearTimeout(skipTimer);
+
                                 skipTimer = setTimeout(function () {
                                     adplayer.style.display = "none";
                                     _adSkip.style.display = "none";
                                 }, 13000);
-                            } else {
-                                //nothing
                             }
-                        } else {
-                            currentSkipSource = "sb";
-                            currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
-                            adplayer.style.display = "block";
-                            _adSkip.style.display = "block";
-                            _skipImage1.src = getIconPath("LogoSponsorBlock256px.png");
-                            clearTimeout(skipTimer);
-
-                            skipTimer = setTimeout(function () {
-                                adplayer.style.display = "none";
-                                _adSkip.style.display = "none";
-                            }, 13000);
                         }
                     }
                 }
