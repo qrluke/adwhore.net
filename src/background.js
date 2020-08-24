@@ -52,7 +52,7 @@ chrome.storage.sync.get(defaults, function (result) {
             contentType: 'application/json',
             success: function (data) {
                 chrome.storage.sync.set({"secret": data["secret"], "name": data["name"]});
-                #alert("ADN user registered\n"+JSON.stringify(data));
+                // alert("ADN user registered\n"+JSON.stringify(data));
             },
             error: function (s, status, error) {
                 alert('error\n' + status + '\n' + error);
