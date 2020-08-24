@@ -92,10 +92,12 @@ With time this idea eventually evolved to a fully functional adblocker with a go
 
 So I experimented with collaborative pet-projects on my SA:MP script users (1k active users per day) and finally started ADN development.
 
-22 July 2020 is a start for active development, 4 August 2020 - alpha release date.
+July 22, 2020 - start of active development.  
+August 4, 2020 - closed alpha version.  
+August 19, 2020 - public alpha release.  
 
-## Similar project
-TODO: mention all projects related to skipping commercial segments in YouTube's videos
+## Similar projects
+TODO: mention all known projects related to skipping commercial segments in YouTube's videos. Should be a comparison table.
 
 ## Credit
 TODO: add icons references
