@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.0.2.5",
+  "version": "0.0.3.1",
   "version_name": "Public Alfa",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
@@ -34,11 +34,11 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab", "storage", "https://karma.adwhore.net/*", "https://sponsor.ajay.app/*"
+    "activeTab", "storage", "https://karma.adwhore.net/*"
   ],
   "background": {
     "scripts": [
-      "background.js"
+      "background.js", "jquery.min.js"
     ]
   },
   "web_accessible_resources": [

@@ -29,7 +29,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     });
 });
 
-var countries = ["AI", "AL", "AM", "AQ", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BM", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CD", "CF", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CZ", "DE", "DJ", "DK", "DZ", "EE", "EG", "ER", "ES", "ET", "FI", "FR", "GA", "GB", "GD", "GE", "GH", "GL", "GN", "GR", "GT", "GU", "HK", "HR", "HU", "ID", "IL", "IN", "IS", "IT", "JO", "JP", "KE", "KH", "KI", "KR", "KY", "KZ", "LA", "LR", "LS", "LV", "MK", "MN", "MT", "MU", "NA", "NE", "NG", "NL", "PA", "PH", "PK", "PW", "RO", "RU", "SB", "SC", "SE", "SK", "SL", "SO", "ST", "SV", "SY", "SZ", "TG", "TH", "TL", "TT", "TZ", "UA", "US", "VC", "YE", "ZM"];
+var countries = ["AI", "AL", "AM", "AQ", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BM", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CD", "CF", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CZ", "DE", "DJ", "DK", "DZ", "EE", "EG", "ER", "ES", "ET", "FI", "FR", "GA", "GB", "GD", "GE", "GH", "GL", "GN", "GR", "GT", "GU", "HK", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KE", "KH", "KI", "KR", "KY", "KZ", "LA", "LR", "LS", "LV", "MD", "MK", "MN", "MT", "MU", "MX", "NA", "NE", "NG", "NL", "NZ", "NO", "PA", "PH", "PK", "PL", "PT", "PW", "RO", "RS", "RU", "SB", "SC", "SE", "SG", "SK", "SL", "SO", "ST", "SV", "SY", "SZ", "TG", "TH", "TL", "TR", "TT", "TZ", "UA", "US", "UZ", "VC", "YE", "ZM"];
 var parties = ["SOV", "SOVIET", "UN", "NATO"];
 
 let youtubeMutation = setTimeout(function tick() {
@@ -79,6 +79,14 @@ let youtubeMutation = setTimeout(function tick() {
 
 function resetAndFetch() {
     /* RESET AFTER URL CHANGE HERE */
+
+    try {
+        document.getElementsByClassName("ytp-fullerscreen-edu-text")[0].style.display = "none";
+        document.getElementsByClassName("ytp-fullerscreen-edu-chevron")[0].style.display = "none";
+    } catch (error) {
+        console.error(error);
+    }
+
     flagButtonImage.style.padding = "8px 0px";
 
     disableStage2()
@@ -130,7 +138,7 @@ function resetAndFetch() {
             }
         },
         complete: function () {
-            if (settings["sb"]) {
+            /*if (settings["sb"]) {
                 $.ajax({
                     dataType: "json",
                     url: "https://sponsor.ajay.app/api/skipSegments",
@@ -205,40 +213,40 @@ function resetAndFetch() {
                         }
                     }
                 });
-            } else {
-                timestamps.sort(function (a, b) {
-                    if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                        return 1;
-                    }
-                    if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                        return -1;
-                    }
-                    // a должно быть равным b
-                    return 0;
-                });
-                console.log(timestamps)
-                //yt ads walkaround
-                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                    set(timestamps, v.duration)
-                } else {
-                    let stoper = document.URL;
-                    let currentDuration = v.duration;
-                    setTimeout(function run() {
-                        if (stoper === document.URL) {
-                            if (v.duration && currentDuration !== v.duration) {
-                                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                    set(timestamps, v.duration);
-                                } else {
-                                    setTimeout(run, 50);
-                                }
-                            } else {
-                                setTimeout(run, 100);
-                            }
-                        }
-                    }, 1000);
+            } else {*/
+            timestamps.sort(function (a, b) {
+                if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                    return 1;
                 }
+                if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                    return -1;
+                }
+                // a должно быть равным b
+                return 0;
+            });
+            console.log(timestamps)
+            //yt ads walkaround
+            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                set(timestamps, v.duration)
+            } else {
+                let stoper = document.URL;
+                let currentDuration = v.duration;
+                setTimeout(function run() {
+                    if (stoper === document.URL) {
+                        if (v.duration && currentDuration !== v.duration) {
+                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                set(timestamps, v.duration);
+                            } else {
+                                setTimeout(run, 50);
+                            }
+                        } else {
+                            setTimeout(run, 100);
+                        }
+                    }
+                }, 1000);
             }
         }
+        /* }*/
     });
 }
 
@@ -439,14 +447,14 @@ function addLayout() {
 
     segControls.appendChild(segControlsNumberInput);
 
-    segControls.appendChild(mark1);
     segControls.appendChild(mark2);
+    segControls.appendChild(mark1);
 
-    segControls.appendChild(mark3);
     segControls.appendChild(mark4);
+    segControls.appendChild(mark3);
 
-    segControls.appendChild(mark5);
     segControls.appendChild(mark6);
+    segControls.appendChild(mark5);
 
     mark1.appendChild(option01b);
 
@@ -493,7 +501,7 @@ function addStyles() {
 
     mainButtonImage.style.boxSizing = "border-box";
     mainButtonImage.style.height = "100%";
-    mainButtonImage.style.filter = "invert(89%)";
+    mainButtonImage.style.filter = "invert(96%)";
     mainButtonImage.style.float = "right";
     mainButtonImage.style.padding = "2px 2px";
     mainButtonImage.src = getIconPath("toggle-on.svg");
@@ -508,7 +516,7 @@ function addStyles() {
 
     markInImage2.style.boxSizing = "border-box";
     markInImage2.style.height = "100%";
-    markInImage2.style.filter = "invert(89%)";
+    markInImage2.style.filter = "invert(96%)";
     markInImage2.style.float = "right";
     markInImage2.style.padding = "4px 0";
     markInImage2.src = getIconPath("mark-out.svg");
@@ -523,7 +531,7 @@ function addStyles() {
 
     markOutImage2.style.boxSizing = "border-box";
     markOutImage2.style.height = "100%";
-    markOutImage2.style.filter = "invert(89%)";
+    markOutImage2.style.filter = "invert(96%)";
     markOutImage2.style.float = "right";
     markOutImage2.style.padding = "4px 0";
     markOutImage2.src = getIconPath("mark-in.svg");
@@ -537,7 +545,7 @@ function addStyles() {
 
     replayButtonImage.style.boxSizing = "border-box";
     replayButtonImage.style.height = "100%";
-    replayButtonImage.style.filter = "invert(89%)";
+    replayButtonImage.style.filter = "invert(96%)";
     replayButtonImage.style.float = "right";
     replayButtonImage.style.padding = "8px 0px";
     replayButtonImage.src = getIconPath("report-button.svg");
@@ -606,7 +614,7 @@ function addStyles() {
 
     skipImage1.style.boxSizing = "border-box";
     skipImage1.style.height = "30px";
-    skipImage1.style.filter = "invert(89%)";
+    skipImage1.style.filter = "invert(96%)";
     skipImage1.style.transform = "";
     skipImage1.style.float = "right";
     skipImage1.style.padding = "4px 0";
@@ -616,7 +624,7 @@ function addStyles() {
 
     skipImage2.style.boxSizing = "border-box";
     skipImage2.style.height = "30px";
-    skipImage2.style.filter = "invert(89%)";
+    skipImage2.style.filter = "invert(96%)";
     skipImage2.style.float = "right";
     skipImage2.style.padding = "4px 0";
     skipImage2.src = getIconPath("like.svg");
@@ -625,7 +633,7 @@ function addStyles() {
 
     skipImage3.style.boxSizing = "border-box";
     skipImage3.style.height = "30px";
-    skipImage3.style.filter = "invert(89%)";
+    skipImage3.style.filter = "invert(96%)";
     skipImage3.style.float = "right";
     skipImage3.style.padding = "4px 0";
     skipImage3.src = getIconPath("dislike.svg");
@@ -635,7 +643,7 @@ function addStyles() {
 
     skipImage4.style.boxSizing = "border-box";
     skipImage4.style.height = "30px";
-    skipImage4.style.filter = "invert(89%)";
+    skipImage4.style.filter = "invert(96%)";
     skipImage4.style.float = "right";
     skipImage4.style.padding = "4px 0";
     skipImage4.src = getIconPath("close-button.svg");
@@ -661,7 +669,7 @@ function addStyles() {
 
     _skipImage2.style.boxSizing = "border-box";
     _skipImage2.style.height = "30px";
-    _skipImage2.style.filter = "invert(89%)";
+    _skipImage2.style.filter = "invert(96%)";
     _skipImage2.style.float = "right";
     _skipImage2.style.padding = "4px 0";
     _skipImage2.src = getIconPath("forward.svg");
@@ -687,7 +695,7 @@ function addStyles() {
 
     segControlsNumberInput.name = "reportType";
     segControlsNumberInput.style.display = "none";
-    segControlsNumberInput.style.marginRight = "10px";
+    segControlsNumberInput.style.marginRight = "5px";
     segControlsNumberInput.style.width = "40px";
     segControlsNumberInput.style.height = "25px";
 
@@ -754,14 +762,14 @@ function addStyles() {
 
     markInImage.style.boxSizing = "border-box";
     markInImage.style.height = "100%";
-    markInImage.style.filter = "invert(89%)";
+    markInImage.style.filter = "invert(96%)";
     markInImage.style.float = "right";
     markInImage.style.padding = "4px 0";
     markInImage.src = getIconPath("mark-out.svg");
 
     markOutImage.style.boxSizing = "border-box";
     markOutImage.style.height = "100%";
-    markOutImage.style.filter = "invert(88%)";
+    markOutImage.style.filter = "invert(96%)";
     markOutImage.style.float = "right";
     markOutImage.style.padding = "4px 0";
     markOutImage.src = getIconPath("mark-in.svg");
@@ -776,14 +784,14 @@ function addStyles() {
 
     markInImage1.style.boxSizing = "border-box";
     markInImage1.style.height = "100%";
-    markInImage1.style.filter = "invert(89%)";
+    markInImage1.style.filter = "invert(96%)";
     markInImage1.style.float = "right";
     markInImage1.style.padding = "4px 0";
     markInImage1.src = getIconPath("mark-in.svg");
 
     markOutImage1.style.boxSizing = "border-box";
     markOutImage1.style.height = "100%";
-    markOutImage1.style.filter = "invert(88%)";
+    markOutImage1.style.filter = "invert(96%)";
     markOutImage1.style.float = "right";
     markOutImage1.style.padding = "4px 0";
     markOutImage1.src = getIconPath("mark-out.svg");
@@ -792,7 +800,7 @@ function addStyles() {
     segStartInput.type = "number";
     segStartInput.min = "0";
     segStartInput.max = v.duration - 1;
-    segStartInput.step = "0.01"
+    segStartInput.step = "0.25"
     segStartInput.style.marginRight = "0px";
     segStartInput.style.marginTop = "2px";
     segStartInput.style.marginBottom = "2px";
@@ -806,7 +814,7 @@ function addStyles() {
     segEndInput.type = "number";
     segEndInput.min = "1";
     segEndInput.max = v.duration;
-    segEndInput.step = "0.01"
+    segEndInput.step = "0.25"
     segEndInput.style.marginRight = "3px";
     segEndInput.style.marginTop = "2px";
     segEndInput.style.marginBottom = "2px";
@@ -824,7 +832,7 @@ function addStyles() {
 
     uploadButtonImage.style.boxSizing = "border-box";
     uploadButtonImage.style.height = "100%";
-    uploadButtonImage.style.filter = "invert(89%)";
+    uploadButtonImage.style.filter = "invert(96%)";
     uploadButtonImage.style.float = "right";
     uploadButtonImage.style.padding = "8px 0";
     uploadButtonImage.src = getIconPath("cloud-upload.svg");
@@ -839,7 +847,7 @@ function addStyles() {
 
     helpButtonImage.style.boxSizing = "border-box";
     helpButtonImage.style.height = "100%";
-    helpButtonImage.style.filter = "invert(89%)";
+    helpButtonImage.style.filter = "invert(96%)";
     helpButtonImage.style.float = "right";
     helpButtonImage.style.padding = "8px 0";
     helpButtonImage.src = getIconPath("help.svg");
@@ -848,11 +856,15 @@ function addStyles() {
 
     option02b.style.fontSize = "150%";
 
-    mark2.style.paddingTop = "4px";
-    mark4.style.paddingTop = "4px";
+    mark1.style.marginRight = "4px";
+    mark3.style.marginRight = "4px";
 
-    mark6.style.marginRight = "8px";
-    mark6.style.paddingTop = "4px";
+    mark2.style.marginTop = "4px";
+    mark4.style.marginTop = "4px";
+    mark6.style.marginTop = "4px";
+
+
+    mark5.style.marginRight = "8px";
     option03b.style.fontSize = "150%";
 
 }
@@ -865,6 +877,15 @@ function inject() {
 }
 
 function addEvents() {
+    mark1.addEventListener("click", function () {
+        option01.checked = !option01.checked
+    });
+    mark3.addEventListener("click", function () {
+        option02.checked = !option02.checked
+    });
+    mark5.addEventListener("click", function () {
+        option03.checked = !option03.checked
+    });
     flagButton.addEventListener("click", function () {
         if (isSideActive) {
 
@@ -919,59 +940,61 @@ function addEvents() {
     v.addEventListener("timeupdate", function () {
         if ((!isReportStage1) && (!isReportStage2)) {
             if (timestamps.length > 0) {
-                for (var i = 0; i < timestamps.length; i++) {
-                    if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
-                        if (timestamps[i]["source"] === "adn") {
-                            let whatshouldido = whatShouldIDo(timestamps[i]);
-                            console.log(whatshouldido)
-                            if (whatshouldido) {
-                                whatshouldido = 2
-                            } else {
-                                whatshouldido = 1
-                            }
-                            if (whatshouldido === 2) {
-                                currentSkipSource = "adn";
-                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
-                                addSegmentSkip(currentSkip)
-                                v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
-                                adplayer.style.display = "block";
-                                adskip.style.display = "block";
-                                adButton3.style.display = "";
-                                clearTimeout(skipTimer);
-                                skipTimer = setTimeout(function () {
-                                    adplayer.style.display = "none";
-                                    adskip.style.display = "none";
-                                }, 8000);
-                            } else if (whatshouldido === 1) {
-                                currentSkipSource = "adn";
-                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
+                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                    for (var i = 0; i < timestamps.length; i++) {
+                        if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
+                            if (timestamps[i]["source"] === "adn") {
+                                let whatshouldido = whatShouldIDo(timestamps[i]);
+                                console.log(whatshouldido)
+                                if (whatshouldido) {
+                                    whatshouldido = 2
+                                } else {
+                                    whatshouldido = 1
+                                }
+                                if (whatshouldido === 2) {
+                                    currentSkipSource = "adn";
+                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
+                                    addSegmentSkip(currentSkip)
+                                    v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
+                                    adplayer.style.display = "block";
+                                    adskip.style.display = "block";
+                                    adButton3.style.display = "";
+                                    clearTimeout(skipTimer);
+                                    skipTimer = setTimeout(function () {
+                                        adplayer.style.display = "none";
+                                        adskip.style.display = "none";
+                                    }, 8000);
+                                } else if (whatshouldido === 1) {
+                                    currentSkipSource = "adn";
+                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
 
+                                    adplayer.style.display = "block";
+                                    _adSkip.style.display = "block";
+                                    adButton3.style.display = "";
+                                    _skipImage1.src = getIconPath("128.png");
+                                    skipImage2.src = getIconPath("like.svg");
+                                    skipImage1.style.transform = "rotate(180deg)";
+                                    clearTimeout(skipTimer);
+                                    skipTimer = setTimeout(function () {
+                                        adplayer.style.display = "none";
+                                        _adSkip.style.display = "none";
+                                    }, 13000);
+                                } else {
+                                    //nothing
+                                }
+                            } else {
+                                currentSkipSource = "sb";
+                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
                                 adplayer.style.display = "block";
                                 _adSkip.style.display = "block";
-                                adButton3.style.display = "";
-                                _skipImage1.src = getIconPath("128.png");
-                                skipImage2.src = getIconPath("like.svg");
-                                skipImage1.style.transform = "rotate(180deg)";
+                                _skipImage1.src = getIconPath("LogoSponsorBlock256px.png");
                                 clearTimeout(skipTimer);
+
                                 skipTimer = setTimeout(function () {
                                     adplayer.style.display = "none";
                                     _adSkip.style.display = "none";
                                 }, 13000);
-                            } else {
-                                //nothing
                             }
-                        } else {
-                            currentSkipSource = "sb";
-                            currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
-                            adplayer.style.display = "block";
-                            _adSkip.style.display = "block";
-                            _skipImage1.src = getIconPath("LogoSponsorBlock256px.png");
-                            clearTimeout(skipTimer);
-
-                            skipTimer = setTimeout(function () {
-                                adplayer.style.display = "none";
-                                _adSkip.style.display = "none";
-                            }, 13000);
                         }
                     }
                 }
@@ -1432,7 +1455,7 @@ function addEvents() {
         } else {
             if (segControlsNumberInput.value !== "Select") {
 
-                if ((+segEndInput.value - +segStartInput.value)/90 * 101 > v.duration) {
+                if ((+segEndInput.value - +segStartInput.value) / 90 * 101 > v.duration) {
                     isReportStage2 = !isReportStage2;
                     alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                 } else {
@@ -1757,10 +1780,12 @@ function set(segs, duration) {
 
     for (var i = 0; i < segs.length; i++) {
 
-        addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"], getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
 
         if ((i + 1) < segs.length) {
-            addBarToList(segs[i]["data"]["timestamps"]["end"], segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration)
+            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"] - 0.7, getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
+            addBarToList(segs[i]["data"]["timestamps"]["end"] - 0.7, segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration)
+        } else {
+            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"], getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
         }
     }
 }
@@ -1777,7 +1802,7 @@ function set_preview() {
     var preview_seg = [0];
 
     preview_seg[1] = segStartInput.value;
-    preview_seg[2] = segEndInput.value;
+    preview_seg[2] = segEndInput.value - 0.7;
 
 
     for (var i = 0; i < preview_seg.length; i++) {

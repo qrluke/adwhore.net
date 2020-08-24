@@ -10,9 +10,9 @@
             font-family: "Open Sans", sans-serif;
             font-size: 14px;
             margin: 0;
-            min-height: 180px;
             padding: 0;
-            width: 460px;
+            width: 470px;
+            overflow: hidden;
         }
 
         table, th, td {
@@ -37,7 +37,6 @@
             outline: 0;
             text-decoration: none;
         }
-
 
         .modal-header {
             text-align: center;
@@ -107,6 +106,8 @@
             height: 35px;
             fill: #2f5876;
         }
+
+
     </style>
 </head>
 
@@ -114,9 +115,9 @@
 
 <div class="modal-header">
     <h1 class="logo">
-        <span class="version">ADN v0.2 active:<input id="enableCheck" type="checkbox"></span>
+        <span class="version">ADN v0.3 active:<input id="enableCheck" type="checkbox"></span>
     </h1>
-    <img style="margin-bottom: 3px; width: 110px;" border="1px" src="img/adwhore-logo.png"/>
+    <img border="1px" src="img/adwhore-logo.png" style="margin-bottom: 3px; width: 110px;"/>
     <p class="moto" style="margin-block-end: 0em;">better youtube for everyone</p>
     <small id="global_users"></small>
     <small id="stats_users">users - </small>
@@ -132,57 +133,67 @@
 
 
 </div>
-<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px ">
+<div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px;height:53px  ">
     <div id="trust_table" style="flex:1;">
 
         <table class="center">
             <tr>
-                <td id="skip_trust_selector" colspan="3"></td>
+                <td colspan="3" id="skip_trust_selector"></td>
             </tr>
             <tr>
                 <td>
-                    <button type="button" id="decreaseButton1">-</button>
+                    <button id="decreaseButton1" type="button">-</button>
                 </td>
                 <td>
-                    <div style="width: 50px; border-style: solid; border-width: 1px" id="displayDiv1">100</div>
+                    <div id="displayDiv1" style="width: 50px; border-style: solid; border-width: 1px">100</div>
                 </td>
                 <td>
-                    <button type="button" id="increaseButton1">+</button>
+                    <button id="increaseButton1" type="button">+</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div id="switchButton" role="button" style="flex:1;">
+    <div id="switchButton" role="button" style="flex:1; position: relative">
         <center>
-            <br>
-            <button id="switchButtonAction">
+            <button id="switchButtonAction" style="
+    border: 1px outset black;
+    height:42px;
+    width:42px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding-left: 0px;
+    padding-right: 0px;    ">
                 <img class="icon" src="img/popup/cog.svg">
             </button>
         </center>
     </div>
     <div id="acceptable_table" style="flex:1;">
 
-        <table  class="center">
+        <table class="center">
             <tr>
-                <td id="acceptable_selector" colspan="3"></td>
+                <td colspan="3" id="acceptable_selector"></td>
             </tr>
             <tr>
                 <td>
-                    <button type="button" id="decreaseButton2">-</button>
+                    <button id="decreaseButton2" type="button">-</button>
                 </td>
                 <td>
-                    <div style="width: 50px; border-style: solid; border-width: 1px" id="displayDiv2">100</div>
+                    <div id="displayDiv2" style="width: 50px; border-style: solid; border-width: 1px">100</div>
                 </td>
                 <td>
-                    <button type="button" id="increaseButton2">+</button>
+                    <button id="increaseButton2" type="button">+</button>
                 </td>
             </tr>
         </table>
     </div>
 </div>
 
-<div id="blockSettings" class="modal-content" style="display: block">
+<div class="modal-content" id="blockSettings" style="display: block; margin-top: 5px; margin-bottom: 5px;">
     <table style="width:100%">
         <tr>
             <th id="table_title"></th>
@@ -215,20 +226,21 @@
             <td><input id="fine-a2" type="checkbox"></td>
             <td><input id="love-a2" type="checkbox"></td>
         </tr>
-    </table><br>
+    </table>
 </div>
 
-<div id="blockSecret" class="modal-content" style="display: none; margin-bottom: 9px">
+<div class="modal-content" id="blockSecret" style="display: none; margin-bottom: 9px;">
     <center>
+        <small><a id="switchSide" href="" target="_blank"></a></small><br><br>
         <small id="nicknameDesc"></small><br>
-        <input id="nickname" style="width: 65%" maxlength="20"  type="text">
-        <input id="buttonSave1" type="button" style="width: 12%"  value="Save"><br>
+        <input id="nickname" maxlength="20" style="width: 65%" type="text">
+        <input id="buttonSave1" style="width: 12%" type="button" value="Save"><br>
         <small id="secretDesc1"></small><br>
         <small id="secretDesc2"></small><br>
-        <input id="secret" name="secret" style="width: 52%"  type="password">
-        <input id="buttonSave2" type="button" style="width: 12%"  value="Save">
-        <input id="buttonNew" type="button" style="width: 12%" value="New"><br>
-        <table style="width:100%">
+        <input id="secret" name="secret" style="width: 52%" type="password">
+        <input id="buttonSave2" style="width: 12%" type="button" value="Save">
+        <input id="buttonNew" style="width: 12%" type="button" value="New"><br>
+        <table style="width:100%; margin-top: 8px">
             <tr>
                 <th id="settingsString"></th>
                 <th id="valueString"></th>
@@ -237,21 +249,19 @@
                 <td id="showFlagSetting"></td>
                 <td><input id="show-flags" type="checkbox"></td>
             </tr>
-            <tr>
+            <tr style="display: none">
                 <td id="settingSponsorBlock"></td>
                 <td><input id="sb" type="checkbox"></td>
             </tr>
-            <p id="sponsorBlock" style="padding: 0 3px;">
-            </p>
         </table>
     </center>
 </div>
 
-<div id="note_the_alpha" class="alpha-notice" style="margin-block-end: 1em;">
+<div class="alpha-notice" id="note_the_alpha" style="margin-block-end: 1em;">
 
 </div>
 
-<div id = "links" class="modal-icons">
+<div class="modal-icons" id="links">
     <div class="flex-container">
         <div class="flex">
             <a href="https://adwhore.net" target="_blank">
@@ -295,8 +305,8 @@
             </a>
         </div>
         <div class="flex">
-            <a href="https://adwhore.net" target="_blank">
-                <img class="icon" src="img/popup/question.svg">
+            <a href="https://www.github.com/qrlk/adwhore.net/releases" target="_blank">
+                <img class="icon" src="img/popup/history.svg">
             </a>
         </div>
     </div>

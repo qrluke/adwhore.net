@@ -96,6 +96,7 @@ So I experimented with collaborative pet-projects on my SA:MP script users (1k a
 
 ## Differences from SponsorBlock
 [SponsorBlock](https://github.com/ajayyy/SponsorBlock) is the most active similar project that was lucky to appear before ADN.  
+
 * ADN also provides optional support for fetching segments from SponsorBlock's database.  
 
 It's more stable and has an active community, but it doesn't care if the ad is acceptable or not: it just blocks it.  
