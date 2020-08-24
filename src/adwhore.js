@@ -29,7 +29,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     });
 });
 
-var countries = ["AI", "AL", "AM", "AQ", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BM", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CD", "CF", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CZ", "DE", "DJ", "DK", "DZ", "EE", "EG", "ER", "ES", "ET", "FI", "FR", "GA", "GB", "GD", "GE", "GH", "GL", "GN", "GR", "GT", "GU", "HK", "HR", "HU", "ID", "IL", "IN", "IS", "IT", "JO", "JP", "KE", "KH", "KI", "KR", "KY", "KZ", "LA", "LR", "LS", "LV", "MK", "MN", "MT", "MU", "NA", "NE", "NG", "NL", "PA", "PH", "PK", "PW", "RO", "RU", "SB", "SC", "SE", "SK", "SL", "SO", "ST", "SV", "SY", "SZ", "TG", "TH", "TL", "TT", "TZ", "UA", "US", "VC", "YE", "ZM"];
+var countries = ["AI", "AL", "AM", "AQ", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BM", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CD", "CF", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CZ", "DE", "DJ", "DK", "DZ", "EE", "EG", "ER", "ES", "ET", "FI", "FR", "GA", "GB", "GD", "GE", "GH", "GL", "GN", "GR", "GT", "GU", "HK", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KE", "KH", "KI", "KR", "KY", "KZ", "LA", "LR", "LS", "LV", "MD", "MK", "MN", "MT", "MU", "MX", "NA", "NE", "NG", "NL", "NO", "PA", "PH", "PK", "PL", "PW", "RO", "RS", "RU", "SB", "SC", "SE", "SG", "SK", "SL", "SO", "ST", "SV", "SY", "SZ", "TG", "TH", "TL", "TR", "TT", "TZ", "UA", "US", "VC", "YE", "ZM"];
 var parties = ["SOV", "SOVIET", "UN", "NATO"];
 
 let youtubeMutation = setTimeout(function tick() {
