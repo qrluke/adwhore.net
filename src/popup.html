@@ -38,7 +38,6 @@
             text-decoration: none;
         }
 
-
         .modal-header {
             text-align: center;
             align-items: center;
@@ -107,6 +106,8 @@
             height: 35px;
             fill: #2f5876;
         }
+
+
     </style>
 </head>
 
@@ -116,7 +117,7 @@
     <h1 class="logo">
         <span class="version">ADN v0.2 active:<input id="enableCheck" type="checkbox"></span>
     </h1>
-    <img style="margin-bottom: 3px; width: 110px;" border="1px" src="img/adwhore-logo.png"/>
+    <img border="1px" src="img/adwhore-logo.png" style="margin-bottom: 3px; width: 110px;"/>
     <p class="moto" style="margin-block-end: 0em;">better youtube for everyone</p>
     <small id="global_users"></small>
     <small id="stats_users">users - </small>
@@ -137,17 +138,17 @@
 
         <table class="center">
             <tr>
-                <td id="skip_trust_selector" colspan="3"></td>
+                <td colspan="3" id="skip_trust_selector"></td>
             </tr>
             <tr>
                 <td>
-                    <button type="button" id="decreaseButton1">-</button>
+                    <button id="decreaseButton1" type="button">-</button>
                 </td>
                 <td>
-                    <div style="width: 50px; border-style: solid; border-width: 1px" id="displayDiv1">100</div>
+                    <div id="displayDiv1" style="width: 50px; border-style: solid; border-width: 1px">100</div>
                 </td>
                 <td>
-                    <button type="button" id="increaseButton1">+</button>
+                    <button id="increaseButton1" type="button">+</button>
                 </td>
             </tr>
         </table>
@@ -162,26 +163,26 @@
     </div>
     <div id="acceptable_table" style="flex:1;">
 
-        <table  class="center">
+        <table class="center">
             <tr>
-                <td id="acceptable_selector" colspan="3"></td>
+                <td colspan="3" id="acceptable_selector"></td>
             </tr>
             <tr>
                 <td>
-                    <button type="button" id="decreaseButton2">-</button>
+                    <button id="decreaseButton2" type="button">-</button>
                 </td>
                 <td>
-                    <div style="width: 50px; border-style: solid; border-width: 1px" id="displayDiv2">100</div>
+                    <div id="displayDiv2" style="width: 50px; border-style: solid; border-width: 1px">100</div>
                 </td>
                 <td>
-                    <button type="button" id="increaseButton2">+</button>
+                    <button id="increaseButton2" type="button">+</button>
                 </td>
             </tr>
         </table>
     </div>
 </div>
 
-<div id="blockSettings" class="modal-content" style="display: block">
+<div class="modal-content" id="blockSettings" style="display: block">
     <table style="width:100%">
         <tr>
             <th id="table_title"></th>
@@ -214,19 +215,20 @@
             <td><input id="fine-a2" type="checkbox"></td>
             <td><input id="love-a2" type="checkbox"></td>
         </tr>
-    </table><br>
+    </table>
+    <br>
 </div>
 
-<div id="blockSecret" class="modal-content" style="display: none; margin-bottom: 9px">
+<div class="modal-content" id="blockSecret" style="display: none; margin-bottom: 9px">
     <center>
         <small id="nicknameDesc"></small><br>
-        <input id="nickname" style="width: 65%" maxlength="20"  type="text">
-        <input id="buttonSave1" type="button" style="width: 12%"  value="Save"><br>
+        <input id="nickname" maxlength="20" style="width: 65%" type="text">
+        <input id="buttonSave1" style="width: 12%" type="button" value="Save"><br>
         <small id="secretDesc1"></small><br>
         <small id="secretDesc2"></small><br>
-        <input id="secret" name="secret" style="width: 52%"  type="password">
-        <input id="buttonSave2" type="button" style="width: 12%"  value="Save">
-        <input id="buttonNew" type="button" style="width: 12%" value="New"><br>
+        <input id="secret" name="secret" style="width: 52%" type="password">
+        <input id="buttonSave2" style="width: 12%" type="button" value="Save">
+        <input id="buttonNew" style="width: 12%" type="button" value="New"><br>
         <table style="width:100%">
             <tr>
                 <th id="settingsString"></th>
@@ -246,11 +248,11 @@
     </center>
 </div>
 
-<div id="note_the_alpha" class="alpha-notice" style="margin-block-end: 1em;">
+<div class="alpha-notice" id="note_the_alpha" style="margin-block-end: 1em;">
 
 </div>
 
-<div id = "links" class="modal-icons">
+<div class="modal-icons" id="links">
     <div class="flex-container">
         <div class="flex">
             <a href="https://adwhore.net" target="_blank">
