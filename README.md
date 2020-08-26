@@ -100,4 +100,6 @@ August 19, 2020 - public alpha release.
 TODO: mention all known projects related to skipping commercial segments in YouTube's videos. Should be a comparison table.
 
 ## Credit
-TODO: add icons references
+* Font Awesome by Dave Gandy - http://fontawesome.io
+* Flags icons by iconPerk.com - https://www.iconfinder.com/iconsets/flags-37
+* Some flags icons made by Freepik - https://www.flaticon.com/packs/countrys-flags
