@@ -663,7 +663,7 @@ function addStyles() {
     _skipImage1.style.transform = "";
     _skipImage1.style.float = "right";
     _skipImage1.style.padding = "4px 0";
-    _skipImage1.src = getIconPath("LogoSponsorBlock256px.png");
+    _skipImage1.src = getIconPath("128.png");
 
     _adButton2.className = "ytp-ad-skip-button ytp-button";
 
@@ -987,7 +987,7 @@ function addEvents() {
                                 currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
                                 adplayer.style.display = "block";
                                 _adSkip.style.display = "block";
-                                _skipImage1.src = getIconPath("LogoSponsorBlock256px.png");
+                                _skipImage1.src = getIconPath("128.png");
                                 clearTimeout(skipTimer);
 
                                 skipTimer = setTimeout(function () {
