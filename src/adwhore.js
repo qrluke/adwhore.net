@@ -1454,12 +1454,11 @@ function addEvents() {
             enableStage2();
         } else {
             if (segControlsNumberInput.value !== "Select") {
-
                 if ((+segEndInput.value - +segStartInput.value) / 90 * 101 > v.duration) {
                     isReportStage2 = !isReportStage2;
                     alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                 } else {
-                    let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"));
+                    let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment")) || "";
                     let json = {
                         "vID": currentVideoId,
                         "secret": settings["secret"],
