@@ -25,6 +25,20 @@ chrome.storage.sync.get(null, function (result) {
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     chrome.storage.sync.get(null, function (result) {
+        if (result["askedForHelp"] === 0) {
+            if (result["segments"] + result["likes"] > 2) {
+                try {
+                    v.pause()
+                } catch (error) {
+                    console.error(error);
+                }
+
+                chrome.runtime.sendMessage({message: "open_help"}, function (response) {
+                    console.log(response.status);
+                });
+                chrome.storage.sync.set({"askedForHelp": 1});
+            }
+        }
         settings = result;
     });
 });
@@ -1038,6 +1052,7 @@ function addEvents() {
                 url: "https://karma.adwhore.net:47976/addSegmentLike",
                 data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
                 success: function (sb) {
+                    chrome.storage.sync.set({"likes": settings["likes"] + 1});
                     // alert(`Success. Reason: ${JSON.stringify(sb)}`);
                 }
             });
@@ -1483,6 +1498,7 @@ function addEvents() {
                             disableStage2()
                             disableStage1()
                             resetAndFetch()
+                            chrome.storage.sync.set({"segments": settings["segments"] + 1});
                         },
                         error: function (s, status, error) {
                             alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
@@ -1936,3 +1952,4 @@ function formatTime(time) {
 
     return minutes + ':' + seconds
 }
+

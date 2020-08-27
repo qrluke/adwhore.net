@@ -316,5 +316,8 @@
   },
   "switchSide": {
     "message": "Click to switch your 'team'"
+  },
+  "askingForHelpPage": {
+    "message": "help-us-en.html"
   }
 }

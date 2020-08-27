@@ -17,6 +17,9 @@ var defaults = {
     "accept": 70,
     "sb": false,
     "secret": null,
+    "askedForHelp": 0,
+    "likes": 0,
+    "segments": 0,
     "name": "None",
     "enable": true,
     "show_flags": true,
@@ -77,3 +80,12 @@ chrome.runtime.onInstalled.addListener(function (details) {
         console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
     }
 });
+
+chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse) {
+        chrome.extension.getBackgroundPage().console.log('resp.type');
+        if (request.message === "open_help") {
+            chrome.tabs.create({url: chrome.i18n.getMessage("askingForHelpPage")});
+            sendResponse({status: "done"});
+        }
+    });

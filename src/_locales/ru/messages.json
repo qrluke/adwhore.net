@@ -332,5 +332,8 @@
   },
   "switchSide": {
     "message": "Нажмите, чтобы сменить команду"
+  },
+  "askingForHelpPage": {
+    "message": "help-us-ru.html"
   }
 }
