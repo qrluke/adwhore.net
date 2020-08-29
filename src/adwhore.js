@@ -4,6 +4,7 @@ let isReportStage1 = false,
     isToggle = false,
     isPreviewInside = false,
     isPreviewOutside = false,
+    isPreviewOutsideBeforeSend = false,
     isFirstInputSelect = false,
     isSideActive = false,
     isAdFlagActive = false,
@@ -889,7 +890,7 @@ function addEvents() {
     });
 
     v.addEventListener('seeking', (event) => {
-        if ((isReportStage1) && (!isReportStage2)) {
+        if ((isReportStage1) && (!isReportStage2) && (!isPreviewOutside) && (!isPreviewOutsideBeforeSend)) {
             if (isToggle) {
                 if (v.currentTime < segEndInput.value) {
                     segStartInput.value = +v.currentTime.toFixed(1);
@@ -977,6 +978,24 @@ function addEvents() {
                 if (v.currentTime >= segStartInput.value) {
                     v.currentTime = segEndInput.value;
                     isPreviewOutside = false;
+                    setTimeout(function () {
+                        v.pause();
+                    }, 1500);
+                }
+            }
+            if (isPreviewOutsideBeforeSend) {
+                if (v.currentTime >= segStartInput.value) {
+                    v.currentTime = segEndInput.value;
+                    isPreviewOutsideBeforeSend = false;
+                    setTimeout(function () {
+                        v.pause();
+                        var r = confirm(chrome.i18n.getMessage("areYouSure"));
+                        if (r === true) {
+                            enableStage2();
+                        } else {
+                            isReportStage2 = !isReportStage2;
+                        }
+                    }, 1500);
                 }
             }
         }
@@ -1085,7 +1104,7 @@ function addEvents() {
     previewOutside.addEventListener("click", function () {
         isPreviewInside = false;
         isPreviewOutside = true;
-        v.currentTime = segStartInput.value - 1;
+        v.currentTime = segStartInput.value - 1.5;
         v.play();
     });
 
@@ -1416,7 +1435,15 @@ function addEvents() {
     uploadButton.addEventListener("click", function () {
         isReportStage2 = !isReportStage2;
         if (isReportStage2) {
-            enableStage2();
+            if (settings["segments"] < 2) {
+                isPreviewInside = false;
+                isPreviewOutside = false;
+                isPreviewOutsideBeforeSend = true;
+                v.currentTime = segStartInput.value - 1.5;
+                v.play();
+            } else {
+                enableStage2();
+            }
         } else {
             if (segControlsNumberInput.value !== "Select") {
                 if ((+segEndInput.value - +segStartInput.value) / 90 * 101 > v.duration) {

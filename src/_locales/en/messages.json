@@ -198,7 +198,7 @@
     "message": "Send"
   },
   "checkBeforeSend": {
-    "message": "Check before sending"
+    "message": "Go to submission"
   },
   "clickHelp1": {
     "message": "Click if you don't understand what's going on"
@@ -207,10 +207,13 @@
     "message": "Click to learn how to select a category"
   },
   "help1": {
-    "message": "Thanks for contributing!\n\nFirst, you need to select two points of the segment: start and end.\n\nClick on the field to the right (end) or left (start), TAB switches between them.\n\nSteps by arrows: right / left - 2 sec, up / down - 0.1 sec.\nIn the field itself there are built-in arrows with a step of 0.25 sec.\n\nSpace - pause / start, Enter - saves the current video time in the field .\n\nYou can also select with the mouse on the progress bar, the slider shows active selection of the beginning or end.\n\nYellow bar shows the selected fragment.\n\nButtons can be used to check how the fragment begins and ends.\n\nAnd in the next step you can check it out!\n\nAnd remember: it's hard to learn, easy to fight!\n\nP.S. If you lose the control unit, make the player wider. "
+    "message": "Thanks for contributing!\n\nYou need to select two points of the segment, select ad's category and click submit.\n\nA simple way: select the end and the beginning with the mouse (the slider switches the selection) and adjust with the arrows.\n\nHarder to understand, but more convenient:\nClick on the seconds field to the right (end) or left (beginning), tab stops switching between them.\n\nSteps by arrows: right / left - 2 sec, up / down - 0.1 sec.\n\n'Space' - play/pause, 'Enter' - place the current video time to field.\n\nYellow bar shows the selected segment.\n\nP.S. Press the '→][→' button to check how your segment will be skipped!"
   },
   "help2": {
-    "message": "First make sure you have selected the correct segment.\n\nClick the button on the left to test skipping it.\n\nAre you sure the segment is correct? Then select a category from the menu on the left and check the checkboxes.\n\nThis will help distinguish acceptable from bad ads and form an ADN opinion about the blogger.\n\nYour segment will immediately become available to all users, but it will be automatically skipped only if it has enough trust points (TP).\n\nWhen the moderator checks it or a user with a bunch of TP, you will also get some TP.\n\nThe more TP you have, the more valuable your likes / segment reports and the higher the impact on other users.\n\nRemember that the contribution of any user can be extracted without harm to the community so don't overuse TP, please.\n\nGood luck! ADWHORE.NET guarantees that no contribution will go unnoticed!"
+    "message": "Please select a segment category from the list on the left and check the checkboxes.\n\nThis is very important: it will help distinguish acceptable from bad ads and help determine if YouTuber is an adwhore.\n\nYour segment will immediately be available to everyone, but it will be automatically skipped only if it has enough trust points (TP).\n\nWhen the moderator checks it, you will also receive some TP.\n\nThe amount of TP you receive depends on the decision of the moderator: if he decides that you are a bona fide user, he will give you more TP.\n\nThe more TP you have, the greater your influence in the system, the more valuable your likes/segment reports, the higher the level of trust in your segments.\n\nRemember that any user's contribution can be retrieved without harm to the community, so please do not abuse TP.\n\nThank you and good luck!"
+  },
+  "areYouSure": {
+    "message": "This is how your segment will be skipped.\nAre you sure the time codes are correct?\n\n- If yes, that's awesome: click 'OK' and go to the last step!\n- If no, it's fine: please click 'cancel' and correct a little =)\n\nWe will stop showing you this alert once you send 2 segments.\nYou can always test your segment by clicking on the '→][→'!\n\nP.S. Did you know that you can use hotkeys to select segments?\nIt's much easier. Click the '?' button for more information!"
   },
   "helpMePlease": {
     "message": "Click on the button to my right and follow the instructions of the button with the question mark.\n\nIf you don't see anything, make the player wider."
