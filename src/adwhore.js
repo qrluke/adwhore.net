@@ -1253,10 +1253,10 @@ function addEvents() {
     });
 
     replayButtonImage.addEventListener("mouseover", function () {
-        if (isReportStage1) {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("close");
-        } else if (isReportStage2) {
+        if (isReportStage2) {
             awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("edit");
+        } else if (isReportStage1) {
+            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("close");
         } else {
             awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("addsegment");
         }
