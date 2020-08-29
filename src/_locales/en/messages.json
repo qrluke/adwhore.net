@@ -322,5 +322,59 @@
   },
   "askingForHelpPage": {
     "message": "help-us-en.html"
+  },
+  "whitelistDesc": {
+    "message": "<b>This is your personal 'whitelist'</b></br>Segments for these channels will not be skipped automatically.</br>Only you are in control of this list: add your favorite bloggers."
+  },
+  "caption1": {
+    "message": "Channel ID"
+  },
+  "caption2": {
+    "message": "Channel Name"
+  },
+  "caption3": {
+    "message": "Button"
+  },
+  "AddRow": {
+    "message": "Add"
+  },
+  "RemoveRow": {
+    "message": "Del"
+  },
+  "stats1": {
+    "message": "<b>You received from the community:</b>"
+  },
+  "stats2": {
+    "message": "You skipped: "
+  },
+  "stats3": {
+    "message": " segments. </br> ADN has saved you: "
+  },
+  "stats4": {
+    "message": " of time."
+  },
+  "stats5": {
+    "message": "<b>You gave the community:</b>"
+  },
+  "stats6": {
+    "message": " valid segments."
+  },
+  "stats7": {
+    "message": " of your segments have been moderated."
+  },
+  "stats8": {
+    "message": "Your segments were skipped: "
+  },
+  "stats9": {
+    "message": " times.</br>"
+  },
+  "stats10": {
+    "message": "You saved "
+  },
+  "stats11": {
+    "message": " for our users!"
+  },
+  "stats12": {
+    "message": "p.s. your own segment skips are excluded"
   }
 }

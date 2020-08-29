@@ -107,6 +107,19 @@
             fill: #2f5876;
         }
 
+        .tab {
+            border: 1px outset black;
+            height:42px;
+            width:42px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
 
     </style>
 </head>
@@ -130,7 +143,6 @@
     <small id="stats_saved">time saved: </small>
     <small id="global_time"></small>
     <small id="stats_sec"> sec</small>
-
 
 </div>
 <div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px;height:53px  ">
@@ -156,19 +168,16 @@
 
     <div id="switchButton" role="button" style="flex:1; position: relative">
         <center>
-            <button id="switchButtonAction" style="
-    border: 1px outset black;
-    height:42px;
-    width:42px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    padding-left: 0px;
-    padding-right: 0px;    ">
+            <button class="tab" id="switchButtonAction1">
                 <img class="icon" src="img/popup/cog.svg">
+            </button>
+
+            <button class="tab" id="switchButtonAction2" style="left: 95px">
+                <img class="icon" src="img/popup/stats.svg">
+            </button>
+
+            <button class="tab" id="switchButtonAction3" style="right: 95px">
+                <img class="icon" src="img/popup/whitelist.svg">
             </button>
         </center>
     </div>
@@ -231,7 +240,7 @@
 
 <div class="modal-content" id="blockSecret" style="display: none; margin-bottom: 9px;">
     <center>
-        <small><a id="switchSide" href="" target="_blank"></a></small><br><br>
+        <small><a href="" id="switchSide" target="_blank"></a></small><br><br>
         <small id="nicknameDesc"></small><br>
         <input id="nickname" maxlength="20" style="width: 65%" type="text">
         <input id="buttonSave1" style="width: 12%" type="button" value="Save"><br>
@@ -254,6 +263,36 @@
                 <td><input id="sb" type="checkbox"></td>
             </tr>
         </table>
+    </center>
+</div>
+
+<div class="modal-content" id="whitelist" style="display: none; margin-bottom: 9px;">
+    <center>
+        <small id="whitelistDesc"></small>
+
+        <table id="whitelistTable" style="width:100%; margin-top: 6px;">
+            <thead>
+                <th id="caption1"></th>
+                <th id="caption2"></th>
+                <th id="caption3"></th>
+            </thead>
+            <tbody id = "list">
+
+            </tbody>
+        </table>
+    </center>
+</div>
+
+<div class="modal-content" id="stats" style="display: none; margin-bottom: 9px;">
+    <center>
+        <small id="stats1"></small></br>
+        <small id="stats2"></small><small id="stats01"></small><small id="stats3"></small><small id="stats02"></small><small id="stats4"></small></br></br>
+        <small id="stats5"></small></br>
+        <small id="stats03"></small><small id="stats6"></small></br>
+        <small id="stats04"></small><small id="stats7"></small></br>
+        <small id="stats8"></small><small id="stats05"></small><small id="stats9"></small>
+        <small id="stats10"></small><small id="stats06"></small><small id="stats11"></small></br></br><small id="stats12"></small>
+
     </center>
 </div>
 

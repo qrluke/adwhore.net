@@ -41,7 +41,12 @@ var defaults = {
         "y2": false,
         "a1": false,
         "a2": false
-    }
+    },
+    "last_channel": {
+        "name": "",
+        "cID": ""
+    },
+    "whitelist": []
 }
 
 chrome.storage.sync.get(defaults, function (result) {

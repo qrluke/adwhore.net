@@ -19,10 +19,17 @@ let isReportStage1 = false,
     keepControlsOpen,
     updateProgressBar,
     updateBufferProgress,
-    timestamps = [];
+    timestamps = [],
+    whitelist = [];
 
 chrome.storage.sync.get(null, function (result) {
     settings = result;
+    whitelist = [];
+    for (let item of result["whitelist"]) {
+        if (!whitelist.includes(item["cID"])) {
+            whitelist.push(item["cID"])
+        }
+    }
 });
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
@@ -80,11 +87,11 @@ let youtubeMutation = setTimeout(function tick() {
                 resetAndFetch();
                 setTimeout(function fetchWhenCidIsKnown() {
                     if (getChannelID() !== "") {
-                        resetAndFetch();
+                        resetAndFetch(false);
                     } else {
                         setTimeout(fetchWhenCidIsKnown, 100);
                     }
-                }, 100);
+                }, 1250);
             } else {
                 currentUrl = "";
                 if (v) {
@@ -100,43 +107,45 @@ let youtubeMutation = setTimeout(function tick() {
     youtubeMutation = setTimeout(tick, 250);
 }, 0);
 
-function resetAndFetch() {
+function resetAndFetch(bar = true) {
     /* RESET AFTER URL CHANGE HERE */
 
-    try {
-        document.getElementsByClassName("ytp-fullerscreen-edu-text")[0].style.display = "none";
-        document.getElementsByClassName("ytp-fullerscreen-edu-chevron")[0].style.display = "none";
-    } catch (error) {
-        console.error(error);
-    }
+    if (bar) {
+        disableStage2()
+        disableStage1()
+        try {
+            document.getElementsByClassName("ytp-fullerscreen-edu-text")[0].style.display = "none";
+            document.getElementsByClassName("ytp-fullerscreen-edu-chevron")[0].style.display = "none";
+        } catch (error) {
+            console.error(error);
+        }
 
-    flagButtonImage.style.padding = "8px 0px";
 
-    disableStage2()
-    disableStage1()
+        isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
 
-    isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
-    timestamps = [];
-    if (typeof (barList) == "object") {
-        if (barList.firstChild) {
-            while (barList.firstChild) {
-                barList.removeChild(barList.firstChild);
+        flagButtonImage.style.padding = "8px 0px";
+
+        if (typeof (barList) == "object") {
+            if (barList.firstChild) {
+                while (barList.firstChild) {
+                    barList.removeChild(barList.firstChild);
+                }
             }
         }
-    }
-    if (typeof (barList) == "object") {
-        if (barListPreview.firstChild) {
-            while (barListPreview.firstChild) {
-                barListPreview.removeChild(barListPreview.firstChild);
+        if (typeof (barList) == "object") {
+            if (barListPreview.firstChild) {
+                while (barListPreview.firstChild) {
+                    barListPreview.removeChild(barListPreview.firstChild);
+                }
             }
         }
+        sideButton.style.display = "none";
+        flagButtonImage.src = getFlagByCode("unknown");
+        pathFinder = {};
+        isSideActive = false;
     }
-    sideButton.style.display = "none";
 
-    /* GET NEW SEGMENTS */
-    flagButtonImage.src = getFlagByCode("unknown");
-    pathFinder = {};
-    isSideActive = false;
+
     timestamps = [];
     currentVideoId = getYouTubeID(currentUrl);
     currentChannelId = getChannelID();
@@ -161,119 +170,43 @@ function resetAndFetch() {
             }
         },
         complete: function () {
-            /*if (settings["sb"]) {
-                $.ajax({
-                    dataType: "json",
-                    url: "https://sponsor.ajay.app/api/skipSegments",
-                    data: {
-                        videoID: currentVideoId,
-                        category: "sponsor"
-                    },
-                    success: function (sb) {
-                        for (let i = 0; i < sb.length; i++) {
-                            const item = sb[i];
-                            let isOverflow = false;
-
-                            let a1 = item["segment"][0]
-                            let a2 = item["segment"][1]
-                            for (let i = 0; i < timestamps.length; i++) {
-                                const it = timestamps[i];
-                                if (it["source"] === "adn") {
-                                    let b1 = it["data"]["timestamps"]["start"]
-                                    let b2 = it["data"]["timestamps"]["end"]
-                                    if (((a1 >= b1) && (a1 <= b2)) || ((a2 >= b1) && (a2 <= b2))) {
-                                        isOverflow = true;
-                                    }
-                                    if (((b1 >= a1) && (b1 <= a2)) || ((b2 >= a1) && (b2 <= a2))) {
-                                        isOverflow = true;
-                                    }
-                                }
-                            }
-                            if (!isOverflow) {
-                                timestamps.push({
-                                    "source": "sb",
-                                    "data": {
-                                        "timestamps": {
-                                            "start": item["segment"][0],
-                                            "end": item["segment"][1]
-                                        }
-                                    }
-                                })
-                            }
-                        }
-                    },
-                    complete: function () {
-                        timestamps.sort(function (a, b) {
-                            if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                                return 1;
-                            }
-                            if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                                return -1;
-                            }
-                            // a должно быть равным b
-                            return 0;
-                        });
-                        console.log(timestamps)
-                        //yt ads walkaround
-                        if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                            set(timestamps, v.duration)
-                        } else {
-                            let stoper = document.URL;
-                            let currentDuration = v.duration;
-                            setTimeout(function run() {
-                                if (stoper === document.URL) {
-                                    if (v.duration && currentDuration !== v.duration) {
-                                        if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                            set(timestamps, v.duration);
-                                        } else {
-                                            setTimeout(run, 50);
-                                        }
-                                    } else {
-                                        setTimeout(run, 100);
-                                    }
-                                }
-                            }, 1000);
-                        }
+            if (bar) {
+                timestamps.sort(function (a, b) {
+                    if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                        return 1;
                     }
+                    if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                        return -1;
+                    }
+                    // a должно быть равным b
+                    return 0;
                 });
-            } else {*/
-            timestamps.sort(function (a, b) {
-                if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                    return 1;
-                }
-                if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                    return -1;
-                }
-                // a должно быть равным b
-                return 0;
-            });
-            console.log(timestamps)
-            //yt ads walkaround
-            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                set(timestamps, v.duration)
-                segEndInput.max = v.duration - 0.5;
-                segStartInput.max = v.duration - 1;
-            } else {
-                let stoper = document.URL;
-                let currentDuration = v.duration;
-                setTimeout(function run() {
-                    if (stoper === document.URL) {
-                        if (v.duration && currentDuration !== v.duration) {
-                            if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
-                                set(timestamps, v.duration);
-                                segEndInput.max = v.duration - 0.5;
-                                segStartInput.max = v.duration - 1;
+                //yt ads walkaround
+                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                    set(timestamps, v.duration)
+                    segEndInput.max = v.duration - 0.5;
+                    segStartInput.max = v.duration - 1;
+                } else {
+                    let stoper = document.URL;
+                    let currentDuration = v.duration;
+                    setTimeout(function run() {
+                        if (stoper === document.URL) {
+                            if (v.duration && currentDuration !== v.duration) {
+                                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                    set(timestamps, v.duration);
+                                    segEndInput.max = v.duration - 0.5;
+                                    segStartInput.max = v.duration - 1;
+                                } else {
+                                    setTimeout(run, 50);
+                                }
                             } else {
-                                setTimeout(run, 50);
+                                setTimeout(run, 100);
                             }
-                        } else {
-                            setTimeout(run, 100);
                         }
-                    }
-                }, 1000);
+                    }, 1000);
+                }
             }
         }
-        /* }*/
     });
 }
 
@@ -1702,11 +1635,13 @@ function getYouTubeID(url) {
     return 'undefined' !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
 }
 
-function getChannelID(url) {
+function getChannelID() {
     var list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
     for (let item of list) {
         if (item.href.includes("channel")) {
-            return item.href.replace("https://www.youtube.com/channel/", "")
+            let cid = item.href.replace("https://www.youtube.com/channel/", "")
+            chrome.storage.sync.set({"last_channel": {"name": item.text, "cID": cid}});
+            return cid
         }
     }
     return ""
@@ -1864,6 +1799,9 @@ function getSideTooltip() {
 }
 
 function whatShouldIDo(segment) {
+    if (whitelist.includes(currentChannelId)) {
+        return false
+    }
     if (segment["paid"] === 0) {
         if (isAdFlagActive) {
             if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {

@@ -169,31 +169,95 @@ function savePopupSettings() {
 }
 
 
-document.getElementById("switchButtonAction").addEventListener("click", function () {
+document.getElementById("switchButtonAction1").addEventListener("click", function () {
     if (document.getElementById("blockSettings").style.display.includes("block")) {
         document.getElementById("blockSettings").style.display = "none"
         document.getElementById("blockSecret").style.display = "block"
-        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+        document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
         document.getElementById("note_the_alpha").style.display = "none"
         document.getElementById("links").style.display = "none"
         document.getElementById("acceptable_table").style.display = "none"
         document.getElementById("trust_table").style.display = "none"
+
+        document.getElementById("switchButtonAction2").style.display = "none"
+        document.getElementById("switchButtonAction3").style.display = "none"
+
     } else {
         document.getElementById("blockSecret").style.display = "none"
         document.getElementById("blockSettings").style.display = "block"
-        document.getElementById("switchButtonAction").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
+        document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
         document.getElementById("note_the_alpha").style.display = ""
         document.getElementById("links").style.display = ""
         document.getElementById("acceptable_table").style.display = ""
         document.getElementById("trust_table").style.display = ""
+        document.getElementById("whitelist").style.display = "none"
+        document.getElementById("stats").style.display = "none"
+
+        document.getElementById("switchButtonAction2").style.display = ""
+        document.getElementById("switchButtonAction3").style.display = ""
     }
 })
 
 
+document.getElementById("switchButtonAction3").addEventListener("click", function () {
+    document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+    document.getElementById("note_the_alpha").style.display = "none"
+    document.getElementById("links").style.display = "none"
+    document.getElementById("blockSettings").style.display = "none"
+    document.getElementById("acceptable_table").style.display = "none"
+    document.getElementById("trust_table").style.display = "none"
+    document.getElementById("whitelist").style.display = "block"
+    document.getElementById("stats").style.display = "none"
+    document.getElementById("switchButtonAction2").style.display = "none"
+    document.getElementById("switchButtonAction3").style.display = "none"
+})
+
+function formatTime(time) {
+    time = Math.round(time)
+
+    const minutes = Math.floor(time / 60)
+    let seconds = time - minutes * 60
+
+    seconds = seconds < 10 ? '0' + seconds : seconds
+
+    return minutes + 'm:' + seconds + 's'
+}
+
+document.getElementById("switchButtonAction2").addEventListener("click", function () {
+    document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+    document.getElementById("note_the_alpha").style.display = "none"
+    document.getElementById("links").style.display = "none"
+    document.getElementById("blockSettings").style.display = "none"
+    document.getElementById("acceptable_table").style.display = "none"
+    document.getElementById("trust_table").style.display = "none"
+    document.getElementById("whitelist").style.display = "none"
+    document.getElementById("stats").style.display = "block"
+    document.getElementById("switchButtonAction2").style.display = "none"
+    document.getElementById("switchButtonAction3").style.display = "none"
+
+    $("#stats01")[0].innerText = "...";
+    $("#stats02")[0].innerText = "...";
+    $("#stats03")[0].innerText = "...";
+    $("#stats04")[0].innerText = "...";
+    $("#stats05")[0].innerText = "...";
+    $("#stats06")[0].innerText = "...";
+
+    chrome.storage.sync.get(["secret"], function (result) {
+        $.getJSON("https://karma.adwhore.net:47976/getPersonalStats", "secret=" + result["secret"], function (data) {
+            $("#stats01")[0].innerText = data["skips_for_count"];
+            $("#stats02")[0].innerText = formatTime(data["skips_for_duration"]);
+            $("#stats03")[0].innerText = data["actual_segments"];
+            $("#stats04")[0].innerText = data["moderated_segments"];
+            $("#stats05")[0].innerText = data["skips_from_count"];
+            $("#stats06")[0].innerText = formatTime(data["skips_from_duration"]);
+        });
+    })
+})
+
 function secondsToDhms(seconds) {
     seconds = Number(seconds);
-    var d = Math.floor(seconds / (3600*24));
-    var h = Math.floor(seconds % (3600*24) / 3600);
+    var d = Math.floor(seconds / (3600 * 24));
+    var h = Math.floor(seconds % (3600 * 24) / 3600);
     var m = Math.floor(seconds % 3600 / 60);
     var s = Math.floor(seconds % 60);
 
@@ -223,7 +287,26 @@ function secondsToDhms(seconds) {
  https://github.com/talmand/jquery-animate-numbers
  ***********/
 
-!function(e){e.fn.animateNumbers=function(t,a,n,l){return this.each(function(){var i=e(this),r=i.is("input"),v=parseInt(r?i.val().replace(/,/g,""):i.text().replace(/,/g,"")),u=/(\d)(?=(\d\d\d)+(?!\d))/g;a=void 0===a?!0:a,r&&"number"===i[0].type&&(a=!1),e({value:v}).animate({value:t},{duration:void 0===n?1e3:n,easing:void 0===l?"swing":l,step:function(){r?i.val(Math.floor(this.value)):i.text(Math.floor(this.value)),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,")))},complete:function(){(parseInt(i.text())!==t||parseInt(i.val())!==t)&&(r?i.val(t):i.text(t),a&&(r?i.val(i.val().replace(u,"$1,")):i.text(i.text().replace(u,"$1,"))))}})})}}(jQuery);
+!function (e) {
+    e.fn.animateNumbers = function (t, a, n, l) {
+        return this.each(function () {
+            var i = e(this), r = i.is("input"),
+                v = parseInt(r ? i.val().replace(/,/g, "") : i.text().replace(/,/g, "")),
+                u = /(\d)(?=(\d\d\d)+(?!\d))/g;
+            a = void 0 === a ? !0 : a, r && "number" === i[0].type && (a = !1), e({value: v}).animate({value: t}, {
+                duration: void 0 === n ? 1e3 : n,
+                easing: void 0 === l ? "swing" : l,
+                step: function () {
+                    r ? i.val(Math.floor(this.value)) : i.text(Math.floor(this.value)), a && (r ? i.val(i.val().replace(u, "$1,")) : i.text(i.text().replace(u, "$1,")))
+                },
+                complete: function () {
+                    (parseInt(i.text()) !== t || parseInt(i.val()) !== t) && (r ? i.val(t) : i.text(t), a && (r ? i.val(i.val().replace(u, "$1,")) : i.text(i.text().replace(u, "$1,"))))
+                }
+            })
+        })
+    }
+}(jQuery);
+
 function get_mini_stats() {
     $.getJSON("https://karma.adwhore.net:47976/statsMini", function (data) {
         $("#global_users").animateNumbers(data["global"]["users"]);
@@ -235,6 +318,50 @@ function get_mini_stats() {
         setTimeout(get_mini_stats, 1000); // <-- when you ge a response, call it
     });
 }
+
 get_mini_stats();
 
 document.getElementById('switchSide').href = chrome.extension.getURL("thank-you.html");
+var whitelist = [];
+
+function updateWhitelistTable() {
+    chrome.storage.sync.get(["whitelist", "last_channel"], function (result) {
+        whitelist = result["whitelist"];
+        $("#list").empty();
+        let list = []
+        for (let item of result["whitelist"]) {
+            if (!list.includes(item["cID"])) {
+                $('#whitelistTable > tbody:last-child').append("<tr><td><small>" + item["cID"] + "</small></td><td><small>" + item["name"] + "</small></td><td><input type='button' class='RemoveRow' value='" + chrome.i18n.getMessage("RemoveRow") + "'></td></tr>");
+                list.push(item["cID"])
+            }
+        }
+        if (!list.includes(result["last_channel"]["cID"])) {
+            $('#whitelistTable > tbody:last-child').append("<tr><td><small>" + result["last_channel"]["cID"] + "</small></td><td><small>" + result["last_channel"]["name"] + "</small></td><td><input type='button' class='AddNew' value='" + chrome.i18n.getMessage("AddRow") + "'></td></tr>");
+        }
+    })
+}
+
+updateWhitelistTable()
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+    updateWhitelistTable()
+});
+
+
+$('table').on('click', '.AddNew', function () {
+    whitelist.push({
+        "cID": $(this).closest('tr')[0].childNodes[0].innerText,
+        "name": $(this).closest('tr')[0].childNodes[1].innerText
+    })
+    chrome.storage.sync.set({"whitelist": whitelist});
+});
+
+$('table').on('click', '.RemoveRow', function () {
+    let new_whitelist = [];
+    let cid = $(this).closest('tr')[0].childNodes[0].innerText;
+    for (let item of whitelist) {
+        if (item["cID"] !== cid) {
+            new_whitelist.push(item);
+        }
+    }
+    chrome.storage.sync.set({"whitelist": new_whitelist});
+});

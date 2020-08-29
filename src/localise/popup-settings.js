@@ -11,7 +11,6 @@ function init() {
   setChildTextNode('skip_trust_selector', chrome.i18n.getMessage("skip_trust_selector"));
   setTitle('skip_trust_selector', chrome.i18n.getMessage("skip_trust_selector_title"));
 
-
   setChildTextNode('acceptable_selector', chrome.i18n.getMessage("acceptable_selector"));
   setTitle('acceptable_selector', chrome.i18n.getMessage("acceptable_selector_title"));
 
@@ -51,6 +50,26 @@ function init() {
   setChildTextNode('stats_saved', chrome.i18n.getMessage("stats_saved"));
   setChildTextNode('stats_sec', chrome.i18n.getMessage("stats_sec"));
   setChildTextNode('switchSide', chrome.i18n.getMessage("switchSide"));
+
+  setChildTextNode('whitelistDesc', chrome.i18n.getMessage("whitelistDesc"));
+
+  setChildTextNode('caption1', chrome.i18n.getMessage("caption1"));
+  setChildTextNode('caption2', chrome.i18n.getMessage("caption2"));
+  setChildTextNode('caption3', chrome.i18n.getMessage("caption3"));
+
+  setChildTextNode('stats1', chrome.i18n.getMessage("stats1"));
+  setChildTextNode('stats2', chrome.i18n.getMessage("stats2"));
+  setChildTextNode('stats3', chrome.i18n.getMessage("stats3"));
+  setChildTextNode('stats4', chrome.i18n.getMessage("stats4"));
+  setChildTextNode('stats5', chrome.i18n.getMessage("stats5"));
+  setChildTextNode('stats6', chrome.i18n.getMessage("stats6"));
+  setChildTextNode('stats7', chrome.i18n.getMessage("stats7"));
+  setChildTextNode('stats8', chrome.i18n.getMessage("stats8"));
+  setChildTextNode('stats9', chrome.i18n.getMessage("stats9"));
+  setChildTextNode('stats10', chrome.i18n.getMessage("stats10"));
+  setChildTextNode('stats11', chrome.i18n.getMessage("stats11"));
+  setChildTextNode('stats12', chrome.i18n.getMessage("stats12"));
+
 }
 
 init();
