@@ -10,6 +10,7 @@ let isReportStage1 = false,
     isAdFlagActive = false,
     currentUrl = '',
     currentSkipSource = '',
+    currentSkipReason = '',
     currentVideoId = '',
     currentChannelId = '',
     currentSkip = [],
@@ -585,8 +586,9 @@ function addStyles() {
     _skipImage1.style.height = "30px";
     _skipImage1.style.transform = "";
     _skipImage1.style.float = "right";
+    _skipImage1.style.filter = "invert(96%)";
     _skipImage1.style.padding = "4px 0";
-    _skipImage1.src = getIconPath("128.png");
+    _skipImage1.src = getIconPath("help.svg");
 
     _adButton2.className = "ytp-ad-skip-button ytp-button";
 
@@ -854,7 +856,6 @@ function addEvents() {
                         if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
                             if (timestamps[i]["source"] === "adn") {
                                 let whatshouldido = whatShouldIDo(timestamps[i]);
-                                console.log(whatshouldido)
                                 if (whatshouldido) {
                                     whatshouldido = 2
                                 } else {
@@ -880,7 +881,7 @@ function addEvents() {
                                     adplayer.style.display = "block";
                                     _adSkip.style.display = "block";
                                     adButton3.style.display = "";
-                                    _skipImage1.src = getIconPath("128.png");
+                                    _skipImage1.src = getIconPath("help.svg");
                                     skipImage2.src = getIconPath("like.svg");
                                     skipImage1.style.transform = "rotate(180deg)";
                                     clearTimeout(skipTimer);
@@ -896,7 +897,7 @@ function addEvents() {
                                 currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
                                 adplayer.style.display = "block";
                                 _adSkip.style.display = "block";
-                                _skipImage1.src = getIconPath("128.png");
+                                _skipImage1.src = getIconPath("help.svg");
                                 clearTimeout(skipTimer);
 
                                 skipTimer = setTimeout(function () {
@@ -1300,6 +1301,10 @@ function addEvents() {
 
     markOutImage.addEventListener("mouseleave", function () {
         awesomeTooltip.style.display = "none";
+    });
+
+    _skipImage1.addEventListener("click", function () {
+        alert(currentSkipReason);
     });
 
     markInImage1.addEventListener("mouseover", function () {
@@ -1799,52 +1804,73 @@ function getSideTooltip() {
 }
 
 function whatShouldIDo(segment) {
+    currentSkipReason = chrome.i18n.getMessage("WNS_1")
+    skip = true
+
     if (whitelist.includes(currentChannelId)) {
-        return false
+        currentSkipReason += chrome.i18n.getMessage("WNS_2").replace("currentChannelId", currentChannelId)
+        skip = false
+    }
+    if (!(segment["moderated"] || (segment["trust"] * 100 > settings["trust"]))) {
+        currentSkipReason += chrome.i18n.getMessage("WNS_3").replace("CURRENT", segment["trust"] * 100).replace("NEEDED", settings["trust"])
+        skip = false
     }
     if (segment["paid"] === 0) {
         if (isAdFlagActive) {
-            if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {
-                return +settings["love"]["y2"]
+            if (!settings["love"]["y2"]) {
+                currentSkipReason += chrome.i18n.getMessage("WNS_4")
             } else {
-                return +false
+                if (skip) {
+                    return true
+                }
             }
         } else {
-            if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {
-                return +settings["love"]["y1"]
+            if (!settings["love"]["y1"]) {
+                currentSkipReason += chrome.i18n.getMessage("WNS_5")
             } else {
-                return +false
+                if (skip) {
+                    return true
+                }
             }
         }
     } else if (segment["acrate"] * 100 < settings["accept"]) {
         if (isAdFlagActive) {
-            if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {
-                return +settings["hate"]["y2"]
+            if (!settings["hate"]["y2"]) {
+                currentSkipReason += chrome.i18n.getMessage("WNS_6")
             } else {
-                return +false
+                if (skip) {
+                    return true
+                }
             }
         } else {
-            if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {
-                return +settings["hate"]["y1"]
+            if (!settings["hate"]["y1"]) {
+                currentSkipReason += chrome.i18n.getMessage("WNS_7")
             } else {
-                return +false
+                if (skip) {
+                    return true
+                }
             }
         }
     } else {
         if (isAdFlagActive) {
-            if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {
-                return +settings["fine"]["y2"]
+            if (!settings["fine"]["y2"]) {
+                currentSkipReason += chrome.i18n.getMessage("WNS_8")
             } else {
-                return +false
+                if (skip) {
+                    return true
+                }
             }
         } else {
-            if (segment["moderated"] || (segment["trust"] * 100 > settings["trust"])) {
-                return +settings["fine"]["y1"]
+            if (!settings["fine"]["y1"]) {
+                currentSkipReason += chrome.i18n.getMessage("WNS_9")
             } else {
-                return +false
+                if (skip) {
+                    return true
+                }
             }
         }
     }
+    return false
 }
 
 function addSegmentSkip(segment) {
