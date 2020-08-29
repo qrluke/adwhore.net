@@ -272,12 +272,6 @@ function createElemets() {
     mainButton = document.createElement("div");
     mainButtonImage = document.createElement("img");
 
-    markInButton = document.createElement("div");
-    markInImage2 = document.createElement("img");
-
-    markOutButton = document.createElement("div");
-    markOutImage2 = document.createElement("img");
-
     replayButton = document.createElement("div");
     replayButtonImage = document.createElement("img");
 
@@ -408,8 +402,6 @@ function createElemets() {
 
 function addLayout() {
     mainButton.appendChild(mainButtonImage);
-    markInButton.appendChild(markInImage2);
-    markOutButton.appendChild(markOutImage2);
 
     control.appendChild(replayButton);
     replayButton.appendChild(replayButtonImage);
@@ -486,20 +478,18 @@ function addLayout() {
 
     mark6.appendChild(option03)
 
-    segControls.appendChild(markInButton);
 
     previewInside.appendChild(markInImage);
     previewInside.appendChild(markOutImage);
     segControls.appendChild(previewInside);
 
-    segControls.appendChild(previewOutside);
-    previewOutside.appendChild(markInImage1);
-    previewOutside.appendChild(markOutImage1);
     segControls.appendChild(segStartInput);
 
     segControls.appendChild(mainButton);
     segControls.appendChild(segEndInput);
-    segControls.appendChild(markOutButton);
+    segControls.appendChild(previewOutside);
+    previewOutside.appendChild(markInImage1);
+    previewOutside.appendChild(markOutImage1);
     segControls.appendChild(helpButton);
     helpButton.appendChild(helpButtonImage);
     segControls.appendChild(uploadButton);
@@ -523,36 +513,6 @@ function addStyles() {
     mainButtonImage.style.float = "right";
     mainButtonImage.style.padding = "2px 2px";
     mainButtonImage.src = getIconPath("toggle-on.svg");
-
-    markInButton.id = "markInButton";
-    markInButton.setAttribute("role", "button");
-    markInButton.style.height = "100%";
-    markInButton.style.display = "none";
-    markInButton.style.float = "right";
-    markInButton.style.marginRight = "3px";
-    markInButton.style.cursor = "pointer";
-
-    markInImage2.style.boxSizing = "border-box";
-    markInImage2.style.height = "100%";
-    markInImage2.style.filter = "invert(96%)";
-    markInImage2.style.float = "right";
-    markInImage2.style.padding = "4px 0";
-    markInImage2.src = getIconPath("mark-out.svg");
-
-    markOutButton.id = "markOutButton";
-    markOutButton.setAttribute("role", "button");
-    markOutButton.style.height = "100%";
-    markOutButton.style.display = "none";
-    markOutButton.style.float = "right";
-    markOutButton.style.marginRight = "20px";
-    markOutButton.style.cursor = "pointer";
-
-    markOutImage2.style.boxSizing = "border-box";
-    markOutImage2.style.height = "100%";
-    markOutImage2.style.filter = "invert(96%)";
-    markOutImage2.style.float = "right";
-    markOutImage2.style.padding = "4px 0";
-    markOutImage2.src = getIconPath("mark-in.svg");
 
     replayButton.id = "replayButton";
     replayButton.setAttribute("role", "button");
@@ -925,15 +885,6 @@ function addEvents() {
         }
     });
 
-    markInButton.addEventListener("click", function () {
-        v.currentTime = segStartInput.value;
-        v.play();
-    });
-
-    markOutButton.addEventListener("click", function () {
-        v.currentTime = segEndInput.value;
-        v.play();
-    });
 
     sideButton.addEventListener("click", function () {
         window.open("https://adwhore.net/stats", '_blank');
@@ -1025,7 +976,6 @@ function addEvents() {
                 }
             }
             if (isPreviewOutside) {
-
                 if (v.currentTime >= segStartInput.value) {
                     v.currentTime = segEndInput.value;
                     isPreviewOutside = false;
@@ -1373,25 +1323,25 @@ function addEvents() {
         awesomeTooltip.style.display = "none";
     });
 
-    markInButton.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("markIn");
+    markInImage.addEventListener("mouseover", function () {
+        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewInside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
-        awesomeTooltip.style.left = (markInImage2.offsetLeft + (markInImage2.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
+        awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
 
-    markInButton.addEventListener("mouseleave", function () {
+    markInImage.addEventListener("mouseleave", function () {
         awesomeTooltip.style.display = "none";
     });
 
-    markOutButton.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("markOut");
+    markOutImage.addEventListener("mouseover", function () {
+        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewInside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
-        awesomeTooltip.style.left = (markOutImage2.offsetLeft + (markOutImage2.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
+        awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
 
-    markOutButton.addEventListener("mouseleave", function () {
+    markOutImage.addEventListener("mouseleave", function () {
         awesomeTooltip.style.display = "none";
     });
 
@@ -1427,7 +1377,6 @@ function addEvents() {
     segControlsNumberInput.addEventListener("mouseleave", function () {
         awesomeTooltip.style.display = "none";
     });
-
 
     segControlsNumberInput.onchange = function () {
         option03.checked = !(segControlsNumberInput.value === "7" || segControlsNumberInput.value === "8");
@@ -1580,9 +1529,7 @@ function enableStage2() {
     mark6.style.display = "block";
 
     segControlsNumberInput.value = "Select";
-    markInButton.style.display = "none";
     mainButton.style.display = "none";
-    markOutButton.style.display = "none";
     isReportStage2 = true;
 }
 
@@ -1605,8 +1552,6 @@ function disableStage2() {
     mark5.style.display = "none";
     mark6.style.display = "none";
 
-    markInButton.style.display = "block";
-    markOutButton.style.display = "block";
     mainButton.style.display = "block";
     replayButtonImage.src = getIconPath("close-button.svg");
     isReportStage2 = false;
@@ -1664,8 +1609,6 @@ function enableStage1(start, end) {
     mark5.style.display = "none";
     mark6.style.display = "none";
 
-    markInButton.style.display = "block";
-    markOutButton.style.display = "block";
     mainButton.style.display = "block";
     isToggle = false;
     segControlsNumberInput.value = "Select";
@@ -1674,7 +1617,6 @@ function enableStage1(start, end) {
     segControls.style.display = "flex";
 
     isFirstInputSelect = true;
-
 
     set_preview();
     isReportStage1 = true;
@@ -1712,8 +1654,6 @@ function disableStage1() {
     mark6.style.display = "none";
 
     mainButton.style.display = "none";
-    markInButton.style.display = "none";
-    markOutButton.style.display = "none";
 
     uploadButton.style.display = "none";
     helpButton.style.display = "none";
