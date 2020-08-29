@@ -242,6 +242,8 @@ function resetAndFetch() {
             //yt ads walkaround
             if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
                 set(timestamps, v.duration)
+                segEndInput.max = v.duration-0.5;
+                segStartInput.max = v.duration - 1;
             } else {
                 let stoper = document.URL;
                 let currentDuration = v.duration;
@@ -250,6 +252,8 @@ function resetAndFetch() {
                         if (v.duration && currentDuration !== v.duration) {
                             if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
                                 set(timestamps, v.duration);
+                                segEndInput.max = v.duration-0.5;
+                                segStartInput.max = v.duration - 1;
                             } else {
                                 setTimeout(run, 50);
                             }
