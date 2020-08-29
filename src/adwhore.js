@@ -778,7 +778,7 @@ function addStyles() {
     segStartInput.type = "number";
     segStartInput.min = "0";
     segStartInput.max = v.duration - 1;
-    segStartInput.step = "0.25"
+    segStartInput.step = "0.1"
     segStartInput.style.marginRight = "0px";
     segStartInput.style.marginTop = "2px";
     segStartInput.style.marginBottom = "2px";
@@ -791,8 +791,7 @@ function addStyles() {
     segEndInput.id = "replayEnd";
     segEndInput.type = "number";
     segEndInput.min = "1";
-    segEndInput.max = v.duration;
-    segEndInput.step = "0.25"
+    segEndInput.step = "0.1"
     segEndInput.style.marginRight = "3px";
     segEndInput.style.marginTop = "2px";
     segEndInput.style.marginBottom = "2px";
@@ -894,11 +893,11 @@ function addEvents() {
         if ((isReportStage1) && (!isReportStage2)) {
             if (isToggle) {
                 if (v.currentTime < segEndInput.value) {
-                    segStartInput.value = +v.currentTime.toFixed(2);
+                    segStartInput.value = +v.currentTime.toFixed(1);
                 }
             } else {
                 if (v.currentTime > segStartInput.value) {
-                    segEndInput.value = +v.currentTime.toFixed(2);
+                    segEndInput.value = +v.currentTime.toFixed(1);
                 }
             }
             set_preview();
@@ -1103,14 +1102,14 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 13) {
             if (v.currentTime < segEndInput.value) {
-                segStartInput.value = +(parseFloat(v.currentTime)).toFixed(2);
+                segStartInput.value = +(parseFloat(v.currentTime)).toFixed(1);
             }
             e.preventDefault();
             e.stopPropagation();
             return true;
         } else if (e.keyCode === 40) {
             if (segStartInput.value < parseFloat(segEndInput.value) - 0.1) {
-                segStartInput.value = +(parseFloat(segStartInput.value) - 0.1).toFixed(2);
+                segStartInput.value = +(parseFloat(segStartInput.value) - 0.1).toFixed(1);
                 v.currentTime = +parseFloat(segStartInput.value);
             }
             e.preventDefault();
@@ -1118,16 +1117,15 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 38) {
             if (segStartInput.value < parseFloat(segEndInput.value) + 0.1) {
-                segStartInput.value = +(parseFloat(segStartInput.value) + 0.1).toFixed(2);
+                segStartInput.value = +(parseFloat(segStartInput.value) + 0.1).toFixed(1);
                 v.currentTime = +parseFloat(segStartInput.value);
             }
             e.preventDefault();
             e.stopPropagation();
             return true;
         } else if (e.keyCode === 37) {
-
             if (segStartInput.value < parseFloat(segEndInput.value) - 2) {
-                segStartInput.value = +(parseFloat(segStartInput.value) - 2).toFixed(2);
+                segStartInput.value = +(parseFloat(segStartInput.value) - 2).toFixed(1);
                 v.currentTime = +parseFloat(segStartInput.value);
             }
             e.preventDefault();
@@ -1135,7 +1133,7 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 39) {
             if (segStartInput.value < parseFloat(segEndInput.value) + 2) {
-                segStartInput.value = +(parseFloat(segStartInput.value) + 2).toFixed(2);
+                segStartInput.value = +(parseFloat(segStartInput.value) + 2).toFixed(1);
                 v.currentTime = +parseFloat(segStartInput.value);
             }
             e.preventDefault();
@@ -1198,14 +1196,14 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 13) {
             if (v.currentTime > +parseFloat(segStartInput.value)) {
-                segEndInput.value = +v.currentTime.toFixed(2);
+                segEndInput.value = +v.currentTime.toFixed(1);
             }
             e.preventDefault();
             e.stopPropagation();
             return true;
         } else if (e.keyCode === 40) {
             if (segEndInput.value > +parseFloat(segStartInput.value) - 0.1) {
-                segEndInput.value = +(parseFloat(segEndInput.value) - 0.1).toFixed(2);
+                segEndInput.value = +(parseFloat(segEndInput.value) - 0.1).toFixed(1);
                 v.currentTime = +parseFloat(segEndInput.value);
             }
             e.preventDefault();
@@ -1213,7 +1211,7 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 38) {
             if (segEndInput.value > +parseFloat(segStartInput.value) + 0.1) {
-                segEndInput.value = +(parseFloat(segEndInput.value) + 0.1).toFixed(2);
+                segEndInput.value = +(parseFloat(segEndInput.value) + 0.1).toFixed(1);
                 v.currentTime = +parseFloat(segEndInput.value);
             }
             e.preventDefault();
@@ -1221,7 +1219,7 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 37) {
             if (segEndInput.value > parseFloat(segStartInput.value) - 2) {
-                segEndInput.value = +(parseFloat(segEndInput.value) - 2).toFixed(2);
+                segEndInput.value = +(parseFloat(segEndInput.value) - 2).toFixed(1);
                 v.currentTime = +parseFloat(segEndInput.value);
             }
             e.preventDefault();
@@ -1229,7 +1227,7 @@ function addEvents() {
             return true;
         } else if (e.keyCode === 39) {
             if (segEndInput.value > parseFloat(segStartInput.value) + 2) {
-                segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(2);
+                segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(1);
                 v.currentTime = +parseFloat(segEndInput.value);
             }
             e.preventDefault();
@@ -1578,17 +1576,16 @@ function enableStage1(start, end) {
         $('.html5-video-player').removeClass('ytp-autohide')
     }, 100)
 
+    segStartInput.value = +start.toFixed(1);
 
-    segStartInput.value = +start.toFixed(2);
-
-    segEndInput.value = +end.toFixed(2);
+    segEndInput.value = +end.toFixed(1);
 
     if (+segEndInput.value >= v.duration) {
-        segEndInput.value = +(v.duration).toFixed(2) - 0.5;
+        segEndInput.value = +(v.duration).toFixed(1) - 0.5;
     }
 
-    segStartInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
-    segEndInput.style.width = (+v.duration.toFixed(2).length * 6 + 22) + "px";
+    segStartInput.style.width = (+v.duration.toFixed(1).length * 6 + 20) + "px";
+    segEndInput.style.width = (+v.duration.toFixed(1).length * 6 + 20) + "px";
 
     uploadButton.style.display = "block";
     helpButton.style.display = "block";
