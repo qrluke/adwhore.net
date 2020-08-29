@@ -353,11 +353,14 @@ function createElemets() {
     option02 = document.createElement("input");
     option03 = document.createElement("input");
 
-    option01.style.width = "15px"
-    option01.style.height = "15px"
+    option01.style.display = "inline-block"
+    option01.style.verticalAlign = "middle"
 
-    option02.style.width = "15px"
-    option02.style.height = "15px"
+    option02.style.display = "inline-block"
+    option02.style.verticalAlign = "middle"
+
+    option03.style.display = "inline-block"
+    option03.style.verticalAlign = "middle"
 
     option01b = document.createElement("p");
     option01b.textContent = "🤡";
@@ -511,7 +514,7 @@ function addStyles() {
     mainButtonImage.style.height = "100%";
     mainButtonImage.style.filter = "invert(96%)";
     mainButtonImage.style.float = "right";
-    mainButtonImage.style.padding = "2px 2px";
+    mainButtonImage.style.padding = "5px 5px";
     mainButtonImage.src = getIconPath("toggle-on.svg");
 
     replayButton.id = "replayButton";
@@ -675,7 +678,7 @@ function addStyles() {
     segControlsNumberInput.style.display = "none";
     segControlsNumberInput.style.marginRight = "5px";
     segControlsNumberInput.style.width = "40px";
-    segControlsNumberInput.style.height = "25px";
+    segControlsNumberInput.style.height = "70%";
 
     /*
     0. SSL: реклама аферистов, букмекеров, казино, пирамид, инвестиций
@@ -735,21 +738,23 @@ function addStyles() {
     previewInside.style.height = "100%";
     previewInside.style.display = "none";
     previewInside.style.float = "right";
-    previewInside.style.marginRight = "10px";
+    previewInside.style.marginRight = "8px";
+    previewInside.style.marginLeft = "8px";
+
     previewInside.style.cursor = "pointer";
 
     markInImage.style.boxSizing = "border-box";
     markInImage.style.height = "100%";
     markInImage.style.filter = "invert(96%)";
     markInImage.style.float = "right";
-    markInImage.style.padding = "4px 0";
+    markInImage.style.padding = "6px 0";
     markInImage.src = getIconPath("mark-out.svg");
 
     markOutImage.style.boxSizing = "border-box";
     markOutImage.style.height = "100%";
     markOutImage.style.filter = "invert(96%)";
     markOutImage.style.float = "right";
-    markOutImage.style.padding = "4px 0";
+    markOutImage.style.padding = "6px 0";
     markOutImage.src = getIconPath("mark-in.svg");
 
     previewOutside.id = "outside";
@@ -757,21 +762,22 @@ function addStyles() {
     previewOutside.style.height = "100%";
     previewOutside.style.display = "none";
     previewOutside.style.float = "right";
-    previewOutside.style.marginRight = "10px";
+    previewOutside.style.marginRight = "8px";
+    previewOutside.style.marginLeft = "8px";
     previewOutside.style.cursor = "pointer";
 
     markInImage1.style.boxSizing = "border-box";
     markInImage1.style.height = "100%";
     markInImage1.style.filter = "invert(96%)";
     markInImage1.style.float = "right";
-    markInImage1.style.padding = "4px 0";
+    markInImage1.style.padding = "6px 0";
     markInImage1.src = getIconPath("mark-in.svg");
 
     markOutImage1.style.boxSizing = "border-box";
     markOutImage1.style.height = "100%";
     markOutImage1.style.filter = "invert(96%)";
     markOutImage1.style.float = "right";
-    markOutImage1.style.padding = "4px 0";
+    markOutImage1.style.padding = "6px 0";
     markOutImage1.src = getIconPath("mark-out.svg");
 
     segStartInput.id = "replayStart";
@@ -780,24 +786,23 @@ function addStyles() {
     segStartInput.max = v.duration - 1;
     segStartInput.step = "0.1"
     segStartInput.style.marginRight = "0px";
-    segStartInput.style.marginTop = "2px";
-    segStartInput.style.marginBottom = "2px";
-
+    segStartInput.style.marginTop = "5px";
+    segStartInput.style.marginBottom = "5px";
     segStartInput.style.borderRadius = "2px";
     segStartInput.style.display = "none";
     segStartInput.style.width = "60px";
-    segStartInput.style.height = "23px";
+    segStartInput.style.height = "50%";
 
     segEndInput.id = "replayEnd";
     segEndInput.type = "number";
     segEndInput.min = "1";
     segEndInput.step = "0.1"
     segEndInput.style.marginRight = "3px";
-    segEndInput.style.marginTop = "2px";
-    segEndInput.style.marginBottom = "2px";
+    segEndInput.style.marginTop = "5px";
+    segEndInput.style.marginBottom = "5px";
     segEndInput.style.width = "60px";
     segEndInput.style.borderRadius = "2px";
-    segEndInput.style.height = "23px";
+    segEndInput.style.height = "50%";
 
     uploadButton.id = "uploadButton";
     uploadButton.setAttribute("role", "button");
@@ -830,20 +835,14 @@ function addStyles() {
     helpButtonImage.src = getIconPath("help.svg");
 
     option01b.style.fontSize = "150%";
-
+    option01b.style.display = "inline-block"
+    option01b.style.verticalAlign = "middle"
     option02b.style.fontSize = "150%";
-
-    mark1.style.marginRight = "4px";
-    mark3.style.marginRight = "4px";
-
-    mark2.style.marginTop = "4px";
-    mark4.style.marginTop = "4px";
-    mark6.style.marginTop = "4px";
-
-
-    mark5.style.marginRight = "8px";
+    option02b.style.display = "inline-block"
+    option02b.style.verticalAlign = "middle"
     option03b.style.fontSize = "150%";
-
+    option03b.style.display = "inline-block"
+    option03b.style.verticalAlign = "middle"
 }
 
 function inject() {
@@ -1343,25 +1342,25 @@ function addEvents() {
         awesomeTooltip.style.display = "none";
     });
 
-    previewInside.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewInside");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
-        awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
-        awesomeTooltip.style.display = "block";
-    });
-
-    previewInside.addEventListener("mouseleave", function () {
-        awesomeTooltip.style.display = "none";
-    });
-
-    previewOutside.addEventListener("mouseover", function () {
+    markInImage1.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewOutside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewOutside.offsetLeft + (previewOutside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
 
-    previewOutside.addEventListener("mouseleave", function () {
+    markInImage1.addEventListener("mouseleave", function () {
+        awesomeTooltip.style.display = "none";
+    });
+
+    markOutImage1.addEventListener("mouseover", function () {
+        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewOutside");
+        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.left = (previewOutside.offsetLeft + (previewOutside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
+        awesomeTooltip.style.display = "block";
+    });
+
+    markOutImage1.addEventListener("mouseleave", function () {
         awesomeTooltip.style.display = "none";
     });
 
@@ -1517,7 +1516,7 @@ function enableStage2() {
     segStartInput.style.display = "none";
     segEndInput.style.display = "none";
     previewInside.style.display = "block";
-    previewOutside.style.display = "block";
+    previewOutside.style.display = "none";
     mark1.style.display = "block";
     mark2.style.display = "block";
     mark3.style.display = "block";
@@ -1542,7 +1541,7 @@ function disableStage2() {
     segStartInput.style.display = "block";
     segEndInput.style.display = "block";
     previewInside.style.display = "none";
-    previewOutside.style.display = "none";
+    previewOutside.style.display = "block";
     mark1.style.display = "none";
     mark2.style.display = "none";
     mark3.style.display = "none";
@@ -1597,7 +1596,7 @@ function enableStage1(start, end) {
     segStartInput.style.display = "block";
     segEndInput.style.display = "block";
     previewInside.style.display = "none";
-    previewOutside.style.display = "none";
+    previewOutside.style.display = "block";
 
     mark1.style.display = "none";
     mark2.style.display = "none";
@@ -1608,6 +1607,8 @@ function enableStage1(start, end) {
 
     mainButton.style.display = "block";
     isToggle = false;
+    mainButtonImage.style.transform = "";
+
     segControlsNumberInput.value = "Select";
 
     replayButtonImage.src = getIconPath("close-button.svg");
@@ -1640,7 +1641,7 @@ function disableStage1() {
     segStartInput.style.display = "none";
     segEndInput.style.display = "none";
     previewInside.style.display = "none";
-    previewOutside.style.display = "none";
+    previewOutside.style.display = "block";
 
     mark1.style.display = "none";
     mark2.style.display = "none";
