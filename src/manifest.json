@@ -16,7 +16,7 @@
         "adwhore.js",
         "jquery.min.js"
       ],
-      "run_at": "document_end"
+      "run_at": "document_start"
     }
   ],
   "browser_specific_settings": {
