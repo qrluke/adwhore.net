@@ -11,6 +11,7 @@ let isReportStage1 = false,
     currentUrl = '',
     currentSkipSource = '',
     currentVideoId = '',
+    currentChannelId = '',
     currentSkip = [],
     skipTimer,
     pathFinder,
@@ -77,6 +78,13 @@ let youtubeMutation = setTimeout(function tick() {
                     didWeChangeYouTubeQuestionMark = true;
                 }
                 resetAndFetch();
+                setTimeout(function fetchWhenCidIsKnown() {
+                    if (getChannelID() !== "") {
+                        resetAndFetch();
+                    } else {
+                        setTimeout(fetchWhenCidIsKnown, 100);
+                    }
+                }, 100);
             } else {
                 currentUrl = "";
                 if (v) {
@@ -131,12 +139,12 @@ function resetAndFetch() {
     isSideActive = false;
     timestamps = [];
     currentVideoId = getYouTubeID(currentUrl);
-
+    currentChannelId = getChannelID();
 
     $.ajax({
         dataType: "json",
         url: "https://karma.adwhore.net:47976/getVideoData",
-        data: {vID: currentVideoId},
+        data: {vID: currentVideoId, cID: currentChannelId},
         success: function (sb) {
             pathFinder = sb["pathfinder"];
             pathFinderSide = sb["pathfinder"]["side"];
@@ -243,7 +251,7 @@ function resetAndFetch() {
             //yt ads walkaround
             if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
                 set(timestamps, v.duration)
-                segEndInput.max = v.duration-0.5;
+                segEndInput.max = v.duration - 0.5;
                 segStartInput.max = v.duration - 1;
             } else {
                 let stoper = document.URL;
@@ -253,7 +261,7 @@ function resetAndFetch() {
                         if (v.duration && currentDuration !== v.duration) {
                             if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
                                 set(timestamps, v.duration);
-                                segEndInput.max = v.duration-0.5;
+                                segEndInput.max = v.duration - 0.5;
                                 segStartInput.max = v.duration - 1;
                             } else {
                                 setTimeout(run, 50);
@@ -1699,6 +1707,16 @@ function getYouTubeID(url) {
         ID = url;
     }
     return ID;
+}
+
+function getChannelID(url) {
+    var list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
+    for (let item of list) {
+        if (item.href.includes("channel")) {
+            return item.href.replace("https://www.youtube.com/channel/", "")
+        }
+    }
+    return ""
 }
 
 function createBar() {
