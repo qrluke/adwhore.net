@@ -92,7 +92,7 @@ let youtubeMutation = setTimeout(function tick() {
                     } else {
                         setTimeout(fetchWhenCidIsKnown, 100);
                     }
-                }, 1250);
+                }, 2500);
             } else {
                 currentUrl = "";
                 if (v) {
