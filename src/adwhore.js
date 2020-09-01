@@ -14,6 +14,8 @@ let isReportStage1 = false,
     currentVideoId = '',
     currentChannelId = '',
     currentSkip = [],
+    isReportActive = false,
+    isReplace = false,
     skipTimer,
     pathFinder,
     settings,
@@ -309,13 +311,13 @@ function createElemets() {
     option03.style.verticalAlign = "middle"
 
     option01b = document.createElement("p");
-    option01b.textContent = "🤡";
+    option01b.innerHTML = "🤡";
 
     option02b = document.createElement("p");
-    option02b.textContent = "🎭";
+    option02b.innerHTML = "🎭";
 
     option03b = document.createElement("p");
-    option03b.textContent = "💰";
+    option03b.innerHTML = "💰";
 
     option01.name = "option01";
     option01.value = "a1";
@@ -628,7 +630,6 @@ function addStyles() {
     awesomeTooltipBody.style.borderRadius = "2px";
 
     awesomeTooltipBodyText.className = "ytp-text-tooltip";
-    awesomeTooltipBodyText.textContent = "Repeat";
 
     segControls.style.display = "none";
     segControls.style.height = "100%";
@@ -885,10 +886,14 @@ function addEvents() {
                                 }
                                 if (whatshouldido === 2) {
                                     currentSkipSource = "adn";
+                                    isReportActive = false;
+                                    isReplace = false;
+                                    switchModes()
                                     currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
                                     addSegmentSkip(currentSkip)
                                     v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
                                     adplayer.style.display = "block";
+                                    isReportActive = false;
                                     adskip.style.display = "block";
                                     adButton3.style.display = "";
                                     clearTimeout(skipTimer);
@@ -898,10 +903,14 @@ function addEvents() {
                                     }, 8000);
                                 } else if (whatshouldido === 1) {
                                     currentSkipSource = "adn";
+                                    isReportActive = false;
+                                    isReplace = false;
+                                    switchModes()
                                     currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
 
                                     adplayer.style.display = "block";
                                     _adSkip.style.display = "block";
+                                    adskip.style.display = "none";
                                     adButton3.style.display = "";
                                     _skipImage1.src = getIconPath("help.svg");
                                     skipImage2.src = getIconPath("like.svg");
@@ -916,9 +925,13 @@ function addEvents() {
                                 }
                             } else {
                                 currentSkipSource = "sb";
+                                isReportActive = false;
+                                isReplace = false;
+                                switchModes()
                                 currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
                                 adplayer.style.display = "block";
                                 _adSkip.style.display = "block";
+                                adskip.style.display = "none";
                                 _skipImage1.src = getIconPath("help.svg");
                                 clearTimeout(skipTimer);
 
@@ -966,66 +979,124 @@ function addEvents() {
     });
 
     adButton1.addEventListener("click", function () {
-        if (skipImage1.style.transform === "") {
-            v.currentTime = currentSkip[0] + 1;
-            skipImage1.style.transform = "rotate(180deg)";
-            v.play();
+        if (isReportActive) {
+            adskip.style.display = "none";
+            adButton3.style.display = "";
+            skipImage2.src = getIconPath("like.svg");
+            clearTimeout(skipTimer);
+
+            disableStage2()
+            disableStage1()
+
+            enableStage1(currentSkip[0], currentSkip[1])
+            v.pause()
         } else {
-            v.currentTime = currentSkip[1];
-            skipImage1.style.transform = "";
-            v.play();
+            if (skipImage1.style.transform === "") {
+                v.currentTime = currentSkip[0] + 1;
+                skipImage1.style.transform = "rotate(180deg)";
+                v.play();
+            } else {
+                v.currentTime = currentSkip[1];
+                skipImage1.style.transform = "";
+                v.play();
+            }
         }
     });
 
 
     adButton2.addEventListener("click", function () {
-        if (currentSkipSource === "adn") {
-            skipImage2.src = getIconPath("heart.svg");
-            $.ajax({
-                dataType: "json",
-                type: "POST",
-                url: "https://karma.adwhore.net:47976/addSegmentLike",
-                data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
-                success: function (sb) {
-                    chrome.storage.sync.set({"likes": settings["likes"] + 1});
-                    // alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                }
-            });
-            setTimeout(function () {
-                adskip.style.display = "none"
-                skipImage2.src = getIconPath("like.svg");
-            }, 1000);
-        } else {
+        if (isReportActive) {
+            adskip.style.display = "none";
+            adButton3.style.display = "";
+            skipImage2.src = getIconPath("like.svg");
+            clearTimeout(skipTimer);
+            isReplace = true;
             disableStage2()
             disableStage1()
-
             enableStage1(currentSkip[0], currentSkip[1])
-            enableStage2()
             v.pause()
+
+
+        } else {
+            if (currentSkipSource === "adn") {
+                skipImage2.src = getIconPath("heart.svg");
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: "https://karma.adwhore.net:47976/addSegmentLike",
+                    data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
+                    success: function (sb) {
+                        chrome.storage.sync.set({"likes": settings["likes"] + 1});
+                        // alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                        if (settings["moderator"]) {
+                            let rewardValue = prompt("enter reward: n/10");
+                            if (rewardValue != null) {
+                                $.ajax({
+                                    dataType: "json",
+                                    type: "POST",
+                                    url: "https://karma.adwhore.net:47976/addReward",
+                                    data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"], reward: rewardValue}),
+                                    success: function (sb) {
+                                        alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+                setTimeout(function () {
+                    adskip.style.display = "none"
+                    skipImage2.src = getIconPath("like.svg");
+                }, 1000);
+            } else {
+                disableStage2()
+                disableStage1()
+
+                enableStage1(currentSkip[0], currentSkip[1])
+                enableStage2()
+                v.pause()
+            }
         }
     });
 
     adButton3.addEventListener("click", function () {
-        let age = prompt(`Report on ${currentVideoId} skip ${currentSkip}\n\nWhat's wrong?`);
+        if (isReportActive) {
+            let comment = prompt(`Report on ${currentVideoId} skip ${currentSkip}.\n\n` + chrome.i18n.getMessage("reportText"));
+            if (comment != null) {
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: "https://karma.adwhore.net:47976/addSegmentReport",
+                    data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
+                    success: function (sb) {
+                        alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                        resetAndFetch()
+                    }
+                });
+                v.currentTime = currentSkip[0] + 1;
 
-        $.ajax({
-            dataType: "json",
-            type: "POST",
-            url: "https://karma.adwhore.net:47976/addSegmentReport",
-            data: JSON.stringify({sID: currentSkip[2], text: age, secret: settings["secret"]}),
-            success: function (sb) {
-                alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                adskip.style.display = "none";
+                adButton3.style.display = "";
+                skipImage2.src = getIconPath("like.svg");
+                clearTimeout(skipTimer);
             }
-        });
-        v.currentTime = currentSkip[0] + 1;
-        adskip.style.display = "none"
+        } else {
+            isReportActive = !isReportActive
+            switchModes()
+        }
     });
 
     adButton4.addEventListener("click", function () {
-        adskip.style.display = "none"
-        adButton3.style.display = "";
-        skipImage2.src = getIconPath("like.svg");
-        clearTimeout(skipTimer);
+        if (isReportActive) {
+            isReportActive = false;
+            isReplace = false;
+            switchModes()
+        } else {
+            adskip.style.display = "none";
+            adButton3.style.display = "";
+            skipImage2.src = getIconPath("like.svg");
+            clearTimeout(skipTimer);
+        }
     });
 
     _adButton2.addEventListener("click", function () {
@@ -1036,6 +1107,11 @@ function addEvents() {
             addSegmentSkip(currentSkip)
 
             adButton3.style.display = ""
+
+            isReportActive = false;
+            isReplace = false;
+
+            switchModes();
 
             adskip.style.display = "block";
             _adSkip.style.display = "none";
@@ -1234,11 +1310,11 @@ function addEvents() {
 
     replayButtonImage.addEventListener("mouseover", function () {
         if (isReportStage2) {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("edit");
+            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("edit");
         } else if (isReportStage1) {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("close");
+            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("close");
         } else {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("addsegment");
+            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("addsegment");
         }
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (replayButtonImage.offsetLeft + (replayButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
@@ -1250,7 +1326,7 @@ function addEvents() {
     });
 
     sideButtonImage.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = getSideTooltip()
+        awesomeTooltipBodyText.innerHTML = getSideTooltip()
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (sideButtonImage.offsetLeft + (sideButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
@@ -1261,7 +1337,7 @@ function addEvents() {
     });
 
     flagButtonImage.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = getFlagTooltip();
+        awesomeTooltipBodyText.innerHTML = getFlagTooltip();
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (flagButtonImage.offsetLeft + (flagButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
@@ -1273,9 +1349,19 @@ function addEvents() {
 
     uploadButton.addEventListener("mouseover", function () {
         if (isReportStage2) {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("send");
+            if (isReportActive) {
+                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("replaceSubmit");
+            } else {
+                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("send");
+            }
         } else {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("checkBeforeSend");
+            if (isReportActive && isReplace) {
+                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("replaceSelectCat");
+            } else if (isReportActive) {
+                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("editTimecodes");
+            } else {
+                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkBeforeSend");
+            }
         }
 
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
@@ -1289,9 +1375,9 @@ function addEvents() {
 
     helpButton.addEventListener("mouseover", function () {
         if (isReportStage2) {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("clickHelp2");
+            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("clickHelp2");
         } else {
-            awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("clickHelp1");
+            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("clickHelp1");
         }
 
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
@@ -1304,7 +1390,7 @@ function addEvents() {
     });
 
     markInImage.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewInside");
+        awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewInside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
@@ -1315,7 +1401,7 @@ function addEvents() {
     });
 
     markOutImage.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewInside");
+        awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewInside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
@@ -1330,7 +1416,7 @@ function addEvents() {
     });
 
     markInImage1.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewOutside");
+        awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewOutside.offsetLeft + (previewOutside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
@@ -1341,7 +1427,7 @@ function addEvents() {
     });
 
     markOutImage1.addEventListener("mouseover", function () {
-        awesomeTooltipBodyText.textContent = chrome.i18n.getMessage("previewOutside");
+        awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
         awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewOutside.offsetLeft + (previewOutside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
@@ -1401,59 +1487,126 @@ function addEvents() {
     });
 
     uploadButton.addEventListener("click", function () {
-        isReportStage2 = !isReportStage2;
-        if (isReportStage2) {
-            if (settings["segments"] < 2) {
-                isPreviewInside = false;
-                isPreviewOutside = false;
-                isPreviewOutsideBeforeSend = true;
-                v.currentTime = segStartInput.value - 1.5;
-                v.play();
-            } else {
-                enableStage2();
-            }
-        } else {
-            if (segControlsNumberInput.value !== "Select") {
-                if ((+segEndInput.value - +segStartInput.value) / 90 * 101 > v.duration) {
+        if (isReportActive && !isReplace) {
+            let json = {
+                "sID": currentSkip[2],
+                "secret": settings["secret"],
+                "start": +segStartInput.value,
+                "end": +segEndInput.value,
+            };
+            $.ajax
+            ({
+                url: "https://karma.adwhore.net:47976/editSegment",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: 'application/json',
+                async: false,
+                success: function (data) {
+                    alert("Success | Удачно\n" + JSON.stringify(data));
+                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                },
+                error: function (s, status, error) {
+                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
                     isReportStage2 = !isReportStage2;
-                    alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
-                } else {
-                    let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment")) || "";
-                    let json = {
-                        "vID": currentVideoId,
-                        "secret": settings["secret"],
-                        "category": segControlsNumberInput.value,
-                        "start": +segStartInput.value,
-                        "end": +segEndInput.value,
-                        "pizdabol": option02.checked,
-                        "honest": option02.checked,
-                        "paid": option03.checked,
-                        "comment": comment
-                    };
+                }
+            })
+            disableStage2()
+            disableStage1()
+            resetAndFetch()
 
-                    $.ajax
-                    ({
-                        url: "https://karma.adwhore.net:47976/addSegment",
-                        type: "POST",
-                        data: JSON.stringify(json),
-                        contentType: 'application/json',
-                        async: false,
-                        success: function (data) {
-                            alert("Success | Удачно\n" + JSON.stringify(data));
-                            disableStage2()
-                            disableStage1()
-                            resetAndFetch()
-                            chrome.storage.sync.set({"segments": settings["segments"] + 1});
-                        },
-                        error: function (s, status, error) {
-                            alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
-                            isReportStage2 = !isReportStage2;
-                        }
-                    })
+            isReplace = false;
+            isReportActive = false;
+        } else {
+            isReportStage2 = !isReportStage2;
+            if (isReportStage2) {
+                if (settings["segments"] < 2) {
+                    isPreviewInside = false;
+                    isPreviewOutside = false;
+                    isPreviewOutsideBeforeSend = true;
+                    v.currentTime = segStartInput.value - 1.5;
+                    v.play();
+                } else {
+                    enableStage2();
                 }
             } else {
-                isReportStage2 = !isReportStage2;
-                alert(chrome.i18n.getMessage("categoryMissing"));
+                if (segControlsNumberInput.value !== "Select") {
+                    if ((+segEndInput.value - +segStartInput.value) / 90 * 101 > v.duration) {
+                        isReportStage2 = !isReportStage2;
+                        alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
+                    } else {
+                        let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment")) || "";
+
+                        if (isReportActive && isReplace) {
+                            let json = {
+                                "secret": settings["secret"],
+                                "category": segControlsNumberInput.value,
+                                "start": +segStartInput.value,
+                                "end": +segEndInput.value,
+                                "pizdabol": option02.checked,
+                                "honest": option02.checked,
+                                "paid": option03.checked,
+                                "comment": comment,
+                                "sID": currentSkip[2]
+                            };
+
+                            $.ajax
+                            ({
+                                url: "https://karma.adwhore.net:47976/replaceSegment",
+                                type: "POST",
+                                data: JSON.stringify(json),
+                                contentType: 'application/json',
+                                async: false,
+                                success: function (data) {
+                                    alert("Success | Удачно\n" + JSON.stringify(data));
+                                    disableStage2()
+                                    disableStage1()
+                                    resetAndFetch()
+                                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                                },
+                                error: function (s, status, error) {
+                                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                                    isReportStage2 = !isReportStage2;
+                                }
+                            })
+                        } else {
+                            let json = {
+                                "vID": currentVideoId,
+                                "secret": settings["secret"],
+                                "category": segControlsNumberInput.value,
+                                "start": +segStartInput.value,
+                                "end": +segEndInput.value,
+                                "pizdabol": option02.checked,
+                                "honest": option02.checked,
+                                "paid": option03.checked,
+                                "comment": comment
+                            };
+                            $.ajax
+                            ({
+                                url: "https://karma.adwhore.net:47976/addSegment",
+                                type: "POST",
+                                data: JSON.stringify(json),
+                                contentType: 'application/json',
+                                async: false,
+                                success: function (data) {
+                                    alert("Success | Удачно\n" + JSON.stringify(data));
+                                    disableStage2()
+                                    disableStage1()
+                                    resetAndFetch()
+                                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                                },
+                                error: function (s, status, error) {
+                                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                                    isReportStage2 = !isReportStage2;
+                                }
+                            })
+                        }
+
+
+                    }
+                } else {
+                    isReportStage2 = !isReportStage2;
+                    alert(chrome.i18n.getMessage("categoryMissing"));
+                }
             }
         }
     });
@@ -1486,10 +1639,15 @@ function addEvents() {
         if (isReportStage2) {
             disableStage2()
         } else {
+            isReportActive = false;
+            isReplace = false;
+
             isReportStage1 = !isReportStage1;
             if (isReportStage1) {
                 enableStage1(v.currentTime, v.currentTime + 40)
             } else {
+
+
                 disableStage1()
             }
         }
@@ -1498,7 +1656,15 @@ function addEvents() {
 
 function enableStage2() {
     replayButtonImage.src = getIconPath("back.svg");
-
+    if (!isReportActive) {
+        uploadButtonImage.src = getIconPath("cloud-upload.svg");
+    } else {
+        if (isReplace) {
+            uploadButtonImage.src = getIconPath("replace.svg");
+        } else {
+            uploadButtonImage.src = getIconPath("resize.svg");
+        }
+    }
     isFirstInputSelect = true;
 
     segControlsNumberInput.style.display = "block";
@@ -1550,6 +1716,16 @@ function disableStage2() {
 }
 
 function enableStage1(start, end) {
+    if (!isReportActive) {
+        uploadButtonImage.src = getIconPath("cloud-upload.svg");
+    } else {
+        if (isReplace) {
+            uploadButtonImage.src = getIconPath("replace.svg");
+        } else {
+            uploadButtonImage.src = getIconPath("resize.svg");
+        }
+    }
+
     const ytplayer = document.querySelector('.html5-video-player')
     const progressbar = ytplayer.querySelector('.ytp-play-progress')
     const loadbar = ytplayer.querySelector('.ytp-load-progress')
@@ -1893,6 +2069,20 @@ function whatShouldIDo(segment) {
         }
     }
     return false
+}
+
+function switchModes() {
+    if (isReportActive) {
+        skipImage1.src = getIconPath("resize.svg");
+        skipImage2.src = getIconPath("replace.svg");
+        skipImage3.src = getIconPath("delete.svg");
+        skipImage4.src = getIconPath("undo.svg");
+    } else {
+        skipImage1.src = getIconPath("backward.svg");
+        skipImage2.src = getIconPath("like.svg");
+        skipImage3.src = getIconPath("dislike.svg");
+        skipImage4.src = getIconPath("close-button.svg");
+    }
 }
 
 function addSegmentSkip(segment) {

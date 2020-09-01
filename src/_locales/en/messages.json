@@ -192,7 +192,7 @@
     "message": "Edit snippet"
   },
   "addsegment": {
-    "message": "Report advertisement (ADWHORE.NET extension)"
+    "message": "Report advertisement</br>(ADWHORE.NET extension)"
   },
   "send": {
     "message": "Send"
@@ -270,22 +270,22 @@
     "message": "You seem to be trying to send an ad segment longer than 90% of the video.\nWe cannot accept such a segment.\nADN is sent with ad integrations, and you are sending a whole ad video.\nA person opening a video wants to watch it but not skip completely.\nPerhaps in the future we will make a special notion that the video is a commercial.\nSoryan :("
   },
   "countryStatsWIP": {
-    "message": "There should be statistics for your country, but I'm still working on it! Check it out later. P.S. You can hide flags in ADWHORE.NET extension settings."
+    "message": "There should be statistics for your country, but I'm still working on it! Check it out later.</br></br>P.S. You can hide flags in ADWHORE.NET extension settings."
   },
   "404": {
-    "message": "Our users haven't watched this video yet. You can be the first! Click on the button to learn how to send a report! P.S. You can hide flags in ADWHORE.NET extension settings."
+    "message": "Our users haven't watched this video yet. You can be the first! Click on the button to learn how to send a report!</br></br>P.S. You can hide flags in ADWHORE.NET extension settings."
   },
   "clickToViewColdWarStats": {
-    "message": ". Click to view Cold War statistics. P.S. You can hide flags in ADWHORE.NET extension settings."
+    "message": ".</br></br>Click to view Cold War statistics.</br></br>P.S. You can hide flags in ADWHORE.NET extension settings."
   },
   "UN_date": {
-    "message": " discovered the ad first. It happened: "
+    "message": " discovered the ad first.</br></br>It happened: "
   },
   "NATO_date": {
-    "message": " cleared the video from the communists. It happened: "
+    "message": " cleared the video from the communists.</br>It happened: "
   },
   "SOV_date": {
-    "message": " finished censoring first. It happened: "
+    "message": " finished censoring first.</br>It happened: "
   },
   "UN_pathfinder_prefix": {
     "message": "Peacemaker "
@@ -403,5 +403,17 @@
   },
   "WNS_9": {
     "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Solution: check this category in the menu."
+  },
+  "replaceSelectCat": {
+    "message": "Select category to submit replacement"
+  },
+  "replaceSubmit": {
+    "message": "Submit replacement"
+  },
+  "editTimecodes": {
+    "message": "Submit new timecodes for review"
+  },
+  "reportText": {
+    "message": "Mods will be notified, but if this is your segment - it will be disabled immediately.\n\nWhat's wrong?"
   }
 }
