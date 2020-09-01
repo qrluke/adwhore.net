@@ -88,6 +88,9 @@ let youtubeMutation = setTimeout(function tick() {
                 resetAndFetch();
                 setTimeout(function fetchWhenCidIsKnown() {
                     if (getChannelID() !== "") {
+                        if (settings["moderator"]) {
+                            injectModeratorPanel()
+                        }
                         resetAndFetch(false);
                     } else {
                         setTimeout(fetchWhenCidIsKnown, 100);
@@ -344,6 +347,25 @@ function createElemets() {
 
     helpButton = document.createElement("div");
     helpButtonImage = document.createElement("img");
+}
+
+function injectModeratorPanel() {
+    fetch(chrome.extension.getURL('moderator.html'))
+        .then(response => response.text())
+        .then(data => {
+            var template = document.createElement('template');
+            html = data.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            let dad = template.content.firstChild
+
+            $('ytd-video-primary-info-renderer')[0].insertBefore(dad, $('ytd-video-primary-info-renderer')[0].firstChild);
+            //$('ytd-video-primary-info-renderer').innerHTML += data;
+            // other code
+            // eg update injected elements,
+            // add event listeners or logic to connect to other parts of the app
+        }).catch(err => {
+        // handle error
+    });
 }
 
 function addLayout() {

@@ -20,6 +20,7 @@ var defaults = {
     "askedForHelp": 0,
     "likes": 0,
     "segments": 0,
+    "moderator": 0,
     "name": "None",
     "enable": true,
     "show_flags": true,
