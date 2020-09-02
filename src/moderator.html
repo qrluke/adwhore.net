@@ -1,8 +1,32 @@
-<div style="margin-bottom:15px; background:#F00; border: 1px solid">
+<div id = "ADN_MOD_PANEL" style="margin-bottom:15px; background:#F00; border: 1px solid">
     <h2>ADWHORE.NET - модераторская панелька</h2>
-    <div style="height:224px;
+    <form action="https://karma.adwhore.net:47976/getRandomForMod">
+        <input type="submit" value="Go to random segment" />
+    </form>
+    <div style="height:54px;
    overflow:auto;
     background:#fff;">
-        hello world
+        <table id="adnModTable" border="1">
+            <thead>
+            <th>id</th>
+            <th>time</th>
+            <th>mod?</th>
+            <th>trust</th>
+            <th>acrate</th>
+            <th>st</th>
+            <th>end</th>
+            <th>user</th>
+            <th>country</th>
+            <th>side</th>
+            <th>category</th>
+            <th>clown</th>
+            <th>maski</th>
+            <th>paid?</th>
+
+            <th>comment</th>
+            </thead>
+            <tbody id = "adnModList">
+            </tbody>
+        </table>
     </div>
 </div>

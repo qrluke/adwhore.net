@@ -12,6 +12,7 @@ let isReportStage1 = false,
     currentSkipSource = '',
     currentSkipReason = '',
     currentVideoId = '',
+    modSegmentData = {},
     currentChannelId = '',
     currentSkip = [],
     isReportActive = false,
@@ -88,11 +89,15 @@ let youtubeMutation = setTimeout(function tick() {
                     didWeChangeYouTubeQuestionMark = true;
                 }
                 resetAndFetch();
+
+                setTimeout(function test() {
+                    if (settings["moderator"]) {
+                        injectModeratorPanel()
+                    }
+                }, 800);
+
                 setTimeout(function fetchWhenCidIsKnown() {
                     if (getChannelID() !== "") {
-                        if (settings["moderator"]) {
-                            injectModeratorPanel()
-                        }
                         resetAndFetch(false);
                     } else {
                         setTimeout(fetchWhenCidIsKnown, 100);
@@ -352,6 +357,11 @@ function createElemets() {
 }
 
 function injectModeratorPanel() {
+    let adnPanel = document.getElementById("ADN_MOD_PANEL");
+    if(adnPanel){
+        adnPanel.remove()
+    }
+
     fetch(chrome.extension.getURL('moderator.html'))
         .then(response => response.text())
         .then(data => {
@@ -359,8 +369,26 @@ function injectModeratorPanel() {
             html = data.trim(); // Never return a text node of whitespace as the result
             template.innerHTML = html;
             let dad = template.content.firstChild
-
             $('ytd-video-primary-info-renderer')[0].insertBefore(dad, $('ytd-video-primary-info-renderer')[0].firstChild);
+
+            $("#adnModList").empty();
+            for (var i = 0; i < timestamps.length; i++) {
+                $.ajax
+                ({
+                    url: "https://karma.adwhore.net:47976/getSegmentData",
+                    data: {sID: timestamps[i]["id"]},
+                    async: false,
+                    success: function (data) {
+                        let unixTimestamp = data["timestamp"]
+                        let milliseconds = unixTimestamp * 1000 // 1575909015000
+                        let dateObject = new Date(milliseconds)
+                        let humanDateFormat = dateObject.toLocaleString()
+                        console.log(data)
+                        $('#adnModTable > tbody:last-child').append("<tr><td>" + data["id"] + "</td><td>" + humanDateFormat + "</td><td>" + data["moderated"] + "</td><td>" + data["trust"] + "</td><td>" + data["acrate"] + "</td><td>" + data["st"] + "</td><td>" + data["en"] + "</td><td>" + data["user"] + "</td><td>" + data["country"] + "</td><td>" + data["side"] + "</td><td>" + data["category"] + "</td><td>" + data["acceptable_start"] + "</td><td>" + data["pizdaboling"] + "</td><td>" + data["prepaid"] + "</td><td>" + data["comment"] + "</td></tr>");
+                    }
+                })
+            }
+
             //$('ytd-video-primary-info-renderer').innerHTML += data;
             // other code
             // eg update injected elements,
@@ -1029,7 +1057,7 @@ function addEvents() {
                         chrome.storage.sync.set({"likes": settings["likes"] + 1});
                         // alert(`Success. Reason: ${JSON.stringify(sb)}`);
                         if (settings["moderator"]) {
-                            let rewardValue = prompt("enter reward: n/10");
+                            let rewardValue = prompt("enter reward: n/10", "1");
                             if (rewardValue != null) {
                                 $.ajax({
                                     dataType: "json",
@@ -1516,6 +1544,9 @@ function addEvents() {
 
             isReplace = false;
             isReportActive = false;
+
+            v.currentTime = +segStartInput.value - 1;
+            v.play();
         } else {
             isReportStage2 = !isReportStage2;
             if (isReportStage2) {
@@ -1527,6 +1558,24 @@ function addEvents() {
                     v.play();
                 } else {
                     enableStage2();
+                    if (isReplace && settings["moderator"]) {
+                        $.ajax
+                        ({
+                            url: "https://karma.adwhore.net:47976/getSegmentData",
+                            data: {sID: currentSkip[2]},
+                            async: false,
+                            success: function (data) {
+                                modSegmentData = data
+                                option01.checked = data["acceptable_start"]
+                                option02.checked = data["pizdaboling"]
+                                option03.checked = data["prepaid"]
+                                segControlsNumberInput.value = data["category"]
+                            },
+                            error: function (s, status, error) {
+                                alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                            }
+                        })
+                    }
                 }
             } else {
                 if (segControlsNumberInput.value !== "Select") {
@@ -1534,7 +1583,12 @@ function addEvents() {
                         isReportStage2 = !isReportStage2;
                         alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                     } else {
-                        let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment")) || "";
+                        let comment = ""
+                        if (isReplace && settings["moderator"]) {
+                            comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), modSegmentData["comment"]) || "";
+                        } else {
+                            comment = prompt(chrome.i18n.getMessage("pleaseEnterComment")) || "";
+                        }
 
                         if (isReportActive && isReplace) {
                             let json = {
@@ -1561,6 +1615,13 @@ function addEvents() {
                                     disableStage2()
                                     disableStage1()
                                     resetAndFetch()
+
+                                    isReplace = false;
+                                    isReportActive = false;
+
+                                    v.currentTime = +segStartInput.value - 1;
+                                    v.play();
+
                                     chrome.storage.sync.set({"segments": settings["segments"] + 1});
                                 },
                                 error: function (s, status, error) {
