@@ -88,13 +88,26 @@ let youtubeMutation = setTimeout(function tick() {
                     console.log("ADN inserted. Let's roll!");
                     didWeChangeYouTubeQuestionMark = true;
                 }
-                resetAndFetch();
+                let adnPanel = document.getElementById("ADN_MOD_PANEL");
+                if(adnPanel){
+                    adnPanel.remove()
+                }
 
-                setTimeout(function test() {
+                resetAndFetch();
+                setTimeout(function injectModeratorPanelTimeout() {
                     if (settings["moderator"]) {
-                        injectModeratorPanel()
+                        if (timestamps.length < 1) {
+                            setTimeout(injectModeratorPanelTimeout, 200);
+                        } else {
+                            try {
+                                $('ytd-video-primary-info-renderer')[0].firstChild
+                                injectModeratorPanel()
+                            } catch {
+                                setTimeout(injectModeratorPanelTimeout, 100);
+                            }
+                        }
                     }
-                }, 800);
+                }, 100);
 
                 setTimeout(function fetchWhenCidIsKnown() {
                     if (getChannelID() !== "") {
@@ -365,8 +378,8 @@ function injectModeratorPanel() {
     fetch(chrome.extension.getURL('moderator.html'))
         .then(response => response.text())
         .then(data => {
-            var template = document.createElement('template');
-            html = data.trim(); // Never return a text node of whitespace as the result
+            let template = document.createElement('template');
+            let html = data.trim(); // Never return a text node of whitespace as the result
             template.innerHTML = html;
             let dad = template.content.firstChild
             $('ytd-video-primary-info-renderer')[0].insertBefore(dad, $('ytd-video-primary-info-renderer')[0].firstChild);
