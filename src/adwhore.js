@@ -57,7 +57,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 });
 
 var countries = ["AI", "AL", "AM", "AQ", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BM", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CD", "CF", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CZ", "DE", "DJ", "DK", "DZ", "EE", "EG", "ER", "ES", "ET", "FI", "FR", "GA", "GB", "GD", "GE", "GH", "GL", "GN", "GR", "GT", "GU", "HK", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KE", "KH", "KI", "KR", "KY", "KZ", "LA", "LR", "LS", "LV", "MD", "MK", "MN", "MT", "MU", "MX", "NA", "NE", "NG", "NL", "NZ", "NO", "PA", "PH", "PK", "PL", "PT", "PW", "RO", "RS", "RU", "SB", "SC", "SE", "SG", "SK", "SL", "SO", "ST", "SV", "SY", "SZ", "TG", "TH", "TL", "TR", "TT", "TZ", "UA", "US", "UZ", "VC", "YE", "ZM"];
-var parties = ["SOV", "SOVIET", "UN", "NATO"];
+var parties = ["SOVIET", "UN", "NATO"];
 
 let youtubeMutation = setTimeout(function tick() {
     //console.log("URL check started");
@@ -567,7 +567,7 @@ function addStyles() {
     sideButtonImage.style.border = "2";
     sideButtonImage.style.float = "right";
     sideButtonImage.style.padding = "10px 0";
-    sideButtonImage.src = getFlagByCode("SOV.svg");
+    sideButtonImage.src = getParty("no.svg");
 
     awesomeTooltip.id = "replayButtonTooltip";
     awesomeTooltip.className = "ytp-tooltip";
