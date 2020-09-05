@@ -387,22 +387,40 @@
     "message": "\n\n * Segment's trust level (CURRENT) is less than what is required (NEEDED).\n- Explanation: ADN uses an advanced reputation system to protect community from vandalism. The segment's trust level is influenced by likes and reputation of the author. This system needs to be improved and will fully launch in September.\n- Solution: reduce the required level of trust (click on the extension icon, on the left, but not recommended), or wait until the segment is checked by the moderator or other users. Don't forget to like it if it's good!"
   },
   "WNS_4": {
-    "message": "\n\n * Autoskip is disabled for the category: unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: check this category in the menu. "
+    "message": "\n\n * Autoskip is disabled for the category: unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: check this category in the advanced menu. "
   },
   "WNS_5": {
-    "message": "\n\n * Autoskip is disabled for category: unpaid, 'Inludes paid promotion' disabled.\n- Solution: tick this category in the menu."
+    "message": "\n\n * Autoskip is disabled for category: unpaid, 'Inludes paid promotion' disabled.\n- Solution: tick this category in the advanced menu."
   },
   "WNS_6": {
-    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution : Check this category in the menu. "
+    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution : Check this category in the advanced menu. "
   },
   "WNS_7": {
-    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' disabled.\n- Solution: check this category in the menu."
+    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' disabled.\n- Solution: check this category in the advanced menu."
   },
   "WNS_8": {
-    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution : Check this category in the menu. "
+    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution : Check this category in the advanced menu. "
   },
   "WNS_9": {
-    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Solution: check this category in the menu."
+    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu."
+  },
+  "WNS_4A": {
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu. "
+  },
+  "WNS_5A": {
+    "message": "\n\n * Autoskip is disabled for category: ambassador, unpaid, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: tick this category in the advanced menu."
+  },
+  "WNS_6A": {
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution : Check this category in the advanced menu. "
+  },
+  "WNS_7A": {
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu."
+  },
+  "WNS_8A": {
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Check this category in the advanced menu. "
+  },
+  "WNS_9A": {
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu."
   },
   "replaceSelectCat": {
     "message": "Select category to submit replacement"

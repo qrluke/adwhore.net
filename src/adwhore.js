@@ -2087,62 +2087,120 @@ function whatShouldIDo(segment) {
         currentSkipReason += chrome.i18n.getMessage("WNS_3").replace("CURRENT", segment["trust"] * 100).replace("NEEDED", settings["trust"])
         skip = false
     }
-    if (segment["paid"] === 0) {
-        if (isAdFlagActive) {
-            if (!settings["love"]["y2"]) {
-                currentSkipReason += chrome.i18n.getMessage("WNS_4")
+    if (segment["ambassador"] === 1) {
+        if (segment["paid"] === 0) {
+            if (isAdFlagActive) {
+                if (!settings["love"]["a2"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_4A")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
             } else {
-                if (skip) {
-                    return true
+                if (!settings["love"]["a1"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_5A")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
+            }
+        } else if (segment["acrate"] * 100 < settings["accept"]) {
+            if (isAdFlagActive) {
+                if (!settings["hate"]["a2"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_6A")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
+            } else {
+                if (!settings["hate"]["a1"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_7A")
+                } else {
+                    if (skip) {
+                        return true
+                    }
                 }
             }
         } else {
-            if (!settings["love"]["y1"]) {
-                currentSkipReason += chrome.i18n.getMessage("WNS_5")
-            } else {
-                if (skip) {
-                    return true
+            if (isAdFlagActive) {
+                if (!settings["fine"]["a2"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_8A")
+                } else {
+                    if (skip) {
+                        return true
+                    }
                 }
-            }
-        }
-    } else if (segment["acrate"] * 100 < settings["accept"]) {
-        if (isAdFlagActive) {
-            if (!settings["hate"]["y2"]) {
-                currentSkipReason += chrome.i18n.getMessage("WNS_6")
             } else {
-                if (skip) {
-                    return true
-                }
-            }
-        } else {
-            if (!settings["hate"]["y1"]) {
-                currentSkipReason += chrome.i18n.getMessage("WNS_7")
-            } else {
-                if (skip) {
-                    return true
+                if (!settings["fine"]["a1"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_9A")
+                } else {
+                    if (skip) {
+                        return true
+                    }
                 }
             }
         }
     } else {
-        if (isAdFlagActive) {
-            if (!settings["fine"]["y2"]) {
-                currentSkipReason += chrome.i18n.getMessage("WNS_8")
+        if (segment["paid"] === 0) {
+            if (isAdFlagActive) {
+                if (!settings["love"]["y2"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_4")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
             } else {
-                if (skip) {
-                    return true
+                if (!settings["love"]["y1"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_5")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
+            }
+        } else if (segment["acrate"] * 100 < settings["accept"]) {
+            if (isAdFlagActive) {
+                if (!settings["hate"]["y2"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_6")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
+            } else {
+                if (!settings["hate"]["y1"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_7")
+                } else {
+                    if (skip) {
+                        return true
+                    }
                 }
             }
         } else {
-            if (!settings["fine"]["y1"]) {
-                currentSkipReason += chrome.i18n.getMessage("WNS_9")
+            if (isAdFlagActive) {
+                if (!settings["fine"]["y2"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_8")
+                } else {
+                    if (skip) {
+                        return true
+                    }
+                }
             } else {
-                if (skip) {
-                    return true
+                if (!settings["fine"]["y1"]) {
+                    currentSkipReason += chrome.i18n.getMessage("WNS_9")
+                } else {
+                    if (skip) {
+                        return true
+                    }
                 }
             }
         }
+        return false
     }
-    return false
 }
 
 function switchModes() {
