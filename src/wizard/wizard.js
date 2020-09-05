@@ -210,7 +210,6 @@ function updateModesDisplay() {
     wizard.panels.updatePanelsContainerHeight()
 }
 
-updateModesDisplay()
 wizard.panels.updatePanelsContainerHeight()
 
 mode_select.onchange = function () {
@@ -237,4 +236,5 @@ teamsForm.addEventListener('change', function (evt) {
 
 chrome.storage.sync.get("mode", function (result) {
     mode_select.value = result["mode"]
+    updateModesDisplay()
 })
