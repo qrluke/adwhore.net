@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="w0"></title>
+    <link rel="stylesheet" href="wizard.css">
+    <script defer src="../js/font-awesome.js"></script>
+    <script src="../jquery.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div id="wizard" class="wizard">
+        <div class="wizard__content">
+            <header class="wizard__header">
+                <div class="wizard__header-overlay"></div>
+
+                <div class="wizard__header-content">
+                    <h1 class="wizard__title" id="w1"></h1>
+                    <p class="wizard__subheading" id="w2"></p>
+                </div>
+
+                <div class="wizard__steps">
+                    <nav class="steps">
+                        <div class="step">
+                            <div class="step__content">
+                                <p class="step__number">
+                                    <i class="fas fa-shield-alt"></i>
+                                </p>
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                </svg>
+
+                                <div class="lines">
+                                    <div class="line -start">
+                                    </div>
+
+                                    <div class="line -background">
+                                    </div>
+
+                                    <div class="line -progress">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step__content">
+                                <p class="step__number">
+                                    <i class="fas fa-users-cog"></i>
+                                </p>
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                </svg>
+
+                                <div class="lines">
+                                    <div class="line -background">
+                                    </div>
+
+                                    <div class="line -progress">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step__content">
+                                <p class="step__number">
+                                    <i class="fas fa-eye"></i>
+                                </p>
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                </svg>
+
+                                <div class="lines">
+                                    <div class="line -background">
+                                    </div>
+
+                                    <div class="line -progress">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step__content">
+                                <p class="step__number"><i class="fas fa-users"></i></p>
+                                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                </svg>
+
+                                <div class="lines">
+                                    <div class="line -background">
+                                    </div>
+
+                                    <div class="line -progress">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </nav>
+                </div>
+            </header>
+
+
+            <div class="panels" style="height: 586px;">
+                <div class="panel">
+                    <header class="panel__header">
+                        <h2 class="panel__title" id="w3"></h2>
+                        <p class="panel__subheading" id="w4"></p>
+                    </header>
+
+                    <p class="panel__content" id="w5"></p>
+                    <p class="panel__content" id="w6"></p>
+                    <label for="mode_select" id="w7"></label>
+                    <select id="mode_select" autofocus="true">
+                        <option value="1" id="w8"></option>
+                        <option value="2" id="w9"></option>
+                        <option value="3" id="w10"></option>
+                        <option value="4" id="w11"></option>
+                        <option value="5" id="w12"></option>
+                    </select>
+                    <ul id="config1" style="display: none">
+                        <li><small id="w13"></small></li>
+                        <li><small id="w14"></small></li>
+                        <li><small id="w15"></small></li>
+                        <li><small id="w16"></small></li>
+                        <li><small id="w17"></small></li>
+                        <li><small id="w18"></small></li>
+                    </ul>
+
+                    <ul id="config2" style="display: none">
+                        <li><small id="w19"></small></li>
+                        <li><small id="w20"></small></li>
+                        <li><small id="w21"></small></li>
+                    </ul>
+
+                    <ul id="config3" style="display: none">
+                        <li><small id="w22"></small></li>
+                        <li><small id="w23"></small></li>
+                        <li><small id="w24"></small></li>
+                    </ul>
+
+                    <ul id="config4" style="display: none">
+                        <li><small id="w25"></small></li>
+                        <ul>
+                            <li><small id="w26"></small></li>
+                        </ul>
+                        <li><small id="w27"></small></li>
+                        <li><small id="w28"></small></li>
+                    </ul>
+
+                    <ul id="config5" style="display: none">
+                        <li><small id="w29"></small></li>
+                    </ul>
+                    <p class="panel__content" id="w30"></p>
+                </div>
+
+                <div class="panel">
+                    <header class="panel__header">
+                        <h2 class="panel__title" id="w31"></h2>
+                        <p class="panel__subheading" id="w32"></p>
+                    </header>
+
+
+                    <form id="teamsForm">
+                        <label>
+                            <input type="radio" name="appearance" id="t1" data-show="1" class="input-hidden"/>
+                            <img src="../img/parties/UN.svg" alt="Default appearance"/>
+                            <b id="w33"></b>
+                        </label>
+                        </br>
+                        <label>
+                            <input type="radio" name="appearance" id="t2" data-show="2" class="input-hidden"/>
+                            <img src="../img/parties/NATO.svg" alt="Only report button"/>
+                            <b id="w34"></b>
+                        </label>
+                        </br>
+                        <label>
+                            <input type="radio" name="appearance" id="t3" data-show="3" class="input-hidden"/>
+                            <img src="../img/parties/SOVIET.svg" alt="Disable panel"/>
+                            <b id="w35"></b>
+                        </label>
+                        </br>
+                    </form>
+                    <p class="panel__content" id="display"></p>
+
+                </div>
+
+                <div class="panel">
+                    <header class="panel__header">
+                        <h2 class="panel__title" id="w36"></h2>
+                        <p class="panel__subheading" id="w37"></p>
+                    </header>
+
+                    <p class="panel__content" id="w38"></p>
+
+                    <form id="appearenceForm">
+                        <label>
+                            <input type="radio" name="appearance" id="a1" data-show="1" class="input-hidden"/>
+                            <img src="img/1.png" alt="Default appearance"/>
+                            <b id="w39"></b>
+                        </label>
+                        </br>
+                        <label>
+                            <input type="radio" name="appearance" id="a2" data-show="2" class="input-hidden"/>
+                            <img src="img/2.png" alt="Only report button"/>
+                            <b id="w40"></b>
+                        </label>
+                        </br>
+                        <label>
+                            <input type="radio" name="appearance" id="a3" data-show="3" class="input-hidden"/>
+                            <img src="img/3.png" alt="Disable panel"/>
+                            <b id="w41"></b>
+                        </label>
+                        </br>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <header class="panel__header">
+                        <h2 class="panel__title" id="w42"></h2>
+                        <p class="panel__subheading" id="w43"></p>
+                    </header>
+
+                    <p class="panel__content" id="w44"><b></b></p>
+                    <p class="panel__content" id="w45"></p>
+                    <p class="panel__content" id="w46"></p>
+                </div>
+            </div>
+
+            <div class="wizard__footer">
+                <button class="button previous" id="w47"></button>
+                <button class="button next" id="w48"></button>
+            </div>
+        </div>
+
+
+        <h1 class="wizard__congrats-message" style="display: none" id="w49">
+
+        </h1>
+    </div>
+</div>
+<script src="../localise/wizard.js"></script>
+<script src="wizard.js"></script>
+</body>
+</html>
+
