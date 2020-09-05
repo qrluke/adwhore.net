@@ -13,8 +13,6 @@ function httpGet(theUrl) {
 }
 
 var defaults = {
-    "trust": 70,
-    "accept": 70,
     "sb": false,
     "secret": null,
     "askedForHelp": 0,
@@ -23,25 +21,30 @@ var defaults = {
     "moderator": 0,
     "name": "None",
     "enable": true,
+    "mode": 1,
     "show_flags": true,
     "uuid": getUserId(),
-    "love": {
-        "y1": false,
-        "y2": false,
-        "a1": false,
-        "a2": false
-    },
-    "fine": {
-        "y1": true,
-        "y2": false,
-        "a1": false,
-        "a2": false
-    },
-    "hate": {
-        "y1": true,
-        "y2": false,
-        "a1": false,
-        "a2": false
+    "custom": {
+        "trust": 70,
+        "accept": 70,
+        "love": {
+            "y1": false,
+            "y2": false,
+            "a1": false,
+            "a2": false
+        },
+        "fine": {
+            "y1": true,
+            "y2": false,
+            "a1": false,
+            "a2": false
+        },
+        "hate": {
+            "y1": true,
+            "y2": true,
+            "a1": false,
+            "a2": false
+        }
     },
     "last_channel": {
         "name": "",
@@ -79,7 +82,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
         httpGet("https://karma.adwhore.net:47976/onInstall")
 
-        chrome.tabs.create({url: `${chrome.extension.getURL("thank-you.html")}`})
+        chrome.tabs.create({url: `${chrome.extension.getURL("wizard/wizard.html")}`})
 
     } else if (details.reason === "update") {
         var thisVersion = chrome.runtime.getManifest().version;

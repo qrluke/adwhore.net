@@ -107,27 +107,27 @@ $('[name="secret"]').blur(function () {
 
 
 chrome.storage.sync.get(null, function (result) {
-    document.getElementById("hate-y1").checked = result["hate"]["y1"];
-    document.getElementById("hate-y2").checked = result["hate"]["y2"];
-    document.getElementById("hate-a1").checked = result["hate"]["a1"];
-    document.getElementById("hate-a2").checked = result["hate"]["a2"];
+    document.getElementById("hate-y1").checked = result["custom"]["hate"]["y1"];
+    document.getElementById("hate-y2").checked = result["custom"]["hate"]["y2"];
+    document.getElementById("hate-a1").checked = result["custom"]["hate"]["a1"];
+    document.getElementById("hate-a2").checked = result["custom"]["hate"]["a2"];
+
+    document.getElementById("fine-y1").checked = result["custom"]["fine"]["y1"];
+    document.getElementById("fine-y2").checked = result["custom"]["fine"]["y2"];
+    document.getElementById("fine-a1").checked = result["custom"]["fine"]["a1"];
+    document.getElementById("fine-a2").checked = result["custom"]["fine"]["a2"];
+
+    document.getElementById("love-y1").checked = result["custom"]["love"]["y1"];
+    document.getElementById("love-y2").checked = result["custom"]["love"]["y2"];
+    document.getElementById("love-a1").checked = result["custom"]["love"]["a1"];
+    document.getElementById("love-a2").checked = result["custom"]["love"]["a2"];
+
+    document.getElementById('displayDiv1').innerText = result["custom"]["trust"];
+    document.getElementById('displayDiv2').innerText = result["custom"]["accept"];
+
     document.getElementById("nickname").value = result["name"];
     document.getElementById("secret").value = result["secret"];
 
-
-    document.getElementById("fine-y1").checked = result["fine"]["y1"];
-    document.getElementById("fine-y2").checked = result["fine"]["y2"];
-    document.getElementById("fine-a1").checked = result["fine"]["a1"];
-    document.getElementById("fine-a2").checked = result["fine"]["a2"];
-
-    document.getElementById("love-y1").checked = result["love"]["y1"];
-    document.getElementById("love-y2").checked = result["love"]["y2"];
-    document.getElementById("love-a1").checked = result["love"]["a1"];
-    document.getElementById("love-a2").checked = result["love"]["a2"];
-
-    document.getElementById("sb").checked = result["sb"];
-    document.getElementById('displayDiv1').innerText = result["trust"];
-    document.getElementById('displayDiv2').innerText = result["accept"];
     document.getElementById("enableCheck").checked = result["enable"];
     document.getElementById("show-flags").checked = result["show_flags"];
 });
@@ -141,28 +141,29 @@ for (i = 0; i < checkboxes.length; ++i) {
 
 function savePopupSettings() {
     let new_bool = {
-        "sb": document.getElementById("sb").checked,
-        "love": {
-            "y1": document.getElementById("love-y1").checked,
-            "y2": document.getElementById("love-y2").checked,
-            "a1": document.getElementById("love-a1").checked,
-            "a2": document.getElementById("love-a2").checked
-        },
-        "fine": {
-            "y1": document.getElementById("fine-y1").checked,
-            "y2": document.getElementById("fine-y2").checked,
-            "a1": document.getElementById("fine-a1").checked,
-            "a2": document.getElementById("fine-a2").checked
-        },
-        "hate": {
-            "y1": document.getElementById("hate-y1").checked,
-            "y2": document.getElementById("hate-y2").checked,
-            "a1": document.getElementById("hate-a1").checked,
-            "a2": document.getElementById("hate-a2").checked
+        "custom": {
+            "love": {
+                "y1": document.getElementById("love-y1").checked,
+                "y2": document.getElementById("love-y2").checked,
+                "a1": document.getElementById("love-a1").checked,
+                "a2": document.getElementById("love-a2").checked
+            },
+            "fine": {
+                "y1": document.getElementById("fine-y1").checked,
+                "y2": document.getElementById("fine-y2").checked,
+                "a1": document.getElementById("fine-a1").checked,
+                "a2": document.getElementById("fine-a2").checked
+            },
+            "hate": {
+                "y1": document.getElementById("hate-y1").checked,
+                "y2": document.getElementById("hate-y2").checked,
+                "a1": document.getElementById("hate-a1").checked,
+                "a2": document.getElementById("hate-a2").checked
+            },
+            "trust": +document.getElementById('displayDiv1').innerText,
+            "accept": +document.getElementById('displayDiv2').innerText
         },
         "show_flags": document.getElementById("show-flags").checked,
-        "trust": +document.getElementById('displayDiv1').innerText,
-        "accept": +document.getElementById('displayDiv2').innerText,
         "enable": document.getElementById("enableCheck").checked
     }
     chrome.storage.sync.set(new_bool);

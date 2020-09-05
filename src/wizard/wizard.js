@@ -213,14 +213,14 @@ function updateModesDisplay() {
 updateModesDisplay()
 wizard.panels.updatePanelsContainerHeight()
 
-document.getElementById("mode_select").onchange = function () {
+mode_select.onchange = function () {
     updateModesDisplay()
+    chrome.storage.sync.set({"mode": mode_select.value});
 }
 
 appearenceForm.addEventListener('change', function (evt) {
     let descriptionId = evt.target.dataset.show
 })
-
 
 const descriptions = {
     1: chrome.i18n.getMessage("w50"),
@@ -233,4 +233,8 @@ teamsForm.addEventListener('change', function (evt) {
     selectSide(+descriptionId)
     display.innerHTML = descriptions[descriptionId]
     wizard.panels.updatePanelsContainerHeight()
+})
+
+chrome.storage.sync.get("mode", function (result) {
+    mode_select.value = result["mode"]
 })

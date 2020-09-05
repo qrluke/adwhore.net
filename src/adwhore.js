@@ -24,16 +24,125 @@ let isReportStage1 = false,
     updateProgressBar,
     updateBufferProgress,
     timestamps = [],
+    config = {}
     whitelist = [];
 
-chrome.storage.sync.get(null, function (result) {
+function updateConfig() {
+    switch (+settings["mode"]) {
+        case 1:
+            config = {
+                "trust": 70,
+                "accept": 70,
+                "love": {
+                    "y1": false,
+                    "y2": false,
+                    "a1": false,
+                    "a2": false
+                },
+                "fine": {
+                    "y1": true,
+                    "y2": false,
+                    "a1": false,
+                    "a2": false
+                },
+                "hate": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": false,
+                    "a2": false
+                }
+            }
+            break;
+        case 2:
+            config = {
+                "trust": 70,
+                "accept": 100,
+                "love": {
+                    "y1": false,
+                    "y2": false,
+                    "a1": false,
+                    "a2": false
+                },
+                "fine": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                },
+                "hate": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                }
+            }
+            break;
+        case 3:
+            config = {
+                "trust": 70,
+                "accept": 100,
+                "love": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                },
+                "fine": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                },
+                "hate": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                }
+            }
+            break;
+        case 4:
+            config = {
+                "trust": 0,
+                "accept": 100,
+                "love": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                },
+                "fine": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                },
+                "hate": {
+                    "y1": true,
+                    "y2": true,
+                    "a1": true,
+                    "a2": true
+                }
+            }
+            break;
+        default:
+            config = settings["custom"]
+    }
+}
+
+function updateSettings(result) {
     settings = result;
+    updateConfig()
     whitelist = [];
     for (let item of result["whitelist"]) {
         if (!whitelist.includes(item["cID"])) {
             whitelist.push(item["cID"])
         }
     }
+}
+
+chrome.storage.sync.get(null, function (result) {
+    updateSettings(result)
 });
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
@@ -52,7 +161,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
                 chrome.storage.sync.set({"askedForHelp": 1});
             }
         }
-        settings = result;
+        updateSettings(result)
     });
 });
 
@@ -1948,7 +2057,7 @@ function getBarColor(segment) {
     } else if (segment["source"] === "adn") {
         if (segment["paid"] === 0) {
             return "#00fcd3"
-        } else if (segment["acrate"] * 100 < settings["accept"]) {
+        } else if (segment["acrate"] * 100 < config["accept"]) {
             return "#0000ff"
         } else {
             return "#ff6100"
@@ -1962,7 +2071,7 @@ function getBarOpacity(segment) {
     } else if (segment["source"] === "adn") {
         if (segment["paid"] === 0) {
             return "1.0"
-        } else if (segment["trust"] * 100 < settings["trust"]) {
+        } else if (segment["trust"] * 100 < config["trust"]) {
             return "1.0"
         } else {
             return "1.0"
@@ -2083,14 +2192,14 @@ function whatShouldIDo(segment) {
         currentSkipReason += chrome.i18n.getMessage("WNS_2").replace("currentChannelId", currentChannelId)
         skip = false
     }
-    if (!(segment["moderated"] || (segment["trust"] * 100 > settings["trust"]))) {
-        currentSkipReason += chrome.i18n.getMessage("WNS_3").replace("CURRENT", segment["trust"] * 100).replace("NEEDED", settings["trust"])
+    if (!(segment["moderated"] || (segment["trust"] * 100 > config["trust"]))) {
+        currentSkipReason += chrome.i18n.getMessage("WNS_3").replace("CURRENT", segment["trust"] * 100).replace("NEEDED", config["trust"])
         skip = false
     }
     if (segment["ambassador"] === 1) {
         if (segment["paid"] === 0) {
             if (isAdFlagActive) {
-                if (!settings["love"]["a2"]) {
+                if (!config["love"]["a2"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_4A")
                 } else {
                     if (skip) {
@@ -2098,7 +2207,7 @@ function whatShouldIDo(segment) {
                     }
                 }
             } else {
-                if (!settings["love"]["a1"]) {
+                if (!config["love"]["a1"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_5A")
                 } else {
                     if (skip) {
@@ -2106,9 +2215,9 @@ function whatShouldIDo(segment) {
                     }
                 }
             }
-        } else if (segment["acrate"] * 100 < settings["accept"]) {
+        } else if (segment["acrate"] * 100 < config["accept"]) {
             if (isAdFlagActive) {
-                if (!settings["hate"]["a2"]) {
+                if (!config["hate"]["a2"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_6A")
                 } else {
                     if (skip) {
@@ -2116,7 +2225,7 @@ function whatShouldIDo(segment) {
                     }
                 }
             } else {
-                if (!settings["hate"]["a1"]) {
+                if (!config["hate"]["a1"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_7A")
                 } else {
                     if (skip) {
@@ -2126,7 +2235,7 @@ function whatShouldIDo(segment) {
             }
         } else {
             if (isAdFlagActive) {
-                if (!settings["fine"]["a2"]) {
+                if (!config["fine"]["a2"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_8A")
                 } else {
                     if (skip) {
@@ -2134,7 +2243,7 @@ function whatShouldIDo(segment) {
                     }
                 }
             } else {
-                if (!settings["fine"]["a1"]) {
+                if (!config["fine"]["a1"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_9A")
                 } else {
                     if (skip) {
@@ -2146,7 +2255,7 @@ function whatShouldIDo(segment) {
     } else {
         if (segment["paid"] === 0) {
             if (isAdFlagActive) {
-                if (!settings["love"]["y2"]) {
+                if (!config["love"]["y2"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_4")
                 } else {
                     if (skip) {
@@ -2154,7 +2263,7 @@ function whatShouldIDo(segment) {
                     }
                 }
             } else {
-                if (!settings["love"]["y1"]) {
+                if (!config["love"]["y1"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_5")
                 } else {
                     if (skip) {
@@ -2162,9 +2271,9 @@ function whatShouldIDo(segment) {
                     }
                 }
             }
-        } else if (segment["acrate"] * 100 < settings["accept"]) {
+        } else if (segment["acrate"] * 100 < config["accept"]) {
             if (isAdFlagActive) {
-                if (!settings["hate"]["y2"]) {
+                if (!config["hate"]["y2"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_6")
                 } else {
                     if (skip) {
@@ -2172,7 +2281,7 @@ function whatShouldIDo(segment) {
                     }
                 }
             } else {
-                if (!settings["hate"]["y1"]) {
+                if (!config["hate"]["y1"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_7")
                 } else {
                     if (skip) {
@@ -2182,7 +2291,7 @@ function whatShouldIDo(segment) {
             }
         } else {
             if (isAdFlagActive) {
-                if (!settings["fine"]["y2"]) {
+                if (!config["fine"]["y2"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_8")
                 } else {
                     if (skip) {
@@ -2190,7 +2299,7 @@ function whatShouldIDo(segment) {
                     }
                 }
             } else {
-                if (!settings["fine"]["y1"]) {
+                if (!config["fine"]["y1"]) {
                     currentSkipReason += chrome.i18n.getMessage("WNS_9")
                 } else {
                     if (skip) {
