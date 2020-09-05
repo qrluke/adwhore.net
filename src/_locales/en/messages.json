@@ -461,7 +461,7 @@
   "w24": {"message": "Autoskip is enabled for all segments"},
   "w25": {"message": "Trust rate is 0%"},
   "w26": {"message": "<b>Warning:</b> this setting will auto-skip even unverified segments submitted by new users. Our self-moderation system won't help in case of massive attack."},
-  "w27": {"message": "Tolerance rate is 0%"},
+  "w27": {"message": "Tolerance rate is 100%"},
   "w28": {"message": "Autoskip is enabled for all known segments"},
   "w29": {"message": "Click the extension icon to customize your own configuration."},
   "w30": {"message": "P.S. you can skip a segment with a button even if auto-skip is disabled."},
