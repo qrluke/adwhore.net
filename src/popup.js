@@ -37,38 +37,28 @@ document.getElementById('decreaseButton2').onclick = function () {
     }
 };
 
-function ensureSecret(secret) {
-    if (secret == null) {
-        chrome.i18n.getMessage("noUserSecret")
-        return false
-    } else {
-        return true
-    }
-}
 
 document.getElementById('buttonSave1').onclick = function () {
     chrome.storage.sync.get(["name", "secret"], function (result) {
-            if (ensureSecret(result["secret"])) {
-                if (!(result["name"] === document.getElementById("nickname").value)) {
-                    $.ajax
-                    ({
-                        url: "https://karma.adwhore.net:47976/updateNickname",
-                        type: "POST",
-                        data: JSON.stringify({
-                            "secret": result["secret"],
-                            "name": document.getElementById("nickname").value
-                        }),
-                        contentType: 'application/json',
-                        success: function (data) {
-                            chrome.storage.sync.set({"name": data["name"]});
-                            document.getElementById("nickname").value = data["name"];
-                            alert("Success\n" + JSON.stringify(data));
-                        },
-                        error: function (s, status, error) {
-                            alert('error\n' + status + '\n' + error);
-                        }
-                    })
-                }
+            if (!(result["name"] === document.getElementById("nickname").value)) {
+                $.ajax
+                ({
+                    url: "https://karma.adwhore.net:47976/updateNickname",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "secret": result["secret"],
+                        "name": document.getElementById("nickname").value
+                    }),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        chrome.storage.sync.set({"name": data["name"]});
+                        document.getElementById("nickname").value = data["name"];
+                        alert("Success\n" + JSON.stringify(data));
+                    },
+                    error: function (s, status, error) {
+                        alert('error\n' + status + '\n' + error);
+                    }
+                })
             }
         }
     )
@@ -303,16 +293,14 @@ document.getElementById("switchButtonAction2").addEventListener("click", functio
     $("#stats06")[0].innerText = "...";
 
     chrome.storage.sync.get(["secret"], function (result) {
-        if (ensureSecret(result["secret"])) {
-            $.getJSON("https://karma.adwhore.net:47976/getPersonalStats", "secret=" + result["secret"], function (data) {
-                $("#stats01")[0].innerText = data["skips_for_count"];
-                $("#stats02")[0].innerText = formatTime(data["skips_for_duration"]);
-                $("#stats03")[0].innerText = data["actual_segments"];
-                $("#stats04")[0].innerText = data["moderated_segments"];
-                $("#stats05")[0].innerText = data["skips_from_count"];
-                $("#stats06")[0].innerText = formatTime(data["skips_from_duration"]);
-            });
-        }
+        $.getJSON("https://karma.adwhore.net:47976/getPersonalStats", "secret=" + result["secret"], function (data) {
+            $("#stats01")[0].innerText = data["skips_for_count"];
+            $("#stats02")[0].innerText = formatTime(data["skips_for_duration"]);
+            $("#stats03")[0].innerText = data["actual_segments"];
+            $("#stats04")[0].innerText = data["moderated_segments"];
+            $("#stats05")[0].innerText = data["skips_from_count"];
+            $("#stats06")[0].innerText = formatTime(data["skips_from_duration"]);
+        });
     })
 })
 
@@ -431,22 +419,20 @@ $('table').on('click', '.RemoveRow', function () {
 
 function selectSide(id) {
     chrome.storage.sync.get(["secret"], function (result) {
-            if (ensureSecret(result["secret"])) {
-                if (result["secret"] != null) {
-                    $.ajax
-                    ({
-                        url: "https://karma.adwhore.net:47976/switchUserSide",
-                        type: "POST",
-                        data: JSON.stringify({"secret": result["secret"], "side": id}),
-                        contentType: 'application/json',
-                        success: function (data) {
-                            chrome.storage.sync.set({"side": data["side"]});
-                        },
-                        error: function (s, status, error) {
-                            alert('error\n' + status + '\n' + error);
-                        }
-                    })
-                }
+            if (result["secret"] != null) {
+                $.ajax
+                ({
+                    url: "https://karma.adwhore.net:47976/switchUserSide",
+                    type: "POST",
+                    data: JSON.stringify({"secret": result["secret"], "side": id}),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        chrome.storage.sync.set({"side": data["side"]});
+                    },
+                    error: function (s, status, error) {
+                        alert('error\n' + status + '\n' + error);
+                    }
+                })
             }
         }
     )

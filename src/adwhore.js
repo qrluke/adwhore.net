@@ -25,16 +25,8 @@ let isReportStage1 = false,
     updateBufferProgress,
     timestamps = [],
     config = {}
-    whitelist = [];
+whitelist = [];
 
-function ensureSecret(secret) {
-    if (secret == null) {
-        chrome.i18n.getMessage("noUserSecret")
-        return false
-    } else {
-        return true
-    }
-}
 
 function updateConfig() {
     switch (+settings["mode"]) {
@@ -223,7 +215,7 @@ let youtubeMutation = setTimeout(function tick() {
                     didWeChangeYouTubeQuestionMark = true;
                 }
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
-                if(adnPanel){
+                if (adnPanel) {
                     adnPanel.remove()
                 }
 
@@ -505,7 +497,7 @@ function createElemets() {
 
 function injectModeratorPanel() {
     let adnPanel = document.getElementById("ADN_MOD_PANEL");
-    if(adnPanel){
+    if (adnPanel) {
         adnPanel.remove()
     }
 
@@ -1210,7 +1202,11 @@ function addEvents() {
                                     dataType: "json",
                                     type: "POST",
                                     url: "https://karma.adwhore.net:47976/addReward",
-                                    data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"], reward: rewardValue}),
+                                    data: JSON.stringify({
+                                        sID: currentSkip[2],
+                                        secret: settings["secret"],
+                                        reward: rewardValue
+                                    }),
                                     success: function (sb) {
                                         alert(`Success. Reason: ${JSON.stringify(sb)}`);
                                     }
@@ -1669,24 +1665,22 @@ function addEvents() {
                 "start": +segStartInput.value,
                 "end": +segEndInput.value,
             };
-            if (ensureSecret(result["secret"])) {
-                $.ajax
-                ({
-                    url: "https://karma.adwhore.net:47976/editSegment",
-                    type: "POST",
-                    data: JSON.stringify(json),
-                    contentType: 'application/json',
-                    async: false,
-                    success: function (data) {
-                        alert("Success | Удачно\n" + JSON.stringify(data));
-                        chrome.storage.sync.set({"segments": settings["segments"] + 1});
-                    },
-                    error: function (s, status, error) {
-                        alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
-                        isReportStage2 = !isReportStage2;
-                    }
-                })
-            }
+            $.ajax
+            ({
+                url: "https://karma.adwhore.net:47976/editSegment",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: 'application/json',
+                async: false,
+                success: function (data) {
+                    alert("Success | Удачно\n" + JSON.stringify(data));
+                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                },
+                error: function (s, status, error) {
+                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                    isReportStage2 = !isReportStage2;
+                }
+            })
             disableStage2()
             disableStage1()
             resetAndFetch()
@@ -1732,26 +1726,28 @@ function addEvents() {
                         isReportStage2 = !isReportStage2;
                         alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                     } else {
-                        let comment = ""
-                        if (isReplace && settings["moderator"]) {
-                            comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), modSegmentData["comment"]) || "";
-                        } else {
-                            comment = prompt(chrome.i18n.getMessage("pleaseEnterComment")) || "";
-                        }
+                        let prepo = ""
 
-                        if (isReportActive && isReplace) {
-                            let json = {
-                                "secret": settings["secret"],
-                                "category": segControlsNumberInput.value,
-                                "start": +segStartInput.value,
-                                "end": +segEndInput.value,
-                                "pizdabol": option02.checked,
-                                "honest": option02.checked,
-                                "paid": option03.checked,
-                                "comment": comment,
-                                "sID": currentSkip[2]
-                            };
-                            if (ensureSecret(result["secret"])) {
+                        if (isReplace && settings["moderator"]) {
+                            prepo = modSegmentData["comment"]
+                        }
+                        comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), prepo);
+                        console.log(comment)
+                        if (comment == null) {
+                            isReportStage2 = !isReportStage2;
+                        } else {
+                            if (isReportActive && isReplace) {
+                                let json = {
+                                    "secret": settings["secret"],
+                                    "category": segControlsNumberInput.value,
+                                    "start": +segStartInput.value,
+                                    "end": +segEndInput.value,
+                                    "pizdabol": option02.checked,
+                                    "honest": option02.checked,
+                                    "paid": option03.checked,
+                                    "comment": comment,
+                                    "sID": currentSkip[2]
+                                };
                                 $.ajax
                                 ({
                                     url: "https://karma.adwhore.net:47976/replaceSegment",
@@ -1778,20 +1774,18 @@ function addEvents() {
                                         isReportStage2 = !isReportStage2;
                                     }
                                 })
-                            }
-                        } else {
-                            let json = {
-                                "vID": currentVideoId,
-                                "secret": settings["secret"],
-                                "category": segControlsNumberInput.value,
-                                "start": +segStartInput.value,
-                                "end": +segEndInput.value,
-                                "pizdabol": option02.checked,
-                                "honest": option02.checked,
-                                "paid": option03.checked,
-                                "comment": comment
-                            };
-                            if (ensureSecret(result["secret"])) {
+                            } else {
+                                let json = {
+                                    "vID": currentVideoId,
+                                    "secret": settings["secret"],
+                                    "category": segControlsNumberInput.value,
+                                    "start": +segStartInput.value,
+                                    "end": +segEndInput.value,
+                                    "pizdabol": option02.checked,
+                                    "honest": option02.checked,
+                                    "paid": option03.checked,
+                                    "comment": comment
+                                };
                                 $.ajax
                                 ({
                                     url: "https://karma.adwhore.net:47976/addSegment",

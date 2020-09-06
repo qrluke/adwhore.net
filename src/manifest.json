@@ -43,7 +43,6 @@
   },
   "web_accessible_resources": [
     "img/*",
-    "moderator.html",
-    "moderator.js"
+    "moderator.html"
   ]
 }

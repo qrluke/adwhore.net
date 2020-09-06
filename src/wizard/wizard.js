@@ -178,33 +178,23 @@ wizard.addControls(buttonPrevious, buttonNext);
 
 // qrlk's govnocode
 
-function ensureSecret(secret) {
-    if (secret == null) {
-        chrome.i18n.getMessage("noUserSecret")
-        return false
-    } else {
-        return true
-    }
-}
 
 function selectSide(id) {
     chrome.storage.sync.get(["secret"], function (result) {
-            if (ensureSecret(result["secret"])) {
-                if (result["secret"] != null) {
-                    $.ajax
-                    ({
-                        url: "https://karma.adwhore.net:47976/switchUserSide",
-                        type: "POST",
-                        data: JSON.stringify({"secret": result["secret"], "side": id}),
-                        contentType: 'application/json',
-                        success: function (data) {
-                            chrome.storage.sync.set({"side": data["side"]});
-                        },
-                        error: function (s, status, error) {
-                            alert('error\n' + status + '\n' + error);
-                        }
-                    })
-                }
+            if (result["secret"] != null) {
+                $.ajax
+                ({
+                    url: "https://karma.adwhore.net:47976/switchUserSide",
+                    type: "POST",
+                    data: JSON.stringify({"secret": result["secret"], "side": id}),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        chrome.storage.sync.set({"side": data["side"]});
+                    },
+                    error: function (s, status, error) {
+                        alert('error\n' + status + '\n' + error);
+                    }
+                })
             }
         }
     )
