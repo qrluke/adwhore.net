@@ -77,7 +77,7 @@ document.getElementById('buttonSave2').onclick = function () {
                         chrome.storage.sync.set({"name": data["name"], "secret": data["secret"], "side": data["side"]});
                         document.getElementById("secret").value = data["secret"];
                         document.getElementById("nickname").value = data["name"];
-
+                        side_select.value = data["side"]
                         alert("Success\n" + JSON.stringify(data));
                     },
                     error: function (s, status, error) {
@@ -102,7 +102,7 @@ document.getElementById('buttonNew').onclick = function () {
                     chrome.storage.sync.set({"name": data["name"], "secret": data["secret"], "side": data["side"]});
                     document.getElementById("secret").value = data["secret"];
                     document.getElementById("nickname").value = data["name"];
-
+                    side_select.value = data["side"]
                     alert("Success\n" + JSON.stringify(data));
                 },
                 error: function (s, status, error) {
