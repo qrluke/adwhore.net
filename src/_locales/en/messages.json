@@ -312,7 +312,7 @@
     "message": "Show country and faction flag"
   },
   "switchSide": {
-    "message": "Click to switch your 'team'"
+    "message": "Click to open First-Run Wizard"
   },
   "askingForHelpPage": {
     "message": "help-us-en.html"
