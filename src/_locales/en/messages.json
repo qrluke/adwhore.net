@@ -114,46 +114,46 @@
     "message": "Ambassadors are ADN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
   },
   "category0Text": {
-    "message": "🎲🤬🤮 | SSL: advertising of scammers, bookmakers, casinos, pyramids, investments"
+    "message": "🎲🔞💩 | SSL: advertising of scammers, bookmakers, casinos, pyramids, investments"
   },
   "category0Title": {
-    "message": "Select this item if your ad is designed to find a random victim among your audience."
+    "message": "Select this item if your ad is designed to find a random victim among audience."
   },
   "category1Text": {
-    "message": "🥱🥵😔 | Prescribed ad insert not voiced by blogger"
+    "message": "💤😤😡 | Pre-recorded ad segment that may occur on other channels"
   },
   "category1Title": {
     "message": "Who is this unrecognized genius that invented this?"
   },
   "category2Text": {
-    "message": "🤮🥱😴 | Blogger-voiced pre-recorded ad insert"
+    "message": "😳😳😳 | Pre-recorded blogger-voiced ad segment that may occur on other channels"
   },
   "category2Title": {
     "message": "Select this item if your ad is designed to find a random sucker among your audience."
   },
   "category3Text": {
-    "message": "🥴🥱🤔 | Original insert by blogger"
+    "message": "🙈🙉🙊 | Original insert by blogger which should be unique per video"
   },
   "category3Title": {
     "message": "Select this item if the author himself recorded the advertising integration, came up with a creative approach to its implementation."
   },
   "category4Text": {
-    "message": "🤔🤨🧐 | The blogger has received a product from the advertiser and is reviewing it"
+    "message": "😼😼😼 | The blogger has received a product from the advertiser and is reviewing it"
   },
   "category4Title": {
-    "message": "Select this item if the content consists of a review of a product for which the blogger did not pay. The blogger's marketability in this case is determined by the second checkbox"
+    "message": "Select this option if the ad segment contains product unboxing that might be interesting to see"
   },
   "category5Text": {
-    "message": "😡🧑‍🎤👩‍🎤 | Advertising of other channels with dissimilar topics"
+    "message": "😡😡😡 | Advertising of other channels with dissimilar topics"
   },
   "category5Title": {
-    "message": "Select this option if the author advertises another channel on YouTube, which is not related to the topic"
+    "message": "Select this option if the author advertises another channel on YouTube, which is not related to the his own channel's topic"
   },
   "category6Text": {
     "message": "🤔👨‍🎤👨‍🎤 | Ads for other channels with similar topics ❤️️‍"
   },
   "category6Title": {
-    "message": "We do not have the right to automatically skip such advertisements, collaboration in related fields is normal. But we will, if you want, of course."
+    "message": "Collaboration in related fields is kinda normal, I guess."
   },
   "category7Text": {
     "message": "🤔👭👌 | Advertising of another blogger who starred in the video (collaboration) ❤️‍"
@@ -162,19 +162,19 @@
     "message": "Select this option if the blogger is advertising another blogger with whom he has recorded a joint video."
   },
   "category8Text": {
-    "message": "👌👌👌 | Advertising of your projects, social networks, channels ❤️‍"
+    "message": "👌👌👌 | Advertising of own projects, social networks, channels ❤️‍"
   },
   "category8Title": {
-    "message": "Select this item if the blogger has advertised his own project, it can be twitch, merch or a second channel."
+    "message": "Select this item if the blogger has advertised his own project, it can be twitch, merch etc."
   },
   "category9Text": {
-    "message": "👍😍😇 | A masterpiece integration worth seeing ❤️️‍"
+    "message": "👍😍😇 | A masterpiece ad segment worth seeing ❤️️‍"
   },
   "category9Title": {
     "message": "Select this item if you really liked the way the blogger got creative with advertising."
   },
   "category10Text": {
-    "message": "🤔🤔🤔 | I can't describe what it was, but I thought it was an advertisement"
+    "message": "👹👹👹 | I can't decide whether it should live or die"
   },
   "category10Title": {
     "message": "Check this box if you spot an ad but it doesn't fit into any category."
@@ -246,19 +246,19 @@
     "message": "Please select an ad category"
   },
   "checkOne": {
-    "message": "Click the checkbox if the blogger did not notify that there will now be an advertisement. An example of a correct notification: a signature on the installation, or a warning in the spirit: and now there is a my sponsor blablabla.."
+    "message": "Click the checkbox if the blogger did not notify that there will now be an advertisement.</br></br>An example of a correct notification: 'this video is sponsored by', or a notable caption on the video."
   },
   "checkTwo": {
-    "message": "Click the checkbox if a blogger, advertising something, seemed insincere to you. Example: monotonous reading of a ready-made text at gunpoint, obvious insincerity. the product he just saw"
+    "message": "Click the check box if the blogger advertising something seemed to you extremely hypocritical.</br></br>If a blogger warned about 'sponsor time', you may not want to brand the blogger a hypocrite."
   },
   "checkThree": {
-    "message": "Click the checkbox if you think the blogger received money for his ad"
+    "message": "Click the checkbox if you think the blogger received money for this ad"
   },
   "pleaseEnterComment": {
     "message": "Please enter comment, just 2-3 words.\nExample: 'VPN', 'shit F2P', '1xbet', 'Fraud'\nIt will be useful for ADN in the future."
   },
   "categoryMissing": {
-    "message": "You have not selected a category.\n\nPlease select an ad category and check the checkboxes.\nThis will help us determine whether an ad is acceptable or not"
+    "message": "You have not selected a category.\n\nPlease select an ad category and check the checkboxes.\nThis will help us determine whether an ad is acceptable or not and search for ads using neural networks in the future"
   },
   "plsDontSendWholeVideo": {
     "message": "You seem to be trying to send an ad segment longer than 90% of the video.\nWe cannot accept such a segment.\nADN is sent with ad integrations, and you are sending a whole ad video.\nA person opening a video wants to watch it but not skip completely.\nPerhaps in the future we will make a special notion that the video is a commercial.\nSoryan :("
@@ -378,46 +378,46 @@
     "message": "This segment was not automatically skipped. Why?"
   },
   "WNS_2": {
-    "message": "\n\n * You included the channel 'currentChannelId' in the whitelist.\n- Explanation: you can turn off autoskip for your favorite bloggers.\n- Solution: Remove it from the whitelist so that the segments of this channel can be skipped automatically. "
+    "message": "\n\n * You included the channel 'currentChannelId' in the whitelist.\n- Explanation: you can turn off autoskip for your favorite bloggers.\n- Solution: Remove channel from the whitelist so that the segments of this channel can be skipped automatically. "
   },
   "WNS_3": {
-    "message": "\n\n * Segment's trust level (CURRENT) is less than what is required (NEEDED).\n- Explanation: ADN uses an advanced reputation system to protect community from vandalism. The segment's trust level is influenced by likes and reputation of the author. This system needs to be improved and will fully launch in September.\n- Solution: reduce the required level of trust (click on the extension icon, on the left, but not recommended), or wait until the segment is checked by the moderator or other users. Don't forget to like it if it's good!"
+    "message": "\n\n * Segment's trust level (CURRENT) is less than what is required (NEEDED).\n- Explanation: ADN uses an advanced reputation system to protect community from vandalism. The segment's trust level is influenced by likes and reputation of the author.\n- Solution: reduce the required level of trust by switching auto-skipping preset (not recommended), or wait until the segment is checked by the moderator or other users. Don't forget to like it if it's good!"
   },
   "WNS_4": {
-    "message": "\n\n * Autoskip is disabled for the category: unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: check this category in the advanced menu. "
+    "message": "\n\n * Autoskip is disabled for the category: unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
   },
   "WNS_5": {
     "message": "\n\n * Autoskip is disabled for category: unpaid, 'Inludes paid promotion' disabled.\n- Solution: tick this category in the advanced menu."
   },
   "WNS_6": {
-    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution : Check this category in the advanced menu. "
+    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
   },
   "WNS_7": {
-    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' disabled.\n- Solution: check this category in the advanced menu."
+    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' disabled.\n- Solution: Select different auto-skipping preset."
   },
   "WNS_8": {
-    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution : Check this category in the advanced menu. "
+    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
   },
   "WNS_9": {
-    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu."
+    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: select different auto-skipping preset"
   },
   "WNS_4A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu. "
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: select different auto-skipping preset."
   },
   "WNS_5A": {
-    "message": "\n\n * Autoskip is disabled for category: ambassador, unpaid, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: tick this category in the advanced menu."
+    "message": "\n\n * Autoskip is disabled for category: ambassador, unpaid, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset."
   },
   "WNS_6A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution : Check this category in the advanced menu. "
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset"
   },
   "WNS_7A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu."
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Check this category in the advanced menu."
   },
   "WNS_8A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Check this category in the advanced menu. "
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset"
   },
   "WNS_9A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: check this category in the advanced menu."
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Select different auto-skipping preset"
   },
   "replaceSelectCat": {
     "message": "Select category to submit replacement"
