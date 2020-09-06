@@ -113,12 +113,6 @@
   "good_ambassador_title": {
     "message": "Ambassadors are ADN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
   },
-  "sponsorBlock": {
-    "message": "SponsorBlock is a similar project, started a year before ADN. Auto-skipping from SB is disabled because ADN cannot guarantee the validity of segments received from the API. In general, ADN and SB are similar, but have completely different goals. The main purpose of ADN - to replay and destroy the adwhores on YouTube, collect data on advertising integrations of all bloggers, process them and highlight conscientious youtubers among the corrupt ones, provide them with all kinds of information support, along the way destroying the reputation and income of those bloggers who have already exhausted themselves long ago. ADN's main priority is Russian YouTube, then English, then the rest world. SB is more focused on English-speaking YouTube and simply blocks sponsored ads, not understanding its types and quality. You can read more about the fundamental differences between ADN and SB on GitHub"
-  },
-  "settingSponsorBlock": {
-    "message": "Enable <a target=\"_blank\" href=\"https://sponsor.ajay.app/\">SponsorBlock API</a> (?)"
-  },
   "category0Text": {
     "message": "🎲🤬🤮 | SSL: advertising of scammers, bookmakers, casinos, pyramids, investments"
   },
