@@ -33,8 +33,6 @@ function init() {
   setChildTextNode('good_ambassador', chrome.i18n.getMessage("good_ambassador"));
   setTitle('good_ambassador', chrome.i18n.getMessage("good_ambassador_title"));
 
-  setTitle('settingSponsorBlock', chrome.i18n.getMessage("sponsorBlock"));
-  setChildTextNode('settingSponsorBlock', chrome.i18n.getMessage("settingSponsorBlock"));
 
   setChildTextNode('nicknameDesc', chrome.i18n.getMessage("nicknameDesc"));
   setChildTextNode('secretDesc1', chrome.i18n.getMessage("secretDesc1"));
