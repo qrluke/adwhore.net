@@ -27,6 +27,15 @@ let isReportStage1 = false,
     config = {}
     whitelist = [];
 
+function ensureSecret(secret) {
+    if (secret == null) {
+        chrome.i18n.getMessage("noUserSecret")
+        return false
+    } else {
+        return true
+    }
+}
+
 function updateConfig() {
     switch (+settings["mode"]) {
         case 1:
@@ -139,6 +148,19 @@ function updateSettings(result) {
             whitelist.push(item["cID"])
         }
     }
+    if (result["secret"] == null) {
+        $.ajax
+        ({
+            url: "https://karma.adwhore.net:47976/addNewUser",
+            type: "POST",
+            data: JSON.stringify({"uuid": result["uuid"]}),
+            contentType: 'application/json',
+            success: function (data) {
+                chrome.storage.sync.set({"secret": data["secret"], "name": data["name"], "side": data["side"]});
+                // alert("ADN user registered\n"+JSON.stringify(data));
+            }
+        })
+    }
 }
 
 chrome.storage.sync.get(null, function (result) {
@@ -184,6 +206,9 @@ let youtubeMutation = setTimeout(function tick() {
                     control = document.createElement("div");
                     control.className = "ytp-right-controls"
                     $(control).insertAfter(document.getElementsByClassName("ytp-left-controls")[0])
+                    if (!settings["show_panel"]) {
+                        control.style.display = "none"
+                    }
                     console.log("creating html");
                     createElemets();
                     console.log("adding layout");
@@ -1644,22 +1669,24 @@ function addEvents() {
                 "start": +segStartInput.value,
                 "end": +segEndInput.value,
             };
-            $.ajax
-            ({
-                url: "https://karma.adwhore.net:47976/editSegment",
-                type: "POST",
-                data: JSON.stringify(json),
-                contentType: 'application/json',
-                async: false,
-                success: function (data) {
-                    alert("Success | Удачно\n" + JSON.stringify(data));
-                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
-                },
-                error: function (s, status, error) {
-                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
-                    isReportStage2 = !isReportStage2;
-                }
-            })
+            if (ensureSecret(result["secret"])) {
+                $.ajax
+                ({
+                    url: "https://karma.adwhore.net:47976/editSegment",
+                    type: "POST",
+                    data: JSON.stringify(json),
+                    contentType: 'application/json',
+                    async: false,
+                    success: function (data) {
+                        alert("Success | Удачно\n" + JSON.stringify(data));
+                        chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                    },
+                    error: function (s, status, error) {
+                        alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                        isReportStage2 = !isReportStage2;
+                    }
+                })
+            }
             disableStage2()
             disableStage1()
             resetAndFetch()
@@ -1724,33 +1751,34 @@ function addEvents() {
                                 "comment": comment,
                                 "sID": currentSkip[2]
                             };
+                            if (ensureSecret(result["secret"])) {
+                                $.ajax
+                                ({
+                                    url: "https://karma.adwhore.net:47976/replaceSegment",
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: 'application/json',
+                                    async: false,
+                                    success: function (data) {
+                                        alert("Success | Удачно\n" + JSON.stringify(data));
+                                        disableStage2()
+                                        disableStage1()
+                                        resetAndFetch()
 
-                            $.ajax
-                            ({
-                                url: "https://karma.adwhore.net:47976/replaceSegment",
-                                type: "POST",
-                                data: JSON.stringify(json),
-                                contentType: 'application/json',
-                                async: false,
-                                success: function (data) {
-                                    alert("Success | Удачно\n" + JSON.stringify(data));
-                                    disableStage2()
-                                    disableStage1()
-                                    resetAndFetch()
+                                        isReplace = false;
+                                        isReportActive = false;
 
-                                    isReplace = false;
-                                    isReportActive = false;
+                                        v.currentTime = +segStartInput.value - 1;
+                                        v.play();
 
-                                    v.currentTime = +segStartInput.value - 1;
-                                    v.play();
-
-                                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
-                                },
-                                error: function (s, status, error) {
-                                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
-                                    isReportStage2 = !isReportStage2;
-                                }
-                            })
+                                        chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                                    },
+                                    error: function (s, status, error) {
+                                        alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                                        isReportStage2 = !isReportStage2;
+                                    }
+                                })
+                            }
                         } else {
                             let json = {
                                 "vID": currentVideoId,
@@ -1763,28 +1791,28 @@ function addEvents() {
                                 "paid": option03.checked,
                                 "comment": comment
                             };
-                            $.ajax
-                            ({
-                                url: "https://karma.adwhore.net:47976/addSegment",
-                                type: "POST",
-                                data: JSON.stringify(json),
-                                contentType: 'application/json',
-                                async: false,
-                                success: function (data) {
-                                    alert("Success | Удачно\n" + JSON.stringify(data));
-                                    disableStage2()
-                                    disableStage1()
-                                    resetAndFetch()
-                                    chrome.storage.sync.set({"segments": settings["segments"] + 1});
-                                },
-                                error: function (s, status, error) {
-                                    alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
-                                    isReportStage2 = !isReportStage2;
-                                }
-                            })
+                            if (ensureSecret(result["secret"])) {
+                                $.ajax
+                                ({
+                                    url: "https://karma.adwhore.net:47976/addSegment",
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: 'application/json',
+                                    async: false,
+                                    success: function (data) {
+                                        alert("Success | Удачно\n" + JSON.stringify(data));
+                                        disableStage2()
+                                        disableStage1()
+                                        resetAndFetch()
+                                        chrome.storage.sync.set({"segments": settings["segments"] + 1});
+                                    },
+                                    error: function (s, status, error) {
+                                        alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                                        isReportStage2 = !isReportStage2;
+                                    }
+                                })
+                            }
                         }
-
-
                     }
                 } else {
                     isReportStage2 = !isReportStage2;

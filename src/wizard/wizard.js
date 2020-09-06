@@ -178,22 +178,33 @@ wizard.addControls(buttonPrevious, buttonNext);
 
 // qrlk's govnocode
 
-function selectSide(id) {
-    console.log(id)
+function ensureSecret(secret) {
+    if (secret == null) {
+        chrome.i18n.getMessage("noUserSecret")
+        return false
+    } else {
+        return true
+    }
+}
 
+function selectSide(id) {
     chrome.storage.sync.get(["secret"], function (result) {
-        console.log(id)
-            if (result["secret"] != null) {
-                $.ajax
-                ({
-                    url: "https://karma.adwhore.net:47976/switchUserSide",
-                    type: "POST",
-                    data: JSON.stringify({"secret": result["secret"], "side": id}),
-                    contentType: 'application/json',
-                    error: function (s, status, error) {
-                        alert('error\n' + status + '\n' + error);
-                    }
-                })
+            if (ensureSecret(result["secret"])) {
+                if (result["secret"] != null) {
+                    $.ajax
+                    ({
+                        url: "https://karma.adwhore.net:47976/switchUserSide",
+                        type: "POST",
+                        data: JSON.stringify({"secret": result["secret"], "side": id}),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            chrome.storage.sync.set({"side": data["side"]});
+                        },
+                        error: function (s, status, error) {
+                            alert('error\n' + status + '\n' + error);
+                        }
+                    })
+                }
             }
         }
     )
@@ -214,11 +225,22 @@ wizard.panels.updatePanelsContainerHeight()
 
 mode_select.onchange = function () {
     updateModesDisplay()
-    chrome.storage.sync.set({"mode": mode_select.value});
+    chrome.storage.sync.set({"mode": +mode_select.value});
 }
 
 appearenceForm.addEventListener('change', function (evt) {
-    let descriptionId = evt.target.dataset.show
+    let aId = +evt.target.dataset.show
+    switch (aId) {
+        case 1:
+            chrome.storage.sync.set({"show_panel": true, "show_flags": true});
+            break;
+        case 2:
+            chrome.storage.sync.set({"show_panel": true, "show_flags": false});
+            break;
+        case 3:
+            chrome.storage.sync.set({"show_panel": false, "show_flags": false});
+            break;
+    }
 })
 
 const descriptions = {
@@ -234,7 +256,23 @@ teamsForm.addEventListener('change', function (evt) {
     wizard.panels.updatePanelsContainerHeight()
 })
 
-chrome.storage.sync.get("mode", function (result) {
+chrome.storage.sync.get(["mode", "show_flags", "show_panel", "side"], function (result) {
     mode_select.value = result["mode"]
+    if (!result["show_panel"]) {
+        a3.checked = true
+    } else {
+        if (result["show_flags"]) {
+            a1.checked = true
+        } else {
+            a2.checked = true
+        }
+    }
     updateModesDisplay()
+    try {
+        document.getElementById('t' + result['side']).checked = true
+        display.innerHTML = descriptions[+result['side']]
+        wizard.panels.updatePanelsContainerHeight()
+    } catch (e) {
+        console.log(e)
+    }
 })

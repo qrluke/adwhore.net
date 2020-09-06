@@ -311,6 +311,9 @@
   "showFlagSetting": {
     "message": "Show country and faction flag"
   },
+  "showPanelSetting": {
+    "message": "Show extension report panel"
+  },
   "switchSide": {
     "message": "Click to open First-Run Wizard"
   },
@@ -481,5 +484,11 @@
   "w50": {"message": "<b>United Nations</b> is a default neutral team."},
   "w51": {"message": "Join the ranks of <b>NATO</b> soldiers to protect the world from the vile communist propaganda!</br></br>The Soviet KGB is actively recruiting YouTubers to lure the citizens of the free world to the side of the Reds!!!</br>Report illegal activities today or it will be too late!</br></br>P.S. It's still cold war which main battlefield is YouTube now."},
   "w52": {"message": "Now you are a soldier of the <b>Soviet</b> red army.</br></br>CIA actively recruits our YouTubers to target our people with their false ideas!</br>You must stop our enemies! Protect our motherland!</br>Report illegal activities today, or tomorrow it will be too late for us!</br></br>P.S. It's still cold war which main battlefield is YouTube now."},
-  "w53": {"message": "Let's roll!"}
+  "w53": {"message": "Let's roll!"},
+  "preset": {"message": "Preset:"},
+  "switchTeamSetting": {"message": "Select your team"},
+  "t1": {"message": "UN"},
+  "t2": {"message": "NATO"},
+  "t3": {"message": "SOVIET"},
+  "noUserSecret": {"message": "Fatal error!\nYou are trying to send a request to the server without a secret code.\n\nTry to restart your browser!"}
 }

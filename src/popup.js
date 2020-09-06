@@ -1,3 +1,17 @@
+var mode = 1;
+
+function updateDisplay(mode) {
+    if (mode === 5) {
+        document.getElementById("acceptable_table").style.display = ""
+        document.getElementById("trust_table").style.display = ""
+        document.getElementById("custom").style.display = ""
+    } else {
+        document.getElementById("acceptable_table").style.display = "none"
+        document.getElementById("trust_table").style.display = "none"
+        document.getElementById("custom").style.display = "none"
+    }
+}
+
 document.getElementById('increaseButton1').onclick = function () {
     if (+document.getElementById('displayDiv1').innerText < 100) {
         document.getElementById('displayDiv1').innerText = +document.getElementById('displayDiv1').innerText + 5;
@@ -23,26 +37,39 @@ document.getElementById('decreaseButton2').onclick = function () {
     }
 };
 
+function ensureSecret(secret) {
+    if (secret == null) {
+        chrome.i18n.getMessage("noUserSecret")
+        return false
+    } else {
+        return true
+    }
+}
+
 document.getElementById('buttonSave1').onclick = function () {
     chrome.storage.sync.get(["name", "secret"], function (result) {
-            if (!(result["name"] === document.getElementById("nickname").value)) {
-                $.ajax
-                ({
-                    url: "https://karma.adwhore.net:47976/updateNickname",
-                    type: "POST",
-                    data: JSON.stringify({"secret": result["secret"], "name": document.getElementById("nickname").value}),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        chrome.storage.sync.set({"name": data["name"]});
-                        document.getElementById("nickname").value = data["name"];
-                        alert("Success\n" + JSON.stringify(data));
-                    },
-                    error: function (s, status, error) {
-                        alert('error\n' + status + '\n' + error);
-                    }
-                })
+            if (ensureSecret(result["secret"])) {
+                if (!(result["name"] === document.getElementById("nickname").value)) {
+                    $.ajax
+                    ({
+                        url: "https://karma.adwhore.net:47976/updateNickname",
+                        type: "POST",
+                        data: JSON.stringify({
+                            "secret": result["secret"],
+                            "name": document.getElementById("nickname").value
+                        }),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            chrome.storage.sync.set({"name": data["name"]});
+                            document.getElementById("nickname").value = data["name"];
+                            alert("Success\n" + JSON.stringify(data));
+                        },
+                        error: function (s, status, error) {
+                            alert('error\n' + status + '\n' + error);
+                        }
+                    })
+                }
             }
-
         }
     )
 };
@@ -57,7 +84,7 @@ document.getElementById('buttonSave2').onclick = function () {
                     data: JSON.stringify({"secret": document.getElementById("secret").value}),
                     contentType: 'application/json',
                     success: function (data) {
-                        chrome.storage.sync.set({"name": data["name"], "secret": data["secret"]});
+                        chrome.storage.sync.set({"name": data["name"], "secret": data["secret"], "side": data["side"]});
                         document.getElementById("secret").value = data["secret"];
                         document.getElementById("nickname").value = data["name"];
 
@@ -82,7 +109,7 @@ document.getElementById('buttonNew').onclick = function () {
                 data: JSON.stringify({"secret": document.getElementById("secret").value}),
                 contentType: 'application/json',
                 success: function (data) {
-                    chrome.storage.sync.set({"name": data["name"], "secret": data["secret"]});
+                    chrome.storage.sync.set({"name": data["name"], "secret": data["secret"], "side": data["side"]});
                     document.getElementById("secret").value = data["secret"];
                     document.getElementById("nickname").value = data["name"];
 
@@ -107,6 +134,24 @@ $('[name="secret"]').blur(function () {
 
 
 chrome.storage.sync.get(null, function (result) {
+    if (result["secret"] == null) {
+        $.ajax
+        ({
+            url: "https://karma.adwhore.net:47976/addNewUser",
+            type: "POST",
+            data: JSON.stringify({"uuid": result["uuid"]}),
+            contentType: 'application/json',
+            success: function (data) {
+                chrome.storage.sync.set({"secret": data["secret"], "name": data["name"], "side": data["side"]});
+                document.getElementById("nickname").value = data["name"];
+                document.getElementById("secret").value = data["secret"];
+                side_select.value = data["side"]
+
+                // alert("ADN user registered\n"+JSON.stringify(data));
+            }
+        })
+    }
+
     document.getElementById("hate-y1").checked = result["custom"]["hate"]["y1"];
     document.getElementById("hate-y2").checked = result["custom"]["hate"]["y2"];
     document.getElementById("hate-a1").checked = result["custom"]["hate"]["a1"];
@@ -130,6 +175,17 @@ chrome.storage.sync.get(null, function (result) {
 
     document.getElementById("enableCheck").checked = result["enable"];
     document.getElementById("show-flags").checked = result["show_flags"];
+    document.getElementById("show-panel").checked = result["show_panel"];
+
+    try {
+        side_select.value = result["side"]
+    } catch (e) {
+        console.log(e)
+    }
+
+    mode = result["mode"];
+    updateDisplay(mode);
+    mode_select.value = result["mode"];
 });
 
 checkboxes = document.querySelectorAll("input[type=checkbox]");
@@ -164,6 +220,7 @@ function savePopupSettings() {
             "accept": +document.getElementById('displayDiv2').innerText
         },
         "show_flags": document.getElementById("show-flags").checked,
+        "show_panel": document.getElementById("show-panel").checked,
         "enable": document.getElementById("enableCheck").checked
     }
     chrome.storage.sync.set(new_bool);
@@ -189,8 +246,10 @@ document.getElementById("switchButtonAction1").addEventListener("click", functio
         document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
         document.getElementById("note_the_alpha").style.display = ""
         document.getElementById("links").style.display = ""
-        document.getElementById("acceptable_table").style.display = ""
-        document.getElementById("trust_table").style.display = ""
+        if (mode === 5) {
+            document.getElementById("acceptable_table").style.display = ""
+            document.getElementById("trust_table").style.display = ""
+        }
         document.getElementById("whitelist").style.display = "none"
         document.getElementById("stats").style.display = "none"
 
@@ -244,14 +303,16 @@ document.getElementById("switchButtonAction2").addEventListener("click", functio
     $("#stats06")[0].innerText = "...";
 
     chrome.storage.sync.get(["secret"], function (result) {
-        $.getJSON("https://karma.adwhore.net:47976/getPersonalStats", "secret=" + result["secret"], function (data) {
-            $("#stats01")[0].innerText = data["skips_for_count"];
-            $("#stats02")[0].innerText = formatTime(data["skips_for_duration"]);
-            $("#stats03")[0].innerText = data["actual_segments"];
-            $("#stats04")[0].innerText = data["moderated_segments"];
-            $("#stats05")[0].innerText = data["skips_from_count"];
-            $("#stats06")[0].innerText = formatTime(data["skips_from_duration"]);
-        });
+        if (ensureSecret(result["secret"])) {
+            $.getJSON("https://karma.adwhore.net:47976/getPersonalStats", "secret=" + result["secret"], function (data) {
+                $("#stats01")[0].innerText = data["skips_for_count"];
+                $("#stats02")[0].innerText = formatTime(data["skips_for_duration"]);
+                $("#stats03")[0].innerText = data["actual_segments"];
+                $("#stats04")[0].innerText = data["moderated_segments"];
+                $("#stats05")[0].innerText = data["skips_from_count"];
+                $("#stats06")[0].innerText = formatTime(data["skips_from_duration"]);
+            });
+        }
     })
 })
 
@@ -366,3 +427,37 @@ $('table').on('click', '.RemoveRow', function () {
     }
     chrome.storage.sync.set({"whitelist": new_whitelist});
 });
+
+
+function selectSide(id) {
+    chrome.storage.sync.get(["secret"], function (result) {
+            if (ensureSecret(result["secret"])) {
+                if (result["secret"] != null) {
+                    $.ajax
+                    ({
+                        url: "https://karma.adwhore.net:47976/switchUserSide",
+                        type: "POST",
+                        data: JSON.stringify({"secret": result["secret"], "side": id}),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            chrome.storage.sync.set({"side": data["side"]});
+                        },
+                        error: function (s, status, error) {
+                            alert('error\n' + status + '\n' + error);
+                        }
+                    })
+                }
+            }
+        }
+    )
+}
+
+side_select.onchange = function () {
+    selectSide(+side_select.value)
+}
+
+mode_select.onchange = function () {
+    chrome.storage.sync.set({"mode": +mode_select.value});
+    mode = +mode_select.value
+    updateDisplay(mode)
+}

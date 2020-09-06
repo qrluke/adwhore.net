@@ -40,6 +40,7 @@ function init() {
   setChildTextNode('settingsString', chrome.i18n.getMessage("settingsString"));
   setChildTextNode('valueString', chrome.i18n.getMessage("valueString"));
   setChildTextNode('showFlagSetting', chrome.i18n.getMessage("showFlagSetting"));
+  setChildTextNode('showPanelSetting', chrome.i18n.getMessage("showPanelSetting"));
 
   setChildTextNode('stats_users', chrome.i18n.getMessage("stats_users"));
   setChildTextNode('stats_seg', chrome.i18n.getMessage("stats_seg"));
@@ -68,6 +69,17 @@ function init() {
   setChildTextNode('stats11', chrome.i18n.getMessage("stats11"));
   setChildTextNode('stats12', chrome.i18n.getMessage("stats12"));
 
+  setChildTextNode("preset", chrome.i18n.getMessage("preset"))
+  setChildTextNode("w8", chrome.i18n.getMessage("w8"))
+  setChildTextNode("w9", chrome.i18n.getMessage("w9"))
+  setChildTextNode("w10", chrome.i18n.getMessage("w10"))
+  setChildTextNode("w11", chrome.i18n.getMessage("w11"))
+  setChildTextNode("w12", chrome.i18n.getMessage("w12"))
+
+  setChildTextNode("switchTeamSetting", chrome.i18n.getMessage("switchTeamSetting"))
+  setChildTextNode("t1", chrome.i18n.getMessage("t1"))
+  setChildTextNode("t2", chrome.i18n.getMessage("t2"))
+  setChildTextNode("t3", chrome.i18n.getMessage("t3"))
 }
 
 init();

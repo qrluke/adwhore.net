@@ -109,8 +109,8 @@
 
         .tab {
             border: 1px outset black;
-            height:42px;
-            width:42px;
+            height: 42px;
+            width: 42px;
             position: absolute;
             top: 0;
             bottom: 0;
@@ -146,7 +146,7 @@
 
 </div>
 <div style="display:flex;flex-direction:row;padding-left: 20px;padding-right: 20px;margin-top: 5px;height:53px  ">
-    <div id="trust_table" style="flex:1;">
+    <div id="trust_table" style="display: none;flex:1;">
 
         <table class="center">
             <tr>
@@ -180,9 +180,9 @@
                 <img class="icon" src="img/popup/whitelist.svg">
             </button>
         </center>
-    </div>
-    <div id="acceptable_table" style="flex:1;">
 
+    </div>
+    <div id="acceptable_table" style="display: none; flex:1;">
         <table class="center">
             <tr>
                 <td colspan="3" id="acceptable_selector"></td>
@@ -203,7 +203,7 @@
 </div>
 
 <div class="modal-content" id="blockSettings" style="display: block; margin-top: 5px; margin-bottom: 5px;">
-    <table style="width:100%">
+    <table id="custom" style="display: none; width:100%">
         <tr>
             <th id="table_title"></th>
             <th id="bad_ads">
@@ -236,6 +236,15 @@
             <td><input id="love-a2" type="checkbox"></td>
         </tr>
     </table>
+
+    <label for="mode_select" id="preset"></label>
+    <select id="mode_select" style="margin-top: 5px;">
+        <option value="1" id="w8"></option>
+        <option value="2" id="w9"></option>
+        <option value="3" id="w10"></option>
+        <option value="4" id="w11"></option>
+        <option value="5" id="w12"></option>
+    </select>
 </div>
 
 <div class="modal-content" id="blockSecret" style="display: none; margin-bottom: 9px;">
@@ -254,13 +263,24 @@
                 <th id="settingsString"></th>
                 <th id="valueString"></th>
             </tr>
+
             <tr>
                 <td id="showFlagSetting"></td>
                 <td><input id="show-flags" type="checkbox"></td>
             </tr>
-            <tr style="display: none">
-                <td id="settingSponsorBlock"></td>
-                <td><input id="sb" type="checkbox"></td>
+            <tr>
+                <td id="showPanelSetting"></td>
+                <td><input id="show-panel" type="checkbox"></td>
+            </tr>
+            <tr>
+                <td id="switchTeamSetting"></td>
+                <td>
+                    <select id="side_select">
+                        <option value="1" id="t1"></option>
+                        <option value="2" id="t2"></option>
+                        <option value="3" id="t3"></option>
+                    </select>
+                </td>
             </tr>
         </table>
     </center>
@@ -272,11 +292,11 @@
 
         <table id="whitelistTable" style="width:100%; margin-top: 6px;">
             <thead>
-                <th id="caption1"></th>
-                <th id="caption2"></th>
-                <th id="caption3"></th>
+            <th id="caption1"></th>
+            <th id="caption2"></th>
+            <th id="caption3"></th>
             </thead>
-            <tbody id = "list">
+            <tbody id="list">
 
             </tbody>
         </table>
@@ -286,12 +306,14 @@
 <div class="modal-content" id="stats" style="display: none; margin-bottom: 9px;">
     <center>
         <small id="stats1"></small></br>
-        <small id="stats2"></small><small id="stats01"></small><small id="stats3"></small><small id="stats02"></small><small id="stats4"></small></br></br>
+        <small id="stats2"></small><small id="stats01"></small><small id="stats3"></small><small
+            id="stats02"></small><small id="stats4"></small></br></br>
         <small id="stats5"></small></br>
         <small id="stats03"></small><small id="stats6"></small></br>
         <small id="stats04"></small><small id="stats7"></small></br>
         <small id="stats8"></small><small id="stats05"></small><small id="stats9"></small>
-        <small id="stats10"></small><small id="stats06"></small><small id="stats11"></small></br></br><small id="stats12"></small>
+        <small id="stats10"></small><small id="stats06"></small><small id="stats11"></small></br></br><small
+            id="stats12"></small>
 
     </center>
 </div>

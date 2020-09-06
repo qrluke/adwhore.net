@@ -23,6 +23,7 @@ var defaults = {
     "enable": true,
     "mode": 1,
     "show_flags": true,
+    "show_panel": true,
     "uuid": getUserId(),
     "custom": {
         "trust": 70,
@@ -63,13 +64,21 @@ chrome.storage.sync.get(defaults, function (result) {
             data: JSON.stringify({"uuid": result["uuid"]}),
             contentType: 'application/json',
             success: function (data) {
-                chrome.storage.sync.set({"secret": data["secret"], "name": data["name"]});
+                chrome.storage.sync.set({"secret": data["secret"], "name": data["name"], "side": data["side"]});
                 // alert("ADN user registered\n"+JSON.stringify(data));
             },
             error: function (s, status, error) {
                 alert('error\n' + status + '\n' + error);
             }
         })
+    } else {
+        setTimeout(function getServiceStatus() {
+            $.getJSON("https://karma.adwhore.net:47976/getStatus", "secret=" + result["secret"], function (data) {
+                chrome.storage.sync.set({"side": data["side"]});
+                console.log(data)
+            });
+            setTimeout(getServiceStatus, 300000);
+        }, 1000);
     }
 });
 
