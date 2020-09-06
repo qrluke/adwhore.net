@@ -195,6 +195,24 @@ function selectSide(id) {
                         alert('error\n' + status + '\n' + error);
                     }
                 })
+            } else {
+                $.ajax
+                ({
+                    url: "https://karma.adwhore.net:47976/addNewUser",
+                    type: "POST",
+                    data: JSON.stringify({"uuid": result["uuid"]}),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        chrome.storage.sync.set({"secret": data["secret"], "name": data["name"], "side": data["side"]});
+                        setTimeout(function () {
+                            selectSide(id)
+                        }, 500);
+                        // alert("ADN user registered\n"+JSON.stringify(data));
+                    },
+                    error: function (s, status, error) {
+                        alert('error\n' + status + '\n' + error);
+                    }
+                })
             }
         }
     )
