@@ -332,7 +332,7 @@ function resetAndFetch(bar = true) {
                     return 0;
                 });
                 //yt ads walkaround
-                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor !== "rgb(255, 204, 0)") {
                     set(timestamps, v.duration)
                     segEndInput.max = v.duration - 0.5;
                     segStartInput.max = v.duration - 1;
@@ -342,7 +342,7 @@ function resetAndFetch(bar = true) {
                     setTimeout(function run() {
                         if (stoper === document.URL) {
                             if (v.duration && currentDuration !== v.duration) {
-                                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor !== "rgb(255, 204, 0)") {
                                     set(timestamps, v.duration);
                                     segEndInput.max = v.duration - 0.5;
                                     segStartInput.max = v.duration - 1;
@@ -1041,7 +1041,7 @@ function addEvents() {
     v.addEventListener("timeupdate", function () {
         if ((!isReportStage1) && (!isReportStage2)) {
             if (timestamps.length > 0) {
-                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor === "rgb(255, 0, 0)") {
+                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor !== "rgb(255, 204, 0)") {
                     for (var i = 0; i < timestamps.length; i++) {
                         if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
                             if (timestamps[i]["source"] === "adn") {
