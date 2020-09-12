@@ -1492,7 +1492,6 @@ function addStyles() {
     sideButtonImage.style.padding = "10px 0";
     sideButtonImage.src = getParty("no.svg");
 
-
     barList.style.height = 0;
     barList.style.margin = 0;
     barList.style.padding = 0;
@@ -1509,79 +1508,6 @@ function addStyles() {
     barListPreview.style.width = "100%";
     barListPreview.style.width = "visible";
     barListPreview.style.paddingTop = "5px";
-
-    /*adplayer.className = "ytp-ad-player-overlay-skip-or-preview";
-
-    adskip.className = "ytp-ad-skip-ad-slot";
-    adskip.style.display = "none";
-
-    adSkipButton.className = "ytp-ad-skip-button-slot";
-
-    adspan.className = "ytp-ad-skip-button-container";
-
-    adButton1.className = "ytp-ad-skip-button ytp-button";
-
-    skipImage1.style.boxSizing = "border-box";
-    skipImage1.style.height = "30px";
-    skipImage1.style.filter = "invert(96%)";
-    skipImage1.style.transform = "";
-    skipImage1.style.float = "right";
-    skipImage1.style.padding = "4px 0";
-
-    adButton2.className = "ytp-ad-skip-button ytp-button";
-
-    skipImage2.style.boxSizing = "border-box";
-    skipImage2.style.height = "30px";
-    skipImage2.style.filter = "invert(96%)";
-    skipImage2.style.float = "right";
-    skipImage2.style.padding = "4px 0";
-
-    adButton3.className = "ytp-ad-skip-button ytp-button";
-
-    skipImage3.style.boxSizing = "border-box";
-    skipImage3.style.height = "30px";
-    skipImage3.style.filter = "invert(96%)";
-    skipImage3.style.float = "right";
-    skipImage3.style.padding = "4px 0";
-
-
-    adButton4.className = "ytp-ad-skip-button ytp-button";
-
-    skipImage4.style.boxSizing = "border-box";
-    skipImage4.style.height = "30px";
-    skipImage4.style.filter = "invert(96%)";
-    skipImage4.style.float = "right";
-    skipImage4.style.padding = "4px 0";
-    skipImage4.src = getIconPath("close-button.svg");
-
-    _adSkip.className = "ytp-ad-skip-ad-slot";
-
-    _adSkip.style.display = "none";
-
-    _adSkipButton.className = "ytp-ad-skip-button-slot";
-
-    _adSpan.className = "ytp-ad-skip-button-container";
-
-    _adButton1.className = "ytp-ad-skip-button ytp-button";
-
-    _skipImage1.style.boxSizing = "border-box";
-    _skipImage1.style.height = "30px";
-    _skipImage1.style.transform = "";
-    _skipImage1.style.float = "right";
-    _skipImage1.style.filter = "invert(96%)";
-    _skipImage1.style.padding = "4px 0";
-
-
-       */
-
-    _adButton2.className = "ytp-ad-skip-button ytp-button";
-
-    _skipImage2.style.boxSizing = "border-box";
-    _skipImage2.style.height = "30px";
-    _skipImage2.style.filter = "invert(96%)";
-    _skipImage2.style.float = "right";
-    _skipImage2.style.padding = "4px 0";
-    _skipImage2.src = getIconPath("forward.svg");*/
 
     segControls.style.display = "none";
     segControls.style.height = "100%";
