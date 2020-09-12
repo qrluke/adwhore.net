@@ -24,8 +24,8 @@ let isReportStage1 = false,
     updateProgressBar,
     updateBufferProgress,
     timestamps = [],
-    config = {}
-whitelist = [];
+    config = {},
+    whitelist = [];
 
 
 function updateConfig() {
