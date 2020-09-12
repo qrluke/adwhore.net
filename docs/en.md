@@ -11,9 +11,6 @@ ref: homepage
 </div>
 <br>
 
-# If you get "Internal Server Error" when trying to contribute, follow this steps:
-* <b><a href = "https://imgur.com/a/uvoEA2y">CLICK</a></b>
-
 **Download:**
 * <b><a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/">Firefox Add-ons</a></b>
 * <b><a href = "https://chrome.google.com/webstore/detail/adwhorenet/emfkjghgdkajicmnicojahgojkemagcm">Chrome Web Store</a></b>
