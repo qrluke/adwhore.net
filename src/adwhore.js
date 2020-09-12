@@ -250,6 +250,10 @@ let youtubeMutation = setTimeout(function tick() {
                     if (!settings["show_panel"]) {
                         control.style.display = "none"
                     }
+
+                    injectOverlay();
+                    console.log('tried')
+
                     console.log("creating html");
                     createElemets();
                     console.log("adding layout");
@@ -261,6 +265,8 @@ let youtubeMutation = setTimeout(function tick() {
                     console.log("adding JS events");
                     addEvents();
                     console.log("ADN inserted. Let's roll!");
+
+
                     didWeChangeYouTubeQuestionMark = true;
                 }
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
@@ -305,6 +311,248 @@ let youtubeMutation = setTimeout(function tick() {
     }
     youtubeMutation = setTimeout(tick, 250);
 }, 0);
+
+var shadow_ad;
+
+function injectOverlay() {
+    fetch(chrome.extension.getURL('static/overlay.html'))
+        .then(response => response.text())
+        .then(data => {
+            let template = document.createElement('template');
+            let html = data.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            let content = template.content.firstChild
+
+            let shadow_overlay = document.createElement("div");
+
+            document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_overlay);
+
+            shadow_ad = shadow_overlay.attachShadow({mode: 'open'});
+
+            // Create some CSS to apply to the shadow dom
+            let style_ad = document.createElement('style');
+
+            fetch(chrome.extension.getURL('static/overlay.css'))
+                .then(response => response.text())
+                .then(data => {
+                    style_ad.textContent = data.trim()
+                }).catch(err => {
+                console.log(err)
+            });
+
+            shadow_ad.appendChild(style_ad)
+
+            shadow_ad.appendChild(content)
+
+            adplayer = shadow_ad.getElementById("adplayer");
+            adskip = shadow_ad.getElementById("adskip");
+            adSkipButton = shadow_ad.getElementById("adSkipButton");
+
+            adspan = shadow_ad.getElementById("adspan");
+
+            adButton1 = shadow_ad.getElementById("adButton1");
+            skipImage1 = shadow_ad.getElementById("skipImage1");
+
+            adButton2 = shadow_ad.getElementById("adButton2");
+            skipImage2 = shadow_ad.getElementById("skipImage2");
+
+            adButton3 = shadow_ad.getElementById("adButton3");
+            skipImage3 = shadow_ad.getElementById("skipImage3");
+
+            adButton4 = shadow_ad.getElementById("adButton4");
+            skipImage4 = shadow_ad.getElementById("skipImage4");
+
+            _adSkip = shadow_ad.getElementById("_adSkip");
+            _adSkipButton = shadow_ad.getElementById("_adSkipButton");
+            _adSpan = shadow_ad.getElementById("_adSpan");
+            _adButton1 = shadow_ad.getElementById("_adButton1");
+            _skipImage1 = shadow_ad.getElementById("_skipImage1");
+            _adButton2 = shadow_ad.getElementById("_adButton2");
+            _skipImage2 = shadow_ad.getElementById("_skipImage2");
+
+            adskip.addEventListener("mouseover", function () {
+                clearTimeout(skipTimer);
+            });
+            adskip.addEventListener("mouseleave", function () {
+                clearTimeout(skipTimer);
+                skipTimer = setTimeout(() => adskip.style.display = "none", 3000);
+            });
+
+            _adSkip.addEventListener("mouseover", function () {
+                clearTimeout(skipTimer);
+            });
+            _adSkip.addEventListener("mouseleave", function () {
+                clearTimeout(skipTimer);
+                skipTimer = setTimeout(() => _adSkip.style.display = "none", 3000);
+            });
+
+            adButton1.addEventListener("click", function () {
+                if (isReportActive) {
+                    adskip.style.display = "none";
+                    adButton3.style.display = "";
+                    skipImage2.src = getIconPath("like.svg");
+                    clearTimeout(skipTimer);
+
+                    disableStage2()
+                    disableStage1()
+
+                    enableStage1(currentSkip[0], currentSkip[1])
+                    v.pause()
+                } else {
+                    if (skipImage1.style.transform === "") {
+                        v.currentTime = currentSkip[0] + 1;
+                        skipImage1.style.transform = "rotate(180deg)";
+                        v.play();
+                    } else {
+                        v.currentTime = currentSkip[1];
+                        skipImage1.style.transform = "";
+                        v.play();
+                    }
+                }
+            });
+
+
+            adButton2.addEventListener("click", function () {
+                if (isReportActive) {
+                    adskip.style.display = "none";
+                    adButton3.style.display = "";
+                    skipImage2.src = getIconPath("like.svg");
+                    clearTimeout(skipTimer);
+                    isReplace = true;
+                    disableStage2()
+                    disableStage1()
+                    enableStage1(currentSkip[0], currentSkip[1])
+                    v.pause()
+
+
+                } else {
+                    if (currentSkipSource === "adn") {
+                        skipImage2.src = getIconPath("heart.svg");
+                        $.ajax({
+                            dataType: "json",
+                            type: "POST",
+                            url: "https://karma.adwhore.net:47976/addSegmentLike",
+                            data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
+                            success: function (sb) {
+                                chrome.storage.sync.set({"likes": settings["likes"] + 1});
+                                // alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                if (settings["moderator"]) {
+                                    let rewardValue = prompt("enter reward: n/10", "1");
+                                    if (rewardValue != null) {
+                                        $.ajax({
+                                            dataType: "json",
+                                            type: "POST",
+                                            url: "https://karma.adwhore.net:47976/addReward",
+                                            data: JSON.stringify({
+                                                sID: currentSkip[2],
+                                                secret: settings["secret"],
+                                                reward: rewardValue
+                                            }),
+                                            success: function (sb) {
+                                                alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                        setTimeout(function () {
+                            adskip.style.display = "none"
+                            skipImage2.src = getIconPath("like.svg");
+                        }, 1000);
+                    } else {
+                        disableStage2()
+                        disableStage1()
+
+                        enableStage1(currentSkip[0], currentSkip[1])
+                        enableStage2()
+                        v.pause()
+                    }
+                }
+            });
+
+            adButton3.addEventListener("click", function () {
+                if (isReportActive) {
+                    let comment = prompt(`Report on ${currentVideoId} skip ${currentSkip}.\n\n` + chrome.i18n.getMessage("reportText"));
+                    if (comment != null) {
+                        $.ajax({
+                            dataType: "json",
+                            type: "POST",
+                            url: "https://karma.adwhore.net:47976/addSegmentReport",
+                            data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
+                            success: function (sb) {
+                                alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                resetAndFetch()
+                            }
+                        });
+                        v.currentTime = currentSkip[0] + 1;
+
+                        adskip.style.display = "none";
+                        adButton3.style.display = "";
+                        skipImage2.src = getIconPath("like.svg");
+                        clearTimeout(skipTimer);
+                    }
+                } else {
+                    isReportActive = !isReportActive
+                    switchModes()
+                }
+            });
+
+            adButton4.addEventListener("click", function () {
+                if (isReportActive) {
+                    isReportActive = false;
+                    isReplace = false;
+                    switchModes()
+                } else {
+                    adskip.style.display = "none";
+                    adButton3.style.display = "";
+                    skipImage2.src = getIconPath("like.svg");
+                    clearTimeout(skipTimer);
+                }
+            });
+
+            _adButton1.addEventListener("click", function () {
+                alert(currentSkipReason);
+            });
+
+            _adButton2.addEventListener("click", function () {
+                if (currentSkipSource === "adn") {
+                    skipImage2.src = getIconPath("like.svg");
+                    skipImage1.style.transform = "";
+                    v.currentTime = currentSkip[1] + 0.1;
+                    addSegmentSkip(currentSkip)
+
+                    adButton3.style.display = ""
+
+                    isReportActive = false;
+                    isReplace = false;
+
+                    switchModes();
+
+                    adskip.style.display = "block";
+                    _adSkip.style.display = "none";
+
+                    skipTimer = setTimeout(function () {
+                        adskip.style.display = "none";
+                    }, 8000);
+                } else {
+                    adButton3.style.display = "none"
+                    skipImage2.src = getIconPath("cloud-upload.svg");
+                    skipImage1.style.transform = "";
+                    v.currentTime = currentSkip[1] + 0.1;
+                    adskip.style.display = "block";
+                    _adSkip.style.display = "none";
+                    skipTimer = setTimeout(function () {
+                        adskip.style.display = "none";
+                        adButton3.style.display = "";
+                        skipImage2.src = getIconPath("like.svg");
+                    }, 5000);
+                }
+            });
+        }).catch(err => {
+        console.log(err)
+    });
+}
 
 function resetAndFetch(bar = true) {
     /* RESET AFTER URL CHANGE HERE */
@@ -426,32 +674,6 @@ function createElemets() {
 
     barList = document.createElement('ul');
     barListPreview = document.createElement('ul');
-
-    adplayer = document.createElement("div");
-    adskip = document.createElement("div");
-    adSkipButton = document.createElement("div");
-
-    adspan = document.createElement("span");
-
-    adButton1 = document.createElement("button");
-    skipImage1 = document.createElement("img");
-
-    adButton2 = document.createElement("button");
-    skipImage2 = document.createElement("img");
-
-    adButton3 = document.createElement("button");
-    skipImage3 = document.createElement("img");
-
-    adButton4 = document.createElement("button");
-    skipImage4 = document.createElement("img");
-
-    _adSkip = document.createElement("div");
-    _adSkipButton = document.createElement("div");
-    _adSpan = document.createElement("span");
-    _adButton1 = document.createElement("button");
-    _skipImage1 = document.createElement("img");
-    _adButton2 = document.createElement("button");
-    _skipImage2 = document.createElement("img");
 
     awesomeTooltipBody = document.createElement("div");
     awesomeTooltipBodyText = document.createElement("div");
@@ -1105,28 +1327,6 @@ function addLayout() {
         sideButton.appendChild(sideButtonImage);
     }
 
-
-    adplayer.appendChild(adskip);
-    adskip.appendChild(adSkipButton);
-    adSkipButton.appendChild(adspan);
-
-    adspan.appendChild(adButton1);
-    adButton1.appendChild(skipImage1);
-    adspan.appendChild(adButton2);
-    adButton2.appendChild(skipImage2);
-    adspan.appendChild(adButton3);
-    adButton3.appendChild(skipImage3);
-    adspan.appendChild(adButton4);
-    adButton4.appendChild(skipImage4);
-
-    adplayer.appendChild(_adSkip);
-    _adSkip.appendChild(_adSkipButton);
-    _adSkipButton.appendChild(_adSpan);
-    _adSpan.appendChild(_adButton1);
-    _adButton1.appendChild(_skipImage1);
-    _adSpan.appendChild(_adButton2);
-    _adButton2.appendChild(_skipImage2);
-
     awesomeTooltip.appendChild(awesomeTooltipBody);
     awesomeTooltipBody.appendChild(awesomeTooltipBodyText);
 
@@ -1270,7 +1470,7 @@ function addStyles() {
     barListPreview.style.width = "visible";
     barListPreview.style.paddingTop = "5px";
 
-    adplayer.className = "ytp-ad-player-overlay-skip-or-preview";
+    /*adplayer.className = "ytp-ad-player-overlay-skip-or-preview";
 
     adskip.className = "ytp-ad-skip-ad-slot";
     adskip.style.display = "none";
@@ -1342,7 +1542,7 @@ function addStyles() {
     _skipImage2.style.filter = "invert(96%)";
     _skipImage2.style.float = "right";
     _skipImage2.style.padding = "4px 0";
-    _skipImage2.src = getIconPath("forward.svg");
+    _skipImage2.src = getIconPath("forward.svg");*/
 
     awesomeTooltipBody.className = "ytp-tooltip-body";
     awesomeTooltipBody.style.left = "-22.5px";
@@ -1610,114 +1810,6 @@ function inject() {
     shadow_tooltip.appendChild(awesomeTooltip)
 
 
-    shadow_place = document.createElement("div");
-
-    document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_place);
-
-    shadow_ad = shadow_place.attachShadow({mode: 'open'});
-
-    // Create some CSS to apply to the shadow dom
-    let style_ad = document.createElement('style');
-
-    style_ad.textContent = `
-                        /*! CSS Used from: https://www.youtube.com/s/player/134332d3/www-player-2x-webp.css */
-                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar {
-                              width: 10px;
-                              background-color: #424242;
-                            }
-                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-track {
-                              background-color: #424242;
-                            }
-                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-thumb {
-                              background-color: #8e8e8e;
-                              border: 1px solid #424242;
-                              border-radius: 5px;
-                            }
-                            .ytp-button {
-                              border: none;
-                              background-color: transparent;
-                              padding: 0;
-                              color: inherit;
-                              text-align: inherit;
-                              font-size: 100%;
-                              font-family: inherit;
-                              cursor: default;
-                              line-height: inherit;
-                            }
-                            .ytp-button:focus,
-                            .ytp-button {
-                              outline: 0;
-                            }
-                            .ytp-button::-moz-focus-inner {
-                              padding: 0;
-                              border: 0;
-                            }
-                            .ytp-button:not([aria-disabled="true"]):not([disabled]):not([aria-hidden="true"]) {
-                              cursor: pointer;
-                            }
-                            @media print {
-                              .html5-video-player * {
-                                visibility: hidden;
-                              }
-                            }
-                            .ytp-ad-skip-ad-slot {
-                              text-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
-                              pointer-events: auto;
-                              z-index: 35;
-                            }
-                            .ytp-ad-skip-button-container {
-                              bottom: 74px;
-                              display: inline-block;
-                              position: absolute;
-                              right: 0;
-                              z-index: 1000;
-                            }
-                            .ytp-ad-skip-button-container {
-                              -moz-transition: opacity 0.5s cubic-bezier(0, 0, 0.2, 1);
-                              -webkit-transition: opacity 0.5s cubic-bezier(0, 0, 0.2, 1);
-                              transition: opacity 0.5s cubic-bezier(0, 0, 0.2, 1);
-                              cursor: pointer;
-                              opacity: 0.7;
-                              pointer-events: auto;
-                            }
-                            .ytp-ad-skip-button {
-                              background: rgba(0, 0, 0, 0.7);
-                              border: 1px solid rgba(255, 255, 255, 0.5);
-                              border-right: 0;
-                              box-sizing: content-box;
-                              color: #fff;
-                              direction: ltr;
-                              font-size: 18px;
-                              line-height: normal;
-                              min-width: 0;
-                              padding: 10px 6px 8px 10px;
-                              width: auto;
-                              text-align: center;
-                              cursor: pointer;
-                            }
-                            .ytp-ad-skip-button:hover {
-                              background: rgba(0, 0, 0, 0.9);
-                              border: 1px solid rgba(255, 255, 255, 1);
-                              border-right: 0;
-                            }
-                            .ytp-ad-player-overlay-skip-or-preview {
-                              width: 100%;
-                              height: 100%;
-                              right: 0;
-                            }
-                            /*! CSS Used from: Embedded */
-                            div,
-                            img,
-                            span {
-                              margin: 0;
-                              padding: 0;
-                              border: 0;
-                              background: transparent;
-                            }
-                        `;
-    shadow_ad.appendChild(style_ad)
-
-    shadow_ad.appendChild(adplayer)
 }
 
 function addEvents() {
@@ -1896,165 +1988,7 @@ function addEvents() {
         }
     });
 
-    adButton1.addEventListener("click", function () {
-        if (isReportActive) {
-            adskip.style.display = "none";
-            adButton3.style.display = "";
-            skipImage2.src = getIconPath("like.svg");
-            clearTimeout(skipTimer);
 
-            disableStage2()
-            disableStage1()
-
-            enableStage1(currentSkip[0], currentSkip[1])
-            v.pause()
-        } else {
-            if (skipImage1.style.transform === "") {
-                v.currentTime = currentSkip[0] + 1;
-                skipImage1.style.transform = "rotate(180deg)";
-                v.play();
-            } else {
-                v.currentTime = currentSkip[1];
-                skipImage1.style.transform = "";
-                v.play();
-            }
-        }
-    });
-
-
-    adButton2.addEventListener("click", function () {
-        if (isReportActive) {
-            adskip.style.display = "none";
-            adButton3.style.display = "";
-            skipImage2.src = getIconPath("like.svg");
-            clearTimeout(skipTimer);
-            isReplace = true;
-            disableStage2()
-            disableStage1()
-            enableStage1(currentSkip[0], currentSkip[1])
-            v.pause()
-
-
-        } else {
-            if (currentSkipSource === "adn") {
-                skipImage2.src = getIconPath("heart.svg");
-                $.ajax({
-                    dataType: "json",
-                    type: "POST",
-                    url: "https://karma.adwhore.net:47976/addSegmentLike",
-                    data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
-                    success: function (sb) {
-                        chrome.storage.sync.set({"likes": settings["likes"] + 1});
-                        // alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                        if (settings["moderator"]) {
-                            let rewardValue = prompt("enter reward: n/10", "1");
-                            if (rewardValue != null) {
-                                $.ajax({
-                                    dataType: "json",
-                                    type: "POST",
-                                    url: "https://karma.adwhore.net:47976/addReward",
-                                    data: JSON.stringify({
-                                        sID: currentSkip[2],
-                                        secret: settings["secret"],
-                                        reward: rewardValue
-                                    }),
-                                    success: function (sb) {
-                                        alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
-                setTimeout(function () {
-                    adskip.style.display = "none"
-                    skipImage2.src = getIconPath("like.svg");
-                }, 1000);
-            } else {
-                disableStage2()
-                disableStage1()
-
-                enableStage1(currentSkip[0], currentSkip[1])
-                enableStage2()
-                v.pause()
-            }
-        }
-    });
-
-    adButton3.addEventListener("click", function () {
-        if (isReportActive) {
-            let comment = prompt(`Report on ${currentVideoId} skip ${currentSkip}.\n\n` + chrome.i18n.getMessage("reportText"));
-            if (comment != null) {
-                $.ajax({
-                    dataType: "json",
-                    type: "POST",
-                    url: "https://karma.adwhore.net:47976/addSegmentReport",
-                    data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
-                    success: function (sb) {
-                        alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                        resetAndFetch()
-                    }
-                });
-                v.currentTime = currentSkip[0] + 1;
-
-                adskip.style.display = "none";
-                adButton3.style.display = "";
-                skipImage2.src = getIconPath("like.svg");
-                clearTimeout(skipTimer);
-            }
-        } else {
-            isReportActive = !isReportActive
-            switchModes()
-        }
-    });
-
-    adButton4.addEventListener("click", function () {
-        if (isReportActive) {
-            isReportActive = false;
-            isReplace = false;
-            switchModes()
-        } else {
-            adskip.style.display = "none";
-            adButton3.style.display = "";
-            skipImage2.src = getIconPath("like.svg");
-            clearTimeout(skipTimer);
-        }
-    });
-
-    _adButton2.addEventListener("click", function () {
-        if (currentSkipSource === "adn") {
-            skipImage2.src = getIconPath("like.svg");
-            skipImage1.style.transform = "";
-            v.currentTime = currentSkip[1] + 0.1;
-            addSegmentSkip(currentSkip)
-
-            adButton3.style.display = ""
-
-            isReportActive = false;
-            isReplace = false;
-
-            switchModes();
-
-            adskip.style.display = "block";
-            _adSkip.style.display = "none";
-
-            skipTimer = setTimeout(function () {
-                adskip.style.display = "none";
-            }, 8000);
-        } else {
-            adButton3.style.display = "none"
-            skipImage2.src = getIconPath("cloud-upload.svg");
-            skipImage1.style.transform = "";
-            v.currentTime = currentSkip[1] + 0.1;
-            adskip.style.display = "block";
-            _adSkip.style.display = "none";
-            skipTimer = setTimeout(function () {
-                adskip.style.display = "none";
-                adButton3.style.display = "";
-                skipImage2.src = getIconPath("like.svg");
-            }, 5000);
-        }
-    });
 
     previewInside.addEventListener("click", function () {
         isPreviewOutside = false;
@@ -2333,9 +2267,7 @@ function addEvents() {
         awesomeTooltip.style.display = "none";
     });
 
-    _skipImage1.addEventListener("click", function () {
-        alert(currentSkipReason);
-    });
+
 
     markInImage1.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
@@ -2575,21 +2507,7 @@ function addEvents() {
         }
     });
 
-    adskip.addEventListener("mouseover", function () {
-        clearTimeout(skipTimer);
-    });
-    adskip.addEventListener("mouseleave", function () {
-        clearTimeout(skipTimer);
-        skipTimer = setTimeout(() => adskip.style.display = "none", 3000);
-    });
 
-    _adSkip.addEventListener("mouseover", function () {
-        clearTimeout(skipTimer);
-    });
-    _adSkip.addEventListener("mouseleave", function () {
-        clearTimeout(skipTimer);
-        skipTimer = setTimeout(() => _adSkip.style.display = "none", 3000);
-    });
 
     replayButtonImage.addEventListener("click", function () {
         if (isReportStage2) {
