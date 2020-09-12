@@ -2117,8 +2117,6 @@ function set(segs, duration) {
     addBarToList(0, segs[0]["data"]["timestamps"]["start"], "#FFFFFF", "0.0", duration);
 
     for (var i = 0; i < segs.length; i++) {
-
-
         if ((i + 1) < segs.length) {
             addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"] - 0.7, getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration)
             addBarToList(segs[i]["data"]["timestamps"]["end"] - 0.7, segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration)
