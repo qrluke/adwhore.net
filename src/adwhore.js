@@ -4,6 +4,9 @@ let isReportStage1 = false,
     isToggle = false,
     isPreviewInside = false,
     isPreviewOutside = false,
+    isModInProgress = false,
+    isPreviewInsideMod = false,
+    isPreviewOutsideMod = false,
     isPreviewOutsideBeforeSend = false,
     isFirstInputSelect = false,
     isSideActive = false,
@@ -541,12 +544,124 @@ function createElemets() {
     helpButtonImage = document.createElement("img");
 }
 
+var lastSpeed = 2.0;
+
+function modKeys(e, i) {
+    let st = document.getElementById(`seg${i}_st`)
+    let en = document.getElementById(`seg${i}_en`)
+
+    let cat = document.getElementById(`seg${i}_category`)
+    let clown = document.getElementById(`seg${i}_acceptable_start`)
+    let maski = document.getElementById(`seg${i}_pizdaboling`)
+    let paid = document.getElementById(`seg${i}_prepaid`)
+
+    let like = document.getElementById(`seg${i}_like`)
+    let save = document.getElementById(`seg${i}_save`)
+    let del = document.getElementById(`seg${i}_del`)
+
+    let skip = document.getElementById(`seg${i}_skip`)
+    let test = document.getElementById(`seg${i}_test`)
+
+    switch (e.key) {
+        case '1':
+            clown.click()
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case '2':
+            maski.click()
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case '3':
+            paid.click()
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case 'f':
+            cat.focus()
+            cat.click()
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "q":
+            st.focus();
+            st.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "e":
+            en.focus();
+            en.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "z":
+            like.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "x":
+            save.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "c":
+            del.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "w":
+            skip.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "s":
+            test.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "a":
+            v.playbackRate = v.playbackRate - 0.1
+            lastSpeed = v.playbackRate
+
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "d":
+            v.playbackRate = v.playbackRate + 0.1
+            lastSpeed = v.playbackRate
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "r":
+            if (v.playbackRate === 1) {
+                v.playbackRate = lastSpeed
+            } else {
+                v.playbackRate = 1.0
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        default:
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+    }
+}
+
+
 function injectModeratorPanel() {
     let adnPanel = document.getElementById("ADN_MOD_PANEL");
     if (adnPanel) {
         adnPanel.remove()
     }
 
+    while (barListPreview.firstChild) {
+        barListPreview.removeChild(barListPreview.firstChild);
+    }
+
+    isModInProgress = false;
     fetch(chrome.extension.getURL('moderator.html'))
         .then(response => response.text())
         .then(data => {
@@ -569,7 +684,400 @@ function injectModeratorPanel() {
                         let dateObject = new Date(milliseconds)
                         let humanDateFormat = dateObject.toLocaleString()
                         console.log(data)
-                        $('#adnModTable > tbody:last-child').append("<tr><td>" + data["id"] + "</td><td>" + humanDateFormat + "</td><td>" + data["moderated"] + "</td><td>" + data["trust"] + "</td><td>" + data["acrate"] + "</td><td>" + data["st"] + "</td><td>" + data["en"] + "</td><td>" + data["user"] + "</td><td>" + data["country"] + "</td><td>" + data["side"] + "</td><td>" + data["category"] + "</td><td>" + data["acceptable_start"] + "</td><td>" + data["pizdaboling"] + "</td><td>" + data["prepaid"] + "</td><td>" + data["comment"] + "</td></tr>");
+                        let segRow = `<tr>
+                            <td id="seg${i}_id"><center>${data["id"]}</center></td>
+                            <td>${humanDateFormat}</td>
+                            <td><center><input id="seg${i}_moderated" type="checkbox" onclick="return false;" style="margin: 0px;vertical-align: top;"></center></td>
+                            <td><center>${data["trust"]}</center></td>
+                            <td><center>${data["acrate"]}</center></td>
+                            <td><input id="seg${i}_st" type="number" value="${+data["st"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20}px"></td>
+                            <td><input id="seg${i}_en" type="number" value="${+data["en"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20}px"></td>
+                            <td><input id="seg${i}_skip" type="button" value="Skip"></td>
+                            <td><input id="seg${i}_test" type="button" value="Test"></td>
+                            <td><center>${data["user"]}</center></td>
+                            <td><center><img title="${data["country"]}" src="${getFlagByCode(data["country"])}" style="height: 20px;vertical-align: top;"></center></td>
+                            <td><center><img title="${data["side"]}" src="${getParty(data["side"])}" style="height: 20px;vertical-align: top;"></center></td>
+                            
+                            <td>
+                                <center>
+                                    <select id="seg${i}_category" style="width: 30px;">
+                                        <option value="0">0 | SSL</option>
+                                        <option value="1">1 | Предзаписанная не озвученная</option>
+                                        <option value="2">2 | Предзаписанная озвученная</option>
+                                        <option value="3">3 | Оригинал</option>
+                                        <option value="4">4 | Анбоксинг/ревью</option>
+                                        <option value="5">5 | Другой канал</option>
+                                        <option value="6">6 | Похожий канал</option>
+                                        <option value="7">7 | Коллаборация</option>
+                                        <option value="8">8 | Самореклама</option>
+                                        <option value="9">9 | Шедевр</option>
+                                        <option value="10">10 | Хз</option>
+                                    </select>
+                                </center>
+                            </td>
+                            
+                            <td><center><input id="seg${i}_acceptable_start" type="checkbox" style="margin: 0px;vertical-align: top;"></center></td>
+                            <td><center><input id="seg${i}_pizdaboling" type="checkbox" style="margin: 0px;vertical-align: top;"></center></td>
+                            <td><center><input id="seg${i}_prepaid" type="checkbox" style="margin: 0px;vertical-align: top;"></center></td>
+                            <td><input id="seg${i}_like" type="button" value="L"></td>
+                            <td><input id="seg${i}_save" type="button" value="S"></td>
+                            <td><input id="seg${i}_del" type="button" value="D"></td>
+                            <td id="seg${i}_comment">${data["comment"]}</td>
+                        </tr>`
+
+
+                        $('#adnModTable > tbody:last-child').append(segRow);
+                        document.getElementById(`seg${i}_category`).value = data["category"]
+
+                        document.getElementById(`seg${i}_moderated`).checked = data["moderated"]
+                        document.getElementById(`seg${i}_acceptable_start`).checked = data["acceptable_start"]
+                        document.getElementById(`seg${i}_pizdaboling`).checked = data["pizdaboling"]
+                        document.getElementById(`seg${i}_prepaid`).checked = data["prepaid"]
+
+                        document.getElementById(`seg${i}_like`).addEventListener("click", function (e) {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+                            $.ajax({
+                                dataType: "json",
+                                type: "POST",
+                                url: "https://karma.adwhore.net:47976/addSegmentLike",
+                                data: JSON.stringify({
+                                    sID: document.getElementById(`seg${i}_id`).innerText,
+                                    secret: settings["secret"]
+                                }),
+                                success: function (sb) {
+                                    chrome.storage.sync.set({"likes": settings["likes"] + 1});
+                                    // alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                    if (settings["moderator"]) {
+                                        let rewardValue = prompt("enter reward: n/10", "1");
+                                        if (rewardValue != null) {
+                                            $.ajax({
+                                                dataType: "json",
+                                                type: "POST",
+                                                url: "https://karma.adwhore.net:47976/addReward",
+                                                data: JSON.stringify({
+                                                    sID: document.getElementById(`seg${i}_id`).innerText,
+                                                    secret: settings["secret"],
+                                                    reward: rewardValue
+                                                }),
+                                                success: function (sb) {
+                                                    injectModeratorPanel()
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                        });
+
+
+                        document.getElementById(`seg${i}_save`).addEventListener("click", function (e) {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+                            let comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), document.getElementById(`seg${i}_comment`).innerText);
+                            if (comment !== null) {
+                                let json = {
+                                    "secret": settings["secret"],
+                                    "category": +document.getElementById(`seg${i}_category`).value,
+                                    "start": +document.getElementById(`seg${i}_st`).value,
+                                    "end": +document.getElementById(`seg${i}_en`).value,
+                                    "pizdabol": +document.getElementById(`seg${i}_pizdaboling`).checked,
+                                    "honest": +document.getElementById(`seg${i}_acceptable_start`).checked,
+                                    "paid": +document.getElementById(`seg${i}_prepaid`).checked,
+                                    "comment": comment,
+                                    "sID": document.getElementById(`seg${i}_id`).innerText
+                                };
+                                $.ajax
+                                ({
+                                    url: "https://karma.adwhore.net:47976/replaceSegment",
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: 'application/json',
+                                    async: false,
+                                    success: function (data) {
+                                        v.currentTime = +document.getElementById(`seg${i}_st`).value - 1;
+                                        v.play();
+                                        isModInProgress = false;
+                                        injectModeratorPanel()
+                                    },
+                                    error: function (s, status, error) {
+                                        alert('error\n' + JSON.stringify(s.responseJSON) + '\n' + status + '\n' + error);
+                                    }
+                                })
+                            }
+
+                        });
+
+                        document.getElementById(`seg${i}_del`).addEventListener("click", function (e) {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+                            let comment = prompt(`Report on ${document.getElementById(`seg${i}_id`).innerText} skip ${[+document.getElementById(`seg${i}_st`).value, +document.getElementById(`seg${i}_en`).value]}.\n\n` + chrome.i18n.getMessage("reportText"));
+                            if (comment != null) {
+                                $.ajax({
+                                    dataType: "json",
+                                    type: "POST",
+                                    url: "https://karma.adwhore.net:47976/addSegmentReport",
+                                    data: JSON.stringify({
+                                        sID: document.getElementById(`seg${i}_id`).innerText,
+                                        text: comment,
+                                        secret: settings["secret"]
+                                    }),
+                                    success: function (sb) {
+                                        alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                        resetAndFetch()
+                                        injectModeratorPanel()
+                                        isModInProgress = false;
+                                    }
+                                });
+                                v.currentTime = +document.getElementById(`seg${i}_st`).value + 1;
+                            }
+                        });
+
+                        document.getElementById(`seg${i}_skip`).addEventListener("click", function (e) {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+                            segStartInput.value = +document.getElementById(`seg${i}_st`).value
+                            segEndInput.value = +document.getElementById(`seg${i}_en`).value
+                            isModInProgress = true;
+                            isPreviewInsideMod = false;
+                            isPreviewOutsideMod = true;
+                            v.currentTime = segStartInput.value - 1.5;
+                            v.play();
+                        });
+
+                        document.getElementById(`seg${i}_skip`).focus()
+
+                        document.getElementById(`seg${i}_test`).addEventListener("click", function (e) {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+                            segStartInput.value = +document.getElementById(`seg${i}_st`).value
+                            segEndInput.value = +document.getElementById(`seg${i}_en`).value
+                            isModInProgress = true;
+                            isPreviewInsideMod = true;
+                            isPreviewOutsideMod = false;
+                            v.currentTime = segStartInput.value;
+                            v.play();
+                        });
+
+                        document.getElementById(`seg${i}_test`).addEventListener("keydown", function (e) {
+                            modKeys(e, e.srcElement.id.match(/\d+/)[0])
+                        });
+
+                        document.getElementById(`seg${i}_skip`).addEventListener("keydown", function (e) {
+                            modKeys(e, e.srcElement.id.match(/\d+/)[0])
+                        });
+
+                        document.getElementById(`seg${i}_st`).addEventListener("keydown", function (e) {
+                            modKeys(e, e.srcElement.id.match(/\d+/)[0])
+                        });
+
+                        document.getElementById(`seg${i}_en`).addEventListener("keydown", function (e) {
+                            modKeys(e, e.srcElement.id.match(/\d+/)[0])
+                        });
+
+                        document.getElementById(`seg${i}_st`).addEventListener('change', (e) => {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+
+                            let st = document.getElementById(`seg${i}_st`)
+                            let en = document.getElementById(`seg${i}_en`)
+                            segStartInput.value = st.value
+                            segEndInput.value = en.value
+
+                            v.currentTime = st.value;
+                            set_preview();
+                        });
+
+                        document.getElementById(`seg${i}_st`).addEventListener('click', (e) => {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+
+                            let st = document.getElementById(`seg${i}_st`)
+                            let en = document.getElementById(`seg${i}_en`)
+                            segStartInput.value = st.value
+                            segEndInput.value = en.value
+
+                            v.currentTime = st.value;
+
+                            v.pause()
+                            set_preview();
+                        });
+
+
+                        document.getElementById(`seg${i}_st`).addEventListener('keydown', (e) => {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+
+                            let st = document.getElementById(`seg${i}_st`)
+                            let en = document.getElementById(`seg${i}_en`)
+
+                            if (e.keyCode === 32) {
+                                if (v.paused) {  // если видео остановлено, запускаем
+                                    v.play();
+                                } else {
+                                    v.pause();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 13) {
+                                if (v.currentTime < en.value) {
+                                    st.value = +(parseFloat(v.currentTime)).toFixed(1);
+                                    segStartInput.value = st.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 40) {
+                                if (st.value < parseFloat(en.value) - 0.1) {
+                                    st.value = +(parseFloat(st.value) - 0.1).toFixed(1);
+                                    v.currentTime = +parseFloat(st.value);
+                                    segStartInput.value = st.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 38) {
+                                if (st.value < parseFloat(en.value) + 0.1) {
+                                    st.value = +(parseFloat(st.value) + 0.1).toFixed(1);
+                                    v.currentTime = +parseFloat(st.value);
+                                    segStartInput.value = st.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 37) {
+                                if (st.value < parseFloat(en.value) - 2) {
+                                    st.value = +(parseFloat(st.value) - 2).toFixed(1);
+                                    v.currentTime = +parseFloat(st.value);
+                                    segStartInput.value = st.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 39) {
+                                if (st.value < parseFloat(en.value) + 2) {
+                                    st.value = +(parseFloat(st.value) + 2).toFixed(1);
+                                    v.currentTime = +parseFloat(st.value);
+                                    segStartInput.value = st.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 9) {
+                                document.getElementById(`seg${i}_en`).click()
+                                document.getElementById(`seg${i}_en`).focus()
+
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return false;
+                            }
+                        });
+
+
+                        document.getElementById(`seg${i}_en`).addEventListener('change', (e) => {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+
+                            let st = document.getElementById(`seg${i}_st`)
+                            let en = document.getElementById(`seg${i}_en`)
+                            segStartInput.value = st.value
+                            segEndInput.value = en.value
+                            v.currentTime = en.value;
+                            set_preview();
+                        });
+
+                        document.getElementById(`seg${i}_en`).addEventListener('click', (e) => {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+
+                            let st = document.getElementById(`seg${i}_st`)
+                            let en = document.getElementById(`seg${i}_en`)
+                            segStartInput.value = st.value
+                            segEndInput.value = en.value
+
+                            v.currentTime = en.value;
+                            v.pause()
+                            set_preview();
+                        });
+
+
+                        document.getElementById(`seg${i}_en`).addEventListener('keydown', (e) => {
+                            let i = e.srcElement.id.match(/\d+/)[0]
+
+                            let st = document.getElementById(`seg${i}_st`)
+                            let en = document.getElementById(`seg${i}_en`)
+
+                            if (e.keyCode === 32) {
+                                if (v.paused) {  // если видео остановлено, запускаем
+                                    v.play();
+                                } else {
+                                    v.pause();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 13) {
+                                if (v.currentTime > +parseFloat(segStartInput.value)) {
+                                    en.value = +v.currentTime.toFixed(1);
+                                    segEndInput.value = en.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 40) {
+                                if (en.value > +parseFloat(st.value) - 0.1) {
+                                    en.value = +(parseFloat(en.value) - 0.1).toFixed(1);
+                                    v.currentTime = +parseFloat(en.value);
+                                    segEndInput.value = en.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 38) {
+                                if (en.value > +parseFloat(st.value) + 0.1) {
+                                    en.value = +(parseFloat(en.value) + 0.1).toFixed(1);
+                                    v.currentTime = +parseFloat(en.value);
+                                    segEndInput.value = en.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 37) {
+                                if (en.value > parseFloat(st.value) - 2) {
+                                    en.value = +(parseFloat(en.value) - 2).toFixed(1);
+                                    v.currentTime = +parseFloat(en.value);
+                                    segEndInput.value = en.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 39) {
+                                if (en.value > parseFloat(st.value) + 2) {
+                                    en.value = +(parseFloat(en.value) + 2).toFixed(1);
+                                    v.currentTime = +parseFloat(en.value);
+                                    segEndInput.value = en.value
+                                    set_preview();
+                                }
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else if (e.keyCode === 9) {
+                                document.getElementById(`seg${i}_st`).click()
+                                document.getElementById(`seg${i}_st`).focus()
+
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return true;
+                            } else {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                return false;
+                            }
+                        });
                     }
                 })
             }
@@ -1265,107 +1773,124 @@ function addEvents() {
 
 
     v.addEventListener("timeupdate", function () {
-        if ((!isReportStage1) && (!isReportStage2)) {
-            if (timestamps.length > 0) {
-                if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor !== "rgb(255, 204, 0)") {
-                    for (var i = 0; i < timestamps.length; i++) {
-                        if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
-                            if (timestamps[i]["source"] === "adn") {
-                                let whatshouldido = whatShouldIDo(timestamps[i]);
-                                if (whatshouldido) {
-                                    whatshouldido = 2
-                                } else {
-                                    whatshouldido = 1
-                                }
-                                if (whatshouldido === 2) {
-                                    currentSkipSource = "adn";
-                                    isReportActive = false;
-                                    isReplace = false;
-                                    switchModes()
-                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
-                                    addSegmentSkip(currentSkip)
-                                    v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
-                                    adplayer.style.display = "block";
-                                    isReportActive = false;
-                                    adskip.style.display = "block";
-                                    adButton3.style.display = "";
-                                    clearTimeout(skipTimer);
-                                    skipTimer = setTimeout(function () {
-                                        adplayer.style.display = "none";
+        if (isModInProgress) {
+            if (isPreviewInsideMod) {
+                if (this.currentTime >= segEndInput.value) {
+                    v.pause();
+                    isPreviewInsideMod = false;
+                }
+            }
+            if (isPreviewOutsideMod) {
+                if (v.currentTime >= segStartInput.value) {
+                    v.currentTime = segEndInput.value;
+                    isPreviewOutsideMod = false;
+                    setTimeout(function () {
+                        v.pause();
+                    }, 1500);
+                }
+            }
+        } else {
+            if ((!isReportStage1) && (!isReportStage2)) {
+                if (timestamps.length > 0) {
+                    if (getComputedStyle(document.getElementsByClassName('ytp-play-progress ytp-swatch-background-color')[0], null).backgroundColor !== "rgb(255, 204, 0)") {
+                        for (var i = 0; i < timestamps.length; i++) {
+                            if ((this.currentTime >= timestamps[i]["data"]["timestamps"]["start"]) && (this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8)) {
+                                if (timestamps[i]["source"] === "adn") {
+                                    let whatshouldido = whatShouldIDo(timestamps[i]);
+                                    if (whatshouldido) {
+                                        whatshouldido = 2
+                                    } else {
+                                        whatshouldido = 1
+                                    }
+                                    if (whatshouldido === 2) {
+                                        currentSkipSource = "adn";
+                                        isReportActive = false;
+                                        isReplace = false;
+                                        switchModes()
+                                        currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
+                                        addSegmentSkip(currentSkip)
+                                        v.currentTime = timestamps[i]["data"]["timestamps"]["end"] + 0.1;
+                                        adplayer.style.display = "block";
+                                        skipImage1.style.transform = "";
+                                        isReportActive = false;
+                                        adskip.style.display = "block";
+                                        adButton3.style.display = "";
+                                        clearTimeout(skipTimer);
+                                        skipTimer = setTimeout(function () {
+                                            adplayer.style.display = "none";
+                                            adskip.style.display = "none";
+                                        }, 8000);
+                                    } else if (whatshouldido === 1) {
+                                        currentSkipSource = "adn";
+                                        isReportActive = false;
+                                        isReplace = false;
+                                        switchModes()
+                                        currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
+                                        adplayer.style.display = "block";
+                                        _adSkip.style.display = "block";
                                         adskip.style.display = "none";
-                                    }, 8000);
-                                } else if (whatshouldido === 1) {
-                                    currentSkipSource = "adn";
+                                        adButton3.style.display = "";
+                                        _skipImage1.src = getIconPath("help.svg");
+                                        skipImage2.src = getIconPath("like.svg");
+                                        skipImage1.style.transform = "rotate(180deg)";
+                                        clearTimeout(skipTimer);
+                                        skipTimer = setTimeout(function () {
+                                            adplayer.style.display = "none";
+                                            _adSkip.style.display = "none";
+                                        }, 13000);
+                                    } else {
+                                        //nothing
+                                    }
+                                } else {
+                                    currentSkipSource = "sb";
                                     isReportActive = false;
                                     isReplace = false;
                                     switchModes()
-                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"], timestamps[i]["id"]]
-
+                                    currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
                                     adplayer.style.display = "block";
                                     _adSkip.style.display = "block";
                                     adskip.style.display = "none";
-                                    adButton3.style.display = "";
                                     _skipImage1.src = getIconPath("help.svg");
-                                    skipImage2.src = getIconPath("like.svg");
-                                    skipImage1.style.transform = "rotate(180deg)";
                                     clearTimeout(skipTimer);
                                     skipTimer = setTimeout(function () {
                                         adplayer.style.display = "none";
                                         _adSkip.style.display = "none";
                                     }, 13000);
-                                } else {
-                                    //nothing
                                 }
-                            } else {
-                                currentSkipSource = "sb";
-                                isReportActive = false;
-                                isReplace = false;
-                                switchModes()
-                                currentSkip = [timestamps[i]["data"]["timestamps"]["start"], timestamps[i]["data"]["timestamps"]["end"]]
-                                adplayer.style.display = "block";
-                                _adSkip.style.display = "block";
-                                adskip.style.display = "none";
-                                _skipImage1.src = getIconPath("help.svg");
-                                clearTimeout(skipTimer);
-
-                                skipTimer = setTimeout(function () {
-                                    adplayer.style.display = "none";
-                                    _adSkip.style.display = "none";
-                                }, 13000);
                             }
                         }
                     }
                 }
-            }
-        } else {
-            if (isPreviewInside) {
-                if (this.currentTime >= segEndInput.value) {
-                    v.pause();
-                    isPreviewInside = false;
-                }
-            }
-            if (isPreviewOutside) {
-                if (v.currentTime >= segStartInput.value) {
-                    v.currentTime = segEndInput.value;
-                    isPreviewOutside = false;
-                    setTimeout(function () {
+            } else {
+                if (isPreviewInside) {
+                    if (this.currentTime >= segEndInput.value) {
                         v.pause();
-                    }, 1500);
+                        isPreviewInside = false;
+                    }
                 }
-            }
-            if (isPreviewOutsideBeforeSend) {
-                if (v.currentTime >= segStartInput.value) {
-                    v.currentTime = segEndInput.value;
-                    isPreviewOutsideBeforeSend = false;
-                    setTimeout(function () {
-                        v.pause();
-                        var r = confirm(chrome.i18n.getMessage("areYouSure"));
-                        if (r === true) {
-                            enableStage2();
-                        } else {
-                            isReportStage2 = !isReportStage2;
-                        }
-                    }, 1500);
+                if (isPreviewOutside) {
+                    if (v.currentTime >= segStartInput.value) {
+                        v.currentTime = segEndInput.value;
+                        isPreviewOutside = false;
+                        setTimeout(function () {
+                            v.pause();
+                        }, 1500);
+                    }
+                }
+                if (isPreviewOutsideBeforeSend) {
+                    if (v.currentTime >= segStartInput.value) {
+                        v.currentTime = segEndInput.value;
+                        isPreviewOutsideBeforeSend = false;
+                        setTimeout(function () {
+                            v.pause();
+                            var r = confirm(chrome.i18n.getMessage("areYouSure"));
+                            if (r === true) {
+                                enableStage2();
+                            } else {
+                                isReportStage2 = !isReportStage2;
+                            }
+                        }, 1500);
+                    }
                 }
             }
         }
