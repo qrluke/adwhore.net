@@ -1,31 +1,45 @@
-<div id = "ADN_MOD_PANEL" style="margin-bottom:15px; background:#F00; border: 1px solid">
+<div id="ADN_MOD_PANEL" style="margin-bottom:15px; background:#F00; border: 1px solid">
+    <style>
+        table,
+        td,
+        th {
+            border: 1px solid black;
+        }
+    </style>
     <div style="display: flex">
         <h2>ADWHORE.NET - модераторская панелька</h2>
         <form action="https://karma.adwhore.net:47976/getRandomForMod" style="margin-left: auto;">
-            <input type="submit" value="Go to random segment" />
+            <input type="submit" value="Go to random segment"/>
         </form>
     </div>
     <div style="overflow:auto; background:#fff">
-        <table id="adnModTable" border="1">
-            <thead>
-            <th>id</th>
-            <th>time</th>
-            <th>mod?</th>
-            <th>trust</th>
-            <th>acrate</th>
-            <th>st</th>
-            <th>end</th>
-            <th>user</th>
-            <th>country</th>
-            <th>side</th>
-            <th>category</th>
-            <th>clown</th>
-            <th>maski</th>
-            <th>paid?</th>
-            <th>comment</th>
-            </thead>
-            <tbody id = "adnModList">
-            </tbody>
-        </table>
+        <center>
+            <table id="adnModTable">
+                <thead>
+                <th>id</th>
+                <th>time</th>
+                <th>mod?</th>
+                <th>trust</th>
+                <th>acrate</th>
+                <th>st</th>
+                <th>end</th>
+                <th>skip</th>
+                <th>test</th>
+                <th>user</th>
+                <th>country</th>
+                <th>side</th>
+                <th>category</th>
+                <th>clown</th>
+                <th>maski</th>
+                <th>paid?</th>
+                <th>L</th>
+                <th>S</th>
+                <th>D</th>
+                <th>comment</th>
+                </thead>
+                <tbody id="adnModList">
+                </tbody>
+            </table>
+        </center>
     </div>
 </div>
