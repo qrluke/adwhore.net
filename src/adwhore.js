@@ -252,6 +252,7 @@ let youtubeMutation = setTimeout(function tick() {
                     }
 
                     injectOverlay();
+                    injectToolTip()
                     console.log('tried')
 
                     console.log("creating html");
@@ -554,6 +555,45 @@ function injectOverlay() {
     });
 }
 
+function injectToolTip() {
+    fetch(chrome.extension.getURL('static/tooltip.html'))
+        .then(response => response.text())
+        .then(data => {
+            let template = document.createElement('template');
+            let html = data.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            let content = template.content.firstChild
+
+
+            let shadow_tooltip = document.createElement("div");
+
+            document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
+
+            shadow_tooltip_wrapper = shadow_tooltip.attachShadow({mode: 'open'});
+
+            // Create some CSS to apply to the shadow dom
+            let style_tooltip = document.createElement('style');
+
+            fetch(chrome.extension.getURL('static/tooltip.css'))
+                .then(response => response.text())
+                .then(data => {
+                    style_tooltip.textContent = data.trim()
+                }).catch(err => {
+                console.log(err)
+            });
+
+            shadow_tooltip_wrapper.appendChild(style_tooltip)
+
+            shadow_tooltip_wrapper.appendChild(content)
+
+            awesomeTooltip = shadow_tooltip_wrapper.getElementById("awesomeTooltip");
+            awesomeTooltipBody = shadow_tooltip_wrapper.getElementById("awesomeTooltipBody");
+            awesomeTooltipBodyText = shadow_tooltip_wrapper.getElementById("awesomeTooltipBodyText");
+        }).catch(err => {
+        console.log(err)
+    });
+}
+
 function resetAndFetch(bar = true) {
     /* RESET AFTER URL CHANGE HERE */
 
@@ -670,13 +710,10 @@ function createElemets() {
     sideButton = document.createElement("div");
     sideButtonImage = document.createElement("img");
 
-    awesomeTooltip = document.createElement("div");
 
     barList = document.createElement('ul');
     barListPreview = document.createElement('ul');
 
-    awesomeTooltipBody = document.createElement("div");
-    awesomeTooltipBodyText = document.createElement("div");
     segControls = document.createElement("div");
     segControlsNumberLabel = document.createElement("span");
     segControlsNumberInput = document.createElement("select");
@@ -1327,8 +1364,6 @@ function addLayout() {
         sideButton.appendChild(sideButtonImage);
     }
 
-    awesomeTooltip.appendChild(awesomeTooltipBody);
-    awesomeTooltipBody.appendChild(awesomeTooltipBodyText);
 
     replayButton.appendChild(segControls);
     segControls.appendChild(segControlsNumberLabel);
@@ -1449,9 +1484,6 @@ function addStyles() {
     sideButtonImage.style.padding = "10px 0";
     sideButtonImage.src = getParty("no.svg");
 
-    awesomeTooltip.id = "replayButtonTooltip";
-    awesomeTooltip.className = "ytp-tooltip";
-    awesomeTooltip.style.display = "none";
 
     barList.style.height = 0;
     barList.style.margin = 0;
@@ -1543,14 +1575,6 @@ function addStyles() {
     _skipImage2.style.float = "right";
     _skipImage2.style.padding = "4px 0";
     _skipImage2.src = getIconPath("forward.svg");*/
-
-    awesomeTooltipBody.className = "ytp-tooltip-body";
-    awesomeTooltipBody.style.left = "-22.5px";
-    awesomeTooltipBody.style.padding = "5px 8px";
-    awesomeTooltipBody.style.backgroundColor = "rgba(26,26,26,0.8)";
-    awesomeTooltipBody.style.borderRadius = "2px";
-
-    awesomeTooltipBodyText.className = "ytp-text-tooltip";
 
     segControls.style.display = "none";
     segControls.style.height = "100%";
@@ -1736,80 +1760,6 @@ function addStyles() {
 function inject() {
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barList);
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barListPreview);
-
-    shadow_tooltip = document.createElement("div");
-
-    document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
-
-    shadow_tooltip = shadow_tooltip.attachShadow({mode: 'open'});
-
-    // Create some CSS to apply to the shadow dom
-    let style_tooltip = document.createElement('style');
-
-    style_tooltip.textContent = `
-                        /*! CSS Used from: https://www.youtube.com/s/player/134332d3/www-player-2x-webp.css */
-                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar {
-                              width: 10px;
-                              background-color: #424242;
-                            }
-                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-track {
-                              background-color: #424242;
-                            }
-                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-thumb {
-                              background-color: #8e8e8e;
-                              border: 1px solid #424242;
-                              border-radius: 5px;
-                            }
-                            @media print {
-                              .html5-video-player * {
-                                visibility: hidden;
-                              }
-                            }
-                            .ytp-tooltip {
-                              position: absolute;
-                              z-index: 1002;
-                              font-size: 118%;
-                              font-weight: 500;
-                              line-height: 15px;
-                              opacity: 0;
-                              -moz-transition: -moz-transform 0.1s cubic-bezier(0, 0, 0.2, 1),
-                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
-                              -webkit-transition: -webkit-transform 0.1s cubic-bezier(0, 0, 0.2, 1),
-                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
-                              -ms-transition: -ms-transform 0.1s cubic-bezier(0, 0, 0.2, 1),
-                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
-                              transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1),
-                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
-                              pointer-events: none;
-                            }
-                            .ytp-tooltip:not([aria-hidden="true"]) {
-                              opacity: 1;
-                              -moz-transform: none;
-                              -ms-transform: none;
-                              -webkit-transform: none;
-                              transform: none;
-                              -moz-transition: -moz-transform 0.1s cubic-bezier(0.4, 0, 1, 1),
-                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
-                              -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.4, 0, 1, 1),
-                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
-                              -ms-transition: -ms-transform 0.1s cubic-bezier(0.4, 0, 1, 1),
-                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
-                              transition: transform 0.1s cubic-bezier(0.4, 0, 1, 1),
-                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
-                            }
-                            /*! CSS Used from: Embedded */
-                            div {
-                              margin: 0;
-                              padding: 0;
-                              border: 0;
-                              background: transparent;
-                            }
-                        `;
-    shadow_tooltip.appendChild(style_tooltip)
-
-    shadow_tooltip.appendChild(awesomeTooltip)
-
-
 }
 
 function addEvents() {
