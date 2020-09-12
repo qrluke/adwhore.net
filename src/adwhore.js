@@ -195,9 +195,55 @@ let youtubeMutation = setTimeout(function tick() {
                 console.log("video found");
 
                 if (!didWeChangeYouTubeQuestionMark) {
-                    control = document.createElement("div");
-                    control.className = "ytp-right-controls"
-                    $(control).insertAfter(document.getElementsByClassName("ytp-left-controls")[0])
+                    control1 = document.createElement("div");
+                    control1.style.height = "100%"
+
+                    $(control1).insertAfter(document.getElementsByClassName("ytp-left-controls")[0])
+
+                    shadow = control1.attachShadow({mode: 'open'});
+
+                    control = document.createElement('div');
+                    control.setAttribute('class', 'ytp-right-controls');
+
+                    // Create some CSS to apply to the shadow dom
+                    let style = document.createElement('style');
+
+                    style.textContent = `
+                        /*! CSS Used from: https://www.youtube.com/s/player/134332d3/www-player-2x-webp.css */
+                        .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar {
+                          width: 10px;
+                          background-color: #424242;
+                        }
+                        .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-track {
+                          background-color: #424242;
+                        }
+                        .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-thumb {
+                          background-color: #8e8e8e;
+                          border: 1px solid #424242;
+                          border-radius: 5px;
+                        }
+                        :not(.ytp-exp-bottom-control-flexbox) .ytp-right-controls {
+                          float: right;
+                        }
+                        .ytp-right-controls {
+                          height: 100%;
+                        }
+                        @media print {
+                          .html5-video-player * {
+                            visibility: hidden;
+                          }
+                        }
+                        /*! CSS Used from: Embedded */
+                        div {
+                          margin: 0;
+                          padding: 0;
+                          border: 0;
+                          background: transparent;
+                        }
+                        `;
+                    shadow.appendChild(style)
+                    shadow.appendChild(control)
+
                     if (!settings["show_panel"]) {
                         control.style.display = "none"
                     }
@@ -980,10 +1026,190 @@ function addStyles() {
 }
 
 function inject() {
-    document.getElementsByClassName("ytp-chrome-controls")[0].insertBefore(awesomeTooltip, document.getElementsByClassName(" ytp-right-controls")[0])
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barList);
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barListPreview);
-    document.getElementsByClassName("html5-video-player")[0].appendChild(adplayer);
+
+    shadow_tooltip = document.createElement("div");
+
+    document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
+
+    shadow_tooltip = shadow_tooltip.attachShadow({mode: 'open'});
+
+    // Create some CSS to apply to the shadow dom
+    let style_tooltip = document.createElement('style');
+
+    style_tooltip.textContent = `
+                        /*! CSS Used from: https://www.youtube.com/s/player/134332d3/www-player-2x-webp.css */
+                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar {
+                              width: 10px;
+                              background-color: #424242;
+                            }
+                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-track {
+                              background-color: #424242;
+                            }
+                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-thumb {
+                              background-color: #8e8e8e;
+                              border: 1px solid #424242;
+                              border-radius: 5px;
+                            }
+                            @media print {
+                              .html5-video-player * {
+                                visibility: hidden;
+                              }
+                            }
+                            .ytp-tooltip {
+                              position: absolute;
+                              z-index: 1002;
+                              font-size: 118%;
+                              font-weight: 500;
+                              line-height: 15px;
+                              opacity: 0;
+                              -moz-transition: -moz-transform 0.1s cubic-bezier(0, 0, 0.2, 1),
+                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
+                              -webkit-transition: -webkit-transform 0.1s cubic-bezier(0, 0, 0.2, 1),
+                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
+                              -ms-transition: -ms-transform 0.1s cubic-bezier(0, 0, 0.2, 1),
+                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
+                              transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1),
+                                opacity 0.1s cubic-bezier(0, 0, 0.2, 1);
+                              pointer-events: none;
+                            }
+                            .ytp-tooltip:not([aria-hidden="true"]) {
+                              opacity: 1;
+                              -moz-transform: none;
+                              -ms-transform: none;
+                              -webkit-transform: none;
+                              transform: none;
+                              -moz-transition: -moz-transform 0.1s cubic-bezier(0.4, 0, 1, 1),
+                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
+                              -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.4, 0, 1, 1),
+                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
+                              -ms-transition: -ms-transform 0.1s cubic-bezier(0.4, 0, 1, 1),
+                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
+                              transition: transform 0.1s cubic-bezier(0.4, 0, 1, 1),
+                                opacity 0.1s cubic-bezier(0.4, 0, 1, 1);
+                            }
+                            /*! CSS Used from: Embedded */
+                            div {
+                              margin: 0;
+                              padding: 0;
+                              border: 0;
+                              background: transparent;
+                            }
+                        `;
+    shadow_tooltip.appendChild(style_tooltip)
+
+    shadow_tooltip.appendChild(awesomeTooltip)
+
+
+    shadow_place = document.createElement("div");
+
+    document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_place);
+
+    shadow_ad = shadow_place.attachShadow({mode: 'open'});
+
+    // Create some CSS to apply to the shadow dom
+    let style_ad = document.createElement('style');
+
+    style_ad.textContent = `
+                        /*! CSS Used from: https://www.youtube.com/s/player/134332d3/www-player-2x-webp.css */
+                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar {
+                              width: 10px;
+                              background-color: #424242;
+                            }
+                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-track {
+                              background-color: #424242;
+                            }
+                            .html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-thumb {
+                              background-color: #8e8e8e;
+                              border: 1px solid #424242;
+                              border-radius: 5px;
+                            }
+                            .ytp-button {
+                              border: none;
+                              background-color: transparent;
+                              padding: 0;
+                              color: inherit;
+                              text-align: inherit;
+                              font-size: 100%;
+                              font-family: inherit;
+                              cursor: default;
+                              line-height: inherit;
+                            }
+                            .ytp-button:focus,
+                            .ytp-button {
+                              outline: 0;
+                            }
+                            .ytp-button::-moz-focus-inner {
+                              padding: 0;
+                              border: 0;
+                            }
+                            .ytp-button:not([aria-disabled="true"]):not([disabled]):not([aria-hidden="true"]) {
+                              cursor: pointer;
+                            }
+                            @media print {
+                              .html5-video-player * {
+                                visibility: hidden;
+                              }
+                            }
+                            .ytp-ad-skip-ad-slot {
+                              text-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+                              pointer-events: auto;
+                              z-index: 35;
+                            }
+                            .ytp-ad-skip-button-container {
+                              bottom: 74px;
+                              display: inline-block;
+                              position: absolute;
+                              right: 0;
+                              z-index: 1000;
+                            }
+                            .ytp-ad-skip-button-container {
+                              -moz-transition: opacity 0.5s cubic-bezier(0, 0, 0.2, 1);
+                              -webkit-transition: opacity 0.5s cubic-bezier(0, 0, 0.2, 1);
+                              transition: opacity 0.5s cubic-bezier(0, 0, 0.2, 1);
+                              cursor: pointer;
+                              opacity: 0.7;
+                              pointer-events: auto;
+                            }
+                            .ytp-ad-skip-button {
+                              background: rgba(0, 0, 0, 0.7);
+                              border: 1px solid rgba(255, 255, 255, 0.5);
+                              border-right: 0;
+                              box-sizing: content-box;
+                              color: #fff;
+                              direction: ltr;
+                              font-size: 18px;
+                              line-height: normal;
+                              min-width: 0;
+                              padding: 10px 6px 8px 10px;
+                              width: auto;
+                              text-align: center;
+                              cursor: pointer;
+                            }
+                            .ytp-ad-skip-button:hover {
+                              background: rgba(0, 0, 0, 0.9);
+                              border: 1px solid rgba(255, 255, 255, 1);
+                              border-right: 0;
+                            }
+                            .ytp-ad-player-overlay-skip-or-preview {
+                              width: 100%;
+                              height: 100%;
+                              right: 0;
+                            }
+                            /*! CSS Used from: Embedded */
+                            div,
+                            img,
+                            span {
+                              margin: 0;
+                              padding: 0;
+                              border: 0;
+                              background: transparent;
+                            }
+                        `;
+    shadow_ad.appendChild(style_ad)
+
+    shadow_ad.appendChild(adplayer)
 }
 
 function addEvents() {
@@ -1487,7 +1713,7 @@ function addEvents() {
         } else {
             awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("addsegment");
         }
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (replayButtonImage.offsetLeft + (replayButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1498,7 +1724,7 @@ function addEvents() {
 
     sideButtonImage.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = getSideTooltip()
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (sideButtonImage.offsetLeft + (sideButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1509,7 +1735,7 @@ function addEvents() {
 
     flagButtonImage.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = getFlagTooltip();
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (flagButtonImage.offsetLeft + (flagButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1535,7 +1761,7 @@ function addEvents() {
             }
         }
 
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (uploadButtonImage.offsetLeft + (uploadButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1551,7 +1777,7 @@ function addEvents() {
             awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("clickHelp1");
         }
 
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (helpButtonImage.offsetLeft + (helpButtonImage.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1562,7 +1788,7 @@ function addEvents() {
 
     markInImage.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewInside");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1573,7 +1799,7 @@ function addEvents() {
 
     markOutImage.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewInside");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewInside.offsetLeft + (previewInside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1588,7 +1814,7 @@ function addEvents() {
 
     markInImage1.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewOutside.offsetLeft + (previewOutside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1599,7 +1825,7 @@ function addEvents() {
 
     markOutImage1.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (previewOutside.offsetLeft + (previewOutside.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1610,7 +1836,7 @@ function addEvents() {
 
     segControlsNumberInput.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("selectCategory");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (segControlsNumberInput.offsetLeft + (segControlsNumberInput.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1626,7 +1852,7 @@ function addEvents() {
 
     mark1.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkOne");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (mark1.offsetLeft + (mark1.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1637,7 +1863,7 @@ function addEvents() {
 
     mark3.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkTwo");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (mark3.offsetLeft + (mark3.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
@@ -1648,7 +1874,7 @@ function addEvents() {
 
     mark5.addEventListener("mouseover", function () {
         awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkThree");
-        awesomeTooltip.style.bottom = (control.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
+        awesomeTooltip.style.bottom = (control1.parentElement.offsetHeight + (awesomeTooltip.offsetHeight / 2) + 10) + "px";
         awesomeTooltip.style.left = (mark5.offsetLeft + (mark5.offsetWidth / 2) - (awesomeTooltip.offsetWidth / 2) - 12) + "px";
         awesomeTooltip.style.display = "block";
     });
