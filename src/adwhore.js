@@ -371,6 +371,14 @@ function injectOverlay() {
             _adButton2 = shadow_ad.getElementById("_adButton2");
             _skipImage2 = shadow_ad.getElementById("_skipImage2");
 
+            skipImage1.src = getIconPath("backward.svg");
+            skipImage2.src = getIconPath("like.svg");
+            skipImage3.src = getIconPath("dislike.svg");
+            skipImage4.src = getIconPath("close-button.svg");
+
+            _skipImage1.src = getIconPath("help.svg");
+            _skipImage2.src = getIconPath("forward.svg");
+
             adskip.addEventListener("mouseover", function () {
                 clearTimeout(skipTimer);
             });
@@ -1519,7 +1527,6 @@ function addStyles() {
     skipImage1.style.transform = "";
     skipImage1.style.float = "right";
     skipImage1.style.padding = "4px 0";
-    skipImage1.src = getIconPath("backward.svg");
 
     adButton2.className = "ytp-ad-skip-button ytp-button";
 
@@ -1528,7 +1535,6 @@ function addStyles() {
     skipImage2.style.filter = "invert(96%)";
     skipImage2.style.float = "right";
     skipImage2.style.padding = "4px 0";
-    skipImage2.src = getIconPath("like.svg");
 
     adButton3.className = "ytp-ad-skip-button ytp-button";
 
@@ -1537,7 +1543,6 @@ function addStyles() {
     skipImage3.style.filter = "invert(96%)";
     skipImage3.style.float = "right";
     skipImage3.style.padding = "4px 0";
-    skipImage3.src = getIconPath("dislike.svg");
 
 
     adButton4.className = "ytp-ad-skip-button ytp-button";
@@ -1565,7 +1570,9 @@ function addStyles() {
     _skipImage1.style.float = "right";
     _skipImage1.style.filter = "invert(96%)";
     _skipImage1.style.padding = "4px 0";
-    _skipImage1.src = getIconPath("help.svg");
+
+
+       */
 
     _adButton2.className = "ytp-ad-skip-button ytp-button";
 
