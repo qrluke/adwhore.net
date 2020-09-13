@@ -1,0 +1,31 @@
+/*! CSS Used from: https://www.youtube.com/s/player/134332d3/www-player-2x-webp.css */
+.html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #424242;
+}
+.html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-track {
+    background-color: #424242;
+}
+.html5-video-player:not(.ytp-touch-mode) ::-webkit-scrollbar-thumb {
+    background-color: #8e8e8e;
+    border: 1px solid #424242;
+    border-radius: 5px;
+}
+:not(.ytp-exp-bottom-control-flexbox) .ytp-right-controls {
+    float: right;
+}
+.ytp-right-controls {
+    height: 100%;
+}
+@media print {
+    .html5-video-player * {
+        visibility: hidden;
+    }
+}
+/*! CSS Used from: Embedded */
+div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
