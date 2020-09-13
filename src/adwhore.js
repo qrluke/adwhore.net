@@ -1933,7 +1933,6 @@ function inject() {
 function addEvents() {
 
 
-
     v.addEventListener("timeupdate", function () {
         if (isModInProgress) {
             if (isPreviewInsideMod) {
