@@ -354,6 +354,8 @@ let youtubeMutation = setTimeout(function tick() {
 
                     didWeChangeYouTubeQuestionMark = true;
                 }
+                shadow_controls.style.display = "none";
+
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
                 if (adnPanel) {
                     adnPanel.remove();
@@ -495,6 +497,9 @@ function resetAndFetch(bar = true) {
                         }
                     }, 1000);
                 }
+            }
+            if (settings["show_panel"]) {
+                shadow_controls.style.display = "";
             }
         },
     });
@@ -859,6 +864,7 @@ function injectControls() {
 
         shadow_controls = document.createElement("div");
         shadow_controls.style.height = "100%";
+        shadow_controls.style.display = "none";
 
         $(shadow_controls).insertAfter(document.getElementsByClassName("ytp-left-controls")[0]);
 
