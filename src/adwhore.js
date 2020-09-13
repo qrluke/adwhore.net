@@ -512,7 +512,7 @@ function getYouTubeID(url) {
 }
 
 /**
- * Get YouTube Channel ID from actual page.
+ * Get YouTube Channel ID from current page.
  *
  * @return {String} Return YouTube Channel ID or "".
  */
