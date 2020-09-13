@@ -810,7 +810,7 @@ function injectToolTip() {
     if (request.status === 200) {
         let data = request.responseText;
         let template = document.createElement("template");
-        template.innerHTML = data.trim();;
+        template.innerHTML = data.trim();
         let content = template.content.firstChild;
 
         let shadow_tooltip = document.createElement("div");
