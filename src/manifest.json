@@ -14,7 +14,7 @@
       ],
       "js": [
         "adwhore.js",
-        "jquery.min.js"
+        "js/jquery.min.js"
       ],
       "run_at": "document_start"
     }
@@ -38,7 +38,7 @@
   ],
   "background": {
     "scripts": [
-      "background.js", "jquery.min.js"
+      "background.js", "js/jquery.min.js"
     ]
   },
   "web_accessible_resources": [
