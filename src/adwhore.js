@@ -2843,6 +2843,8 @@ function whatShouldIDo(segment) {
 
 /**
  * Tell the server that the segment is skipped.
+ *
+ * @param  {JSON} segment Segment.
  */
 function addSegmentSkip(segment) {
     $.ajax({
