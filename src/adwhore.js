@@ -270,251 +270,252 @@ let youtubeMutation = setTimeout(function tick() {
 var shadow_ad;
 
 function injectOverlay() {
-    fetch(chrome.extension.getURL('static/overlay.html'))
-        .then(response => response.text())
-        .then(data => {
-            let template = document.createElement('template');
-            let html = data.trim(); // Never return a text node of whitespace as the result
-            template.innerHTML = html;
-            let content = template.content.firstChild
+    var request = new XMLHttpRequest();
+    request.open('GET', chrome.extension.getURL('/static/overlay.html'), false);  // `false` makes the request synchronous
+    request.send(null);
 
-            let shadow_overlay = document.createElement("div");
+    if (request.status === 200) {
+        let data = request.responseText
+        let template = document.createElement('template');
+        let html = data.trim(); // Never return a text node of whitespace as the result
+        template.innerHTML = html;
+        let content = template.content.firstChild
 
-            document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_overlay);
+        let shadow_overlay = document.createElement("div");
 
-            shadow_ad = shadow_overlay.attachShadow({mode: 'open'});
+        document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_overlay);
 
-            // Create some CSS to apply to the shadow dom
-            let style_ad = document.createElement('style');
+        shadow_ad = shadow_overlay.attachShadow({mode: 'open'});
 
-            fetch(chrome.extension.getURL('static/overlay.css'))
-                .then(response => response.text())
-                .then(data => {
-                    style_ad.textContent = data.trim()
-                }).catch(err => {
-                console.log(err)
-            });
+        // Create some CSS to apply to the shadow dom
+        let style_ad = document.createElement('style');
 
-            shadow_ad.appendChild(style_ad)
+        var request1 = new XMLHttpRequest();
+        request1.open('GET', chrome.extension.getURL('/static/overlay.css'), false);  // `false` makes the request synchronous
+        request1.send(null);
 
-            shadow_ad.appendChild(content)
+        if (request1.status === 200) {
+            style_ad.textContent = request1.responseText.trim()
+        }
 
-            adplayer = shadow_ad.getElementById("adplayer");
-            adskip = shadow_ad.getElementById("adskip");
-            adSkipButton = shadow_ad.getElementById("adSkipButton");
+        shadow_ad.appendChild(style_ad)
 
-            adspan = shadow_ad.getElementById("adspan");
+        shadow_ad.appendChild(content)
 
-            adButton1 = shadow_ad.getElementById("adButton1");
-            skipImage1 = shadow_ad.getElementById("skipImage1");
+        adplayer = shadow_ad.getElementById("adplayer");
+        adskip = shadow_ad.getElementById("adskip");
+        adSkipButton = shadow_ad.getElementById("adSkipButton");
 
-            adButton2 = shadow_ad.getElementById("adButton2");
-            skipImage2 = shadow_ad.getElementById("skipImage2");
+        adspan = shadow_ad.getElementById("adspan");
 
-            adButton3 = shadow_ad.getElementById("adButton3");
-            skipImage3 = shadow_ad.getElementById("skipImage3");
+        adButton1 = shadow_ad.getElementById("adButton1");
+        skipImage1 = shadow_ad.getElementById("skipImage1");
 
-            adButton4 = shadow_ad.getElementById("adButton4");
-            skipImage4 = shadow_ad.getElementById("skipImage4");
+        adButton2 = shadow_ad.getElementById("adButton2");
+        skipImage2 = shadow_ad.getElementById("skipImage2");
 
-            _adSkip = shadow_ad.getElementById("_adSkip");
-            _adSkipButton = shadow_ad.getElementById("_adSkipButton");
-            _adSpan = shadow_ad.getElementById("_adSpan");
-            _adButton1 = shadow_ad.getElementById("_adButton1");
-            _skipImage1 = shadow_ad.getElementById("_skipImage1");
-            _adButton2 = shadow_ad.getElementById("_adButton2");
-            _skipImage2 = shadow_ad.getElementById("_skipImage2");
+        adButton3 = shadow_ad.getElementById("adButton3");
+        skipImage3 = shadow_ad.getElementById("skipImage3");
 
-            skipImage1.src = getIconPath("backward.svg");
-            skipImage2.src = getIconPath("like.svg");
-            skipImage3.src = getIconPath("dislike.svg");
-            skipImage4.src = getIconPath("close-button.svg");
+        adButton4 = shadow_ad.getElementById("adButton4");
+        skipImage4 = shadow_ad.getElementById("skipImage4");
 
-            _skipImage1.src = getIconPath("help.svg");
-            _skipImage2.src = getIconPath("forward.svg");
+        _adSkip = shadow_ad.getElementById("_adSkip");
+        _adSkipButton = shadow_ad.getElementById("_adSkipButton");
+        _adSpan = shadow_ad.getElementById("_adSpan");
+        _adButton1 = shadow_ad.getElementById("_adButton1");
+        _skipImage1 = shadow_ad.getElementById("_skipImage1");
+        _adButton2 = shadow_ad.getElementById("_adButton2");
+        _skipImage2 = shadow_ad.getElementById("_skipImage2");
 
-            adskip.addEventListener("mouseover", function () {
+        skipImage1.src = getIconPath("backward.svg");
+        skipImage2.src = getIconPath("like.svg");
+        skipImage3.src = getIconPath("dislike.svg");
+        skipImage4.src = getIconPath("close-button.svg");
+
+        _skipImage1.src = getIconPath("help.svg");
+        _skipImage2.src = getIconPath("forward.svg");
+
+        adskip.addEventListener("mouseover", function () {
+            clearTimeout(skipTimer);
+        });
+        adskip.addEventListener("mouseleave", function () {
+            clearTimeout(skipTimer);
+            skipTimer = setTimeout(() => adskip.style.display = "none", 3000);
+        });
+
+        _adSkip.addEventListener("mouseover", function () {
+            clearTimeout(skipTimer);
+        });
+        _adSkip.addEventListener("mouseleave", function () {
+            clearTimeout(skipTimer);
+            skipTimer = setTimeout(() => _adSkip.style.display = "none", 3000);
+        });
+
+        adButton1.addEventListener("click", function () {
+            if (isReportActive) {
+                adskip.style.display = "none";
+                adButton3.style.display = "";
+                skipImage2.src = getIconPath("like.svg");
                 clearTimeout(skipTimer);
-            });
-            adskip.addEventListener("mouseleave", function () {
-                clearTimeout(skipTimer);
-                skipTimer = setTimeout(() => adskip.style.display = "none", 3000);
-            });
 
-            _adSkip.addEventListener("mouseover", function () {
-                clearTimeout(skipTimer);
-            });
-            _adSkip.addEventListener("mouseleave", function () {
-                clearTimeout(skipTimer);
-                skipTimer = setTimeout(() => _adSkip.style.display = "none", 3000);
-            });
+                disableStage2()
+                disableStage1()
 
-            adButton1.addEventListener("click", function () {
-                if (isReportActive) {
-                    adskip.style.display = "none";
-                    adButton3.style.display = "";
-                    skipImage2.src = getIconPath("like.svg");
-                    clearTimeout(skipTimer);
-
-                    disableStage2()
-                    disableStage1()
-
-                    enableStage1(currentSkip[0], currentSkip[1])
-                    v.pause()
+                enableStage1(currentSkip[0], currentSkip[1])
+                v.pause()
+            } else {
+                if (skipImage1.style.transform === "") {
+                    v.currentTime = currentSkip[0] + 1;
+                    skipImage1.style.transform = "rotate(180deg)";
+                    v.play();
                 } else {
-                    if (skipImage1.style.transform === "") {
-                        v.currentTime = currentSkip[0] + 1;
-                        skipImage1.style.transform = "rotate(180deg)";
-                        v.play();
-                    } else {
-                        v.currentTime = currentSkip[1];
-                        skipImage1.style.transform = "";
-                        v.play();
-                    }
+                    v.currentTime = currentSkip[1];
+                    skipImage1.style.transform = "";
+                    v.play();
                 }
-            });
+            }
+        });
 
 
-            adButton2.addEventListener("click", function () {
-                if (isReportActive) {
-                    adskip.style.display = "none";
-                    adButton3.style.display = "";
-                    skipImage2.src = getIconPath("like.svg");
-                    clearTimeout(skipTimer);
-                    isReplace = true;
-                    disableStage2()
-                    disableStage1()
-                    enableStage1(currentSkip[0], currentSkip[1])
-                    v.pause()
+        adButton2.addEventListener("click", function () {
+            if (isReportActive) {
+                adskip.style.display = "none";
+                adButton3.style.display = "";
+                skipImage2.src = getIconPath("like.svg");
+                clearTimeout(skipTimer);
+                isReplace = true;
+                disableStage2()
+                disableStage1()
+                enableStage1(currentSkip[0], currentSkip[1])
+                v.pause()
 
 
-                } else {
-                    if (currentSkipSource === "adn") {
-                        skipImage2.src = getIconPath("heart.svg");
-                        $.ajax({
-                            dataType: "json",
-                            type: "POST",
-                            url: "https://karma.adwhore.net:47976/addSegmentLike",
-                            data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
-                            success: function (sb) {
-                                chrome.storage.sync.set({"likes": settings["likes"] + 1});
-                                // alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                                if (settings["moderator"]) {
-                                    let rewardValue = prompt("enter reward: n/10", "1");
-                                    if (rewardValue != null) {
-                                        $.ajax({
-                                            dataType: "json",
-                                            type: "POST",
-                                            url: "https://karma.adwhore.net:47976/addReward",
-                                            data: JSON.stringify({
-                                                sID: currentSkip[2],
-                                                secret: settings["secret"],
-                                                reward: rewardValue
-                                            }),
-                                            success: function (sb) {
-                                                alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                                            }
-                                        });
-                                    }
+            } else {
+                if (currentSkipSource === "adn") {
+                    skipImage2.src = getIconPath("heart.svg");
+                    $.ajax({
+                        dataType: "json",
+                        type: "POST",
+                        url: "https://karma.adwhore.net:47976/addSegmentLike",
+                        data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
+                        success: function (sb) {
+                            chrome.storage.sync.set({"likes": settings["likes"] + 1});
+                            // alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                            if (settings["moderator"]) {
+                                let rewardValue = prompt("enter reward: n/10", "1");
+                                if (rewardValue != null) {
+                                    $.ajax({
+                                        dataType: "json",
+                                        type: "POST",
+                                        url: "https://karma.adwhore.net:47976/addReward",
+                                        data: JSON.stringify({
+                                            sID: currentSkip[2],
+                                            secret: settings["secret"],
+                                            reward: rewardValue
+                                        }),
+                                        success: function (sb) {
+                                            alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                                        }
+                                    });
                                 }
                             }
-                        });
-                        setTimeout(function () {
-                            adskip.style.display = "none"
-                            skipImage2.src = getIconPath("like.svg");
-                        }, 1000);
-                    } else {
-                        disableStage2()
-                        disableStage1()
-
-                        enableStage1(currentSkip[0], currentSkip[1])
-                        enableStage2()
-                        v.pause()
-                    }
-                }
-            });
-
-            adButton3.addEventListener("click", function () {
-                if (isReportActive) {
-                    let comment = prompt(`Report on ${currentVideoId} skip ${currentSkip}.\n\n` + chrome.i18n.getMessage("reportText"));
-                    if (comment != null) {
-                        $.ajax({
-                            dataType: "json",
-                            type: "POST",
-                            url: "https://karma.adwhore.net:47976/addSegmentReport",
-                            data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
-                            success: function (sb) {
-                                alert(`Success. Reason: ${JSON.stringify(sb)}`);
-                                resetAndFetch()
-                            }
-                        });
-                        v.currentTime = currentSkip[0] + 1;
-
-                        adskip.style.display = "none";
-                        adButton3.style.display = "";
+                        }
+                    });
+                    setTimeout(function () {
+                        adskip.style.display = "none"
                         skipImage2.src = getIconPath("like.svg");
-                        clearTimeout(skipTimer);
-                    }
+                    }, 1000);
                 } else {
-                    isReportActive = !isReportActive
-                    switchModes()
-                }
-            });
+                    disableStage2()
+                    disableStage1()
 
-            adButton4.addEventListener("click", function () {
-                if (isReportActive) {
-                    isReportActive = false;
-                    isReplace = false;
-                    switchModes()
-                } else {
+                    enableStage1(currentSkip[0], currentSkip[1])
+                    enableStage2()
+                    v.pause()
+                }
+            }
+        });
+
+        adButton3.addEventListener("click", function () {
+            if (isReportActive) {
+                let comment = prompt(`Report on ${currentVideoId} skip ${currentSkip}.\n\n` + chrome.i18n.getMessage("reportText"));
+                if (comment != null) {
+                    $.ajax({
+                        dataType: "json",
+                        type: "POST",
+                        url: "https://karma.adwhore.net:47976/addSegmentReport",
+                        data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
+                        success: function (sb) {
+                            alert(`Success. Reason: ${JSON.stringify(sb)}`);
+                            resetAndFetch()
+                        }
+                    });
+                    v.currentTime = currentSkip[0] + 1;
+
                     adskip.style.display = "none";
                     adButton3.style.display = "";
                     skipImage2.src = getIconPath("like.svg");
                     clearTimeout(skipTimer);
                 }
-            });
+            } else {
+                isReportActive = !isReportActive
+                switchModes()
+            }
+        });
 
-            _adButton1.addEventListener("click", function () {
-                alert(currentSkipReason);
-            });
+        adButton4.addEventListener("click", function () {
+            if (isReportActive) {
+                isReportActive = false;
+                isReplace = false;
+                switchModes()
+            } else {
+                adskip.style.display = "none";
+                adButton3.style.display = "";
+                skipImage2.src = getIconPath("like.svg");
+                clearTimeout(skipTimer);
+            }
+        });
 
-            _adButton2.addEventListener("click", function () {
-                if (currentSkipSource === "adn") {
+        _adButton1.addEventListener("click", function () {
+            alert(currentSkipReason);
+        });
+
+        _adButton2.addEventListener("click", function () {
+            if (currentSkipSource === "adn") {
+                skipImage2.src = getIconPath("like.svg");
+                skipImage1.style.transform = "";
+                v.currentTime = currentSkip[1] + 0.1;
+                addSegmentSkip(currentSkip)
+
+                adButton3.style.display = ""
+
+                isReportActive = false;
+                isReplace = false;
+
+                switchModes();
+
+                adskip.style.display = "block";
+                _adSkip.style.display = "none";
+
+                skipTimer = setTimeout(function () {
+                    adskip.style.display = "none";
+                }, 8000);
+            } else {
+                adButton3.style.display = "none"
+                skipImage2.src = getIconPath("cloud-upload.svg");
+                skipImage1.style.transform = "";
+                v.currentTime = currentSkip[1] + 0.1;
+                adskip.style.display = "block";
+                _adSkip.style.display = "none";
+                skipTimer = setTimeout(function () {
+                    adskip.style.display = "none";
+                    adButton3.style.display = "";
                     skipImage2.src = getIconPath("like.svg");
-                    skipImage1.style.transform = "";
-                    v.currentTime = currentSkip[1] + 0.1;
-                    addSegmentSkip(currentSkip)
-
-                    adButton3.style.display = ""
-
-                    isReportActive = false;
-                    isReplace = false;
-
-                    switchModes();
-
-                    adskip.style.display = "block";
-                    _adSkip.style.display = "none";
-
-                    skipTimer = setTimeout(function () {
-                        adskip.style.display = "none";
-                    }, 8000);
-                } else {
-                    adButton3.style.display = "none"
-                    skipImage2.src = getIconPath("cloud-upload.svg");
-                    skipImage1.style.transform = "";
-                    v.currentTime = currentSkip[1] + 0.1;
-                    adskip.style.display = "block";
-                    _adSkip.style.display = "none";
-                    skipTimer = setTimeout(function () {
-                        adskip.style.display = "none";
-                        adButton3.style.display = "";
-                        skipImage2.src = getIconPath("like.svg");
-                    }, 5000);
-                }
-            });
-        }).catch(err => {
-        console.log(err)
-    });
+                }, 5000);
+            }
+        });
+    }
 }
 
 function injectToolTip() {
