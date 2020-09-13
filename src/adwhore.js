@@ -159,6 +159,11 @@ let isReportStage1 = false,
     ],
     parties = ["SOVIET", "UN", "NATO"];
 
+/**
+ * Get active auto-skip configuration.
+ *
+ * There are 4 pre-defined configuration and one custom.
+ */
 function updateConfig() {
     switch (+settings["mode"]) {
         case 1:
@@ -261,7 +266,9 @@ function updateConfig() {
             config = settings["custom"];
     }
 }
-
+/**
+ * Get active settings, update whitelist and register user if no secret key.
+ */
 function updateSettings(result) {
     settings = result;
     updateConfig();
@@ -284,11 +291,15 @@ function updateSettings(result) {
         });
     }
 }
-
+/**
+ * Get active settings on loading.
+ */
 chrome.storage.sync.get(null, function (result) {
     updateSettings(result);
 });
-
+/**
+ * Update settings if changed in popup.html.
+ */
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     chrome.storage.sync.get(null, function (result) {
         if (result["askedForHelp"] === 0) {
@@ -308,7 +319,11 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         updateSettings(result);
     });
 });
-
+/**
+ * Detect YouTube page mutation.
+ *
+ * It detects YouTube page change, injects html&js if needed, fetches new segments and updates moderation panel.
+ */
 let youtubeMutation = setTimeout(function tick() {
     //console.log("URL check started");
     if (settings && settings["enable"] && document.URL.localeCompare(currentUrl)) {
@@ -378,10 +393,10 @@ let youtubeMutation = setTimeout(function tick() {
     }
     youtubeMutation = setTimeout(tick, 250);
 }, 0);
-
+/**
+ * Reset unactual segments and fetch actual ones, update bar if needed.
+ */
 function resetAndFetch(bar = true) {
-    /* RESET AFTER URL CHANGE HERE */
-
     if (bar) {
         disableStage2();
         disableStage1();
@@ -480,12 +495,21 @@ function resetAndFetch(bar = true) {
         },
     });
 }
-
+/**
+ * Get YouTube Video ID.
+ *
+ * @param  {String} url YouTube url.
+ * @return {String} YouTube Video ID.
+ */
 function getYouTubeID(url) {
     const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
     return "undefined" !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
 }
-
+/**
+ * Get YouTube Channel ID from actual page.
+ *
+ * @return {String} Return YouTube Channel ID or "".
+ */
 function getChannelID() {
     const list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
     for (let item of list) {
@@ -497,7 +521,11 @@ function getChannelID() {
     }
     return "";
 }
-
+/**
+ * Inject Overlay to player page.
+ *
+ * Overlay is segments skipping UI. It lets skip segments, like, request deletion, replacement etc.
+ */
 function injectOverlay() {
     const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/overlay.html"), false); // `false` makes the request synchronous
@@ -742,7 +770,11 @@ function injectOverlay() {
         });
     }
 }
-
+/**
+ * Switch skipping UI mode.
+ *
+ * If report is active then change icons.
+ */
 function switchModes() {
     if (isReportActive) {
         skipImage1.src = getIconPath("resize.svg");
@@ -756,7 +788,11 @@ function switchModes() {
         skipImage4.src = getIconPath("close-button.svg");
     }
 }
-
+/**
+ * Inject ToolTip html.
+ *
+ * ToolTip is used to show info on button's mouseover.
+ */
 function injectToolTip() {
     const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/tooltip.html"), false); // `false` makes the request synchronous
@@ -794,7 +830,11 @@ function injectToolTip() {
         awesomeTooltipBodyText = shadow_tooltip_wrapper.getElementById("awesomeTooltipBodyText");
     }
 }
-
+/**
+ * Inject controls.
+ *
+ * Control panel lets submit new segments & shows if there is a segment in video.
+ */
 function injectControls() {
     const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/controls.html"), false); // `false` makes the request synchronous
@@ -1480,11 +1520,21 @@ function injectControls() {
         });
     }
 }
-
-function getIconPath(path) {
-    return chrome.extension.getURL("/img/" + path);
+/**
+ * Get icon path.
+ *
+ * @param  {String} path icon's filename.
+ * @return {String} path to icon.
+ */
+function getIconPath(filename) {
+    return chrome.extension.getURL("/img/" + filename);
 }
-
+/**
+ * Get flag path by country iso code.
+ *
+ * @param  {String} code ISO 3166-1 alpha-2 country code (RU).
+ * @return {String} path to country's flag or unknown country flag.
+ */
 function getFlagByCode(code) {
     if (countries.includes(code)) {
         return chrome.extension.getURL("/img/flags/" + code + ".svg");
@@ -1492,7 +1542,12 @@ function getFlagByCode(code) {
         return chrome.extension.getURL("/img/flags/_flag.svg");
     }
 }
-
+/**
+ * Get team flag path by country iso code.
+ *
+ * @param  {String} partyName team code.
+ * @return {String} path to team flag or unknown team flag.
+ */
 function getParty(partyName) {
     if (parties.includes(partyName)) {
         return chrome.extension.getURL("/img/parties/" + partyName + ".svg");
@@ -1500,7 +1555,11 @@ function getParty(partyName) {
         return chrome.extension.getURL("/img/parties/_flag.svg");
     }
 }
-
+/**
+ * Get country flag ToolTip text.
+ *
+ * @return {String} ToolTip text.
+ */
 function getFlagTooltip() {
     if (pathFinder["side"]) {
         return chrome.i18n.getMessage("countryStatsWIP");
@@ -1508,7 +1567,11 @@ function getFlagTooltip() {
         return chrome.i18n.getMessage("404");
     }
 }
-
+/**
+ * Get team flag Tooltip.
+ *
+ * @return {String} ToolTip text.
+ */
 function getSideTooltip() {
     let unixTimestamp = +pathFinder["timestamp"];
     let milliseconds = unixTimestamp * 1000; // 1575909015000
@@ -1547,7 +1610,12 @@ function getSideTooltip() {
         );
     }
 }
-
+/**
+ * Format SS to MM:SS.
+ *
+ * @param  {Number} time SS.
+ * @return {String} Time in MM:SS.
+ */
 function formatTime(time) {
     time = Math.round(time);
 
@@ -1558,7 +1626,13 @@ function formatTime(time) {
 
     return minutes + ":" + seconds;
 }
-
+/**
+ * Transform control panel to 1st submitting stage.
+ *
+ * 1st stage lets select segment and test it.
+ * @param  {Number} start start timecode of potential's segment.
+ * @param  {Number} end end timecode of potential's segment.
+ */
 function enableStage1(start, end) {
     if (!isReportActive) {
         uploadButtonImage.src = getIconPath("cloud-upload.svg");
@@ -1634,7 +1708,9 @@ function enableStage1(start, end) {
     set_preview();
     isReportStage1 = true;
 }
-
+/**
+ * Transform control panel to idle stage.
+ */
 function disableStage1() {
     clearInterval(keepControlsOpen);
     v.removeEventListener("timeupdate", updateProgressBar);
@@ -1678,7 +1754,11 @@ function disableStage1() {
     segControls.style.display = "none";
     isReportStage1 = false;
 }
-
+/**
+ * Transform control panel from 1st submitting stage to 2st submitting stage.
+ *
+ * 2nd submitting stage lets to select segment's category, tick checboxs and submit it with comment.
+ */
 function enableStage2() {
     replayButtonImage.src = getIconPath("back.svg");
     if (!isReportActive) {
@@ -1715,7 +1795,9 @@ function enableStage2() {
     mainButton.style.display = "none";
     isReportStage2 = true;
 }
-
+/**
+ * Transform control panel from 2nd submitting stage to 1st submitting stage.
+ */
 function disableStage2() {
     uploadButton.style.display = "block";
     helpButton.style.display = "block";
@@ -1739,7 +1821,9 @@ function disableStage2() {
     replayButtonImage.src = getIconPath("close-button.svg");
     isReportStage2 = false;
 }
-
+/**
+ * Inject barList and BarListPreview to progress-bar-container.
+ */
 function injectBars() {
     barList = document.createElement("ul");
     barListPreview = document.createElement("ul");
@@ -1764,7 +1848,11 @@ function injectBars() {
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barList);
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barListPreview);
 }
-
+/**
+ * Create empty bar.
+ *
+ * @return {HTMLElement} <li></li> bar to be added to barList or barListPreview.
+ */
 function createBar() {
     let bar = document.createElement("li");
     bar.style.display = "inline-block";
@@ -1772,7 +1860,15 @@ function createBar() {
     bar.innerText = "\u00A0";
     return bar;
 }
-
+/**
+ * Add Bar To List.
+ *
+ * @param  {Number} a Segment's start timecode.
+ * @param  {Number} b Segment's end timecode.
+ * @param  {String} color Start timecode of potential's segment.
+ * @param  {String} opacity Start timecode of potential's segment.
+ * @param  {Number} duration Video's duration.
+ */
 function addBarToList(a, b, color, opacity, duration) {
     let width = ((b - a) / duration) * 100;
     width = Math.floor(width * 100) / 100;
@@ -1782,7 +1878,12 @@ function addBarToList(a, b, color, opacity, duration) {
     bar.style.width = width + "%";
     barList.insertAdjacentElement("beforeEnd", bar);
 }
-
+/**
+ * Get the color of new bar.
+ *
+ * @param  {JSON} segment Segment.
+ * @return {String} HEX bar color.
+ */
 function getBarColor(segment) {
     if (segment["source"] === "sb") {
         return "#00FF00";
@@ -1796,7 +1897,12 @@ function getBarColor(segment) {
         }
     }
 }
-
+/**
+ * Get the opacity of new bar.
+ *
+ * @param  {JSON} segment Segment.
+ * @return {String} bar opacity.
+ */
 function getBarOpacity(segment) {
     if (segment["source"] === "sb") {
         return "1.0";
@@ -1810,7 +1916,13 @@ function getBarOpacity(segment) {
         }
     }
 }
-
+/**
+ * Set all segments.
+ *
+ * @param  {JSON} segs JSON of all known segments.
+ * @param  {Number} duration Video's duration.
+ * @return {String} bar opacity.
+ */
 function set(segs, duration) {
     while (barList.firstChild) {
         barList.removeChild(barList.firstChild);
@@ -1834,7 +1946,9 @@ function set(segs, duration) {
         }
     }
 }
-
+/**
+ * Set preview bar.
+ */
 function set_preview() {
     while (barListPreview.firstChild) {
         barListPreview.removeChild(barListPreview.firstChild);
@@ -1867,7 +1981,9 @@ function set_preview() {
         barListPreview.insertAdjacentElement("beforeEnd", bar);
     }
 }
-
+/**
+ * Injects moderator panel.
+ */
 function injectModeratorPanel() {
     let adnPanel = document.getElementById("ADN_MOD_PANEL");
     if (adnPanel) {
@@ -2303,7 +2419,12 @@ function injectModeratorPanel() {
             // handle error
         });
 }
-
+/**
+ * Injects moderator panel.
+ *
+ * @param  {Event} e Keydown event.
+ * @param  {Number} i Segment number in table.
+ */
 function modKeys(e, i) {
     let st = document.getElementById(`seg${i}_st`);
     let en = document.getElementById(`seg${i}_en`);
@@ -2407,7 +2528,11 @@ function modKeys(e, i) {
             return false;
     }
 }
-
+/**
+ * Add events on youtube html5 video.
+ *
+ * It handles all skipping functionality.
+ */
 function addVideoEvents() {
     v.addEventListener("timeupdate", function () {
         if (isModInProgress) {
@@ -2548,7 +2673,12 @@ function addVideoEvents() {
         }
     });
 }
-
+/**
+ * Decide if segment will be auto-skipped and generate String with reasons if not.
+ *
+ * @param  {JSON} segment Segment.
+ * @return {String} True - auto-skip, False - manual skip.
+ */
 function whatShouldIDo(segment) {
     currentSkipReason = chrome.i18n.getMessage("WNS_1");
     skip = true;
@@ -2679,7 +2809,9 @@ function whatShouldIDo(segment) {
         return false;
     }
 }
-
+/**
+ * Tell the server that the segment is skipped.
+ */
 function addSegmentSkip(segment) {
     $.ajax({
         dataType: "json",
