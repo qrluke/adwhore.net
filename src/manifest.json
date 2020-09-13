@@ -43,7 +43,6 @@
   },
   "web_accessible_resources": [
     "img/*",
-    "static/*",
-    "moderator.html"
+    "static/*"
   ]
 }

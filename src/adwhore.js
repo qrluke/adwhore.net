@@ -1470,7 +1470,7 @@ function injectModeratorPanel() {
     }
 
     isModInProgress = false;
-    fetch(chrome.extension.getURL('moderator.html'))
+    fetch(chrome.extension.getURL('static/moderator.html'))
         .then(response => response.text())
         .then(data => {
             let template = document.createElement('template');
