@@ -20,7 +20,6 @@ let isReportStage1 = false,
     currentSkip = [],
     isReportActive = false,
     isReplace = false,
-    skipTimer,
     pathFinder,
     settings,
     keepControlsOpen,
@@ -266,6 +265,7 @@ function updateConfig() {
             config = settings["custom"];
     }
 }
+
 /**
  * Get active settings, update whitelist and register user if no secret key.
  */
@@ -291,12 +291,14 @@ function updateSettings(result) {
         });
     }
 }
+
 /**
  * Get active settings on loading.
  */
 chrome.storage.sync.get(null, function (result) {
     updateSettings(result);
 });
+
 /**
  * Update settings if changed in popup.html.
  */
@@ -319,6 +321,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         updateSettings(result);
     });
 });
+
 /**
  * Detect YouTube page mutation.
  *
@@ -393,6 +396,7 @@ let youtubeMutation = setTimeout(function tick() {
     }
     youtubeMutation = setTimeout(tick, 250);
 }, 0);
+
 /**
  * Reset unactual segments and fetch actual ones, update bar if needed.
  */
@@ -495,6 +499,7 @@ function resetAndFetch(bar = true) {
         },
     });
 }
+
 /**
  * Get YouTube Video ID.
  *
@@ -505,6 +510,7 @@ function getYouTubeID(url) {
     const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
     return "undefined" !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
 }
+
 /**
  * Get YouTube Channel ID from actual page.
  *
@@ -521,6 +527,7 @@ function getChannelID() {
     }
     return "";
 }
+
 /**
  * Inject Overlay to player page.
  *
@@ -770,6 +777,7 @@ function injectOverlay() {
         });
     }
 }
+
 /**
  * Switch skipping UI mode.
  *
@@ -788,6 +796,7 @@ function switchModes() {
         skipImage4.src = getIconPath("close-button.svg");
     }
 }
+
 /**
  * Inject ToolTip html.
  *
@@ -830,6 +839,7 @@ function injectToolTip() {
         awesomeTooltipBodyText = shadow_tooltip_wrapper.getElementById("awesomeTooltipBodyText");
     }
 }
+
 /**
  * Inject controls.
  *
@@ -1520,6 +1530,7 @@ function injectControls() {
         });
     }
 }
+
 /**
  * Get icon path.
  *
@@ -1529,6 +1540,7 @@ function injectControls() {
 function getIconPath(filename) {
     return chrome.extension.getURL("/img/" + filename);
 }
+
 /**
  * Get flag path by country iso code.
  *
@@ -1542,6 +1554,7 @@ function getFlagByCode(code) {
         return chrome.extension.getURL("/img/flags/_flag.svg");
     }
 }
+
 /**
  * Get team flag path by country iso code.
  *
@@ -1555,6 +1568,7 @@ function getParty(partyName) {
         return chrome.extension.getURL("/img/parties/_flag.svg");
     }
 }
+
 /**
  * Get country flag ToolTip text.
  *
@@ -1567,6 +1581,7 @@ function getFlagTooltip() {
         return chrome.i18n.getMessage("404");
     }
 }
+
 /**
  * Get team flag Tooltip.
  *
@@ -1610,6 +1625,7 @@ function getSideTooltip() {
         );
     }
 }
+
 /**
  * Format SS to MM:SS.
  *
@@ -1626,6 +1642,7 @@ function formatTime(time) {
 
     return minutes + ":" + seconds;
 }
+
 /**
  * Transform control panel to 1st submitting stage.
  *
@@ -1708,6 +1725,7 @@ function enableStage1(start, end) {
     set_preview();
     isReportStage1 = true;
 }
+
 /**
  * Transform control panel to idle stage.
  */
@@ -1754,6 +1772,7 @@ function disableStage1() {
     segControls.style.display = "none";
     isReportStage1 = false;
 }
+
 /**
  * Transform control panel from 1st submitting stage to 2st submitting stage.
  *
@@ -1795,6 +1814,7 @@ function enableStage2() {
     mainButton.style.display = "none";
     isReportStage2 = true;
 }
+
 /**
  * Transform control panel from 2nd submitting stage to 1st submitting stage.
  */
@@ -1821,6 +1841,7 @@ function disableStage2() {
     replayButtonImage.src = getIconPath("close-button.svg");
     isReportStage2 = false;
 }
+
 /**
  * Inject barList and BarListPreview to progress-bar-container.
  */
@@ -1848,6 +1869,7 @@ function injectBars() {
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barList);
     document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barListPreview);
 }
+
 /**
  * Create empty bar.
  *
@@ -1860,6 +1882,7 @@ function createBar() {
     bar.innerText = "\u00A0";
     return bar;
 }
+
 /**
  * Add Bar To List.
  *
@@ -1878,6 +1901,7 @@ function addBarToList(a, b, color, opacity, duration) {
     bar.style.width = width + "%";
     barList.insertAdjacentElement("beforeEnd", bar);
 }
+
 /**
  * Get the color of new bar.
  *
@@ -1897,6 +1921,7 @@ function getBarColor(segment) {
         }
     }
 }
+
 /**
  * Get the opacity of new bar.
  *
@@ -1916,6 +1941,7 @@ function getBarOpacity(segment) {
         }
     }
 }
+
 /**
  * Set all segments.
  *
@@ -1946,6 +1972,7 @@ function set(segs, duration) {
         }
     }
 }
+
 /**
  * Set preview bar.
  */
@@ -1981,6 +2008,7 @@ function set_preview() {
         barListPreview.insertAdjacentElement("beforeEnd", bar);
     }
 }
+
 /**
  * Injects moderator panel.
  */
@@ -2419,6 +2447,7 @@ function injectModeratorPanel() {
             // handle error
         });
 }
+
 /**
  * Injects moderator panel.
  *
@@ -2528,6 +2557,7 @@ function modKeys(e, i) {
             return false;
     }
 }
+
 /**
  * Add events on youtube html5 video.
  *
@@ -2673,6 +2703,7 @@ function addVideoEvents() {
         }
     });
 }
+
 /**
  * Decide if segment will be auto-skipped and generate String with reasons if not.
  *
@@ -2809,6 +2840,7 @@ function whatShouldIDo(segment) {
         return false;
     }
 }
+
 /**
  * Tell the server that the segment is skipped.
  */
