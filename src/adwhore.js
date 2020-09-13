@@ -392,15 +392,14 @@ let youtubeMutation = setTimeout(function tick() {
 }, 0);
 
 function injectOverlay() {
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/overlay.html"), false); // `false` makes the request synchronous
     request.send(null);
 
     if (request.status === 200) {
         let data = request.responseText;
         let template = document.createElement("template");
-        let html = data.trim(); // Never return a text node of whitespace as the result
-        template.innerHTML = html;
+        template.innerHTML = data.trim();
         let content = template.content.firstChild;
 
         let shadow_overlay = document.createElement("div");
@@ -412,7 +411,7 @@ function injectOverlay() {
         // Create some CSS to apply to the shadow dom
         let style_ad = document.createElement("style");
 
-        var request1 = new XMLHttpRequest();
+        const request1 = new XMLHttpRequest();
         request1.open("GET", chrome.extension.getURL("/static/overlay.css"), false); // `false` makes the request synchronous
         request1.send(null);
 
@@ -638,15 +637,14 @@ function injectOverlay() {
 }
 
 function injectToolTip() {
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/tooltip.html"), false); // `false` makes the request synchronous
     request.send(null);
 
     if (request.status === 200) {
         let data = request.responseText;
         let template = document.createElement("template");
-        let html = data.trim(); // Never return a text node of whitespace as the result
-        template.innerHTML = html;
+        template.innerHTML = data.trim();;
         let content = template.content.firstChild;
 
         let shadow_tooltip = document.createElement("div");
@@ -658,7 +656,7 @@ function injectToolTip() {
         // Create some CSS to apply to the shadow dom
         let style_tooltip = document.createElement("style");
 
-        var request1 = new XMLHttpRequest();
+        const request1 = new XMLHttpRequest();
         request1.open("GET", chrome.extension.getURL("/static/tooltip.css"), false); // `false` makes the request synchronous
         request1.send(null);
 
@@ -677,7 +675,7 @@ function injectToolTip() {
 }
 
 function injectControls() {
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/controls.html"), false); // `false` makes the request synchronous
     request.send(null);
 
@@ -685,8 +683,7 @@ function injectControls() {
         data = request.responseText;
 
         let template = document.createElement("template");
-        let html = data.trim(); // Never return a text node of whitespace as the result
-        template.innerHTML = html;
+        template.innerHTML = data.trim();
         let content = template.content.firstChild;
 
         shadow_controls = document.createElement("div");
@@ -699,7 +696,7 @@ function injectControls() {
         // Create some CSS to apply to the shadow dom
         let style_controls = document.createElement("style");
 
-        var request1 = new XMLHttpRequest();
+        const request1 = new XMLHttpRequest();
         request1.open("GET", chrome.extension.getURL("/static/controls.css"), false); // `false` makes the request synchronous
         request1.send(null);
 
@@ -1581,13 +1578,12 @@ function injectModeratorPanel() {
         .then((response) => response.text())
         .then((data) => {
             let template = document.createElement("template");
-            let html = data.trim(); // Never return a text node of whitespace as the result
-            template.innerHTML = html;
+            template.innerHTML = data.trim();
             let dad = template.content.firstChild;
             $("ytd-video-primary-info-renderer")[0].insertBefore(dad, $("ytd-video-primary-info-renderer")[0].firstChild);
 
             $("#adnModList").empty();
-            for (var i = 0; i < timestamps.length; i++) {
+            for (let i = 0; i < timestamps.length; i++) {
                 $.ajax({
                     url: "https://karma.adwhore.net:47976/getSegmentData",
                     data: { sID: timestamps[i]["id"] },
@@ -1601,7 +1597,7 @@ function injectModeratorPanel() {
                         let segRow = `<tr>
                             <td id="seg${i}_id"><center>${data["id"]}</center></td>
                             <td>${humanDateFormat}</td>
-                            <td><center><input id="seg${i}_moderated" type="checkbox" onclick="return false;" style="margin: 0px;vertical-align: top;"></center></td>
+                            <td><center><input id="seg${i}_moderated" type="checkbox" onclick="return false;" style="margin: 0;vertical-align: top;"></center></td>
                             <td><center>${data["trust"]}</center></td>
                             <td><center>${data["acrate"]}</center></td>
                             <td><input id="seg${i}_st" type="number" value="${+data["st"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20 + "px"}"></td>
@@ -1630,9 +1626,9 @@ function injectModeratorPanel() {
                                 </center>
                             </td>
                             
-                            <td><center><input id="seg${i}_acceptable_start" type="checkbox" style="margin: 0px;vertical-align: top;"></center></td>
-                            <td><center><input id="seg${i}_pizdaboling" type="checkbox" style="margin: 0px;vertical-align: top;"></center></td>
-                            <td><center><input id="seg${i}_prepaid" type="checkbox" style="margin: 0px;vertical-align: top;"></center></td>
+                            <td><center><input id="seg${i}_acceptable_start" type="checkbox" style="margin: 0;vertical-align: top;"></center></td>
+                            <td><center><input id="seg${i}_pizdaboling" type="checkbox" style="margin: 0;vertical-align: top;"></center></td>
+                            <td><center><input id="seg${i}_prepaid" type="checkbox" style="margin: 0;vertical-align: top;"></center></td>
                             <td><input id="seg${i}_like" type="button" value="L"></td>
                             <td><input id="seg${i}_save" type="button" value="S"></td>
                             <td><input id="seg${i}_del" type="button" value="D"></td>
@@ -2053,7 +2049,7 @@ function addEvents() {
             if (!isReportStage1 && !isReportStage2) {
                 if (timestamps.length > 0) {
                     if (getComputedStyle(document.getElementsByClassName("ytp-play-progress ytp-swatch-background-color")[0], null).backgroundColor !== "rgb(255, 204, 0)") {
-                        for (var i = 0; i < timestamps.length; i++) {
+                        for (let i = 0; i < timestamps.length; i++) {
                             if (this.currentTime >= timestamps[i]["data"]["timestamps"]["start"] && this.currentTime <= timestamps[i]["data"]["timestamps"]["start"] + 0.8) {
                                 if (timestamps[i]["source"] === "adn") {
                                     let whatshouldido = whatShouldIDo(timestamps[i]);
@@ -2143,7 +2139,7 @@ function addEvents() {
                         isPreviewOutsideBeforeSend = false;
                         setTimeout(function () {
                             v.pause();
-                            var r = confirm(chrome.i18n.getMessage("areYouSure"));
+                            const r = confirm(chrome.i18n.getMessage("areYouSure"));
                             if (r === true) {
                                 enableStage2();
                             } else {
@@ -2359,7 +2355,7 @@ function getYouTubeID(url) {
 }
 
 function getChannelID() {
-    var list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
+    const list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
     for (let item of list) {
         if (item.href.includes("channel")) {
             let cid = item.href.replace("https://www.youtube.com/channel/", "");
@@ -2430,7 +2426,7 @@ function set(segs, duration) {
     duration = Math.floor(duration);
     addBarToList(0, segs[0]["data"]["timestamps"]["start"], "#FFFFFF", "0.0", duration);
 
-    for (var i = 0; i < segs.length; i++) {
+    for (let i = 0; i < segs.length; i++) {
         if (i + 1 < segs.length) {
             addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"] - 0.7, getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration);
             addBarToList(segs[i]["data"]["timestamps"]["end"] - 0.7, segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration);
@@ -2446,14 +2442,14 @@ function set_preview() {
     }
 
     duration = Math.floor(v.duration);
-    var width = 0;
+    let width = 0;
 
-    var preview_seg = [0];
+    const preview_seg = [0];
 
     preview_seg[1] = segStartInput.value;
     preview_seg[2] = segEndInput.value - 0.7;
 
-    for (var i = 0; i < preview_seg.length; i++) {
+    for (let i = 0; i < preview_seg.length; i++) {
         width = ((preview_seg[i + 1] - preview_seg[i]) / duration) * 100;
         width = Math.floor(width * 100) / 100;
         let bar = createBar();
