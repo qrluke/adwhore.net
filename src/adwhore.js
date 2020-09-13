@@ -519,42 +519,42 @@ function injectOverlay() {
 }
 
 function injectToolTip() {
-    fetch(chrome.extension.getURL('static/tooltip.html'))
-        .then(response => response.text())
-        .then(data => {
-            let template = document.createElement('template');
-            let html = data.trim(); // Never return a text node of whitespace as the result
-            template.innerHTML = html;
-            let content = template.content.firstChild
+    var request = new XMLHttpRequest();
+    request.open('GET', chrome.extension.getURL('/static/tooltip.html'), false);  // `false` makes the request synchronous
+    request.send(null);
 
+    if (request.status === 200) {
+        let data = request.responseText
+        let template = document.createElement('template');
+        let html = data.trim(); // Never return a text node of whitespace as the result
+        template.innerHTML = html;
+        let content = template.content.firstChild
 
-            let shadow_tooltip = document.createElement("div");
+        let shadow_tooltip = document.createElement("div");
 
-            document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
+        document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
 
-            shadow_tooltip_wrapper = shadow_tooltip.attachShadow({mode: 'open'});
+        shadow_tooltip_wrapper = shadow_tooltip.attachShadow({mode: 'open'});
 
-            // Create some CSS to apply to the shadow dom
-            let style_tooltip = document.createElement('style');
+        // Create some CSS to apply to the shadow dom
+        let style_tooltip = document.createElement('style');
 
-            fetch(chrome.extension.getURL('static/tooltip.css'))
-                .then(response => response.text())
-                .then(data => {
-                    style_tooltip.textContent = data.trim()
-                }).catch(err => {
-                console.log(err)
-            });
+        var request1 = new XMLHttpRequest();
+        request1.open('GET', chrome.extension.getURL('/static/tooltip.css'), false);  // `false` makes the request synchronous
+        request1.send(null);
 
-            shadow_tooltip_wrapper.appendChild(style_tooltip)
+        if (request1.status === 200) {
+            style_tooltip.textContent = request1.responseText.trim()
+        }
 
-            shadow_tooltip_wrapper.appendChild(content)
+        shadow_tooltip_wrapper.appendChild(style_tooltip)
 
-            awesomeTooltip = shadow_tooltip_wrapper.getElementById("awesomeTooltip");
-            awesomeTooltipBody = shadow_tooltip_wrapper.getElementById("awesomeTooltipBody");
-            awesomeTooltipBodyText = shadow_tooltip_wrapper.getElementById("awesomeTooltipBodyText");
-        }).catch(err => {
-        console.log(err)
-    });
+        shadow_tooltip_wrapper.appendChild(content)
+
+        awesomeTooltip = shadow_tooltip_wrapper.getElementById("awesomeTooltip");
+        awesomeTooltipBody = shadow_tooltip_wrapper.getElementById("awesomeTooltipBody");
+        awesomeTooltipBodyText = shadow_tooltip_wrapper.getElementById("awesomeTooltipBodyText");
+    }
 }
 
 function injectControls() {
