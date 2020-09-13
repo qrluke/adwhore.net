@@ -322,29 +322,17 @@ let youtubeMutation = setTimeout(function tick() {
                 console.log("video found");
 
                 if (!didWeChangeYouTubeQuestionMark) {
+                    console.log("injecting overlay");
                     injectOverlay();
+                    console.log("injecting tooltip");
                     injectToolTip();
+                    console.log("injecting controls");
                     injectControls();
-
-                    if (settings["show_flags"]) {
-                        flagButton.style.display = "block";
-                    }
-
-                    if (!settings["show_panel"]) {
-                        shadow_controls.style.display = "none";
-                    }
-
-                    console.log("creating html");
-                    createElemets();
-                    console.log("adding layout");
-                    addLayout();
-                    console.log("ugly css");
-                    addStyles();
-                    console.log("injecting ADN HTML+CSS into youtube player");
-                    inject();
-                    console.log("adding JS events");
-                    addEvents();
-                    console.log("ADN inserted. Let's roll!");
+                    console.log("injecting bars");
+                    injectBars();
+                    console.log("adding html5 video events");
+                    addVideoEvents();
+                    console.log("ADN's ready'");
 
                     didWeChangeYouTubeQuestionMark = true;
                 }
@@ -390,6 +378,125 @@ let youtubeMutation = setTimeout(function tick() {
     }
     youtubeMutation = setTimeout(tick, 250);
 }, 0);
+
+function resetAndFetch(bar = true) {
+    /* RESET AFTER URL CHANGE HERE */
+
+    if (bar) {
+        disableStage2();
+        disableStage1();
+        try {
+            document.getElementsByClassName("ytp-fullerscreen-edu-text")[0].style.display = "none";
+            document.getElementsByClassName("ytp-fullerscreen-edu-chevron")[0].style.display = "none";
+        } catch (error) {
+            console.error(error);
+        }
+
+        isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
+
+        flagButtonImage.style.padding = "8px 0px";
+
+        if (typeof barList == "object") {
+            if (barList.firstChild) {
+                while (barList.firstChild) {
+                    barList.removeChild(barList.firstChild);
+                }
+            }
+        }
+        if (typeof barList == "object") {
+            if (barListPreview.firstChild) {
+                while (barListPreview.firstChild) {
+                    barListPreview.removeChild(barListPreview.firstChild);
+                }
+            }
+        }
+        sideButton.style.display = "none";
+        flagButtonImage.src = getFlagByCode("unknown");
+        pathFinder = {};
+        isSideActive = false;
+    }
+
+    timestamps = [];
+    currentVideoId = getYouTubeID(currentUrl);
+    currentChannelId = getChannelID();
+
+    $.ajax({
+        dataType: "json",
+        url: "https://karma.adwhore.net:47976/getVideoData",
+        data: { vID: currentVideoId, cID: currentChannelId },
+        success: function (sb) {
+            pathFinder = sb["pathfinder"];
+            pathFinderSide = sb["pathfinder"]["side"];
+            pathFinderCountry = sb["pathfinder"]["country"];
+            flagButtonImage.style.padding = "10px 0px";
+            flagButtonImage.src = getFlagByCode(pathFinderCountry);
+            if (settings["show_flags"]) {
+                sideButton.style.display = "block";
+            }
+            sideButtonImage.src = getParty(pathFinderSide);
+            isSideActive = true;
+            for (let i = 0; i < sb["data"].length; i++) {
+                sb["data"][i]["source"] = "adn";
+                timestamps.push(sb["data"][i]);
+                console.log("insert");
+            }
+        },
+        complete: function () {
+            if (bar) {
+                timestamps.sort(function (a, b) {
+                    if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
+                        return 1;
+                    }
+                    if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                //yt ads walkaround
+                if (getComputedStyle(document.getElementsByClassName("ytp-play-progress ytp-swatch-background-color")[0], null).backgroundColor !== "rgb(255, 204, 0)") {
+                    set(timestamps, v.duration);
+                    segEndInput.max = v.duration - 0.5;
+                    segStartInput.max = v.duration - 1;
+                } else {
+                    let stoper = document.URL;
+                    let currentDuration = v.duration;
+                    setTimeout(function run() {
+                        if (stoper === document.URL) {
+                            if (v.duration && currentDuration !== v.duration) {
+                                if (getComputedStyle(document.getElementsByClassName("ytp-play-progress ytp-swatch-background-color")[0], null).backgroundColor !== "rgb(255, 204, 0)") {
+                                    set(timestamps, v.duration);
+                                    segEndInput.max = v.duration - 0.5;
+                                    segStartInput.max = v.duration - 1;
+                                } else {
+                                    setTimeout(run, 50);
+                                }
+                            } else {
+                                setTimeout(run, 100);
+                            }
+                        }
+                    }, 1000);
+                }
+            }
+        },
+    });
+}
+
+function getYouTubeID(url) {
+    const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+    return "undefined" !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
+}
+
+function getChannelID() {
+    const list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
+    for (let item of list) {
+        if (item.href.includes("channel")) {
+            let cid = item.href.replace("https://www.youtube.com/channel/", "");
+            chrome.storage.sync.set({ last_channel: { name: item.text, cID: cid } });
+            return cid;
+        }
+    }
+    return "";
+}
 
 function injectOverlay() {
     const request = new XMLHttpRequest();
@@ -636,6 +743,20 @@ function injectOverlay() {
     }
 }
 
+function switchModes() {
+    if (isReportActive) {
+        skipImage1.src = getIconPath("resize.svg");
+        skipImage2.src = getIconPath("replace.svg");
+        skipImage3.src = getIconPath("delete.svg");
+        skipImage4.src = getIconPath("undo.svg");
+    } else {
+        skipImage1.src = getIconPath("backward.svg");
+        skipImage2.src = getIconPath("like.svg");
+        skipImage3.src = getIconPath("dislike.svg");
+        skipImage4.src = getIconPath("close-button.svg");
+    }
+}
+
 function injectToolTip() {
     const request = new XMLHttpRequest();
     request.open("GET", chrome.extension.getURL("/static/tooltip.html"), false); // `false` makes the request synchronous
@@ -788,6 +909,14 @@ function injectControls() {
         markOutImage1.src = getIconPath("mark-out.svg");
         uploadButtonImage.src = getIconPath("cloud-upload.svg");
         helpButtonImage.src = getIconPath("help.svg");
+
+        if (settings["show_flags"]) {
+            flagButton.style.display = "block";
+        }
+
+        if (!settings["show_panel"]) {
+            shadow_controls.style.display = "none";
+        }
 
         mark1.addEventListener("click", function () {
             option01.checked = !option01.checked;
@@ -1352,214 +1481,390 @@ function injectControls() {
     }
 }
 
-function resetAndFetch(bar = true) {
-    /* RESET AFTER URL CHANGE HERE */
+function getIconPath(path) {
+    return chrome.extension.getURL("/img/" + path);
+}
 
-    if (bar) {
-        disableStage2();
-        disableStage1();
-        try {
-            document.getElementsByClassName("ytp-fullerscreen-edu-text")[0].style.display = "none";
-            document.getElementsByClassName("ytp-fullerscreen-edu-chevron")[0].style.display = "none";
-        } catch (error) {
-            console.error(error);
+function getFlagByCode(code) {
+    if (countries.includes(code)) {
+        return chrome.extension.getURL("/img/flags/" + code + ".svg");
+    } else {
+        return chrome.extension.getURL("/img/flags/_flag.svg");
+    }
+}
+
+function getParty(partyName) {
+    if (parties.includes(partyName)) {
+        return chrome.extension.getURL("/img/parties/" + partyName + ".svg");
+    } else {
+        return chrome.extension.getURL("/img/parties/_flag.svg");
+    }
+}
+
+function getFlagTooltip() {
+    if (pathFinder["side"]) {
+        return chrome.i18n.getMessage("countryStatsWIP");
+    } else {
+        return chrome.i18n.getMessage("404");
+    }
+}
+
+function getSideTooltip() {
+    let unixTimestamp = +pathFinder["timestamp"];
+    let milliseconds = unixTimestamp * 1000; // 1575909015000
+    let dateObject = new Date(milliseconds);
+    let humanDateFormat = dateObject.toLocaleString();
+
+    if (pathFinder["side"] === "UN") {
+        return (
+            chrome.i18n.getMessage("UN_pathfinder_prefix") +
+            pathFinder["name"] +
+            chrome.i18n.getMessage("pathfinder_from") +
+            pathFinder["country"] +
+            chrome.i18n.getMessage("UN_date") +
+            humanDateFormat +
+            chrome.i18n.getMessage("clickToViewColdWarStats")
+        );
+    } else if (pathFinder["side"] === "NATO") {
+        return (
+            chrome.i18n.getMessage("NATO_pathfinder_prefix") +
+            pathFinder["name"] +
+            chrome.i18n.getMessage("pathfinder_from") +
+            pathFinder["country"] +
+            chrome.i18n.getMessage("NATO_date") +
+            humanDateFormat +
+            chrome.i18n.getMessage("clickToViewColdWarStats")
+        );
+    } else if (pathFinder["side"] === "SOVIET") {
+        return (
+            chrome.i18n.getMessage("SOV_pathfinder_prefix") +
+            pathFinder["name"] +
+            chrome.i18n.getMessage("pathfinder_from") +
+            pathFinder["country"] +
+            chrome.i18n.getMessage("SOV_date") +
+            humanDateFormat +
+            chrome.i18n.getMessage("clickToViewColdWarStats")
+        );
+    }
+}
+
+function formatTime(time) {
+    time = Math.round(time);
+
+    const minutes = Math.floor(time / 60);
+    let seconds = time - minutes * 60;
+
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return minutes + ":" + seconds;
+}
+
+function enableStage1(start, end) {
+    if (!isReportActive) {
+        uploadButtonImage.src = getIconPath("cloud-upload.svg");
+    } else {
+        if (isReplace) {
+            uploadButtonImage.src = getIconPath("replace.svg");
+        } else {
+            uploadButtonImage.src = getIconPath("resize.svg");
         }
-
-        isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
-
-        flagButtonImage.style.padding = "8px 0px";
-
-        if (typeof barList == "object") {
-            if (barList.firstChild) {
-                while (barList.firstChild) {
-                    barList.removeChild(barList.firstChild);
-                }
-            }
-        }
-        if (typeof barList == "object") {
-            if (barListPreview.firstChild) {
-                while (barListPreview.firstChild) {
-                    barListPreview.removeChild(barListPreview.firstChild);
-                }
-            }
-        }
-        sideButton.style.display = "none";
-        flagButtonImage.src = getFlagByCode("unknown");
-        pathFinder = {};
-        isSideActive = false;
     }
 
-    timestamps = [];
-    currentVideoId = getYouTubeID(currentUrl);
-    currentChannelId = getChannelID();
+    const ytplayer = document.querySelector(".html5-video-player");
+    const progressbar = ytplayer.querySelector(".ytp-play-progress");
+    const loadbar = ytplayer.querySelector(".ytp-load-progress");
 
-    $.ajax({
-        dataType: "json",
-        url: "https://karma.adwhore.net:47976/getVideoData",
-        data: { vID: currentVideoId, cID: currentChannelId },
-        success: function (sb) {
-            pathFinder = sb["pathfinder"];
-            pathFinderSide = sb["pathfinder"]["side"];
-            pathFinderCountry = sb["pathfinder"]["country"];
-            flagButtonImage.style.padding = "10px 0px";
-            flagButtonImage.src = getFlagByCode(pathFinderCountry);
-            if (settings["show_flags"]) {
-                sideButton.style.display = "block";
-            }
-            sideButtonImage.src = getParty(pathFinderSide);
-            isSideActive = true;
-            for (let i = 0; i < sb["data"].length; i++) {
-                sb["data"][i]["source"] = "adn";
-                timestamps.push(sb["data"][i]);
-                console.log("insert");
-            }
-        },
-        complete: function () {
-            if (bar) {
-                timestamps.sort(function (a, b) {
-                    if (a["data"]["timestamps"]["start"] > b["data"]["timestamps"]["start"]) {
-                        return 1;
-                    }
-                    if (a["data"]["timestamps"]["start"] < b["data"]["timestamps"]["start"]) {
-                        return -1;
-                    }
-                    return 0;
-                });
-                //yt ads walkaround
-                if (getComputedStyle(document.getElementsByClassName("ytp-play-progress ytp-swatch-background-color")[0], null).backgroundColor !== "rgb(255, 204, 0)") {
-                    set(timestamps, v.duration);
-                    segEndInput.max = v.duration - 0.5;
-                    segStartInput.max = v.duration - 1;
-                } else {
-                    let stoper = document.URL;
-                    let currentDuration = v.duration;
-                    setTimeout(function run() {
-                        if (stoper === document.URL) {
-                            if (v.duration && currentDuration !== v.duration) {
-                                if (getComputedStyle(document.getElementsByClassName("ytp-play-progress ytp-swatch-background-color")[0], null).backgroundColor !== "rgb(255, 204, 0)") {
-                                    set(timestamps, v.duration);
-                                    segEndInput.max = v.duration - 0.5;
-                                    segStartInput.max = v.duration - 1;
-                                } else {
-                                    setTimeout(run, 50);
-                                }
-                            } else {
-                                setTimeout(run, 100);
-                            }
-                        }
-                    }, 1000);
-                }
-            }
-        },
-    });
+    updateProgressBar = function () {
+        progressbar.style.transform = "scaleX(" + v.currentTime / v.duration + ")";
+        $(".ytp-time-current").text(formatTime(v.currentTime));
+    };
+
+    updateBufferProgress = function () {
+        loadbar.style.transform = "scaleX(" + v.buffered.end(v.buffered.length - 1) / v.duration + ")";
+    };
+
+    v.addEventListener("timeupdate", updateProgressBar);
+    v.addEventListener("progress", updateBufferProgress);
+
+    keepControlsOpen = setInterval(function () {
+        $(".html5-video-player").removeClass("ytp-autohide");
+    }, 100);
+
+    segStartInput.value = +start.toFixed(1);
+
+    segEndInput.value = +end.toFixed(1);
+
+    if (+segEndInput.value >= v.duration) {
+        segEndInput.value = +v.duration.toFixed(1) - 0.5;
+    }
+
+    segStartInput.style.width = +v.duration.toFixed(1).length * 6 + 20 + "px";
+    segEndInput.style.width = +v.duration.toFixed(1).length * 6 + 20 + "px";
+
+    uploadButton.style.display = "block";
+    helpButton.style.display = "block";
+
+    flagButton.style.display = "none";
+    sideButton.style.display = "none";
+
+    segControlsNumberInput.style.display = "none";
+    segStartInput.style.display = "block";
+    segEndInput.style.display = "block";
+    previewInside.style.display = "none";
+    previewOutside.style.display = "block";
+
+    mark1.style.display = "none";
+    mark2.style.display = "none";
+    mark3.style.display = "none";
+    mark4.style.display = "none";
+    mark5.style.display = "none";
+    mark6.style.display = "none";
+
+    mainButton.style.display = "block";
+    isToggle = false;
+    mainButtonImage.style.transform = "";
+
+    segControlsNumberInput.value = "Select";
+
+    replayButtonImage.src = getIconPath("close-button.svg");
+    segControls.style.display = "flex";
+
+    isFirstInputSelect = true;
+
+    set_preview();
+    isReportStage1 = true;
 }
 
-function createElemets() {
+function disableStage1() {
+    clearInterval(keepControlsOpen);
+    v.removeEventListener("timeupdate", updateProgressBar);
+    v.removeEventListener("progress", updateBufferProgress);
+
+    uploadButton.style.display = "none";
+    helpButton.style.display = "none";
+
+    if (settings["show_flags"]) {
+        flagButton.style.display = "block";
+        if (isSideActive) {
+            sideButton.style.display = "block";
+        }
+    }
+
+    while (barListPreview.firstChild) {
+        barListPreview.removeChild(barListPreview.firstChild);
+    }
+
+    segControlsNumberInput.style.display = "none";
+    segStartInput.style.display = "none";
+    segEndInput.style.display = "none";
+    previewInside.style.display = "none";
+    previewOutside.style.display = "block";
+
+    mark1.style.display = "none";
+    mark2.style.display = "none";
+
+    mark3.style.display = "none";
+    mark4.style.display = "none";
+    mark5.style.display = "none";
+    mark6.style.display = "none";
+
+    mainButton.style.display = "none";
+
+    uploadButton.style.display = "none";
+    helpButton.style.display = "none";
+
+    segEndInput.style.display = "none";
+    replayButtonImage.src = getIconPath("report-button.svg");
+    segControls.style.display = "none";
+    isReportStage1 = false;
+}
+
+function enableStage2() {
+    replayButtonImage.src = getIconPath("back.svg");
+    if (!isReportActive) {
+        uploadButtonImage.src = getIconPath("cloud-upload.svg");
+    } else {
+        if (isReplace) {
+            uploadButtonImage.src = getIconPath("replace.svg");
+        } else {
+            uploadButtonImage.src = getIconPath("resize.svg");
+        }
+    }
+    isFirstInputSelect = true;
+
+    segControlsNumberInput.style.display = "block";
+    uploadButton.style.display = "block";
+    helpButton.style.display = "block";
+
+    flagButton.style.display = "none";
+    sideButton.style.display = "none";
+
+    segStartInput.style.display = "none";
+    segEndInput.style.display = "none";
+    previewInside.style.display = "block";
+    previewOutside.style.display = "none";
+    mark1.style.display = "block";
+    mark2.style.display = "block";
+    mark3.style.display = "block";
+    mark4.style.display = "block";
+
+    mark5.style.display = "block";
+    mark6.style.display = "block";
+
+    segControlsNumberInput.value = "Select";
+    mainButton.style.display = "none";
+    isReportStage2 = true;
+}
+
+function disableStage2() {
+    uploadButton.style.display = "block";
+    helpButton.style.display = "block";
+
+    flagButton.style.display = "none";
+    sideButton.style.display = "none";
+
+    segControlsNumberInput.style.display = "none";
+    segStartInput.style.display = "block";
+    segEndInput.style.display = "block";
+    previewInside.style.display = "none";
+    previewOutside.style.display = "block";
+    mark1.style.display = "none";
+    mark2.style.display = "none";
+    mark3.style.display = "none";
+    mark4.style.display = "none";
+    mark5.style.display = "none";
+    mark6.style.display = "none";
+
+    mainButton.style.display = "block";
+    replayButtonImage.src = getIconPath("close-button.svg");
+    isReportStage2 = false;
+}
+
+function injectBars() {
     barList = document.createElement("ul");
     barListPreview = document.createElement("ul");
+
+    barList.style.height = 0;
+    barList.style.margin = 0;
+    barList.style.padding = 0;
+
+    barList.style.position = "absolute";
+    barList.style.width = "100%";
+    barList.style.width = "visible";
+    barList.style.paddingTop = "1px";
+
+    barListPreview.style.height = 0;
+    barListPreview.style.margin = 0;
+    barListPreview.style.padding = 0;
+    barListPreview.style.position = "absolute";
+    barListPreview.style.width = "100%";
+    barListPreview.style.width = "visible";
+    barListPreview.style.paddingTop = "5px";
+
+    document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barList);
+    document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barListPreview);
 }
 
-function modKeys(e, i) {
-    let st = document.getElementById(`seg${i}_st`);
-    let en = document.getElementById(`seg${i}_en`);
+function createBar() {
+    let bar = document.createElement("li");
+    bar.style.display = "inline-block";
+    bar.style.height = "3px";
+    bar.innerText = "\u00A0";
+    return bar;
+}
 
-    let cat = document.getElementById(`seg${i}_category`);
-    let clown = document.getElementById(`seg${i}_acceptable_start`);
-    let maski = document.getElementById(`seg${i}_pizdaboling`);
-    let paid = document.getElementById(`seg${i}_prepaid`);
+function addBarToList(a, b, color, opacity, duration) {
+    let width = ((b - a) / duration) * 100;
+    width = Math.floor(width * 100) / 100;
+    let bar = createBar();
+    bar.style.backgroundColor = color;
+    bar.style.opacity = opacity;
+    bar.style.width = width + "%";
+    barList.insertAdjacentElement("beforeEnd", bar);
+}
 
-    let like = document.getElementById(`seg${i}_like`);
-    let save = document.getElementById(`seg${i}_save`);
-    let del = document.getElementById(`seg${i}_del`);
+function getBarColor(segment) {
+    if (segment["source"] === "sb") {
+        return "#00FF00";
+    } else if (segment["source"] === "adn") {
+        if (segment["paid"] === 0) {
+            return "#00fcd3";
+        } else if (segment["acrate"] * 100 < config["accept"]) {
+            return "#0000ff";
+        } else {
+            return "#ff6100";
+        }
+    }
+}
 
-    let skip = document.getElementById(`seg${i}_skip`);
-    let test = document.getElementById(`seg${i}_test`);
+function getBarOpacity(segment) {
+    if (segment["source"] === "sb") {
+        return "1.0";
+    } else if (segment["source"] === "adn") {
+        if (segment["paid"] === 0) {
+            return "1.0";
+        } else if (segment["trust"] * 100 < config["trust"]) {
+            return "1.0";
+        } else {
+            return "1.0";
+        }
+    }
+}
 
-    switch (e.key) {
-        case "1":
-            clown.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "2":
-            maski.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "3":
-            paid.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "f":
-            cat.focus();
-            cat.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "q":
-            st.focus();
-            st.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "e":
-            en.focus();
-            en.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "z":
-            like.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "x":
-            save.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "c":
-            del.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "w":
-            skip.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "s":
-            test.click();
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "a":
-            v.playbackRate = v.playbackRate - 0.1;
-            lastSpeed = v.playbackRate;
+function set(segs, duration) {
+    while (barList.firstChild) {
+        barList.removeChild(barList.firstChild);
+    }
 
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "d":
-            v.playbackRate = v.playbackRate + 0.1;
-            lastSpeed = v.playbackRate;
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        case "r":
-            if (v.playbackRate === 1) {
-                v.playbackRate = lastSpeed;
-            } else {
-                v.playbackRate = 1.0;
-            }
-            e.preventDefault();
-            e.stopPropagation();
-            return true;
-        default:
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
+    if (!segs || !duration || segs.length === 0) {
+        console.log("incorrect args");
+        return;
+    }
+
+    //console.log(segs);
+    duration = Math.floor(duration);
+    addBarToList(0, segs[0]["data"]["timestamps"]["start"], "#FFFFFF", "0.0", duration);
+
+    for (let i = 0; i < segs.length; i++) {
+        if (i + 1 < segs.length) {
+            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"] - 0.7, getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration);
+            addBarToList(segs[i]["data"]["timestamps"]["end"] - 0.7, segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration);
+        } else {
+            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"], getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration);
+        }
+    }
+}
+
+function set_preview() {
+    while (barListPreview.firstChild) {
+        barListPreview.removeChild(barListPreview.firstChild);
+    }
+
+    duration = Math.floor(v.duration);
+    let width = 0;
+
+    const preview_seg = [0];
+
+    preview_seg[1] = segStartInput.value;
+    preview_seg[2] = segEndInput.value - 0.7;
+
+    for (let i = 0; i < preview_seg.length; i++) {
+        width = ((preview_seg[i + 1] - preview_seg[i]) / duration) * 100;
+        width = Math.floor(width * 100) / 100;
+        let bar = createBar();
+
+        if (i % 2 === 1) {
+            bar.style.backgroundColor = "#FFFF00";
+            bar.style.opacity = "1.0";
+        } else {
+            bar.style.backgroundColor = "#FFFF00";
+            bar.style.opacity = "0.0";
+        }
+
+        bar.style.height = "2.5px";
+        bar.style.width = width + "%";
+
+        barListPreview.insertAdjacentElement("beforeEnd", bar);
     }
 }
 
@@ -1999,35 +2304,111 @@ function injectModeratorPanel() {
         });
 }
 
-//TODO: settings show flags
-function addLayout() {}
+function modKeys(e, i) {
+    let st = document.getElementById(`seg${i}_st`);
+    let en = document.getElementById(`seg${i}_en`);
 
-// TODO: transform to .css
-function addStyles() {
-    barList.style.height = 0;
-    barList.style.margin = 0;
-    barList.style.padding = 0;
+    let cat = document.getElementById(`seg${i}_category`);
+    let clown = document.getElementById(`seg${i}_acceptable_start`);
+    let maski = document.getElementById(`seg${i}_pizdaboling`);
+    let paid = document.getElementById(`seg${i}_prepaid`);
 
-    barList.style.position = "absolute";
-    barList.style.width = "100%";
-    barList.style.width = "visible";
-    barList.style.paddingTop = "1px";
+    let like = document.getElementById(`seg${i}_like`);
+    let save = document.getElementById(`seg${i}_save`);
+    let del = document.getElementById(`seg${i}_del`);
 
-    barListPreview.style.height = 0;
-    barListPreview.style.margin = 0;
-    barListPreview.style.padding = 0;
-    barListPreview.style.position = "absolute";
-    barListPreview.style.width = "100%";
-    barListPreview.style.width = "visible";
-    barListPreview.style.paddingTop = "5px";
+    let skip = document.getElementById(`seg${i}_skip`);
+    let test = document.getElementById(`seg${i}_test`);
+
+    switch (e.key) {
+        case "1":
+            clown.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "2":
+            maski.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "3":
+            paid.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "f":
+            cat.focus();
+            cat.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "q":
+            st.focus();
+            st.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "e":
+            en.focus();
+            en.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "z":
+            like.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "x":
+            save.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "c":
+            del.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "w":
+            skip.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "s":
+            test.click();
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "a":
+            v.playbackRate = v.playbackRate - 0.1;
+            lastSpeed = v.playbackRate;
+
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "d":
+            v.playbackRate = v.playbackRate + 0.1;
+            lastSpeed = v.playbackRate;
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        case "r":
+            if (v.playbackRate === 1) {
+                v.playbackRate = lastSpeed;
+            } else {
+                v.playbackRate = 1.0;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+        default:
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+    }
 }
 
-function inject() {
-    document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barList);
-    document.getElementsByClassName("ytp-progress-bar-container")[0].insertAdjacentElement("afterbegin", barListPreview);
-}
-
-function addEvents() {
+function addVideoEvents() {
     v.addEventListener("timeupdate", function () {
         if (isModInProgress) {
             if (isPreviewInsideMod) {
@@ -2168,374 +2549,6 @@ function addEvents() {
     });
 }
 
-function enableStage2() {
-    replayButtonImage.src = getIconPath("back.svg");
-    if (!isReportActive) {
-        uploadButtonImage.src = getIconPath("cloud-upload.svg");
-    } else {
-        if (isReplace) {
-            uploadButtonImage.src = getIconPath("replace.svg");
-        } else {
-            uploadButtonImage.src = getIconPath("resize.svg");
-        }
-    }
-    isFirstInputSelect = true;
-
-    segControlsNumberInput.style.display = "block";
-    uploadButton.style.display = "block";
-    helpButton.style.display = "block";
-
-    flagButton.style.display = "none";
-    sideButton.style.display = "none";
-
-    segStartInput.style.display = "none";
-    segEndInput.style.display = "none";
-    previewInside.style.display = "block";
-    previewOutside.style.display = "none";
-    mark1.style.display = "block";
-    mark2.style.display = "block";
-    mark3.style.display = "block";
-    mark4.style.display = "block";
-
-    mark5.style.display = "block";
-    mark6.style.display = "block";
-
-    segControlsNumberInput.value = "Select";
-    mainButton.style.display = "none";
-    isReportStage2 = true;
-}
-
-function disableStage2() {
-    uploadButton.style.display = "block";
-    helpButton.style.display = "block";
-
-    flagButton.style.display = "none";
-    sideButton.style.display = "none";
-
-    segControlsNumberInput.style.display = "none";
-    segStartInput.style.display = "block";
-    segEndInput.style.display = "block";
-    previewInside.style.display = "none";
-    previewOutside.style.display = "block";
-    mark1.style.display = "none";
-    mark2.style.display = "none";
-    mark3.style.display = "none";
-    mark4.style.display = "none";
-    mark5.style.display = "none";
-    mark6.style.display = "none";
-
-    mainButton.style.display = "block";
-    replayButtonImage.src = getIconPath("close-button.svg");
-    isReportStage2 = false;
-}
-
-function enableStage1(start, end) {
-    if (!isReportActive) {
-        uploadButtonImage.src = getIconPath("cloud-upload.svg");
-    } else {
-        if (isReplace) {
-            uploadButtonImage.src = getIconPath("replace.svg");
-        } else {
-            uploadButtonImage.src = getIconPath("resize.svg");
-        }
-    }
-
-    const ytplayer = document.querySelector(".html5-video-player");
-    const progressbar = ytplayer.querySelector(".ytp-play-progress");
-    const loadbar = ytplayer.querySelector(".ytp-load-progress");
-
-    updateProgressBar = function () {
-        progressbar.style.transform = "scaleX(" + v.currentTime / v.duration + ")";
-        $(".ytp-time-current").text(formatTime(v.currentTime));
-    };
-
-    updateBufferProgress = function () {
-        loadbar.style.transform = "scaleX(" + v.buffered.end(v.buffered.length - 1) / v.duration + ")";
-    };
-
-    v.addEventListener("timeupdate", updateProgressBar);
-    v.addEventListener("progress", updateBufferProgress);
-
-    keepControlsOpen = setInterval(function () {
-        $(".html5-video-player").removeClass("ytp-autohide");
-    }, 100);
-
-    segStartInput.value = +start.toFixed(1);
-
-    segEndInput.value = +end.toFixed(1);
-
-    if (+segEndInput.value >= v.duration) {
-        segEndInput.value = +v.duration.toFixed(1) - 0.5;
-    }
-
-    segStartInput.style.width = +v.duration.toFixed(1).length * 6 + 20 + "px";
-    segEndInput.style.width = +v.duration.toFixed(1).length * 6 + 20 + "px";
-
-    uploadButton.style.display = "block";
-    helpButton.style.display = "block";
-
-    flagButton.style.display = "none";
-    sideButton.style.display = "none";
-
-    segControlsNumberInput.style.display = "none";
-    segStartInput.style.display = "block";
-    segEndInput.style.display = "block";
-    previewInside.style.display = "none";
-    previewOutside.style.display = "block";
-
-    mark1.style.display = "none";
-    mark2.style.display = "none";
-    mark3.style.display = "none";
-    mark4.style.display = "none";
-    mark5.style.display = "none";
-    mark6.style.display = "none";
-
-    mainButton.style.display = "block";
-    isToggle = false;
-    mainButtonImage.style.transform = "";
-
-    segControlsNumberInput.value = "Select";
-
-    replayButtonImage.src = getIconPath("close-button.svg");
-    segControls.style.display = "flex";
-
-    isFirstInputSelect = true;
-
-    set_preview();
-    isReportStage1 = true;
-}
-
-function disableStage1() {
-    clearInterval(keepControlsOpen);
-    v.removeEventListener("timeupdate", updateProgressBar);
-    v.removeEventListener("progress", updateBufferProgress);
-
-    uploadButton.style.display = "none";
-    helpButton.style.display = "none";
-
-    if (settings["show_flags"]) {
-        flagButton.style.display = "block";
-        if (isSideActive) {
-            sideButton.style.display = "block";
-        }
-    }
-
-    while (barListPreview.firstChild) {
-        barListPreview.removeChild(barListPreview.firstChild);
-    }
-
-    segControlsNumberInput.style.display = "none";
-    segStartInput.style.display = "none";
-    segEndInput.style.display = "none";
-    previewInside.style.display = "none";
-    previewOutside.style.display = "block";
-
-    mark1.style.display = "none";
-    mark2.style.display = "none";
-
-    mark3.style.display = "none";
-    mark4.style.display = "none";
-    mark5.style.display = "none";
-    mark6.style.display = "none";
-
-    mainButton.style.display = "none";
-
-    uploadButton.style.display = "none";
-    helpButton.style.display = "none";
-
-    segEndInput.style.display = "none";
-    replayButtonImage.src = getIconPath("report-button.svg");
-    segControls.style.display = "none";
-    isReportStage1 = false;
-}
-
-function getYouTubeID(url) {
-    const arr = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-    return "undefined" !== arr[2] ? arr[2].split(/[^\w-]/i)[0] : arr[0];
-}
-
-function getChannelID() {
-    const list = document.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string");
-    for (let item of list) {
-        if (item.href.includes("channel")) {
-            let cid = item.href.replace("https://www.youtube.com/channel/", "");
-            chrome.storage.sync.set({ last_channel: { name: item.text, cID: cid } });
-            return cid;
-        }
-    }
-    return "";
-}
-
-function createBar() {
-    let bar = document.createElement("li");
-    bar.style.display = "inline-block";
-    bar.style.height = "3px";
-    bar.innerText = "\u00A0";
-    return bar;
-}
-
-function addBarToList(a, b, color, opacity, duration) {
-    let width = ((b - a) / duration) * 100;
-    width = Math.floor(width * 100) / 100;
-    let bar = createBar();
-    bar.style.backgroundColor = color;
-    bar.style.opacity = opacity;
-    bar.style.width = width + "%";
-    barList.insertAdjacentElement("beforeEnd", bar);
-}
-
-function getBarColor(segment) {
-    if (segment["source"] === "sb") {
-        return "#00FF00";
-    } else if (segment["source"] === "adn") {
-        if (segment["paid"] === 0) {
-            return "#00fcd3";
-        } else if (segment["acrate"] * 100 < config["accept"]) {
-            return "#0000ff";
-        } else {
-            return "#ff6100";
-        }
-    }
-}
-
-function getBarOpacity(segment) {
-    if (segment["source"] === "sb") {
-        return "1.0";
-    } else if (segment["source"] === "adn") {
-        if (segment["paid"] === 0) {
-            return "1.0";
-        } else if (segment["trust"] * 100 < config["trust"]) {
-            return "1.0";
-        } else {
-            return "1.0";
-        }
-    }
-}
-
-function set(segs, duration) {
-    while (barList.firstChild) {
-        barList.removeChild(barList.firstChild);
-    }
-
-    if (!segs || !duration || segs.length === 0) {
-        console.log("incorrect args");
-        return;
-    }
-
-    //console.log(segs);
-    duration = Math.floor(duration);
-    addBarToList(0, segs[0]["data"]["timestamps"]["start"], "#FFFFFF", "0.0", duration);
-
-    for (let i = 0; i < segs.length; i++) {
-        if (i + 1 < segs.length) {
-            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"] - 0.7, getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration);
-            addBarToList(segs[i]["data"]["timestamps"]["end"] - 0.7, segs[i + 1]["data"]["timestamps"]["start"], "#00FF00", "0.0", v.duration);
-        } else {
-            addBarToList(segs[i]["data"]["timestamps"]["start"], segs[i]["data"]["timestamps"]["end"], getBarColor(segs[i]), getBarOpacity(segs[i]), v.duration);
-        }
-    }
-}
-
-function set_preview() {
-    while (barListPreview.firstChild) {
-        barListPreview.removeChild(barListPreview.firstChild);
-    }
-
-    duration = Math.floor(v.duration);
-    let width = 0;
-
-    const preview_seg = [0];
-
-    preview_seg[1] = segStartInput.value;
-    preview_seg[2] = segEndInput.value - 0.7;
-
-    for (let i = 0; i < preview_seg.length; i++) {
-        width = ((preview_seg[i + 1] - preview_seg[i]) / duration) * 100;
-        width = Math.floor(width * 100) / 100;
-        let bar = createBar();
-
-        if (i % 2 === 1) {
-            bar.style.backgroundColor = "#FFFF00";
-            bar.style.opacity = "1.0";
-        } else {
-            bar.style.backgroundColor = "#FFFF00";
-            bar.style.opacity = "0.0";
-        }
-
-        bar.style.height = "2.5px";
-        bar.style.width = width + "%";
-
-        barListPreview.insertAdjacentElement("beforeEnd", bar);
-    }
-}
-
-function getIconPath(path) {
-    return chrome.extension.getURL("/img/" + path);
-}
-
-function getFlagByCode(code) {
-    if (countries.includes(code)) {
-        return chrome.extension.getURL("/img/flags/" + code + ".svg");
-    } else {
-        return chrome.extension.getURL("/img/flags/_flag.svg");
-    }
-}
-
-function getParty(partyName) {
-    if (parties.includes(partyName)) {
-        return chrome.extension.getURL("/img/parties/" + partyName + ".svg");
-    } else {
-        return chrome.extension.getURL("/img/parties/_flag.svg");
-    }
-}
-
-function getFlagTooltip() {
-    if (pathFinder["side"]) {
-        return chrome.i18n.getMessage("countryStatsWIP");
-    } else {
-        return chrome.i18n.getMessage("404");
-    }
-}
-
-function getSideTooltip() {
-    let unixTimestamp = +pathFinder["timestamp"];
-    let milliseconds = unixTimestamp * 1000; // 1575909015000
-    let dateObject = new Date(milliseconds);
-    let humanDateFormat = dateObject.toLocaleString();
-
-    if (pathFinder["side"] === "UN") {
-        return (
-            chrome.i18n.getMessage("UN_pathfinder_prefix") +
-            pathFinder["name"] +
-            chrome.i18n.getMessage("pathfinder_from") +
-            pathFinder["country"] +
-            chrome.i18n.getMessage("UN_date") +
-            humanDateFormat +
-            chrome.i18n.getMessage("clickToViewColdWarStats")
-        );
-    } else if (pathFinder["side"] === "NATO") {
-        return (
-            chrome.i18n.getMessage("NATO_pathfinder_prefix") +
-            pathFinder["name"] +
-            chrome.i18n.getMessage("pathfinder_from") +
-            pathFinder["country"] +
-            chrome.i18n.getMessage("NATO_date") +
-            humanDateFormat +
-            chrome.i18n.getMessage("clickToViewColdWarStats")
-        );
-    } else if (pathFinder["side"] === "SOVIET") {
-        return (
-            chrome.i18n.getMessage("SOV_pathfinder_prefix") +
-            pathFinder["name"] +
-            chrome.i18n.getMessage("pathfinder_from") +
-            pathFinder["country"] +
-            chrome.i18n.getMessage("SOV_date") +
-            humanDateFormat +
-            chrome.i18n.getMessage("clickToViewColdWarStats")
-        );
-    }
-}
-
 function whatShouldIDo(segment) {
     currentSkipReason = chrome.i18n.getMessage("WNS_1");
     skip = true;
@@ -2667,20 +2680,6 @@ function whatShouldIDo(segment) {
     }
 }
 
-function switchModes() {
-    if (isReportActive) {
-        skipImage1.src = getIconPath("resize.svg");
-        skipImage2.src = getIconPath("replace.svg");
-        skipImage3.src = getIconPath("delete.svg");
-        skipImage4.src = getIconPath("undo.svg");
-    } else {
-        skipImage1.src = getIconPath("backward.svg");
-        skipImage2.src = getIconPath("like.svg");
-        skipImage3.src = getIconPath("dislike.svg");
-        skipImage4.src = getIconPath("close-button.svg");
-    }
-}
-
 function addSegmentSkip(segment) {
     $.ajax({
         dataType: "json",
@@ -2691,15 +2690,4 @@ function addSegmentSkip(segment) {
             //alert(`Success. Reason: ${sb}`);
         },
     });
-}
-
-function formatTime(time) {
-    time = Math.round(time);
-
-    const minutes = Math.floor(time / 60);
-    let seconds = time - minutes * 60;
-
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    return minutes + ":" + seconds;
 }
