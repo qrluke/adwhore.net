@@ -1604,8 +1604,8 @@ function injectModeratorPanel() {
                             <td><center><input id="seg${i}_moderated" type="checkbox" onclick="return false;" style="margin: 0px;vertical-align: top;"></center></td>
                             <td><center>${data["trust"]}</center></td>
                             <td><center>${data["acrate"]}</center></td>
-                            <td><input id="seg${i}_st" type="number" value="${+data["st"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20}px"></td>
-                            <td><input id="seg${i}_en" type="number" value="${+data["en"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20}px"></td>
+                            <td><input id="seg${i}_st" type="number" value="${+data["st"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20 + "px"}"></td>
+                            <td><input id="seg${i}_en" type="number" value="${+data["en"]}" min="0" max=${v.duration} step="0.1" style="width: ${+v.duration.toFixed(1).length * 6 + 20 + "px"}"></td>
                             <td><input id="seg${i}_skip" type="button" value="Skip"></td>
                             <td><input id="seg${i}_test" type="button" value="Test"></td>
                             <td><center>${data["user"]}</center></td>
