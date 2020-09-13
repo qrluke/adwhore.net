@@ -2245,77 +2245,65 @@ function injectModeratorPanel() {
                             let st = document.getElementById(`seg${i}_st`);
                             let en = document.getElementById(`seg${i}_en`);
 
-                            if (e.keyCode === 32) {
-                                if (v.paused) {
-                                    // если видео остановлено, запускаем
-                                    v.play();
-                                } else {
-                                    v.pause();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 13) {
-                                if (v.currentTime < en.value) {
-                                    st.value = +parseFloat(v.currentTime).toFixed(1);
-                                    segStartInput.value = st.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 40) {
-                                if (st.value < parseFloat(en.value) - 0.1) {
-                                    st.value = +(parseFloat(st.value) - 0.1).toFixed(1);
-                                    v.currentTime = +parseFloat(st.value);
-                                    segStartInput.value = st.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 38) {
-                                if (st.value < parseFloat(en.value) + 0.1) {
-                                    st.value = +(parseFloat(st.value) + 0.1).toFixed(1);
-                                    v.currentTime = +parseFloat(st.value);
-                                    segStartInput.value = st.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 37) {
-                                if (st.value < parseFloat(en.value) - 2) {
-                                    st.value = +(parseFloat(st.value) - 2).toFixed(1);
-                                    v.currentTime = +parseFloat(st.value);
-                                    segStartInput.value = st.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 39) {
-                                if (st.value < parseFloat(en.value) + 2) {
-                                    st.value = +(parseFloat(st.value) + 2).toFixed(1);
-                                    v.currentTime = +parseFloat(st.value);
-                                    segStartInput.value = st.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 9) {
-                                document.getElementById(`seg${i}_en`).click();
-                                document.getElementById(`seg${i}_en`).focus();
-
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return false;
+                            switch (e.code) {
+                                case "Space":
+                                    if (v.paused) {
+                                        v.play();
+                                    } else {
+                                        v.pause();
+                                    }
+                                    break;
+                                case "Enter":
+                                    if (v.currentTime < en.value) {
+                                        st.value = +parseFloat(v.currentTime).toFixed(1);
+                                        segStartInput.value = st.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowDown":
+                                    if (st.value < parseFloat(en.value) - 0.1) {
+                                        st.value = +(parseFloat(st.value) - 0.1).toFixed(1);
+                                        v.currentTime = +parseFloat(st.value);
+                                        segStartInput.value = st.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowUp":
+                                    if (st.value < parseFloat(en.value) + 0.1) {
+                                        st.value = +(parseFloat(st.value) + 0.1).toFixed(1);
+                                        v.currentTime = +parseFloat(st.value);
+                                        segStartInput.value = st.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowLeft":
+                                    if (st.value < parseFloat(en.value) - 2) {
+                                        st.value = +(parseFloat(st.value) - 2).toFixed(1);
+                                        v.currentTime = +parseFloat(st.value);
+                                        segStartInput.value = st.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowRight":
+                                    if (st.value < parseFloat(en.value) + 2) {
+                                        st.value = +(parseFloat(st.value) + 2).toFixed(1);
+                                        v.currentTime = +parseFloat(st.value);
+                                        segStartInput.value = st.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "Tab":
+                                    document.getElementById(`seg${i}_en`).click();
+                                    document.getElementById(`seg${i}_en`).focus();
+                                    break;
+                                default:
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    return false;
                             }
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return true;
                         });
 
                         document.getElementById(`seg${i}_en`).addEventListener("change", (e) => {
@@ -2348,76 +2336,61 @@ function injectModeratorPanel() {
                             let st = document.getElementById(`seg${i}_st`);
                             let en = document.getElementById(`seg${i}_en`);
 
-                            if (e.keyCode === 32) {
-                                if (v.paused) {
-                                    // если видео остановлено, запускаем
-                                    v.play();
-                                } else {
-                                    v.pause();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 13) {
-                                if (v.currentTime > +parseFloat(segStartInput.value)) {
-                                    en.value = +v.currentTime.toFixed(1);
-                                    segEndInput.value = en.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 40) {
-                                if (en.value > +parseFloat(st.value) - 0.1) {
-                                    en.value = +(parseFloat(en.value) - 0.1).toFixed(1);
-                                    v.currentTime = +parseFloat(en.value);
-                                    segEndInput.value = en.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 38) {
-                                if (en.value > +parseFloat(st.value) + 0.1) {
-                                    en.value = +(parseFloat(en.value) + 0.1).toFixed(1);
-                                    v.currentTime = +parseFloat(en.value);
-                                    segEndInput.value = en.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 37) {
-                                if (en.value > parseFloat(st.value) - 2) {
-                                    en.value = +(parseFloat(en.value) - 2).toFixed(1);
-                                    v.currentTime = +parseFloat(en.value);
-                                    segEndInput.value = en.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 39) {
-                                if (en.value > parseFloat(st.value) + 2) {
-                                    en.value = +(parseFloat(en.value) + 2).toFixed(1);
-                                    v.currentTime = +parseFloat(en.value);
-                                    segEndInput.value = en.value;
-                                    set_preview();
-                                }
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else if (e.keyCode === 9) {
-                                document.getElementById(`seg${i}_st`).click();
-                                document.getElementById(`seg${i}_st`).focus();
-
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return true;
-                            } else {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                return false;
+                            switch (e.code) {
+                                case "Space":
+                                    if (v.paused) {
+                                        v.play();
+                                    } else {
+                                        v.pause();
+                                    }
+                                    break;
+                                case "Enter":
+                                    if (v.currentTime > +parseFloat(segStartInput.value)) {
+                                        en.value = +v.currentTime.toFixed(1);
+                                        segEndInput.value = en.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowDown":
+                                    if (en.value > +parseFloat(st.value) - 0.1) {
+                                        en.value = +(parseFloat(en.value) - 0.1).toFixed(1);
+                                        v.currentTime = +parseFloat(en.value);
+                                        segEndInput.value = en.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowUp":
+                                    if (en.value > +parseFloat(st.value) + 0.1) {
+                                        en.value = +(parseFloat(en.value) + 0.1).toFixed(1);
+                                        v.currentTime = +parseFloat(en.value);
+                                        segEndInput.value = en.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowLeft":
+                                    if (en.value > parseFloat(st.value) - 2) {
+                                        en.value = +(parseFloat(en.value) - 2).toFixed(1);
+                                        v.currentTime = +parseFloat(en.value);
+                                        segEndInput.value = en.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "ArrowRight":
+                                    if (en.value > parseFloat(st.value) + 2) {
+                                        en.value = +(parseFloat(en.value) + 2).toFixed(1);
+                                        v.currentTime = +parseFloat(en.value);
+                                        segEndInput.value = en.value;
+                                        set_preview();
+                                    }
+                                    break;
+                                case "Tab":
+                                    document.getElementById(`seg${i}_st`).click();
+                                    document.getElementById(`seg${i}_st`).focus();
+                                    break;
+                                default:
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    return false;
                             }
                         });
                     },
