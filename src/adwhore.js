@@ -1023,70 +1023,59 @@ function injectControls() {
         });
 
         segStartInput.addEventListener("keydown", (e) => {
-            if (e.keyCode === 32) {
-                if (v.paused) {
-                    // если видео остановлено, запускаем
-                    v.play();
-                } else {
-                    v.pause();
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 13) {
-                if (v.currentTime < segEndInput.value) {
-                    segStartInput.value = +parseFloat(v.currentTime).toFixed(1);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 40) {
-                if (segStartInput.value < parseFloat(segEndInput.value) - 0.1) {
-                    segStartInput.value = +(parseFloat(segStartInput.value) - 0.1).toFixed(1);
-                    v.currentTime = +parseFloat(segStartInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 38) {
-                if (segStartInput.value < parseFloat(segEndInput.value) + 0.1) {
-                    segStartInput.value = +(parseFloat(segStartInput.value) + 0.1).toFixed(1);
-                    v.currentTime = +parseFloat(segStartInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 37) {
-                if (segStartInput.value < parseFloat(segEndInput.value) - 2) {
-                    segStartInput.value = +(parseFloat(segStartInput.value) - 2).toFixed(1);
-                    v.currentTime = +parseFloat(segStartInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 39) {
-                if (segStartInput.value < parseFloat(segEndInput.value) + 2) {
-                    segStartInput.value = +(parseFloat(segStartInput.value) + 2).toFixed(1);
-                    v.currentTime = +parseFloat(segStartInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 9) {
-                mainButton.click();
-                if (isToggle) {
-                    segStartInput.focus();
-                } else {
-                    segEndInput.focus();
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
+            switch (e.code) {
+                case "Space":
+                    if (v.paused) {
+                        v.play();
+                    } else {
+                        v.pause();
+                    }
+                    break;
+                case "Enter":
+                    if (v.currentTime < segEndInput.value) {
+                        segStartInput.value = +parseFloat(v.currentTime).toFixed(1);
+                    }
+                    break;
+                case "ArrowDown":
+                    if (segStartInput.value < parseFloat(segEndInput.value) - 0.1) {
+                        segStartInput.value = +(parseFloat(segStartInput.value) - 0.1).toFixed(1);
+                        v.currentTime = +parseFloat(segStartInput.value);
+                    }
+                    break;
+                case "ArrowUp":
+                    if (segStartInput.value < parseFloat(segEndInput.value) + 0.1) {
+                        segStartInput.value = +(parseFloat(segStartInput.value) + 0.1).toFixed(1);
+                        v.currentTime = +parseFloat(segStartInput.value);
+                    }
+                    break;
+                case "ArrowLeft":
+                    if (segStartInput.value < parseFloat(segEndInput.value) - 2) {
+                        segStartInput.value = +(parseFloat(segStartInput.value) - 2).toFixed(1);
+                        v.currentTime = +parseFloat(segStartInput.value);
+                    }
+                    break;
+                case "ArrowRight":
+                    if (segStartInput.value < parseFloat(segEndInput.value) + 2) {
+                        segStartInput.value = +(parseFloat(segStartInput.value) + 2).toFixed(1);
+                        v.currentTime = +parseFloat(segStartInput.value);
+                    }
+                    break;
+                case "Tab":
+                    mainButton.click();
+                    if (isToggle) {
+                        segStartInput.focus();
+                    } else {
+                        segEndInput.focus();
+                    }
+                    break;
+                default:
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
             }
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
         });
 
         segStartInput.addEventListener("change", (event) => {
@@ -1118,70 +1107,60 @@ function injectControls() {
         });
 
         segEndInput.addEventListener("keydown", (e) => {
-            if (e.keyCode === 32) {
-                if (v.paused) {
-                    // если видео остановлено, запускаем
-                    v.play();
-                } else {
-                    v.pause();
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 13) {
-                if (v.currentTime > +parseFloat(segStartInput.value)) {
-                    segEndInput.value = +v.currentTime.toFixed(1);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 40) {
-                if (segEndInput.value > +parseFloat(segStartInput.value) - 0.1) {
-                    segEndInput.value = +(parseFloat(segEndInput.value) - 0.1).toFixed(1);
-                    v.currentTime = +parseFloat(segEndInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 38) {
-                if (segEndInput.value > +parseFloat(segStartInput.value) + 0.1) {
-                    segEndInput.value = +(parseFloat(segEndInput.value) + 0.1).toFixed(1);
-                    v.currentTime = +parseFloat(segEndInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 37) {
-                if (segEndInput.value > parseFloat(segStartInput.value) - 2) {
-                    segEndInput.value = +(parseFloat(segEndInput.value) - 2).toFixed(1);
-                    v.currentTime = +parseFloat(segEndInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 39) {
-                if (segEndInput.value > parseFloat(segStartInput.value) + 2) {
-                    segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(1);
-                    v.currentTime = +parseFloat(segEndInput.value);
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else if (e.keyCode === 9) {
-                mainButton.click();
-                if (isToggle) {
-                    segStartInput.focus();
-                } else {
-                    segEndInput.focus();
-                }
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-            } else {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
+            console.log(e.code)
+            switch (e.code) {
+                case "Space":
+                    if (v.paused) {
+                        v.play();
+                    } else {
+                        v.pause();
+                    }
+                    break;
+                case "Enter":
+                    if (v.currentTime > +parseFloat(segStartInput.value)) {
+                        segEndInput.value = +v.currentTime.toFixed(1);
+                    }
+                    break;
+                case "ArrowDown":
+                    if (segEndInput.value > +parseFloat(segStartInput.value) - 0.1) {
+                        segEndInput.value = +(parseFloat(segEndInput.value) - 0.1).toFixed(1);
+                        v.currentTime = +parseFloat(segEndInput.value);
+                    }
+                    break;
+                case "ArrowUp":
+                    if (segEndInput.value > +parseFloat(segStartInput.value) + 0.1) {
+                        segEndInput.value = +(parseFloat(segEndInput.value) + 0.1).toFixed(1);
+                        v.currentTime = +parseFloat(segEndInput.value);
+                    }
+                    break;
+                case "ArrowLeft":
+                    if (segEndInput.value > parseFloat(segStartInput.value) - 2) {
+                        segEndInput.value = +(parseFloat(segEndInput.value) - 2).toFixed(1);
+                        v.currentTime = +parseFloat(segEndInput.value);
+                    }
+                    break;
+                case "ArrowRight":
+                    if (segEndInput.value > parseFloat(segStartInput.value) + 2) {
+                        segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(1);
+                        v.currentTime = +parseFloat(segEndInput.value);
+                    }
+                    break;
+                case "Tab":
+                    mainButton.click();
+                    if (isToggle) {
+                        segStartInput.focus();
+                    } else {
+                        segEndInput.focus();
+                    }
+                    break;
+                default:
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
             }
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
         });
 
         replayButtonImage.addEventListener("mouseover", function () {
