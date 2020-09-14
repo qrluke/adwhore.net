@@ -1031,6 +1031,9 @@ function injectControls() {
                         v.play();
                     } else {
                         v.pause();
+                        if (v.currentTime < +parseFloat(segEndInput.value)) {
+                            segStartInput.value = +parseFloat(v.currentTime).toFixed(1);
+                        }
                     }
                     break;
                 case "Enter":
@@ -1118,6 +1121,9 @@ function injectControls() {
                         v.play();
                     } else {
                         v.pause();
+                        if (v.currentTime > +parseFloat(segStartInput.value)) {
+                            segEndInput.value = +v.currentTime.toFixed(1);
+                        }
                     }
                     break;
                 case "Enter":
