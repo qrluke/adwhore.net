@@ -1100,10 +1100,13 @@ function injectControls() {
 
         segEndInput.addEventListener("click", (event) => {
             if (isToggle || isFirstInputSelect) {
+                v.currentTime = segEndInput.value;
+                if (!isFirstInputSelect) {
+                    v.pause();
+                }
                 isFirstInputSelect = false;
                 isToggle = false;
-                v.currentTime = segEndInput.value;
-                v.pause();
+
                 mainButtonImage.style.transform = "";
             }
         });
@@ -1618,6 +1621,8 @@ function enableStage1(start, end) {
 
     set_preview();
     isReportStage1 = true;
+    segEndInput.click();
+    segEndInput.focus();
 }
 
 /**
