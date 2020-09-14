@@ -608,6 +608,7 @@ function injectOverlay() {
         adskip.addEventListener("mouseover", function () {
             clearTimeout(skipTimer);
         });
+
         adskip.addEventListener("mouseleave", function () {
             clearTimeout(skipTimer);
             skipTimer = setTimeout(() => (adskip.style.display = "none"), 3000);
@@ -616,6 +617,7 @@ function injectOverlay() {
         _adSkip.addEventListener("mouseover", function () {
             clearTimeout(skipTimer);
         });
+
         _adSkip.addEventListener("mouseleave", function () {
             clearTimeout(skipTimer);
             skipTimer = setTimeout(() => (_adSkip.style.display = "none"), 3000);
@@ -1163,178 +1165,9 @@ function injectControls() {
             return true;
         });
 
-        replayButtonImage.addEventListener("mouseover", function () {
-            if (isReportStage2) {
-                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("edit");
-            } else if (isReportStage1) {
-                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("close");
-            } else {
-                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("addsegment");
-            }
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = replayButtonImage.offsetLeft + replayButtonImage.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        replayButtonImage.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        sideButtonImage.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = getSideTooltip();
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = sideButtonImage.offsetLeft + sideButtonImage.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        sideButtonImage.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        flagButtonImage.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = getFlagTooltip();
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = flagButtonImage.offsetLeft + flagButtonImage.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        flagButtonImage.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        uploadButton.addEventListener("mouseover", function () {
-            if (isReportStage2) {
-                if (isReportActive) {
-                    awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("replaceSubmit");
-                } else {
-                    awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("send");
-                }
-            } else {
-                if (isReportActive && isReplace) {
-                    awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("replaceSelectCat");
-                } else if (isReportActive) {
-                    awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("editTimecodes");
-                } else {
-                    awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkBeforeSend");
-                }
-            }
-
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = uploadButtonImage.offsetLeft + uploadButtonImage.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        uploadButton.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        helpButton.addEventListener("mouseover", function () {
-            if (isReportStage2) {
-                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("clickHelp2");
-            } else {
-                awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("clickHelp1");
-            }
-
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = helpButtonImage.offsetLeft + helpButtonImage.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        helpButton.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        markInImage.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewInside");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = previewInside.offsetLeft + previewInside.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        markInImage.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        markOutImage.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewInside");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = previewInside.offsetLeft + previewInside.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        markOutImage.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        markInImage1.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = previewOutside.offsetLeft + previewOutside.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        markInImage1.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        markOutImage1.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("previewOutside");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = previewOutside.offsetLeft + previewOutside.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        markOutImage1.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        segControlsNumberInput.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("selectCategory");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = segControlsNumberInput.offsetLeft + segControlsNumberInput.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        segControlsNumberInput.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
         segControlsNumberInput.onchange = function () {
             option03.checked = !(segControlsNumberInput.value === "7" || segControlsNumberInput.value === "8");
         };
-
-        mark1.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkOne");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = mark1.offsetLeft + mark1.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        mark1.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        mark3.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkTwo");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = mark3.offsetLeft + mark3.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        mark3.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
-
-        mark5.addEventListener("mouseover", function () {
-            awesomeTooltipBodyText.innerHTML = chrome.i18n.getMessage("checkThree");
-            awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
-            awesomeTooltip.style.left = mark5.offsetLeft + mark5.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
-            awesomeTooltip.style.display = "block";
-        });
-
-        mark5.addEventListener("mouseleave", function () {
-            awesomeTooltip.style.display = "none";
-        });
 
         uploadButton.addEventListener("click", function () {
             if (isReportActive && !isReplace) {
@@ -1514,6 +1347,82 @@ function injectControls() {
                 }
             }
         });
+
+        /**
+         * Add tooltip for control panel's element.
+         *
+         * @param  {HTMLElement} element Element for 'mouseover' & 'mouseleave'.
+         * @param {function || String} content Tooltip's innerHTML.
+         * @param {HTMLElement} base Element which is used as tooltip's foundation.
+         */
+        function addToolTipForElement(element, content, base) {
+            element.addEventListener("mouseover", function () {
+                if (typeof(content) === "function") {
+                    awesomeTooltipBodyText.innerHTML = content();
+                } else {
+                    awesomeTooltipBodyText.innerHTML = content;
+                }
+                awesomeTooltip.style.bottom = shadow_controls.parentElement.offsetHeight + awesomeTooltip.offsetHeight / 2 + 10 + "px";
+                if (base === undefined) {
+                    awesomeTooltip.style.left = element.offsetLeft + element.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
+                } else {
+                    awesomeTooltip.style.left = base.offsetLeft + base.offsetWidth / 2 - awesomeTooltip.offsetWidth / 2 - 12 + "px";
+                }
+                awesomeTooltip.style.display = "block";
+            });
+
+            element.addEventListener("mouseleave", function () {
+                awesomeTooltip.style.display = "none";
+            });
+        }
+
+        addToolTipForElement(replayButtonImage, function () {
+            if (isReportStage2) {
+                return chrome.i18n.getMessage("edit");
+            } else if (isReportStage1) {
+                return chrome.i18n.getMessage("close");
+            } else {
+                return chrome.i18n.getMessage("addsegment");
+            }
+        })
+
+        addToolTipForElement(sideButtonImage, getSideTooltip)
+        addToolTipForElement(flagButtonImage, getFlagTooltip)
+
+        addToolTipForElement(uploadButton, function () {
+            if (isReportStage2) {
+                if (isReportActive) {
+                    return chrome.i18n.getMessage("replaceSubmit");
+                } else {
+                    return chrome.i18n.getMessage("send");
+                }
+            } else {
+                if (isReportActive && isReplace) {
+                    return chrome.i18n.getMessage("replaceSelectCat");
+                } else if (isReportActive) {
+                    return chrome.i18n.getMessage("editTimecodes");
+                } else {
+                    return chrome.i18n.getMessage("checkBeforeSend");
+                }
+            }
+        })
+
+        addToolTipForElement(helpButton, function () {
+            if (isReportStage2) {
+                return chrome.i18n.getMessage("clickHelp2");
+            } else {
+                return chrome.i18n.getMessage("clickHelp1");
+            }
+        })
+
+        addToolTipForElement(markInImage, chrome.i18n.getMessage("previewInside"), previewInside)
+        addToolTipForElement(markOutImage, chrome.i18n.getMessage("previewInside"), previewInside)
+        addToolTipForElement(markInImage1, chrome.i18n.getMessage("previewOutside"), previewOutside)
+        addToolTipForElement(markOutImage1, chrome.i18n.getMessage("previewOutside"), previewOutside)
+        addToolTipForElement(segControlsNumberInput, chrome.i18n.getMessage("selectCategory"))
+        addToolTipForElement(mark1, chrome.i18n.getMessage("checkOne"))
+        addToolTipForElement(mark3, chrome.i18n.getMessage("checkTwo"))
+        addToolTipForElement(mark5, chrome.i18n.getMessage("checkThree"))
     }
 }
 
