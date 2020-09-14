@@ -1039,25 +1039,25 @@ function injectControls() {
                     }
                     break;
                 case "ArrowDown":
-                    if (segStartInput.value < parseFloat(segEndInput.value) - 0.1) {
+                    if (segStartInput.value < parseFloat(segEndInput.value) + 0.1) {
                         segStartInput.value = +(parseFloat(segStartInput.value) - 0.1).toFixed(1);
                         v.currentTime = +parseFloat(segStartInput.value);
                     }
                     break;
                 case "ArrowUp":
-                    if (segStartInput.value < parseFloat(segEndInput.value) + 0.1) {
+                    if (segStartInput.value < parseFloat(segEndInput.value) - 0.1) {
                         segStartInput.value = +(parseFloat(segStartInput.value) + 0.1).toFixed(1);
                         v.currentTime = +parseFloat(segStartInput.value);
                     }
                     break;
                 case "ArrowLeft":
-                    if (segStartInput.value < parseFloat(segEndInput.value) - 2) {
+                    if (segStartInput.value < parseFloat(segEndInput.value) + 2) {
                         segStartInput.value = +(parseFloat(segStartInput.value) - 2).toFixed(1);
                         v.currentTime = +parseFloat(segStartInput.value);
                     }
                     break;
                 case "ArrowRight":
-                    if (segStartInput.value < parseFloat(segEndInput.value) + 2) {
+                    if (segStartInput.value < parseFloat(segEndInput.value) - 2) {
                         segStartInput.value = +(parseFloat(segStartInput.value) + 2).toFixed(1);
                         v.currentTime = +parseFloat(segStartInput.value);
                     }
@@ -1126,25 +1126,25 @@ function injectControls() {
                     }
                     break;
                 case "ArrowDown":
-                    if (segEndInput.value > +parseFloat(segStartInput.value) - 0.1) {
+                    if (segEndInput.value > +parseFloat(segStartInput.value) + 0.1) {
                         segEndInput.value = +(parseFloat(segEndInput.value) - 0.1).toFixed(1);
                         v.currentTime = +parseFloat(segEndInput.value);
                     }
                     break;
                 case "ArrowUp":
-                    if (segEndInput.value > +parseFloat(segStartInput.value) + 0.1) {
+                    if (segEndInput.value > +parseFloat(segStartInput.value) - 0.1) {
                         segEndInput.value = +(parseFloat(segEndInput.value) + 0.1).toFixed(1);
                         v.currentTime = +parseFloat(segEndInput.value);
                     }
                     break;
                 case "ArrowLeft":
-                    if (segEndInput.value > parseFloat(segStartInput.value) - 2) {
+                    if (segEndInput.value > parseFloat(segStartInput.value) + 2) {
                         segEndInput.value = +(parseFloat(segEndInput.value) - 2).toFixed(1);
                         v.currentTime = +parseFloat(segEndInput.value);
                     }
                     break;
                 case "ArrowRight":
-                    if (segEndInput.value > parseFloat(segStartInput.value) + 2) {
+                    if (segEndInput.value > parseFloat(segStartInput.value) - 2) {
                         segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(1);
                         v.currentTime = +parseFloat(segEndInput.value);
                     }
