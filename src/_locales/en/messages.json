@@ -201,7 +201,7 @@
     "message": "Click to learn how to select a category"
   },
   "help1": {
-    "message": "Thanks for contributing!\n\nYou need to select two points of the segment, select ad's category and click submit.\n\nA simple way: select the end and the beginning with the mouse (the slider switches the selection) and adjust with the arrows.\n\nHarder to understand, but more convenient:\nClick on the seconds field to the right (end) or left (beginning), tab stops switching between them.\n\nSteps by arrows: right / left - 2 sec, up / down - 0.1 sec.\n\n'Space' - play/pause, 'Enter' - place the current video time to field.\n\nYellow bar shows the selected segment.\n\nP.S. Press the '→][→' button to check how your segment will be skipped!"
+    "message": "Thanks for contributing!\n\nYou need to select two points of the segment, select ad's category and click submit.\n\nA simple way: select the end and the beginning with the mouse (the slider switches the selection) and adjust with the arrows.\n\nYou can use hotkeys - it is much more convenient! Select a field and hover over the keyboard icon to learn more!\n\nYellow bar shows the selected segment.\n\nP.S. Press the '→][→' button to check how your segment will be skipped!"
   },
   "help2": {
     "message": "Please select a segment category from the list on the left and check the checkboxes.\n\nThis is very important: it will help distinguish acceptable from bad ads and help determine if YouTuber is an adwhore.\n\nYour segment will immediately be available to everyone, but it will be automatically skipped only if it has enough trust points (TP).\n\nWhen the moderator checks it, you will also receive some TP.\n\nThe amount of TP you receive depends on the decision of the moderator: if he decides that you are a bona fide user, he will give you more TP.\n\nThe more TP you have, the greater your influence in the system, the more valuable your likes/segment reports, the higher the level of trust in your segments.\n\nRemember that any user's contribution can be retrieved without harm to the community, so please do not abuse TP.\n\nThank you and good luck!"
@@ -610,5 +610,8 @@
   },
   "noUserSecret": {
     "message": "Fatal error!\nYou are trying to send a request to the server without a secret code.\n\nTry to restart your browser!"
+  },
+  "hotkeys": {
+    "message": "<b>Segmentation Hotkeys</b></br></br><b>Q</b> — select start of segment</br><b>E</b> — select end of segment</br><b>Tab</b> — switch between boundaries</br></br><b>Space</b> — play/pause + save pos</br><b>W</b> — test segment</br><b>▲/▼</b> — +/- 0.1 sec</br><b>►/◄</b> — +/- 2 sec</br></br><b>D</b> — increase playback speed</br><b>A</b> — decrease playback speed</br><b>R</b> — reset playback speed</br></br><b>Escape</b> — cancel</br><b>Enter</b> — submit"
   }
 }

@@ -932,9 +932,12 @@ function injectControls() {
         segEndInput = shadow_controls_wrapper.getElementById("segEndInput");
         uploadButton = shadow_controls_wrapper.getElementById("uploadButton");
         uploadButtonImage = shadow_controls_wrapper.getElementById("uploadButtonImage");
+        keysButton = shadow_controls_wrapper.getElementById("keysButton");
+        keysButtonImage = shadow_controls_wrapper.getElementById("keysButtonImage");
         helpButton = shadow_controls_wrapper.getElementById("helpButton");
         helpButtonImage = shadow_controls_wrapper.getElementById("helpButtonImage");
 
+        keysButtonImage.src = getIconPath("keyboard.svg");
         mainButtonImage.src = getIconPath("toggle-on.svg");
         replayButtonImage.src = getIconPath("report-button.svg");
         flagButtonImage.src = getFlagByCode("unknown");
@@ -1024,6 +1027,16 @@ function injectControls() {
             v.play();
         });
 
+        segStartInput.addEventListener("focus", (e) => {
+            keysButton.style.display = "block";
+        });
+
+        segStartInput.addEventListener("focusout", (e) => {
+            if (!$("#segStartInput").is(":focus") && !$("#segEndInput").is(":focus")) {
+                keysButton.style.display = "none";
+            }
+        });
+
         segStartInput.addEventListener("keydown", (e) => {
             switch (e.code) {
                 case "Space":
@@ -1038,10 +1051,10 @@ function injectControls() {
                     }
                     break;
                 case "Enter":
-                    if (v.currentTime < segEndInput.value) {
-                        segStartInput.value = +parseFloat(v.currentTime).toFixed(1);
-                        set_preview();
-                    }
+                    uploadButton.click();
+                    break;
+                case "Escape":
+                    replayButtonImage.click();
                     break;
                 case "ArrowDown":
                     if (segStartInput.value < parseFloat(segEndInput.value) + 0.1) {
@@ -1065,6 +1078,32 @@ function injectControls() {
                     if (segStartInput.value < parseFloat(segEndInput.value) - 2) {
                         segStartInput.value = +(parseFloat(segStartInput.value) + 2).toFixed(1);
                         v.currentTime = +parseFloat(segStartInput.value);
+                    }
+                    break;
+                case "KeyQ":
+                    segStartInput.click();
+                    segStartInput.focus();
+                    break;
+                case "KeyW":
+                    previewOutside.click();
+                    break;
+                case "KeyE":
+                    segEndInput.click();
+                    segEndInput.focus();
+                    break;
+                case "KeyA":
+                    v.playbackRate = v.playbackRate - 0.1;
+                    lastSpeed = v.playbackRate;
+                    break;
+                case "KeyD":
+                    v.playbackRate = v.playbackRate + 0.1;
+                    lastSpeed = v.playbackRate;
+                    break;
+                case "KeyR":
+                    if (v.playbackRate === 1) {
+                        v.playbackRate = lastSpeed;
+                    } else {
+                        v.playbackRate = 1.0;
                     }
                     break;
                 case "Tab":
@@ -1099,6 +1138,16 @@ function injectControls() {
             }
         });
 
+        segEndInput.addEventListener("focus", (e) => {
+            keysButton.style.display = "block";
+        });
+
+        segEndInput.addEventListener("focusout", (e) => {
+            if (!$("#segStartInput").is(":focus") && !$("#segEndInput").is(":focus")) {
+                keysButton.style.display = "none";
+            }
+        });
+
         segEndInput.addEventListener("change", (event) => {
             v.currentTime = segEndInput.value;
         });
@@ -1130,10 +1179,10 @@ function injectControls() {
                     }
                     break;
                 case "Enter":
-                    if (v.currentTime > +parseFloat(segStartInput.value)) {
-                        segEndInput.value = +v.currentTime.toFixed(1);
-                        set_preview();
-                    }
+                    uploadButton.click();
+                    break;
+                case "Escape":
+                    replayButtonImage.click();
                     break;
                 case "ArrowDown":
                     if (segEndInput.value > +parseFloat(segStartInput.value) + 0.1) {
@@ -1157,6 +1206,32 @@ function injectControls() {
                     if (segEndInput.value > parseFloat(segStartInput.value) - 2) {
                         segEndInput.value = +(parseFloat(segEndInput.value) + 2).toFixed(1);
                         v.currentTime = +parseFloat(segEndInput.value);
+                    }
+                    break;
+                case "KeyQ":
+                    segStartInput.click();
+                    segStartInput.focus();
+                    break;
+                case "KeyW":
+                    previewOutside.click();
+                    break;
+                case "KeyE":
+                    segEndInput.click();
+                    segEndInput.focus();
+                    break;
+                case "KeyA":
+                    v.playbackRate = v.playbackRate - 0.1;
+                    lastSpeed = v.playbackRate;
+                    break;
+                case "KeyD":
+                    v.playbackRate = v.playbackRate + 0.1;
+                    lastSpeed = v.playbackRate;
+                    break;
+                case "KeyR":
+                    if (v.playbackRate === 1) {
+                        v.playbackRate = lastSpeed;
+                    } else {
+                        v.playbackRate = 1.0;
                     }
                     break;
                 case "Tab":
@@ -1427,14 +1502,15 @@ function injectControls() {
             }
         })
 
-        addToolTipForElement(markInImage, chrome.i18n.getMessage("previewInside"), previewInside)
-        addToolTipForElement(markOutImage, chrome.i18n.getMessage("previewInside"), previewInside)
-        addToolTipForElement(markInImage1, chrome.i18n.getMessage("previewOutside"), previewOutside)
-        addToolTipForElement(markOutImage1, chrome.i18n.getMessage("previewOutside"), previewOutside)
-        addToolTipForElement(segControlsNumberInput, chrome.i18n.getMessage("selectCategory"))
-        addToolTipForElement(mark1, chrome.i18n.getMessage("checkOne"))
-        addToolTipForElement(mark3, chrome.i18n.getMessage("checkTwo"))
-        addToolTipForElement(mark5, chrome.i18n.getMessage("checkThree"))
+        addToolTipForElement(keysButton, chrome.i18n.getMessage("hotkeys"));
+        addToolTipForElement(markInImage, chrome.i18n.getMessage("previewInside"), previewInside);
+        addToolTipForElement(markOutImage, chrome.i18n.getMessage("previewInside"), previewInside);
+        addToolTipForElement(markInImage1, chrome.i18n.getMessage("previewOutside"), previewOutside);
+        addToolTipForElement(markOutImage1, chrome.i18n.getMessage("previewOutside"), previewOutside);
+        addToolTipForElement(segControlsNumberInput, chrome.i18n.getMessage("selectCategory"));
+        addToolTipForElement(mark1, chrome.i18n.getMessage("checkOne"));
+        addToolTipForElement(mark3, chrome.i18n.getMessage("checkTwo"));
+        addToolTipForElement(mark5, chrome.i18n.getMessage("checkThree"));
     }
 }
 
@@ -1658,6 +1734,7 @@ function disableStage1() {
     }
 
     segControlsNumberInput.style.display = "none";
+    keysButton.style.display = "none";
     segStartInput.style.display = "none";
     segEndInput.style.display = "none";
     previewInside.style.display = "none";
@@ -1707,6 +1784,7 @@ function enableStage2() {
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
+    keysButton.style.display = "none";
     segStartInput.style.display = "none";
     segEndInput.style.display = "none";
     previewInside.style.display = "block";
