@@ -1444,7 +1444,7 @@ function injectControls() {
          */
         function addToolTipForElement(element, content, base) {
             element.addEventListener("mouseover", function () {
-                if (typeof(content) === "function") {
+                if (typeof content === "function") {
                     awesomeTooltipBodyText.innerHTML = content();
                 } else {
                     awesomeTooltipBodyText.innerHTML = content;
@@ -1471,10 +1471,10 @@ function injectControls() {
             } else {
                 return chrome.i18n.getMessage("addsegment");
             }
-        })
+        });
 
-        addToolTipForElement(sideButtonImage, getSideTooltip)
-        addToolTipForElement(flagButtonImage, getFlagTooltip)
+        addToolTipForElement(sideButtonImage, getSideTooltip);
+        addToolTipForElement(flagButtonImage, getFlagTooltip);
 
         addToolTipForElement(uploadButton, function () {
             if (isReportStage2) {
@@ -1492,7 +1492,7 @@ function injectControls() {
                     return chrome.i18n.getMessage("checkBeforeSend");
                 }
             }
-        })
+        });
 
         addToolTipForElement(helpButton, function () {
             if (isReportStage2) {
@@ -1500,7 +1500,7 @@ function injectControls() {
             } else {
                 return chrome.i18n.getMessage("clickHelp1");
             }
-        })
+        });
 
         addToolTipForElement(keysButton, chrome.i18n.getMessage("hotkeys"));
         addToolTipForElement(markInImage, chrome.i18n.getMessage("previewInside"), previewInside);
