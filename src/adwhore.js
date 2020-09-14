@@ -2653,10 +2653,14 @@ function addVideoEvents() {
             if (isToggle) {
                 if (v.currentTime < segEndInput.value) {
                     segStartInput.value = +v.currentTime.toFixed(1);
+                    segStartInput.click();
+                    segStartInput.focus();
                 }
             } else {
                 if (v.currentTime > segStartInput.value) {
                     segEndInput.value = +v.currentTime.toFixed(1);
+                    segEndInput.click();
+                    segEndInput.focus();
                 }
             }
             set_preview();
