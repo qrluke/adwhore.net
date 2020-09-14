@@ -1429,7 +1429,7 @@ function injectControls() {
 /**
  * Get icon path.
  *
- * @param  {String} path icon's filename.
+ * @param {String} filename icon's filename.
  * @return {String} path to icon.
  */
 function getIconPath(filename) {
