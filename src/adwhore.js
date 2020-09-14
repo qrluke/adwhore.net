@@ -452,7 +452,7 @@ function resetAndFetch(bar = true) {
             pathFinderCountry = sb["pathfinder"]["country"];
             flagButtonImage.style.padding = "10px 0px";
             flagButtonImage.src = getFlagByCode(pathFinderCountry);
-            if (settings["show_flags"]) {
+            if (settings["show_flags"] && !isReportStage1 && !isReportStage2) {
                 sideButton.style.display = "block";
             }
             sideButtonImage.src = getParty(pathFinderSide);
