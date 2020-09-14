@@ -1343,7 +1343,7 @@ function injectControls() {
 
                 isReportStage1 = !isReportStage1;
                 if (isReportStage1) {
-                    enableStage1(v.currentTime, v.currentTime + 40);
+                    enableStage1(v.currentTime, v.currentTime + 2);
                 } else {
                     disableStage1();
                 }
