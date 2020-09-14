@@ -1109,7 +1109,6 @@ function injectControls() {
         });
 
         segEndInput.addEventListener("keydown", (e) => {
-            console.log(e.code)
             switch (e.code) {
                 case "Space":
                     if (v.paused) {
