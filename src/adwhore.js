@@ -2327,7 +2327,7 @@ function injectModeratorPanel() {
 }
 
 /**
- * Injects moderator panel.
+ * Inject events for navigation hotkeys.
  *
  * @param  {Event} e Keydown event.
  * @param  {Number} i Segment number in table.
