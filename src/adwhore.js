@@ -1033,12 +1033,14 @@ function injectControls() {
                         v.pause();
                         if (v.currentTime < +parseFloat(segEndInput.value)) {
                             segStartInput.value = +parseFloat(v.currentTime).toFixed(1);
+                            set_preview();
                         }
                     }
                     break;
                 case "Enter":
                     if (v.currentTime < segEndInput.value) {
                         segStartInput.value = +parseFloat(v.currentTime).toFixed(1);
+                        set_preview();
                     }
                     break;
                 case "ArrowDown":
@@ -1123,12 +1125,14 @@ function injectControls() {
                         v.pause();
                         if (v.currentTime > +parseFloat(segStartInput.value)) {
                             segEndInput.value = +v.currentTime.toFixed(1);
+                            set_preview();
                         }
                     }
                     break;
                 case "Enter":
                     if (v.currentTime > +parseFloat(segStartInput.value)) {
                         segEndInput.value = +v.currentTime.toFixed(1);
+                        set_preview();
                     }
                     break;
                 case "ArrowDown":
