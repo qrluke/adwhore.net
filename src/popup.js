@@ -250,6 +250,7 @@ document.getElementById("switchButtonAction1").addEventListener("click", functio
 
 
 document.getElementById("switchButtonAction3").addEventListener("click", function () {
+    document.getElementById("switchButtonAction1").focus()
     document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
     document.getElementById("note_the_alpha").style.display = "none"
     document.getElementById("links").style.display = "none"
@@ -274,6 +275,7 @@ function formatTime(time) {
 }
 
 document.getElementById("switchButtonAction2").addEventListener("click", function () {
+    document.getElementById("switchButtonAction1").focus()
     document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
     document.getElementById("note_the_alpha").style.display = "none"
     document.getElementById("links").style.display = "none"
