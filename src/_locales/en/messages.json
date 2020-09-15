@@ -567,7 +567,7 @@
     "message": "<b>ADN is useless without it's community!</b>"
   },
   "w45": {
-    "message": "Do not hesitate to submit new ad segments.</br>It may seem a little complicated, but once you master it - it will take just 20-30 seconds to make a report!</br></br>Your contribution does not go into the void: you can compete in the <a href='https://adwhore.net/stats'>leaderboards</a> and see how much you have contributed, by clicking the extension icon -> fist."
+    "message": "Do not hesitate to submit new ad segments.</br>It may seem a little complicated, but once you master it - it will take just 20-30 seconds to make a report!</br></br>Your contribution does not go into the void: you can compete in the <a target='_blank' href='https://adwhore.net/stats'>leaderboards</a> and see how much you have contributed, by clicking the extension icon -> fist."
   },
   "w46": {
     "message": "Do not forget to like ad segment if it was correct. You can also report wrong segments and even correct them!"
