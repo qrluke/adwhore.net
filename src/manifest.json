@@ -33,6 +33,10 @@
     "default_icon": "img/adwhore-logo.png",
     "default_popup": "popup.html"
   },
+  "options_ui": {
+    "page": "popup.html",
+    "open_in_tab": false
+  },
   "permissions": [
     "activeTab", "storage", "https://karma.adwhore.net/*"
   ],
