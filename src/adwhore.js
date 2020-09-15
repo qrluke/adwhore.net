@@ -1154,11 +1154,11 @@ function injectControls() {
 
         segEndInput.addEventListener("click", (event) => {
             if (isToggle || isFirstInputSelect) {
-                v.currentTime = segEndInput.value;
                 if (!isFirstInputSelect) {
+                    v.currentTime = segEndInput.value;
                     v.pause();
+                    isFirstInputSelect = false;
                 }
-                isFirstInputSelect = false;
                 isToggle = false;
 
                 mainButtonImage.style.transform = "";
