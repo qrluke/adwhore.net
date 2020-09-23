@@ -18,7 +18,7 @@ ref: homepage
     - Google Chrome, Opera, Microsoft Edge, Яндекс.Браузер...
 
 **В разработке:**
-* Safari - расширение готово, для публикации нужно 1-2 недели
+* Safari - расширение готово, <a href="https://www.it-world.ru/it-news/it/156171.html">не могу опубликовать в App Store</ad>
 * Android - запланировано на beta релиз
 * iOS - запланировано на beta релиз
 
