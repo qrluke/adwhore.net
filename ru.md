@@ -23,5 +23,5 @@ ref: homepage
 * iOS - запланировано на beta релиз
 
 **Полезные ссылки:**
-* <a href = "{{ site.url }}/ru/stats">Статистика</a>
-* <a href = "https://github.com/qrlk/adwhore.net/wiki/Home-%28Russian%29">Вики проекта</a>
+* <b><a href = "{{ site.url }}/ru/stats">Статистика</a></b>
+* <b><a href = "https://github.com/qrlk/adwhore.net/wiki/Home-%28Russian%29">Вики проекта</a></b>
