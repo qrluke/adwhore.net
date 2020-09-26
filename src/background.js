@@ -51,7 +51,14 @@ var defaults = {
         "name": "",
         "cID": ""
     },
-    "whitelist": []
+    "whitelist": [],
+    "stats": {
+        "global_users": 0,
+        "global_segs": 0,
+        "global_skips": 0,
+        "global_moderated": 0,
+        "global_time": 0
+    }
 }
 
 chrome.storage.sync.get(defaults, function (result) {

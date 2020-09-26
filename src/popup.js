@@ -361,17 +361,36 @@ function secondsToDhms(seconds) {
 
 function get_mini_stats() {
     $.getJSON("https://karma.adwhore.net:47976/statsMini", function (data) {
-        $("#global_users").animateNumbers(data["global"]["users"]);
-        $("#global_segs").animateNumbers(data["global"]["reports"]);
-        $("#global_skips").animateNumbers(data["global"]["skips"]);
-        $("#global_moderated").animateNumbers(data["global"]["moderated"]);
-        $("#global_time").animateNumbers(data["global"]["duration"]);
+        $("#global_users").animateNumbers(data["global"]["users"], true, 2000);
+        $("#global_segs").animateNumbers(data["global"]["reports"], true, 2000);
+        $("#global_skips").animateNumbers(data["global"]["skips"], true, 2000);
+        $("#global_moderated").animateNumbers(data["global"]["moderated"], true, 2000);
+        $("#global_time").animateNumbers(data["global"]["duration"], true, 2000);
 
-        setTimeout(get_mini_stats, 1000); // <-- when you ge a response, call it
+        chrome.storage.sync.set(
+            {
+                "stats": {
+                    "global_users": data["global"]["users"],
+                    "global_segs": data["global"]["reports"],
+                    "global_skips": data["global"]["skips"],
+                    "global_moderated": data["global"]["moderated"],
+                    "global_time": data["global"]["duration"]
+                }
+            }
+        );
+
+        setTimeout(get_mini_stats, 2500); // <-- when you ge a response, call it
     });
 }
 
-get_mini_stats();
+chrome.storage.sync.get("stats", function (result) {
+    $("#global_users")[0].innerText = result["stats"]["global_users"];
+    $("#global_segs")[0].innerText = result["stats"]["global_segs"];
+    $("#global_skips")[0].innerText = result["stats"]["global_skips"];
+    $("#global_moderated")[0].innerText = result["stats"]["global_moderated"];
+    $("#global_time")[0].innerText = result["stats"]["global_time"];
+    get_mini_stats();
+});
 
 document.getElementById('switchSide').href = chrome.extension.getURL("wizard/wizard.html");
 var whitelist = [];
