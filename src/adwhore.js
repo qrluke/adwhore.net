@@ -2046,7 +2046,7 @@ function injectModeratorPanel() {
                             
                             <td>
                                 <center>
-                                    <select id="seg${i}_category" style="width: 30px;">
+                                    <select id="seg${i}_category" style="width: 40px;">
                                         <option value="0">0 | SSL</option>
                                         <option value="1">1 | Предзаписанная не озвученная</option>
                                         <option value="2">2 | Предзаписанная озвученная</option>
