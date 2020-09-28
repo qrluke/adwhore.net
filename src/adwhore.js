@@ -332,6 +332,7 @@ let youtubeMutation = setTimeout(function tick() {
     //console.log("URL check started");
     if (settings && settings["enable"] && document.URL.localeCompare(currentUrl)) {
         currentUrl = document.URL;
+        $(document).unbindArrive();
         console.log("I'm on youtube and URL has changed");
         if (currentUrl.includes("watch?v=")) {
             console.log("Should be a player somewhere, I'm looking for it");
@@ -1879,14 +1880,51 @@ function createBar() {
  * @param  {String} opacity Start timecode of potential's segment.
  * @param  {Number} duration Video's duration.
  */
-function addBarToList(a, b, color, opacity, duration) {
-    let width = ((b - a) / duration) * 100;
-    width = Math.floor(width * 100) / 100;
-    let bar = createBar();
-    bar.style.backgroundColor = color;
-    bar.style.opacity = opacity;
-    bar.style.width = width + "%";
-    barList.insertAdjacentElement("beforeEnd", bar);
+function addBarToList(a, b, color, opacity, duration, target = barList) {
+    let element = document.getElementsByClassName("ytp-chapter-hover-container ytp-exp-chapter-hover-container");
+    if (element.length > 0) {
+        let count = 0
+        let chaptersWidth = 0
+        let margin = parseInt(element[0].style.marginRight, 10)
+
+        for (let item of element) {
+            count += 1
+            chaptersWidth += parseInt(item.style.width, 10)
+        }
+
+        let secondInPc = chaptersWidth / duration * 100 / (chaptersWidth + count * margin)
+        let secondInPx = chaptersWidth / duration
+        let marginizer = margin * 100 / (chaptersWidth + count * margin)
+
+        let width = (b - a) * secondInPc;
+        let progress = 0;
+
+        for (let item of element) {
+            let itemWidth = parseInt(item.style.width, 10)
+            progress += itemWidth / secondInPx
+            if (progress >= a && progress <= b-2) {
+                width += marginizer
+            }
+            if (progress >= b) {
+                break
+            }
+        }
+
+        width = Math.floor(width * 100) / 100;
+        let bar = createBar();
+        bar.style.backgroundColor = color;
+        bar.style.opacity = opacity;
+        bar.style.width = width + "%";
+        target.insertAdjacentElement("beforeEnd", bar);
+    } else {
+        let width = ((b - a) / duration) * 100;
+        width = Math.floor(width * 100) / 100;
+        let bar = createBar();
+        bar.style.backgroundColor = color;
+        bar.style.opacity = opacity;
+        bar.style.width = width + "%";
+        target.insertAdjacentElement("beforeEnd", bar);
+    }
 }
 
 /**
