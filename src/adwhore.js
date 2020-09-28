@@ -283,10 +283,10 @@ function updateSettings(result) {
         $.ajax({
             url: "https://karma.adwhore.net:47976/addNewUser",
             type: "POST",
-            data: JSON.stringify({ uuid: result["uuid"] }),
+            data: JSON.stringify({uuid: result["uuid"]}),
             contentType: "application/json",
             success: function (data) {
-                chrome.storage.sync.set({ secret: data["secret"], name: data["name"], side: data["side"] });
+                chrome.storage.sync.set({secret: data["secret"], name: data["name"], side: data["side"]});
                 // alert("ADN user registered\n"+JSON.stringify(data));
             },
         });
@@ -313,10 +313,10 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
                     console.error(error);
                 }
 
-                chrome.runtime.sendMessage({ message: "open_help" }, function (response) {
+                chrome.runtime.sendMessage({message: "open_help"}, function (response) {
                     console.log(response.status);
                 });
-                chrome.storage.sync.set({ askedForHelp: 1 });
+                chrome.storage.sync.set({askedForHelp: 1});
             }
         }
         updateSettings(result);
@@ -445,7 +445,7 @@ function resetAndFetch(bar = true) {
     $.ajax({
         dataType: "json",
         url: "https://karma.adwhore.net:47976/getVideoData",
-        data: { vID: currentVideoId, cID: currentChannelId },
+        data: {vID: currentVideoId, cID: currentChannelId},
         success: function (sb) {
             pathFinder = sb["pathfinder"];
             pathFinderSide = sb["pathfinder"]["side"];
@@ -527,7 +527,7 @@ function getChannelID() {
     for (let item of list) {
         if (item.href.includes("channel")) {
             let cid = item.href.replace("https://www.youtube.com/channel/", "");
-            chrome.storage.sync.set({ last_channel: { name: item.text, cID: cid } });
+            chrome.storage.sync.set({last_channel: {name: item.text, cID: cid}});
             return cid;
         }
     }
@@ -554,7 +554,7 @@ function injectOverlay() {
 
         document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_overlay);
 
-        shadow_ad = shadow_overlay.attachShadow({ mode: "open" });
+        shadow_ad = shadow_overlay.attachShadow({mode: "open"});
 
         // Create some CSS to apply to the shadow dom
         let style_ad = document.createElement("style");
@@ -666,9 +666,9 @@ function injectOverlay() {
                         dataType: "json",
                         type: "POST",
                         url: "https://karma.adwhore.net:47976/addSegmentLike",
-                        data: JSON.stringify({ sID: currentSkip[2], secret: settings["secret"] }),
+                        data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
                         success: function (sb) {
-                            chrome.storage.sync.set({ likes: settings["likes"] + 1 });
+                            chrome.storage.sync.set({likes: settings["likes"] + 1});
                             // alert(`Success. Reason: ${JSON.stringify(sb)}`);
                             if (settings["moderator"]) {
                                 let rewardValue = prompt("enter reward: n/10", "1");
@@ -713,7 +713,7 @@ function injectOverlay() {
                         dataType: "json",
                         type: "POST",
                         url: "https://karma.adwhore.net:47976/addSegmentReport",
-                        data: JSON.stringify({ sID: currentSkip[2], text: comment, secret: settings["secret"] }),
+                        data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
                         success: function (sb) {
                             alert(`Success. Reason: ${JSON.stringify(sb)}`);
                             resetAndFetch();
@@ -825,7 +825,7 @@ function injectToolTip() {
 
         document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
 
-        shadow_tooltip_wrapper = shadow_tooltip.attachShadow({ mode: "open" });
+        shadow_tooltip_wrapper = shadow_tooltip.attachShadow({mode: "open"});
 
         // Create some CSS to apply to the shadow dom
         let style_tooltip = document.createElement("style");
@@ -871,7 +871,7 @@ function injectControls() {
 
         $(shadow_controls).insertAfter(document.getElementsByClassName("ytp-left-controls")[0]);
 
-        shadow_controls_wrapper = shadow_controls.attachShadow({ mode: "open" });
+        shadow_controls_wrapper = shadow_controls.attachShadow({mode: "open"});
 
         // Create some CSS to apply to the shadow dom
         let style_controls = document.createElement("style");
@@ -1272,7 +1272,7 @@ function injectControls() {
                     async: false,
                     success: function (data) {
                         alert("Success | Удачно\n" + JSON.stringify(data));
-                        chrome.storage.sync.set({ segments: settings["segments"] + 1 });
+                        chrome.storage.sync.set({segments: settings["segments"] + 1});
                     },
                     error: function (s, status, error) {
                         alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
@@ -1302,7 +1302,7 @@ function injectControls() {
                         if (isReplace && settings["moderator"]) {
                             $.ajax({
                                 url: "https://karma.adwhore.net:47976/getSegmentData",
-                                data: { sID: currentSkip[2] },
+                                data: {sID: currentSkip[2]},
                                 async: false,
                                 success: function (data) {
                                     modSegmentData = data;
@@ -1363,7 +1363,7 @@ function injectControls() {
                                             v.currentTime = +segStartInput.value - 1;
                                             v.play();
 
-                                            chrome.storage.sync.set({ segments: settings["segments"] + 1 });
+                                            chrome.storage.sync.set({segments: settings["segments"] + 1});
                                         },
                                         error: function (s, status, error) {
                                             alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
@@ -1393,7 +1393,7 @@ function injectControls() {
                                             disableStage2();
                                             disableStage1();
                                             resetAndFetch();
-                                            chrome.storage.sync.set({ segments: settings["segments"] + 1 });
+                                            chrome.storage.sync.set({segments: settings["segments"] + 1});
                                         },
                                         error: function (s, status, error) {
                                             alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
@@ -2022,7 +2022,7 @@ function injectModeratorPanel() {
             for (let i = 0; i < timestamps.length; i++) {
                 $.ajax({
                     url: "https://karma.adwhore.net:47976/getSegmentData",
-                    data: { sID: timestamps[i]["id"] },
+                    data: {sID: timestamps[i]["id"]},
                     async: false,
                     success: function (data) {
                         let unixTimestamp = data["timestamp"];
@@ -2090,7 +2090,7 @@ function injectModeratorPanel() {
                                     secret: settings["secret"],
                                 }),
                                 success: function (sb) {
-                                    chrome.storage.sync.set({ likes: settings["likes"] + 1 });
+                                    chrome.storage.sync.set({likes: settings["likes"] + 1});
                                     // alert(`Success. Reason: ${JSON.stringify(sb)}`);
                                     if (settings["moderator"]) {
                                         let rewardValue = prompt("enter reward: n/10", "1");
@@ -2815,7 +2815,7 @@ function addSegmentSkip(segment) {
         dataType: "json",
         type: "POST",
         url: "https://karma.adwhore.net:47976/addSegmentSkip",
-        data: JSON.stringify({ sID: segment[2], secret: settings["secret"] }),
+        data: JSON.stringify({sID: segment[2], secret: settings["secret"]}),
         success: function (sb) {
             //alert(`Success. Reason: ${sb}`);
         },
