@@ -364,7 +364,6 @@ let youtubeMutation = setTimeout(function tick() {
                          set(timestamps, v.duration);
                     }, 500);
                 });
-
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
                 if (adnPanel) {
                     adnPanel.remove();
@@ -1916,7 +1915,6 @@ function addBarToList(a, b, color, opacity, duration, target = barList) {
                 break
             }
         }
-
         width = Math.floor(width * 100) / 100;
         let bar = createBar();
         bar.style.backgroundColor = color;
@@ -2021,24 +2019,8 @@ function set_preview() {
     preview_seg[1] = segStartInput.value;
     preview_seg[2] = segEndInput.value - 0.7;
 
-    for (let i = 0; i < preview_seg.length; i++) {
-        width = ((preview_seg[i + 1] - preview_seg[i]) / duration) * 100;
-        width = Math.floor(width * 100) / 100;
-        let bar = createBar();
-
-        if (i % 2 === 1) {
-            bar.style.backgroundColor = "#FFFF00";
-            bar.style.opacity = "1.0";
-        } else {
-            bar.style.backgroundColor = "#FFFF00";
-            bar.style.opacity = "0.0";
-        }
-
-        bar.style.height = "2.5px";
-        bar.style.width = width + "%";
-
-        barListPreview.insertAdjacentElement("beforeEnd", bar);
-    }
+    addBarToList(0, preview_seg[1], "#FFFF00", "0.0", duration, barListPreview)
+    addBarToList(preview_seg[1], preview_seg[2], "#FFFF00", "1.0", duration, barListPreview)
 }
 
 /**
