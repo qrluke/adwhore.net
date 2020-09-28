@@ -1908,7 +1908,7 @@ function addBarToList(a, b, color, opacity, duration, target = barList) {
         for (let item of element) {
             let itemWidth = parseInt(item.style.width, 10)
             progress += itemWidth / secondInPx
-            if (progress >= a && progress <= b-2) {
+            if (progress >= a && progress <= b - 1) {
                 width += marginizer
             }
             if (progress >= b) {
