@@ -358,6 +358,13 @@ let youtubeMutation = setTimeout(function tick() {
                 }
                 shadow_controls.style.display = "none";
 
+                $(document).arrive(".ytp-exp-chapter-hover-container", function () {
+                    $(document).unbindArrive(".ytp-exp-chapter-hover-container");
+                    setTimeout(function () {
+                         set(timestamps, v.duration);
+                    }, 500);
+                });
+
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
                 if (adnPanel) {
                     adnPanel.remove();
