@@ -13,8 +13,9 @@
         "https://www.youtube.com/*"
       ],
       "js": [
-        "adwhore.js",
-        "js/jquery.min.js"
+        "js/jquery.min.js",
+        "js/arrive.min.js",
+        "adwhore.js"
       ],
       "run_at": "document_start"
     }
