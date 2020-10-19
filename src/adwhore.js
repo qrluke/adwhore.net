@@ -930,6 +930,8 @@ function injectControls() {
         markOutImage1 = shadow_controls_wrapper.getElementById("markOutImage1");
         segStartInput = shadow_controls_wrapper.getElementById("segStartInput");
         segEndInput = shadow_controls_wrapper.getElementById("segEndInput");
+        lazyButton = shadow_controls_wrapper.getElementById("lazyButton");
+        lazyButtonImage = shadow_controls_wrapper.getElementById("lazyButtonImage");
         uploadButton = shadow_controls_wrapper.getElementById("uploadButton");
         uploadButtonImage = shadow_controls_wrapper.getElementById("uploadButtonImage");
         keysButton = shadow_controls_wrapper.getElementById("keysButton");
@@ -970,6 +972,7 @@ function injectControls() {
         markInImage1.src = getIconPath("mark-in.svg");
         markOutImage1.src = getIconPath("mark-out.svg");
         uploadButtonImage.src = getIconPath("cloud-upload.svg");
+        lazyButtonImage.src = getIconPath("lazy.svg");
         helpButtonImage.src = getIconPath("help.svg");
 
         if (settings["show_flags"]) {
@@ -1411,6 +1414,18 @@ function injectControls() {
             }
         });
 
+        lazyButton.addEventListener("click", function () {
+            if (!settings["lazy"]) {
+                lazyButton.style.opacity = "1.0"
+            } else {
+                lazyButton.style.opacity = "0.5"
+            }
+
+            awesomeTooltipBodyText.innerHTML = lazyToolTipText(true);
+
+            chrome.storage.sync.set({ lazy: !settings["lazy"] });
+        });
+
         helpButton.addEventListener("click", function () {
             if (isReportStage2) {
                 alert(chrome.i18n.getMessage("help2"));
@@ -1492,6 +1507,26 @@ function injectControls() {
                     return chrome.i18n.getMessage("checkBeforeSend");
                 }
             }
+        });
+
+        function lazyToolTipText(alt = false) {
+            if (alt) {
+                if (!settings["lazy"]) {
+                    return chrome.i18n.getMessage("clickLazyOn");
+                } else {
+                    return chrome.i18n.getMessage("clickLazyOff");
+                }
+            } else {
+                if (settings["lazy"]) {
+                    return chrome.i18n.getMessage("clickLazyOn");
+                } else {
+                    return chrome.i18n.getMessage("clickLazyOff");
+                }
+            }
+        }
+
+        addToolTipForElement(lazyButton, function () {
+            return lazyToolTipText()
         });
 
         addToolTipForElement(helpButton, function () {
@@ -1678,6 +1713,14 @@ function enableStage1(start, end) {
     uploadButton.style.display = "block";
     helpButton.style.display = "block";
 
+    if (settings["lazy"]) {
+        lazyButton.style.opacity = "1.0"
+    } else {
+        lazyButton.style.opacity = "0.5"
+    }
+
+    lazyButton.style.display = "block";
+
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
@@ -1753,6 +1796,8 @@ function disableStage1() {
     uploadButton.style.display = "none";
     helpButton.style.display = "none";
 
+    lazyButton.style.display = "none";
+
     segEndInput.style.display = "none";
     replayButtonImage.src = getIconPath("report-button.svg");
     segControls.style.display = "none";
@@ -1784,6 +1829,8 @@ function enableStage2() {
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
+    lazyButton.style.display = "none";
+
     keysButton.style.display = "none";
     segStartInput.style.display = "none";
     segEndInput.style.display = "none";
@@ -1811,6 +1858,14 @@ function disableStage2() {
 
     flagButton.style.display = "none";
     sideButton.style.display = "none";
+
+    if (settings["lazy"]) {
+        lazyButton.style.opacity = "1.0"
+    } else {
+        lazyButton.style.opacity = "0.5"
+    }
+
+    lazyButton.style.display = "block";
 
     segControlsNumberInput.style.display = "none";
     segStartInput.style.display = "block";

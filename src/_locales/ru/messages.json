@@ -610,5 +610,11 @@
   },
   "hotkeys": {
     "message": "<b>Горячие клавиши</b></br></br><b>Q</b> — выбрать начало сегмента</br><b>E</b> — выбрать конец сегмента</br><b>Tab</b> — переключить поле</br></br><b>Пробел</b> — play / pause + сохранить позицию</br><b>W</b> — протестировать сегмент</br><b>▲/▼</b> — +/- 0.1 сек</br><b>►/◄</b> — +/- 2 сек</br></br><b>D</b> — увеличить скорость воспроизведения</br><b>A</b> — уменьшить скорость воспроизведения</br><b>R</b> — сбросить скорость воспроизведения</br></br><b>Escape</b> — отменить</br><b>Enter</b> — отправить"
+  },
+  "clickLazyOn": {
+    "message": "RUSSIAN LAZY MODE DESCRIPTION: ON"
+  },
+  "clickLazyOff": {
+    "message": "RUSSIAN LAZY MODE DESCRIPTION: OFF"
   }
 }

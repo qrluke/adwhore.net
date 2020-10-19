@@ -22,6 +22,7 @@ var defaults = {
     "name": "None",
     "enable": true,
     "mode": 1,
+    "lazy": false,
     "show_flags": true,
     "show_panel": true,
     "uuid": getUserId(),
