@@ -306,3 +306,74 @@ body, html {
         opacity: 1;
     }
 }
+
+.cc-selector-2 input{
+    position:absolute;
+    z-index:999;
+}
+
+.sov{background-image:url(../img/parties/SOVIET.svg);}
+.nato{background-image:url(../img/parties/NATO.svg);}
+.un{background-image:url(../img/parties/UN.svg);}
+
+.cc-selector-2 input:active +.team-cc, .cc-selector input:active +.team-cc{opacity: .9;}
+.cc-selector-2 input:checked +.team-cc, .cc-selector input:checked +.team-cc{
+    -webkit-filter: none;
+    -moz-filter: none;
+    filter: none;
+}
+.team-cc{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:115px;height:78px;
+    -webkit-transition: all 100ms ease-in;
+    -moz-transition: all 100ms ease-in;
+    transition: all 100ms ease-in;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+    -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+    filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.team-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+    filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+
+.cc-selector-2 input{ margin: 5px 0 0 12px; }
+.cc-selector-2 label{ margin-left: 7px; }
+
+
+p {
+    line-height: 1.4;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+    padding: 2px 1px 0;
+}
+
+a:link {
+    color: #265301;
+}
+
+a:visited {
+    color: #437A16;
+}
+
+a:focus {
+    border-bottom: 1px solid;
+    background: #BAE498;
+}
+
+a:hover {
+    border-bottom: 1px solid;
+    background: #CDFEAA;
+}
+
+a:active {
+    background: #265301;
+    color: #CDFEAA;
+}

@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.0.6.1",
+  "version": "0.0.6.2",
   "version_name": "Public Alfa",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
@@ -13,8 +13,9 @@
         "https://www.youtube.com/*"
       ],
       "js": [
-        "adwhore.js",
-        "js/jquery.min.js"
+        "js/jquery.min.js",
+        "js/arrive.min.js",
+        "adwhore.js"
       ],
       "run_at": "document_start"
     }

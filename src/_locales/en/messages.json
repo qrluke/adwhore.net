@@ -60,7 +60,7 @@
     "message": "Click Me"
   },
   "note_the_alpha": {
-    "message": "<p>Please remember that <b>ADN</b> is still young and stupid.<br>Don't expect much, okay? Thanks.</p>"
+    "message": "<p>Please remember that <b>AWN</b> is still young and stupid.<br>Don't expect much, okay? Thanks.</p>"
   },
   "skip_trust_selector": {
     "message": "Autoskip (?)"
@@ -81,13 +81,13 @@
     "message": "If the checkbox is checked and the ad segment has a sufficient confidence level for autoskip, it will be skipped."
   },
   "bad_ads_title": {
-    "message": "Condemned ads: scammers, abuse of trust, as well as ads that do not correspond to the topic of the channel"
+    "message": "Unacceptable ad: Segments with an acceptability level below your specified level. Highlighted in blue."
   },
   "acceptable_ads_title": {
-    "message": "Acceptable advertising: admitting the fact of advertising, and advertising other YouTube channels similar to this one"
+    "message": "Acceptable ad: Segments with an acceptability level higher than the level you specify. Highlighted in orange."
   },
   "awesome_ads_title": {
-    "message": "Approved ads: advertising your side projects, collaborations with other bloggers"
+    "message": "Non-commercial advertising: segments in base that the blogger did not receive money for advertising. Highlighted in blue."
   },
   "bad_youtuber": {
     "message": "<b>No ad tagged</b>"
@@ -105,13 +105,13 @@
     "message": "<b>Ambassador, no tag</b>"
   },
   "bad_ambassador_title": {
-    "message": "Ambassadors are ADN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
+    "message": "Ambassadors are AWN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
   },
   "good_ambassador": {
     "message": "<b>Ambassador, there is an ad tag</b>"
   },
   "good_ambassador_title": {
-    "message": "Ambassadors are ADN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
+    "message": "Ambassadors are AWN-friendly bloggers who support the project and distribute it to their audience. They are carefully checked and it usually doesn't make sense to automatically skip their ads."
   },
   "category0Text": {
     "message": "🎲🔞💩 | SSL: advertising of scammers, bookmakers, casinos, pyramids, investments"
@@ -255,13 +255,13 @@
     "message": "Click the checkbox if you think the blogger received money for this ad"
   },
   "pleaseEnterComment": {
-    "message": "Please enter comment, just 2-3 words.\nExample: 'VPN', 'shit F2P', '1xbet', 'Fraud'\nIt will be useful for ADN in the future."
+    "message": "Please enter comment, just 2-3 words.\nExample: 'VPN', 'shit F2P', '1xbet', 'Fraud'\nIt will be useful for AWN in the future."
   },
   "categoryMissing": {
     "message": "You have not selected a category.\n\nPlease select an ad category and check the checkboxes.\nThis will help us determine whether an ad is acceptable or not and search for ads using neural networks in the future"
   },
   "plsDontSendWholeVideo": {
-    "message": "You seem to be trying to send an ad segment longer than 90% of the video.\nWe cannot accept such a segment.\nADN is sent with ad integrations, and you are sending a whole ad video.\nA person opening a video wants to watch it but not skip completely.\nPerhaps in the future we will make a special notion that the video is a commercial.\nSoryan :("
+    "message": "You seem to be trying to send an ad segment longer than 90% of the video.\nWe cannot accept such a segment.\nAWN is sent with ad integrations, and you are sending a whole ad video.\nA person opening a video wants to watch it but not skip completely.\nPerhaps in the future we will make a special notion that the video is a commercial.\nSoryan :("
   },
   "countryStatsWIP": {
     "message": "There should be statistics for your country, but I'm still working on it! Check it out later.</br></br>P.S. You can hide flags in ADWHORE.NET extension settings."
@@ -345,7 +345,7 @@
     "message": "You skipped: "
   },
   "stats3": {
-    "message": " segments. </br> ADN has saved you: "
+    "message": " segments. </br> AWN has saved you: "
   },
   "stats4": {
     "message": " of time."
@@ -381,43 +381,43 @@
     "message": "\n\n * You included the channel 'currentChannelId' in the whitelist.\n- Explanation: you can turn off autoskip for your favorite bloggers.\n- Solution: Remove channel from the whitelist so that the segments of this channel can be skipped automatically. "
   },
   "WNS_3": {
-    "message": "\n\n * Segment's trust level (CURRENT) is less than what is required (NEEDED).\n- Explanation: ADN uses an advanced reputation system to protect community from vandalism. The segment's trust level is influenced by likes and reputation of the author.\n- Solution: reduce the required level of trust by switching auto-skipping preset (not recommended), or wait until the segment is checked by the moderator or other users. Don't forget to like it if it's good!"
+    "message": "\n\n * Segment's trust level (CURRENT) is less than what is required (NEEDED).\n- Explanation: AWN uses an advanced reputation system to protect community from vandalism. The segment's trust level is influenced by likes and reputation of the author.\n- Solution: reduce the required level of trust by switching auto-skipping preset (not recommended), or wait until the segment is checked by the moderator or other users. Don't forget to like it if it's good!"
   },
   "WNS_4": {
-    "message": "\n\n * Autoskip is disabled for the category: unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
+    "message": "\n\n * Autoskip is disabled for the category: unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default AWN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
   },
   "WNS_5": {
     "message": "\n\n * Autoskip is disabled for category: unpaid, 'Inludes paid promotion' disabled.\n- Solution: tick this category in the advanced menu."
   },
   "WNS_6": {
-    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
+    "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default AWN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
   },
   "WNS_7": {
     "message": "\n\n * Autoskip is disabled for the category: awful ads, 'Inludes paid promotion' disabled.\n- Solution: Select different auto-skipping preset."
   },
   "WNS_8": {
-    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
+    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' enabled.\n- Explanation: by default AWN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Solution: select different auto-skipping preset."
   },
   "WNS_9": {
-    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: select different auto-skipping preset"
+    "message": "\n\n * Autoskip is disabled for the category: acceptable ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: select different auto-skipping preset"
   },
   "WNS_4A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: select different auto-skipping preset."
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, unpaid, 'Inludes paid promotion' enabled.\n- Explanation: by default AWN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: select different auto-skipping preset."
   },
   "WNS_5A": {
-    "message": "\n\n * Autoskip is disabled for category: ambassador, unpaid, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset."
+    "message": "\n\n * Autoskip is disabled for category: ambassador, unpaid, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset."
   },
   "WNS_6A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset"
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' enabled.\n- Explanation: by default AWN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset"
   },
   "WNS_7A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Check this category in the advanced menu."
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, awful ads, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Check this category in the advanced menu."
   },
   "WNS_8A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' enabled.\n- Explanation: by default ADN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset"
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' enabled.\n- Explanation: by default AWN does not skip ads for honest bloggers, but you can customize it for yourself.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Solution: Select different auto-skipping preset"
   },
   "WNS_9A": {
-    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database. You can enable autoskip for them in settings.\n- Select different auto-skipping preset"
+    "message": "\n\n * Autoskip is disabled for the category: ambassador, 'Inludes paid promotion' disabled.\n- Who are ambassadors?: they are a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database. You can enable autoskip for them in settings.\n- Select different auto-skipping preset"
   },
   "replaceSelectCat": {
     "message": "Select category to submit replacement"
@@ -438,22 +438,22 @@
     "message": "Thank you for installing!"
   },
   "w2": {
-    "message": "Start with <span>4</span> simple steps."
+    "message": "Start with <span>6</span> simple steps."
   },
   "w3": {
     "message": "Learn the hard truth!"
   },
   "w4": {
-    "message": "We fight only adwhores a.k.a YouTubers who sell your trust."
+    "message": "We fight adwhores but protect honest and creative YouTubers."
   },
   "w5": {
-    "message": "ADN was designed to protect you from adwhores: YouTubers who run illegal, fraudulent or boring in-video ads, try to cheat your trust, and don't disclose the fact that they are being paid for what they say about products."
+    "message": "AWN was designed to protect you from adwhores: YouTubers who run illegal, fraudulent or boring in-video ads, try to cheat your trust, and don't disclose the fact that they are being paid for what they say about products."
   },
   "w6": {
-    "message": "But one human being that ADN cares more than honest and creative YouTuber is <b>you</b>. That's why <b>you can choose</b> how ADN will serve you."
+    "message": "But one human being that AWN cares more than honest and creative YouTuber is <b>you</b>. That's why <b>you can choose</b> how AWN will serve you."
   },
   "w7": {
-    "message": "By now, ADN is configured to:"
+    "message": "By now, AWN is configured to:"
   },
   "w8": {
     "message": "auto-skip adwhores, respect honest creators"
@@ -486,7 +486,7 @@
     "message": "Auto-skip is disabled for all unpaid segments"
   },
   "w18": {
-    "message": "Auto-skip is disabled for ambassadors (a few trusted YouTubers who do unpaid promotion for ADN and make content based on project's private database)"
+    "message": "Auto-skip is disabled for ambassadors (a few trusted YouTubers who do unpaid promotion for AWN and make content based on project's private database)"
   },
   "w19": {
     "message": "Trust rate is 70%"
@@ -528,16 +528,7 @@
     "message": "Select your team."
   },
   "w32": {
-    "message": "Teams are large groups of users that compete with each other."
-  },
-  "w33": {
-    "message": "United Nations"
-  },
-  "w34": {
-    "message": "NATO (OTAN)"
-  },
-  "w35": {
-    "message": "Soviet"
+    "message": "Teams are large groups of users that <a target='_blank' href='https://adwhore.net/stats'>compete</a> with each other."
   },
   "w36": {
     "message": "Configure appearance."
@@ -546,7 +537,7 @@
     "message": "Select how extension will fit best for you!"
   },
   "w38": {
-    "message": "You can choose one of 3 options: default, report button or disable panel."
+    "message": "Segments are supposed to be submitted through a panel built into the YouTube HTML5 player. You can choose one of 3 options."
   },
   "w39": {
     "message": "Default"
@@ -561,16 +552,16 @@
     "message": "Stay in touch with the community."
   },
   "w43": {
-    "message": "Community is everything, and here we do some crazy stuff."
+    "message": "Community is everything, and you have already become a part of it."
   },
   "w44": {
-    "message": "<b>ADN is useless without it's community!</b>"
+    "message": "<b>AWN is useless without it's community!</b>"
   },
   "w45": {
-    "message": "Do not hesitate to submit new ad segments.</br>It may seem a little complicated, but once you master it - it will take just 20-30 seconds to make a report!</br></br>Your contribution does not go into the void: you can compete in the <a target='_blank' href='https://adwhore.net/stats'>leaderboards</a> and see how much you have contributed, by clicking the extension icon -> fist."
+    "message": "Do not hesitate to submit new ad segments.</br>It may seem a little complicated, but once you master it - it will take just 20-30 seconds to make a report!</br></br>Your contribution does not go into the void: you can compete in the <a target='_blank' href='https://adwhore.net/stats'>leaderboards</a> and see how much you have contributed, by clicking the extension icon -> <img src='https://i.imgur.com/SsVt13v.png'>."
   },
   "w46": {
-    "message": "Do not forget to like ad segment if it was correct. You can also report wrong segments and even correct them!"
+    "message": "Do not forget to <img src='https://i.imgur.com/eFskjM5.png'> ad segment if it was correct. Via <img src = 'https://i.imgur.com/BzsEcbJ.png'> you can moderate the segments: change the borders (<img src = 'https://i.imgur.com/rcI4cBY.png'>), replace them (<img src = 'https://i.imgur.com/5NHdAnY.png'>) and even delete (<img src = 'https://i.imgur.com/k6hmjNc.png'>)! "
   },
   "w47": {
     "message": "Previous"
@@ -579,10 +570,10 @@
     "message": "Next"
   },
   "w49": {
-    "message": "Congratulations, you are now in a world free of ads on YouTube!"
+    "message": "Congratulations, you are now in a world free of ads on YouTube!<br><br>Let me show you..."
   },
   "w50": {
-    "message": "<b>United Nations</b> is a default neutral team."
+    "message": "<b>United Nations</b> is a default team.<br><br>All your actions are credited to your team and taken into account in statistics."
   },
   "w51": {
     "message": "Join the ranks of <b>NATO</b> soldiers to protect the world from the vile communist propaganda!</br></br>The Soviet KGB is actively recruiting YouTubers to lure the citizens of the free world to the side of the Reds!!!</br>Report illegal activities today or it will be too late!</br></br>P.S. It's still cold war which main battlefield is YouTube now."
@@ -592,6 +583,61 @@
   },
   "w53": {
     "message": "Let's roll!"
+  },
+
+  "w33": {
+    "message": "Congratulations!"
+  },
+  "w34": {
+    "message": "You are now protected from YouTube ad integrations!"
+  },
+  "w35": {
+    "message": "<b>ADWHORE.NET</b> is a response to the growing activity of unscrupulous bloggers on Russian-speaking YouTube. AWN spreads all over the world."
+  },
+  "ww0": {
+    "message": "<img src=\"https://raw.githubusercontent.com/qrlk/adwhore.net/master/img/1280x800/en/1.png\" \n  width=\"520\" height=\"295\" alt=\"lorem\">"
+  },
+  "ww1": {
+    "message": "<b>Extension users are updating the database of ad segments so that you can skip in-video ads. </b>"
+  },
+  "ww2": {
+    "message": "A trust level and acceptance level are calculated for each segment. These values affect whether the ad is skipped automatically or by click."
+  },
+  "ww3": {
+    "message": "<b>If there is an advertisement in the video, it will be marked on the progress bar and you can skip it! </b>"
+  },
+  "ww4": {
+    "message": "In addition, we will release investigations into the activities of the largest players in the gray advertising market on YouTube!"
+  },
+  "ww5": {
+    "message": "<b>The main goal of the project is to collect information on HOW and WHAT bloggers advertise in order to divide them into two camps: conscientious and adwhores. </b>"
+  },
+  "ww6": {
+    "message": "When enough data has been collected, the community will be able to identify conscientious bloggers, and the extension will alert you to bloggers who repeatedly advertised controversial products or were involved in cheating their viewers for money."
+  },
+  "ww7": {
+    "message": "<b>The database is updated by thousands of volunteers around the world, and the development of the extension is carried out at <a href=\"https://github.com/qrlk/adwhore.net\">GitHub</a> by <a href=\"https://github.com/qrlk\">@qrlk</a>.</b>"
+  },
+  "ww8": {
+    "message": "Lazy mode"
+  },
+  "ww9": {
+    "message": "'Lazy' is a very strong word, I’d like to call it 'selective activity'.."
+  },
+  "ww10": {
+    "message": "To achieve the main goal of the project, segment timecodes alone are not enough: you need to select an segment category, mark three checkboxes and write a comment."
+  },
+  "ww11": {
+    "message": "This data is very important: it will help to roughly estimate the blogger's 'venality' level, as well as (in some cases) block similar ads automatically."
+  },
+  "ww12": {
+    "message": "For those who are annoyed by this, the \"lazy\" mode was invented. It allows you to limit yourself to the selection of only segment boundaries, and another user can add the missing data for your segment in the future."
+  },
+  "ww13": {
+    "message": "If the system trusts you more than the lazy segment's author, <img src = 'https://i.imgur.com/BzsEcbJ.png'> will change to <img src = 'https://i.imgur.com/t3oeDxy.png'> and you can 'unlazy' it via <img src =' https://i.imgur.com/IU5u98I.png'> without moderation."
+  },
+  "ww14": {
+    "message": "If you have any difficulties, feel free to ask at <a href='https://discord.com/invite/F78mDWj'>Discord</a>."
   },
   "preset": {
     "message": "Preset:"
@@ -613,5 +659,14 @@
   },
   "hotkeys": {
     "message": "<b>Segmentation Hotkeys</b></br></br><b>Q</b> — select start of segment</br><b>E</b> — select end of segment</br><b>Tab</b> — switch between boundaries</br></br><b>Space</b> — play/pause + save pos</br><b>W</b> — test segment</br><b>▲/▼</b> — +/- 0.1 sec</br><b>►/◄</b> — +/- 2 sec</br></br><b>D</b> — increase playback speed</br><b>A</b> — decrease playback speed</br><b>R</b> — reset playback speed</br></br><b>Escape</b> — cancel</br><b>Enter</b> — submit"
+  },
+  "clickLazyOn": {
+    "message": "<b>Lazy mode: enabled!</b><br><br>When 'lazy' mode is enabled, you don't need to select a category, checkboxes or comment: someone else will do it for you!"
+  },
+  "clickLazyOff": {
+    "message": "<b>Lazy mode: off!</b><br><br>When 'lazy' mode is enabled, you don't need to select a category, checkboxes or comment: someone else will do it for you!"
+  },
+  "donate": {
+    "message": "https://www.patreon.com/qrlk"
   }
 }

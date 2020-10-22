@@ -1,4 +1,5 @@
-let isReportStage1 = false,
+let baseUrl = "https://karma.adwhore.net:47976",
+    isReportStage1 = false,
     isReportStage2 = false,
     didWeChangeYouTubeQuestionMark = false,
     isToggle = false,
@@ -11,6 +12,7 @@ let isReportStage1 = false,
     isFirstInputSelect = false,
     isSideActive = false,
     isAdFlagActive = false,
+    canUpgradeLazy = false,
     currentUrl = "",
     currentSkipSource = "",
     currentSkipReason = "",
@@ -281,12 +283,12 @@ function updateSettings(result) {
     }
     if (result["secret"] == null) {
         $.ajax({
-            url: "https://karma.adwhore.net:47976/addNewUser",
+            url: `${baseUrl}/api/v0/addNewUser`,
             type: "POST",
-            data: JSON.stringify({ uuid: result["uuid"] }),
+            data: JSON.stringify({uuid: result["uuid"]}),
             contentType: "application/json",
             success: function (data) {
-                chrome.storage.sync.set({ secret: data["secret"], name: data["name"], side: data["side"] });
+                chrome.storage.sync.set({secret: data["secret"], name: data["name"], side: data["side"]});
                 // alert("ADN user registered\n"+JSON.stringify(data));
             },
         });
@@ -313,10 +315,10 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
                     console.error(error);
                 }
 
-                chrome.runtime.sendMessage({ message: "open_help" }, function (response) {
+                chrome.runtime.sendMessage({message: "open_help"}, function (response) {
                     console.log(response.status);
                 });
-                chrome.storage.sync.set({ askedForHelp: 1 });
+                chrome.storage.sync.set({askedForHelp: 1});
             }
         }
         updateSettings(result);
@@ -332,6 +334,7 @@ let youtubeMutation = setTimeout(function tick() {
     //console.log("URL check started");
     if (settings && settings["enable"] && document.URL.localeCompare(currentUrl)) {
         currentUrl = document.URL;
+        $(document).unbindArrive();
         console.log("I'm on youtube and URL has changed");
         if (currentUrl.includes("watch?v=")) {
             console.log("Should be a player somewhere, I'm looking for it");
@@ -357,6 +360,12 @@ let youtubeMutation = setTimeout(function tick() {
                 }
                 shadow_controls.style.display = "none";
 
+                $(document).arrive(".ytp-exp-chapter-hover-container", function () {
+                    $(document).unbindArrive(".ytp-exp-chapter-hover-container");
+                    setTimeout(function () {
+                        set(timestamps, v.duration);
+                    }, 500);
+                });
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
                 if (adnPanel) {
                     adnPanel.remove();
@@ -380,7 +389,17 @@ let youtubeMutation = setTimeout(function tick() {
 
                 setTimeout(function fetchWhenCidIsKnown() {
                     if (getChannelID() !== "") {
-                        resetAndFetch(false);
+                        currentChannelId = getChannelID();
+                        $.ajax({
+                            dataType: "json",
+                            url: `${baseUrl}/api/v0/isChannelBro`,
+                            data: {cID: currentChannelId},
+                            success: function (sb) {
+                                for (let i = 0; i < timestamps.length; i++) {
+                                    timestamps[i]["ambassador"] = 1;
+                                }
+                            }
+                        });
                     } else {
                         setTimeout(fetchWhenCidIsKnown, 100);
                     }
@@ -440,12 +459,12 @@ function resetAndFetch(bar = true) {
 
     timestamps = [];
     currentVideoId = getYouTubeID(currentUrl);
-    currentChannelId = getChannelID();
+
 
     $.ajax({
         dataType: "json",
-        url: "https://karma.adwhore.net:47976/getVideoData",
-        data: { vID: currentVideoId, cID: currentChannelId },
+        url: `${baseUrl}/api/v0/getVideoData`,
+        data: {vID: currentVideoId},
         success: function (sb) {
             pathFinder = sb["pathfinder"];
             pathFinderSide = sb["pathfinder"]["side"];
@@ -527,7 +546,7 @@ function getChannelID() {
     for (let item of list) {
         if (item.href.includes("channel")) {
             let cid = item.href.replace("https://www.youtube.com/channel/", "");
-            chrome.storage.sync.set({ last_channel: { name: item.text, cID: cid } });
+            chrome.storage.sync.set({last_channel: {name: item.text, cID: cid}});
             return cid;
         }
     }
@@ -554,7 +573,7 @@ function injectOverlay() {
 
         document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_overlay);
 
-        shadow_ad = shadow_overlay.attachShadow({ mode: "open" });
+        shadow_ad = shadow_overlay.attachShadow({mode: "open"});
 
         // Create some CSS to apply to the shadow dom
         let style_ad = document.createElement("style");
@@ -665,10 +684,10 @@ function injectOverlay() {
                     $.ajax({
                         dataType: "json",
                         type: "POST",
-                        url: "https://karma.adwhore.net:47976/addSegmentLike",
-                        data: JSON.stringify({ sID: currentSkip[2], secret: settings["secret"] }),
+                        url: `${baseUrl}/api/v0/addSegmentLike`,
+                        data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
                         success: function (sb) {
-                            chrome.storage.sync.set({ likes: settings["likes"] + 1 });
+                            chrome.storage.sync.set({likes: settings["likes"] + 1});
                             // alert(`Success. Reason: ${JSON.stringify(sb)}`);
                             if (settings["moderator"]) {
                                 let rewardValue = prompt("enter reward: n/10", "1");
@@ -676,7 +695,7 @@ function injectOverlay() {
                                     $.ajax({
                                         dataType: "json",
                                         type: "POST",
-                                        url: "https://karma.adwhore.net:47976/addReward",
+                                        url: `${baseUrl}/api/v0/addReward`,
                                         data: JSON.stringify({
                                             sID: currentSkip[2],
                                             secret: settings["secret"],
@@ -712,8 +731,8 @@ function injectOverlay() {
                     $.ajax({
                         dataType: "json",
                         type: "POST",
-                        url: "https://karma.adwhore.net:47976/addSegmentReport",
-                        data: JSON.stringify({ sID: currentSkip[2], text: comment, secret: settings["secret"] }),
+                        url: `${baseUrl}/api/v0/addSegmentReport`,
+                        data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
                         success: function (sb) {
                             alert(`Success. Reason: ${JSON.stringify(sb)}`);
                             resetAndFetch();
@@ -794,13 +813,27 @@ function injectOverlay() {
 function switchModes() {
     if (isReportActive) {
         skipImage1.src = getIconPath("resize.svg");
-        skipImage2.src = getIconPath("replace.svg");
+        if (canUpgradeLazy) {
+            skipImage2.src = getIconPath("unlazy.svg");
+            skipImage2.style.filter = ""
+        } else {
+            skipImage2.src = getIconPath("replace.svg");
+            skipImage2.style.filter = "invert(96%)"
+        }
+        skipImage3.style.filter = "invert(96%)"
         skipImage3.src = getIconPath("delete.svg");
         skipImage4.src = getIconPath("undo.svg");
     } else {
         skipImage1.src = getIconPath("backward.svg");
+        skipImage2.style.filter = "invert(96%)"
         skipImage2.src = getIconPath("like.svg");
-        skipImage3.src = getIconPath("dislike.svg");
+        if (canUpgradeLazy) {
+            skipImage3.src = getIconPath("lazy1.svg");
+            skipImage3.style.filter = ""
+        } else {
+            skipImage3.src = getIconPath("dislike.svg");
+            skipImage3.style.filter = "invert(96%)"
+        }
         skipImage4.src = getIconPath("close-button.svg");
     }
 }
@@ -825,7 +858,7 @@ function injectToolTip() {
 
         document.getElementsByClassName("html5-video-player")[0].appendChild(shadow_tooltip);
 
-        shadow_tooltip_wrapper = shadow_tooltip.attachShadow({ mode: "open" });
+        shadow_tooltip_wrapper = shadow_tooltip.attachShadow({mode: "open"});
 
         // Create some CSS to apply to the shadow dom
         let style_tooltip = document.createElement("style");
@@ -871,7 +904,7 @@ function injectControls() {
 
         $(shadow_controls).insertAfter(document.getElementsByClassName("ytp-left-controls")[0]);
 
-        shadow_controls_wrapper = shadow_controls.attachShadow({ mode: "open" });
+        shadow_controls_wrapper = shadow_controls.attachShadow({mode: "open"});
 
         // Create some CSS to apply to the shadow dom
         let style_controls = document.createElement("style");
@@ -930,6 +963,8 @@ function injectControls() {
         markOutImage1 = shadow_controls_wrapper.getElementById("markOutImage1");
         segStartInput = shadow_controls_wrapper.getElementById("segStartInput");
         segEndInput = shadow_controls_wrapper.getElementById("segEndInput");
+        lazyButton = shadow_controls_wrapper.getElementById("lazyButton");
+        lazyButtonImage = shadow_controls_wrapper.getElementById("lazyButtonImage");
         uploadButton = shadow_controls_wrapper.getElementById("uploadButton");
         uploadButtonImage = shadow_controls_wrapper.getElementById("uploadButtonImage");
         keysButton = shadow_controls_wrapper.getElementById("keysButton");
@@ -970,6 +1005,7 @@ function injectControls() {
         markInImage1.src = getIconPath("mark-in.svg");
         markOutImage1.src = getIconPath("mark-out.svg");
         uploadButtonImage.src = getIconPath("cloud-upload.svg");
+        lazyButtonImage.src = getIconPath("lazy.svg");
         helpButtonImage.src = getIconPath("help.svg");
 
         if (settings["show_flags"]) {
@@ -1265,14 +1301,14 @@ function injectControls() {
                     end: +segEndInput.value,
                 };
                 $.ajax({
-                    url: "https://karma.adwhore.net:47976/editSegment",
+                    url: `${baseUrl}/api/v0/editSegment`,
                     type: "POST",
                     data: JSON.stringify(json),
                     contentType: "application/json",
                     async: false,
                     success: function (data) {
                         alert("Success | Удачно\n" + JSON.stringify(data));
-                        chrome.storage.sync.set({ segments: settings["segments"] + 1 });
+                        chrome.storage.sync.set({segments: settings["segments"] + 1});
                     },
                     error: function (s, status, error) {
                         alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
@@ -1291,18 +1327,47 @@ function injectControls() {
             } else {
                 isReportStage2 = !isReportStage2;
                 if (isReportStage2) {
+                    if (((+segEndInput.value - +segStartInput.value) / 90) * 101 > v.duration) {
+                        isReportStage2 = !isReportStage2;
+                        alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
+                        return
+                    }
                     if (settings["segments"] < 2) {
                         isPreviewInside = false;
                         isPreviewOutside = false;
                         isPreviewOutsideBeforeSend = true;
                         v.currentTime = segStartInput.value - 1.5;
                         v.play();
+                    } else if (settings["lazy"]) {
+                        let json = {
+                            vID: currentVideoId,
+                            secret: settings["secret"],
+                            start: +segStartInput.value,
+                            end: +segEndInput.value,
+                        };
+                        $.ajax({
+                            url: `${baseUrl}/api/v0/addLazySegment`,
+                            type: "POST",
+                            data: JSON.stringify(json),
+                            contentType: "application/json",
+                            async: false,
+                            success: function (data) {
+                                alert("Success | Удачно\n" + JSON.stringify(data));
+                                disableStage1();
+                                resetAndFetch();
+                                chrome.storage.sync.set({segments: settings["segments"] + 1});
+                            },
+                            error: function (s, status, error) {
+                                alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                isReportStage2 = !isReportStage2;
+                            },
+                        });
                     } else {
                         enableStage2();
                         if (isReplace && settings["moderator"]) {
                             $.ajax({
-                                url: "https://karma.adwhore.net:47976/getSegmentData",
-                                data: { sID: currentSkip[2] },
+                                url: `${baseUrl}/api/v0/getSegmentData`,
+                                data: {sID: currentSkip[2], secret: settings["secret"]},
                                 async: false,
                                 success: function (data) {
                                     modSegmentData = data;
@@ -1319,88 +1384,83 @@ function injectControls() {
                     }
                 } else {
                     if (segControlsNumberInput.value !== "Select") {
-                        if (((+segEndInput.value - +segStartInput.value) / 90) * 101 > v.duration) {
+                        let prepo = "";
+
+                        if (isReplace && settings["moderator"]) {
+                            prepo = modSegmentData["comment"];
+                        }
+                        comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), prepo);
+                        console.log(comment);
+                        if (comment == null) {
                             isReportStage2 = !isReportStage2;
-                            alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                         } else {
-                            let prepo = "";
+                            if (isReportActive && isReplace) {
+                                let json = {
+                                    secret: settings["secret"],
+                                    category: +segControlsNumberInput.value,
+                                    start: +segStartInput.value,
+                                    end: +segEndInput.value,
+                                    maski: option02.checked,
+                                    clown: option02.checked,
+                                    paid: option03.checked,
+                                    comment: comment,
+                                    sID: currentSkip[2],
+                                };
+                                $.ajax({
+                                    url: `${baseUrl}/api/v0/replaceSegment`,
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: "application/json",
+                                    async: false,
+                                    success: function (data) {
+                                        alert("Success | Удачно\n" + JSON.stringify(data));
+                                        disableStage2();
+                                        disableStage1();
+                                        resetAndFetch();
 
-                            if (isReplace && settings["moderator"]) {
-                                prepo = modSegmentData["comment"];
-                            }
-                            comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), prepo);
-                            console.log(comment);
-                            if (comment == null) {
-                                isReportStage2 = !isReportStage2;
+                                        isReplace = false;
+                                        isReportActive = false;
+
+                                        v.currentTime = +segStartInput.value - 1;
+                                        v.play();
+
+                                        chrome.storage.sync.set({segments: settings["segments"] + 1});
+                                    },
+                                    error: function (s, status, error) {
+                                        alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                        isReportStage2 = !isReportStage2;
+                                    },
+                                });
                             } else {
-                                if (isReportActive && isReplace) {
-                                    let json = {
-                                        secret: settings["secret"],
-                                        category: segControlsNumberInput.value,
-                                        start: +segStartInput.value,
-                                        end: +segEndInput.value,
-                                        pizdabol: option02.checked,
-                                        honest: option02.checked,
-                                        paid: option03.checked,
-                                        comment: comment,
-                                        sID: currentSkip[2],
-                                    };
-                                    $.ajax({
-                                        url: "https://karma.adwhore.net:47976/replaceSegment",
-                                        type: "POST",
-                                        data: JSON.stringify(json),
-                                        contentType: "application/json",
-                                        async: false,
-                                        success: function (data) {
-                                            alert("Success | Удачно\n" + JSON.stringify(data));
-                                            disableStage2();
-                                            disableStage1();
-                                            resetAndFetch();
-
-                                            isReplace = false;
-                                            isReportActive = false;
-
-                                            v.currentTime = +segStartInput.value - 1;
-                                            v.play();
-
-                                            chrome.storage.sync.set({ segments: settings["segments"] + 1 });
-                                        },
-                                        error: function (s, status, error) {
-                                            alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
-                                            isReportStage2 = !isReportStage2;
-                                        },
-                                    });
-                                } else {
-                                    let json = {
-                                        vID: currentVideoId,
-                                        secret: settings["secret"],
-                                        category: segControlsNumberInput.value,
-                                        start: +segStartInput.value,
-                                        end: +segEndInput.value,
-                                        pizdabol: option02.checked,
-                                        honest: option02.checked,
-                                        paid: option03.checked,
-                                        comment: comment,
-                                    };
-                                    $.ajax({
-                                        url: "https://karma.adwhore.net:47976/addSegment",
-                                        type: "POST",
-                                        data: JSON.stringify(json),
-                                        contentType: "application/json",
-                                        async: false,
-                                        success: function (data) {
-                                            alert("Success | Удачно\n" + JSON.stringify(data));
-                                            disableStage2();
-                                            disableStage1();
-                                            resetAndFetch();
-                                            chrome.storage.sync.set({ segments: settings["segments"] + 1 });
-                                        },
-                                        error: function (s, status, error) {
-                                            alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
-                                            isReportStage2 = !isReportStage2;
-                                        },
-                                    });
-                                }
+                                let json = {
+                                    vID: currentVideoId,
+                                    secret: settings["secret"],
+                                    category: +segControlsNumberInput.value,
+                                    start: +segStartInput.value,
+                                    end: +segEndInput.value,
+                                    maski: option02.checked,
+                                    clown: option02.checked,
+                                    paid: option03.checked,
+                                    comment: comment,
+                                };
+                                $.ajax({
+                                    url: `${baseUrl}/api/v0/addSegment`,
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: "application/json",
+                                    async: false,
+                                    success: function (data) {
+                                        alert("Success | Удачно\n" + JSON.stringify(data));
+                                        disableStage2();
+                                        disableStage1();
+                                        resetAndFetch();
+                                        chrome.storage.sync.set({segments: settings["segments"] + 1});
+                                    },
+                                    error: function (s, status, error) {
+                                        alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                        isReportStage2 = !isReportStage2;
+                                    },
+                                });
                             }
                         }
                     } else {
@@ -1409,6 +1469,18 @@ function injectControls() {
                     }
                 }
             }
+        });
+
+        lazyButton.addEventListener("click", function () {
+            if (!settings["lazy"]) {
+                lazyButton.style.opacity = "1.0"
+            } else {
+                lazyButton.style.opacity = "0.5"
+            }
+
+            awesomeTooltipBodyText.innerHTML = lazyToolTipText(true);
+
+            chrome.storage.sync.set({lazy: !settings["lazy"]});
         });
 
         helpButton.addEventListener("click", function () {
@@ -1492,6 +1564,26 @@ function injectControls() {
                     return chrome.i18n.getMessage("checkBeforeSend");
                 }
             }
+        });
+
+        function lazyToolTipText(alt = false) {
+            if (alt) {
+                if (!settings["lazy"]) {
+                    return chrome.i18n.getMessage("clickLazyOn");
+                } else {
+                    return chrome.i18n.getMessage("clickLazyOff");
+                }
+            } else {
+                if (settings["lazy"]) {
+                    return chrome.i18n.getMessage("clickLazyOn");
+                } else {
+                    return chrome.i18n.getMessage("clickLazyOff");
+                }
+            }
+        }
+
+        addToolTipForElement(lazyButton, function () {
+            return lazyToolTipText()
         });
 
         addToolTipForElement(helpButton, function () {
@@ -1678,6 +1770,14 @@ function enableStage1(start, end) {
     uploadButton.style.display = "block";
     helpButton.style.display = "block";
 
+    if (settings["lazy"]) {
+        lazyButton.style.opacity = "1.0"
+    } else {
+        lazyButton.style.opacity = "0.5"
+    }
+
+    lazyButton.style.display = "block";
+
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
@@ -1698,7 +1798,7 @@ function enableStage1(start, end) {
     isToggle = false;
     mainButtonImage.style.transform = "";
 
-    segControlsNumberInput.value = "Select";
+    segControlsNumberInput.value = "10";
 
     replayButtonImage.src = getIconPath("close-button.svg");
     segControls.style.display = "flex";
@@ -1753,6 +1853,8 @@ function disableStage1() {
     uploadButton.style.display = "none";
     helpButton.style.display = "none";
 
+    lazyButton.style.display = "none";
+
     segEndInput.style.display = "none";
     replayButtonImage.src = getIconPath("report-button.svg");
     segControls.style.display = "none";
@@ -1784,6 +1886,8 @@ function enableStage2() {
     flagButton.style.display = "none";
     sideButton.style.display = "none";
 
+    lazyButton.style.display = "none";
+
     keysButton.style.display = "none";
     segStartInput.style.display = "none";
     segEndInput.style.display = "none";
@@ -1797,7 +1901,7 @@ function enableStage2() {
     mark5.style.display = "block";
     mark6.style.display = "block";
 
-    segControlsNumberInput.value = "Select";
+    segControlsNumberInput.value = "10";
     mainButton.style.display = "none";
     isReportStage2 = true;
 }
@@ -1811,6 +1915,14 @@ function disableStage2() {
 
     flagButton.style.display = "none";
     sideButton.style.display = "none";
+
+    if (settings["lazy"]) {
+        lazyButton.style.opacity = "1.0"
+    } else {
+        lazyButton.style.opacity = "0.5"
+    }
+
+    lazyButton.style.display = "block";
 
     segControlsNumberInput.style.display = "none";
     segStartInput.style.display = "block";
@@ -1879,14 +1991,50 @@ function createBar() {
  * @param  {String} opacity Start timecode of potential's segment.
  * @param  {Number} duration Video's duration.
  */
-function addBarToList(a, b, color, opacity, duration) {
-    let width = ((b - a) / duration) * 100;
-    width = Math.floor(width * 100) / 100;
-    let bar = createBar();
-    bar.style.backgroundColor = color;
-    bar.style.opacity = opacity;
-    bar.style.width = width + "%";
-    barList.insertAdjacentElement("beforeEnd", bar);
+function addBarToList(a, b, color, opacity, duration, target = barList) {
+    let element = document.getElementsByClassName("ytp-chapter-hover-container ytp-exp-chapter-hover-container");
+    if (element.length > 0) {
+        let count = 0
+        let chaptersWidth = 0
+        let margin = parseInt(element[0].style.marginRight, 10)
+
+        for (let item of element) {
+            count += 1
+            chaptersWidth += parseInt(item.style.width, 10)
+        }
+
+        let secondInPc = chaptersWidth / duration * 100 / (chaptersWidth + count * margin)
+        let secondInPx = chaptersWidth / duration
+        let marginizer = margin * 100 / (chaptersWidth + count * margin)
+
+        let width = (b - a) * secondInPc;
+        let progress = 0;
+
+        for (let item of element) {
+            let itemWidth = parseInt(item.style.width, 10)
+            progress += itemWidth / secondInPx
+            if (progress >= a && progress <= b - 1) {
+                width += marginizer
+            }
+            if (progress >= b) {
+                break
+            }
+        }
+        width = Math.floor(width * 100) / 100;
+        let bar = createBar();
+        bar.style.backgroundColor = color;
+        bar.style.opacity = opacity;
+        bar.style.width = width + "%";
+        target.insertAdjacentElement("beforeEnd", bar);
+    } else {
+        let width = ((b - a) / duration) * 100;
+        width = Math.floor(width * 100) / 100;
+        let bar = createBar();
+        bar.style.backgroundColor = color;
+        bar.style.opacity = opacity;
+        bar.style.width = width + "%";
+        target.insertAdjacentElement("beforeEnd", bar);
+    }
 }
 
 /**
@@ -1976,24 +2124,8 @@ function set_preview() {
     preview_seg[1] = segStartInput.value;
     preview_seg[2] = segEndInput.value - 0.7;
 
-    for (let i = 0; i < preview_seg.length; i++) {
-        width = ((preview_seg[i + 1] - preview_seg[i]) / duration) * 100;
-        width = Math.floor(width * 100) / 100;
-        let bar = createBar();
-
-        if (i % 2 === 1) {
-            bar.style.backgroundColor = "#FFFF00";
-            bar.style.opacity = "1.0";
-        } else {
-            bar.style.backgroundColor = "#FFFF00";
-            bar.style.opacity = "0.0";
-        }
-
-        bar.style.height = "2.5px";
-        bar.style.width = width + "%";
-
-        barListPreview.insertAdjacentElement("beforeEnd", bar);
-    }
+    addBarToList(0, preview_seg[1], "#FFFF00", "0.0", duration, barListPreview)
+    addBarToList(preview_seg[1], preview_seg[2], "#FFFF00", "1.0", duration, barListPreview)
 }
 
 /**
@@ -2021,8 +2153,8 @@ function injectModeratorPanel() {
             $("#adnModList").empty();
             for (let i = 0; i < timestamps.length; i++) {
                 $.ajax({
-                    url: "https://karma.adwhore.net:47976/getSegmentData",
-                    data: { sID: timestamps[i]["id"] },
+                    url: `${baseUrl}/api/v0/getSegmentData`,
+                    data: {sID: timestamps[i]["id"], secret: settings["secret"]},
                     async: false,
                     success: function (data) {
                         let unixTimestamp = data["timestamp"];
@@ -2084,13 +2216,13 @@ function injectModeratorPanel() {
                             $.ajax({
                                 dataType: "json",
                                 type: "POST",
-                                url: "https://karma.adwhore.net:47976/addSegmentLike",
+                                url: `${baseUrl}/api/v0/addSegmentLike`,
                                 data: JSON.stringify({
                                     sID: document.getElementById(`seg${i}_id`).innerText,
                                     secret: settings["secret"],
                                 }),
                                 success: function (sb) {
-                                    chrome.storage.sync.set({ likes: settings["likes"] + 1 });
+                                    chrome.storage.sync.set({likes: settings["likes"] + 1});
                                     // alert(`Success. Reason: ${JSON.stringify(sb)}`);
                                     if (settings["moderator"]) {
                                         let rewardValue = prompt("enter reward: n/10", "1");
@@ -2098,7 +2230,7 @@ function injectModeratorPanel() {
                                             $.ajax({
                                                 dataType: "json",
                                                 type: "POST",
-                                                url: "https://karma.adwhore.net:47976/addReward",
+                                                url: `${baseUrl}/api/v0/addReward`,
                                                 data: JSON.stringify({
                                                     sID: document.getElementById(`seg${i}_id`).innerText,
                                                     secret: settings["secret"],
@@ -2123,14 +2255,14 @@ function injectModeratorPanel() {
                                     category: +document.getElementById(`seg${i}_category`).value,
                                     start: +document.getElementById(`seg${i}_st`).value,
                                     end: +document.getElementById(`seg${i}_en`).value,
-                                    pizdabol: +document.getElementById(`seg${i}_pizdaboling`).checked,
-                                    honest: +document.getElementById(`seg${i}_acceptable_start`).checked,
+                                    maski: +document.getElementById(`seg${i}_pizdaboling`).checked,
+                                    clown: +document.getElementById(`seg${i}_acceptable_start`).checked,
                                     paid: +document.getElementById(`seg${i}_prepaid`).checked,
                                     comment: comment,
                                     sID: document.getElementById(`seg${i}_id`).innerText,
                                 };
                                 $.ajax({
-                                    url: "https://karma.adwhore.net:47976/replaceSegment",
+                                    url: `${baseUrl}/api/v0/replaceSegment`,
                                     type: "POST",
                                     data: JSON.stringify(json),
                                     contentType: "application/json",
@@ -2157,7 +2289,7 @@ function injectModeratorPanel() {
                                 $.ajax({
                                     dataType: "json",
                                     type: "POST",
-                                    url: "https://karma.adwhore.net:47976/addSegmentReport",
+                                    url: `${baseUrl}/api/v0/addSegmentReport`,
                                     data: JSON.stringify({
                                         sID: document.getElementById(`seg${i}_id`).innerText,
                                         text: comment,
@@ -2637,7 +2769,33 @@ function addVideoEvents() {
                             v.pause();
                             const r = confirm(chrome.i18n.getMessage("areYouSure"));
                             if (r === true) {
-                                enableStage2();
+                                if (settings["lazy"]) {
+                                    let json = {
+                                        vID: currentVideoId,
+                                        secret: settings["secret"],
+                                        start: +segStartInput.value,
+                                        end: +segEndInput.value,
+                                    };
+                                    $.ajax({
+                                        url: `${baseUrl}/api/v0/addLazySegment`,
+                                        type: "POST",
+                                        data: JSON.stringify(json),
+                                        contentType: "application/json",
+                                        async: false,
+                                        success: function (data) {
+                                            alert("Success | Удачно\n" + JSON.stringify(data));
+                                            disableStage1();
+                                            resetAndFetch();
+                                            chrome.storage.sync.set({segments: settings["segments"] + 1});
+                                        },
+                                        error: function (s, status, error) {
+                                            alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                            isReportStage2 = !isReportStage2;
+                                        },
+                                    })
+                                } else {
+                                    enableStage2();
+                                }
                             } else {
                                 isReportStage2 = !isReportStage2;
                             }
@@ -2811,13 +2969,16 @@ function whatShouldIDo(segment) {
  * @param  {JSON} segment Segment.
  */
 function addSegmentSkip(segment) {
+    canUpgradeLazy = false;
     $.ajax({
         dataType: "json",
         type: "POST",
-        url: "https://karma.adwhore.net:47976/addSegmentSkip",
-        data: JSON.stringify({ sID: segment[2], secret: settings["secret"] }),
+        url: `${baseUrl}/api/v0/addSegmentSkip`,
+        data: JSON.stringify({sID: segment[2], secret: settings["secret"]}),
         success: function (sb) {
             //alert(`Success. Reason: ${sb}`);
+            canUpgradeLazy = sb["can_upgrade_lazy"];
+            switchModes();
         },
     });
 }

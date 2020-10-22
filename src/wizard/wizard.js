@@ -1,3 +1,5 @@
+let baseUrl = "https://karma.adwhore.net:47976"
+
 class Steps {
     constructor(wizard) {
         this.wizard = wizard;
@@ -134,7 +136,11 @@ class Wizard {
         w49.style.display = ""
         this.wizard.classList.add('completed');
         setTimeout(function () {
-            window.open("https://www.youtube.com", "_self")
+            if (chrome.i18n.getMessage('@@ui_locale') === "ru") {
+                window.open("https://youtu.be/VYuJY3qBn9E?t=465", "_self")
+            } else {
+                window.open("https://youtu.be/P1FUMdHU29c?t=702", "_self")
+            }
         }, 5000);
     }
 
@@ -184,7 +190,7 @@ function selectSide(id) {
             if (result["secret"] != null) {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/switchUserSide",
+                    url: `${baseUrl}/api/v0/switchUserSide`,
                     type: "POST",
                     data: JSON.stringify({"secret": result["secret"], "side": id}),
                     contentType: 'application/json',
@@ -198,7 +204,7 @@ function selectSide(id) {
             } else {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/addNewUser",
+                    url: `${baseUrl}/api/v0/addNewUser`,
                     type: "POST",
                     data: JSON.stringify({"uuid": result["uuid"]}),
                     contentType: 'application/json',

@@ -1,3 +1,5 @@
+let baseUrl = "https://karma.adwhore.net:47976"
+
 function getUserId() {
     return (userId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (function (c) {
         var r = 16 * Math.random() | 0, v;
@@ -22,6 +24,7 @@ var defaults = {
     "name": "None",
     "enable": true,
     "mode": 1,
+    "lazy": false,
     "show_flags": true,
     "show_panel": true,
     "uuid": getUserId(),
@@ -66,7 +69,7 @@ chrome.storage.sync.get(defaults, function (result) {
     if (result["secret"] == null) {
         $.ajax
         ({
-            url: "https://karma.adwhore.net:47976/addNewUser",
+            url: `${baseUrl}/api/v0/addNewUser`,
             type: "POST",
             data: JSON.stringify({"uuid": result["uuid"]}),
             contentType: 'application/json',
@@ -80,8 +83,7 @@ chrome.storage.sync.get(defaults, function (result) {
         })
     } else {
         setTimeout(function getServiceStatus() {
-            $.getJSON("https://karma.adwhore.net:47976/getStatus", "secret=" + result["secret"], function (data) {
-                chrome.storage.sync.set({"side": data["side"]});
+            $.getJSON(`${baseUrl}/api/v0/getStatus`, function (data) {
                 console.log(data)
             });
             setTimeout(getServiceStatus, 300000);
@@ -91,12 +93,12 @@ chrome.storage.sync.get(defaults, function (result) {
 
 
 //why not?
-chrome.runtime.setUninstallURL("https://karma.adwhore.net:47976/onUnInstall")
+chrome.runtime.setUninstallURL(`${baseUrl}/api/v0/onUnInstall?locale=${chrome.i18n.getMessage('@@ui_locale')}`)
 // Check whether new version is installed
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === "install") {
 
-        httpGet("https://karma.adwhore.net:47976/onInstall")
+        httpGet(`${baseUrl}/onInstall`)
 
         chrome.tabs.create({url: `${chrome.extension.getURL("wizard/wizard.html")}`})
 
