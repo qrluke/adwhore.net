@@ -1798,7 +1798,7 @@ function enableStage1(start, end) {
     isToggle = false;
     mainButtonImage.style.transform = "";
 
-    segControlsNumberInput.value = "Select";
+    segControlsNumberInput.value = "10";
 
     replayButtonImage.src = getIconPath("close-button.svg");
     segControls.style.display = "flex";
@@ -1901,7 +1901,7 @@ function enableStage2() {
     mark5.style.display = "block";
     mark6.style.display = "block";
 
-    segControlsNumberInput.value = "Select";
+    segControlsNumberInput.value = "10";
     mainButton.style.display = "none";
     isReportStage2 = true;
 }
