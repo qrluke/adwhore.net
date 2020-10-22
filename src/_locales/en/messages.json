@@ -661,9 +661,9 @@
     "message": "<b>Segmentation Hotkeys</b></br></br><b>Q</b> — select start of segment</br><b>E</b> — select end of segment</br><b>Tab</b> — switch between boundaries</br></br><b>Space</b> — play/pause + save pos</br><b>W</b> — test segment</br><b>▲/▼</b> — +/- 0.1 sec</br><b>►/◄</b> — +/- 2 sec</br></br><b>D</b> — increase playback speed</br><b>A</b> — decrease playback speed</br><b>R</b> — reset playback speed</br></br><b>Escape</b> — cancel</br><b>Enter</b> — submit"
   },
   "clickLazyOn": {
-    "message": "LAZY MODE DESCRIPTION: ON"
+    "message": "<b>Lazy mode: enabled!</b><br><br>When 'lazy' mode is enabled, you don't need to select a category, checkboxes or comment: someone else will do it for you!"
   },
   "clickLazyOff": {
-    "message": "LAZY MODE DESCRIPTION: OFF"
+    "message": "<b>Lazy mode: off!</b><br><br>When 'lazy' mode is enabled, you don't need to select a category, checkboxes or comment: someone else will do it for you!"
   }
 }
