@@ -1,4 +1,5 @@
-let isReportStage1 = false,
+let baseUrl = "http://127.0.0.1:47977",
+    isReportStage1 = false,
     isReportStage2 = false,
     didWeChangeYouTubeQuestionMark = false,
     isToggle = false,
@@ -281,7 +282,7 @@ function updateSettings(result) {
     }
     if (result["secret"] == null) {
         $.ajax({
-            url: "https://karma.adwhore.net:47976/addNewUser",
+            url: `${baseUrl}/api/v0/addNewUser`,
             type: "POST",
             data: JSON.stringify({uuid: result["uuid"]}),
             contentType: "application/json",
@@ -361,7 +362,7 @@ let youtubeMutation = setTimeout(function tick() {
                 $(document).arrive(".ytp-exp-chapter-hover-container", function () {
                     $(document).unbindArrive(".ytp-exp-chapter-hover-container");
                     setTimeout(function () {
-                         set(timestamps, v.duration);
+                        set(timestamps, v.duration);
                     }, 500);
                 });
                 let adnPanel = document.getElementById("ADN_MOD_PANEL");
@@ -387,7 +388,17 @@ let youtubeMutation = setTimeout(function tick() {
 
                 setTimeout(function fetchWhenCidIsKnown() {
                     if (getChannelID() !== "") {
-                        resetAndFetch(false);
+                        currentChannelId = getChannelID();
+                        $.ajax({
+                            dataType: "json",
+                            url: `${baseUrl}/api/v0/isChannelBro`,
+                            data: {cID: currentChannelId},
+                            success: function (sb) {
+                                for (let i = 0; i < timestamps.length; i++) {
+                                    timestamps[i]["ambassador"] = 1;
+                                }
+                            }
+                        });
                     } else {
                         setTimeout(fetchWhenCidIsKnown, 100);
                     }
@@ -447,12 +458,13 @@ function resetAndFetch(bar = true) {
 
     timestamps = [];
     currentVideoId = getYouTubeID(currentUrl);
-    currentChannelId = getChannelID();
+
+
 
     $.ajax({
         dataType: "json",
-        url: "https://karma.adwhore.net:47976/getVideoData",
-        data: {vID: currentVideoId, cID: currentChannelId},
+        url: `${baseUrl}/api/v0/getVideoData`,
+        data: {vID: currentVideoId},
         success: function (sb) {
             pathFinder = sb["pathfinder"];
             pathFinderSide = sb["pathfinder"]["side"];
@@ -672,7 +684,7 @@ function injectOverlay() {
                     $.ajax({
                         dataType: "json",
                         type: "POST",
-                        url: "https://karma.adwhore.net:47976/addSegmentLike",
+                        url: `${baseUrl}/api/v0/addSegmentLike`,
                         data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
                         success: function (sb) {
                             chrome.storage.sync.set({likes: settings["likes"] + 1});
@@ -683,7 +695,7 @@ function injectOverlay() {
                                     $.ajax({
                                         dataType: "json",
                                         type: "POST",
-                                        url: "https://karma.adwhore.net:47976/addReward",
+                                        url: `${baseUrl}/api/v0/addReward`,
                                         data: JSON.stringify({
                                             sID: currentSkip[2],
                                             secret: settings["secret"],
@@ -719,7 +731,7 @@ function injectOverlay() {
                     $.ajax({
                         dataType: "json",
                         type: "POST",
-                        url: "https://karma.adwhore.net:47976/addSegmentReport",
+                        url: `${baseUrl}/api/v0/addSegmentReport`,
                         data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
                         success: function (sb) {
                             alert(`Success. Reason: ${JSON.stringify(sb)}`);
@@ -1275,7 +1287,7 @@ function injectControls() {
                     end: +segEndInput.value,
                 };
                 $.ajax({
-                    url: "https://karma.adwhore.net:47976/editSegment",
+                    url: `${baseUrl}/api/v0/editSegment`,
                     type: "POST",
                     data: JSON.stringify(json),
                     contentType: "application/json",
@@ -1301,18 +1313,47 @@ function injectControls() {
             } else {
                 isReportStage2 = !isReportStage2;
                 if (isReportStage2) {
+                    if (((+segEndInput.value - +segStartInput.value) / 90) * 101 > v.duration) {
+                        isReportStage2 = !isReportStage2;
+                        alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
+                        return
+                    }
                     if (settings["segments"] < 2) {
                         isPreviewInside = false;
                         isPreviewOutside = false;
                         isPreviewOutsideBeforeSend = true;
                         v.currentTime = segStartInput.value - 1.5;
                         v.play();
+                    } else if (settings["lazy"]) {
+                        let json = {
+                            vID: currentVideoId,
+                            secret: settings["secret"],
+                            start: +segStartInput.value,
+                            end: +segEndInput.value,
+                        };
+                        $.ajax({
+                            url: `${baseUrl}/api/v0/addLazySegment`,
+                            type: "POST",
+                            data: JSON.stringify(json),
+                            contentType: "application/json",
+                            async: false,
+                            success: function (data) {
+                                alert("Success | Удачно\n" + JSON.stringify(data));
+                                disableStage1();
+                                resetAndFetch();
+                                chrome.storage.sync.set({segments: settings["segments"] + 1});
+                            },
+                            error: function (s, status, error) {
+                                alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                isReportStage2 = !isReportStage2;
+                            },
+                        });
                     } else {
                         enableStage2();
                         if (isReplace && settings["moderator"]) {
                             $.ajax({
-                                url: "https://karma.adwhore.net:47976/getSegmentData",
-                                data: {sID: currentSkip[2]},
+                                url: `${baseUrl}/api/v0/getSegmentData`,
+                                data: {sID: currentSkip[2], secret: settings["secret"]},
                                 async: false,
                                 success: function (data) {
                                     modSegmentData = data;
@@ -1329,88 +1370,83 @@ function injectControls() {
                     }
                 } else {
                     if (segControlsNumberInput.value !== "Select") {
-                        if (((+segEndInput.value - +segStartInput.value) / 90) * 101 > v.duration) {
+                        let prepo = "";
+
+                        if (isReplace && settings["moderator"]) {
+                            prepo = modSegmentData["comment"];
+                        }
+                        comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), prepo);
+                        console.log(comment);
+                        if (comment == null) {
                             isReportStage2 = !isReportStage2;
-                            alert(chrome.i18n.getMessage("plsDontSendWholeVideo"));
                         } else {
-                            let prepo = "";
+                            if (isReportActive && isReplace) {
+                                let json = {
+                                    secret: settings["secret"],
+                                    category: +segControlsNumberInput.value,
+                                    start: +segStartInput.value,
+                                    end: +segEndInput.value,
+                                    maski: option02.checked,
+                                    clown: option02.checked,
+                                    paid: option03.checked,
+                                    comment: comment,
+                                    sID: currentSkip[2],
+                                };
+                                $.ajax({
+                                    url: `${baseUrl}/api/v0/replaceSegment`,
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: "application/json",
+                                    async: false,
+                                    success: function (data) {
+                                        alert("Success | Удачно\n" + JSON.stringify(data));
+                                        disableStage2();
+                                        disableStage1();
+                                        resetAndFetch();
 
-                            if (isReplace && settings["moderator"]) {
-                                prepo = modSegmentData["comment"];
-                            }
-                            comment = prompt(chrome.i18n.getMessage("pleaseEnterComment"), prepo);
-                            console.log(comment);
-                            if (comment == null) {
-                                isReportStage2 = !isReportStage2;
+                                        isReplace = false;
+                                        isReportActive = false;
+
+                                        v.currentTime = +segStartInput.value - 1;
+                                        v.play();
+
+                                        chrome.storage.sync.set({segments: settings["segments"] + 1});
+                                    },
+                                    error: function (s, status, error) {
+                                        alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                        isReportStage2 = !isReportStage2;
+                                    },
+                                });
                             } else {
-                                if (isReportActive && isReplace) {
-                                    let json = {
-                                        secret: settings["secret"],
-                                        category: segControlsNumberInput.value,
-                                        start: +segStartInput.value,
-                                        end: +segEndInput.value,
-                                        pizdabol: option02.checked,
-                                        honest: option02.checked,
-                                        paid: option03.checked,
-                                        comment: comment,
-                                        sID: currentSkip[2],
-                                    };
-                                    $.ajax({
-                                        url: "https://karma.adwhore.net:47976/replaceSegment",
-                                        type: "POST",
-                                        data: JSON.stringify(json),
-                                        contentType: "application/json",
-                                        async: false,
-                                        success: function (data) {
-                                            alert("Success | Удачно\n" + JSON.stringify(data));
-                                            disableStage2();
-                                            disableStage1();
-                                            resetAndFetch();
-
-                                            isReplace = false;
-                                            isReportActive = false;
-
-                                            v.currentTime = +segStartInput.value - 1;
-                                            v.play();
-
-                                            chrome.storage.sync.set({segments: settings["segments"] + 1});
-                                        },
-                                        error: function (s, status, error) {
-                                            alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
-                                            isReportStage2 = !isReportStage2;
-                                        },
-                                    });
-                                } else {
-                                    let json = {
-                                        vID: currentVideoId,
-                                        secret: settings["secret"],
-                                        category: segControlsNumberInput.value,
-                                        start: +segStartInput.value,
-                                        end: +segEndInput.value,
-                                        pizdabol: option02.checked,
-                                        honest: option02.checked,
-                                        paid: option03.checked,
-                                        comment: comment,
-                                    };
-                                    $.ajax({
-                                        url: "https://karma.adwhore.net:47976/addSegment",
-                                        type: "POST",
-                                        data: JSON.stringify(json),
-                                        contentType: "application/json",
-                                        async: false,
-                                        success: function (data) {
-                                            alert("Success | Удачно\n" + JSON.stringify(data));
-                                            disableStage2();
-                                            disableStage1();
-                                            resetAndFetch();
-                                            chrome.storage.sync.set({segments: settings["segments"] + 1});
-                                        },
-                                        error: function (s, status, error) {
-                                            alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
-                                            isReportStage2 = !isReportStage2;
-                                        },
-                                    });
-                                }
+                                let json = {
+                                    vID: currentVideoId,
+                                    secret: settings["secret"],
+                                    category: +segControlsNumberInput.value,
+                                    start: +segStartInput.value,
+                                    end: +segEndInput.value,
+                                    maski: option02.checked,
+                                    clown: option02.checked,
+                                    paid: option03.checked,
+                                    comment: comment,
+                                };
+                                $.ajax({
+                                    url: `${baseUrl}/api/v0/addSegment`,
+                                    type: "POST",
+                                    data: JSON.stringify(json),
+                                    contentType: "application/json",
+                                    async: false,
+                                    success: function (data) {
+                                        alert("Success | Удачно\n" + JSON.stringify(data));
+                                        disableStage2();
+                                        disableStage1();
+                                        resetAndFetch();
+                                        chrome.storage.sync.set({segments: settings["segments"] + 1});
+                                    },
+                                    error: function (s, status, error) {
+                                        alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                        isReportStage2 = !isReportStage2;
+                                    },
+                                });
                             }
                         }
                     } else {
@@ -1430,7 +1466,7 @@ function injectControls() {
 
             awesomeTooltipBodyText.innerHTML = lazyToolTipText(true);
 
-            chrome.storage.sync.set({ lazy: !settings["lazy"] });
+            chrome.storage.sync.set({lazy: !settings["lazy"]});
         });
 
         helpButton.addEventListener("click", function () {
@@ -2103,8 +2139,8 @@ function injectModeratorPanel() {
             $("#adnModList").empty();
             for (let i = 0; i < timestamps.length; i++) {
                 $.ajax({
-                    url: "https://karma.adwhore.net:47976/getSegmentData",
-                    data: {sID: timestamps[i]["id"]},
+                    url: `${baseUrl}/api/v0/getSegmentData`,
+                    data: {sID: timestamps[i]["id"], secret: settings["secret"]},
                     async: false,
                     success: function (data) {
                         let unixTimestamp = data["timestamp"];
@@ -2166,7 +2202,7 @@ function injectModeratorPanel() {
                             $.ajax({
                                 dataType: "json",
                                 type: "POST",
-                                url: "https://karma.adwhore.net:47976/addSegmentLike",
+                                url: `${baseUrl}/api/v0/addSegmentLike`,
                                 data: JSON.stringify({
                                     sID: document.getElementById(`seg${i}_id`).innerText,
                                     secret: settings["secret"],
@@ -2180,7 +2216,7 @@ function injectModeratorPanel() {
                                             $.ajax({
                                                 dataType: "json",
                                                 type: "POST",
-                                                url: "https://karma.adwhore.net:47976/addReward",
+                                                url: `${baseUrl}/api/v0/addReward`,
                                                 data: JSON.stringify({
                                                     sID: document.getElementById(`seg${i}_id`).innerText,
                                                     secret: settings["secret"],
@@ -2205,14 +2241,14 @@ function injectModeratorPanel() {
                                     category: +document.getElementById(`seg${i}_category`).value,
                                     start: +document.getElementById(`seg${i}_st`).value,
                                     end: +document.getElementById(`seg${i}_en`).value,
-                                    pizdabol: +document.getElementById(`seg${i}_pizdaboling`).checked,
-                                    honest: +document.getElementById(`seg${i}_acceptable_start`).checked,
+                                    maski: +document.getElementById(`seg${i}_pizdaboling`).checked,
+                                    clown: +document.getElementById(`seg${i}_acceptable_start`).checked,
                                     paid: +document.getElementById(`seg${i}_prepaid`).checked,
                                     comment: comment,
                                     sID: document.getElementById(`seg${i}_id`).innerText,
                                 };
                                 $.ajax({
-                                    url: "https://karma.adwhore.net:47976/replaceSegment",
+                                    url: `${baseUrl}/api/v0/replaceSegment`,
                                     type: "POST",
                                     data: JSON.stringify(json),
                                     contentType: "application/json",
@@ -2239,7 +2275,7 @@ function injectModeratorPanel() {
                                 $.ajax({
                                     dataType: "json",
                                     type: "POST",
-                                    url: "https://karma.adwhore.net:47976/addSegmentReport",
+                                    url: `${baseUrl}/api/v0/addSegmentReport`,
                                     data: JSON.stringify({
                                         sID: document.getElementById(`seg${i}_id`).innerText,
                                         text: comment,
@@ -2719,7 +2755,33 @@ function addVideoEvents() {
                             v.pause();
                             const r = confirm(chrome.i18n.getMessage("areYouSure"));
                             if (r === true) {
-                                enableStage2();
+                                if (settings["lazy"]) {
+                                    let json = {
+                                        vID: currentVideoId,
+                                        secret: settings["secret"],
+                                        start: +segStartInput.value,
+                                        end: +segEndInput.value,
+                                    };
+                                    $.ajax({
+                                        url: `${baseUrl}/api/v0/addLazySegment`,
+                                        type: "POST",
+                                        data: JSON.stringify(json),
+                                        contentType: "application/json",
+                                        async: false,
+                                        success: function (data) {
+                                            alert("Success | Удачно\n" + JSON.stringify(data));
+                                            disableStage1();
+                                            resetAndFetch();
+                                            chrome.storage.sync.set({segments: settings["segments"] + 1});
+                                        },
+                                        error: function (s, status, error) {
+                                            alert("error\n" + JSON.stringify(s.responseJSON) + "\n" + status + "\n" + error);
+                                            isReportStage2 = !isReportStage2;
+                                        },
+                                    })
+                                } else {
+                                    enableStage2();
+                                }
                             } else {
                                 isReportStage2 = !isReportStage2;
                             }
@@ -2771,6 +2833,7 @@ function whatShouldIDo(segment) {
             .replace("NEEDED", config["trust"]);
         skip = false;
     }
+    console.log((segment["ambassador"] === 1))
     if (segment["ambassador"] === 1) {
         if (segment["paid"] === 0) {
             if (isAdFlagActive) {
@@ -2896,7 +2959,7 @@ function addSegmentSkip(segment) {
     $.ajax({
         dataType: "json",
         type: "POST",
-        url: "https://karma.adwhore.net:47976/addSegmentSkip",
+        url: `${baseUrl}/api/v0/addSegmentSkip`,
         data: JSON.stringify({sID: segment[2], secret: settings["secret"]}),
         success: function (sb) {
             //alert(`Success. Reason: ${sb}`);

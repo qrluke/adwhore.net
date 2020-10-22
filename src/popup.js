@@ -1,4 +1,5 @@
 var mode = 1;
+let baseUrl = "http://127.0.0.1:47977"
 
 function updateDisplay(mode) {
     if (mode === 5) {
@@ -43,7 +44,7 @@ document.getElementById('buttonSave1').onclick = function () {
             if (!(result["name"] === document.getElementById("nickname").value)) {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/updateNickname",
+                    url: `${baseUrl}/api/v0/updateNickname`,
                     type: "POST",
                     data: JSON.stringify({
                         "secret": result["secret"],
@@ -69,7 +70,7 @@ document.getElementById('buttonSave2').onclick = function () {
             if (!(result["secret"] === document.getElementById("secret").value)) {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/switchUserSecret",
+                    url: `${baseUrl}/api/v0/switchUserSecret`,
                     type: "POST",
                     data: JSON.stringify({"secret": document.getElementById("secret").value}),
                     contentType: 'application/json',
@@ -94,7 +95,7 @@ document.getElementById('buttonNew').onclick = function () {
     chrome.storage.sync.get(["name", "secret"], function (result) {
             $.ajax
             ({
-                url: "https://karma.adwhore.net:47976/addNewUser",
+                url: `${baseUrl}/api/v0/addNewUser`,
                 type: "POST",
                 data: JSON.stringify({"secret": document.getElementById("secret").value}),
                 contentType: 'application/json',
@@ -127,7 +128,7 @@ chrome.storage.sync.get(null, function (result) {
     if (result["secret"] == null) {
         $.ajax
         ({
-            url: "https://karma.adwhore.net:47976/addNewUser",
+            url: `${baseUrl}/api/v0/addNewUser`,
             type: "POST",
             data: JSON.stringify({"uuid": result["uuid"]}),
             contentType: 'application/json',
@@ -295,7 +296,7 @@ document.getElementById("switchButtonAction2").addEventListener("click", functio
     $("#stats06")[0].innerText = "...";
 
     chrome.storage.sync.get(["secret"], function (result) {
-        $.getJSON("https://karma.adwhore.net:47976/getPersonalStats", "secret=" + result["secret"], function (data) {
+        $.getJSON(`${baseUrl}/api/v0/getPersonalStats`, "secret=" + result["secret"], function (data) {
             $("#stats01")[0].innerText = data["skips_for_count"];
             $("#stats02")[0].innerText = formatTime(data["skips_for_duration"]);
             $("#stats03")[0].innerText = data["actual_segments"];
@@ -360,7 +361,7 @@ function secondsToDhms(seconds) {
 }(jQuery);
 
 function get_mini_stats() {
-    $.getJSON("https://karma.adwhore.net:47976/statsMini", function (data) {
+    $.getJSON(`${baseUrl}/api/v0/statsMini`, function (data) {
         $("#global_users").animateNumbers(data["global"]["users"], true, 2000);
         $("#global_segs").animateNumbers(data["global"]["reports"], true, 2000);
         $("#global_skips").animateNumbers(data["global"]["skips"], true, 2000);
@@ -443,7 +444,7 @@ function selectSide(id) {
             if (result["secret"] != null) {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/switchUserSide",
+                    url: `${baseUrl}/api/v0/switchUserSide`,
                     type: "POST",
                     data: JSON.stringify({"secret": result["secret"], "side": id}),
                     contentType: 'application/json',
