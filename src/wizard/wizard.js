@@ -136,7 +136,11 @@ class Wizard {
         w49.style.display = ""
         this.wizard.classList.add('completed');
         setTimeout(function () {
-            window.open("https://www.youtube.com", "_self")
+            if (chrome.i18n.getMessage('@@ui_locale') === "ru") {
+                window.open("https://youtu.be/VYuJY3qBn9E?t=465", "_self")
+            } else {
+                window.open("https://youtu.be/P1FUMdHU29c?t=702", "_self")
+            }
         }, 5000);
     }
 
