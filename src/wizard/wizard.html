@@ -160,32 +160,25 @@
                 </div>
 
                 <div class="panel">
-                    <header class="panel__header">
+                    <header class="panel__header" style="margin-bottom: 16px;">
                         <h2 class="panel__title" id="w31"></h2>
                         <p class="panel__subheading" id="w32"></p>
                     </header>
+                    <center>
+                        <div class="cc-selector-2">
 
+                            <form id="teamsForm">
+                                <input type="radio" name="appearance" id="t1" data-show="1">
+                                <label class="team-cc un" for="t1"></label>
+                                <input type="radio" name="appearance" id="t2" data-show="2">
+                                <label class="team-cc nato" for="t2"></label>
 
-                    <form id="teamsForm">
-                        <label>
-                            <input type="radio" name="appearance" id="t1" data-show="1" class="input-hidden"/>
-                            <img src="../img/parties/UN.svg" alt="Default appearance"/>
-                            <b id="w33"></b>
-                        </label>
-                        </br>
-                        <label>
-                            <input type="radio" name="appearance" id="t2" data-show="2" class="input-hidden"/>
-                            <img src="../img/parties/NATO.svg" alt="Only report button"/>
-                            <b id="w34"></b>
-                        </label>
-                        </br>
-                        <label>
-                            <input type="radio" name="appearance" id="t3" data-show="3" class="input-hidden"/>
-                            <img src="../img/parties/SOVIET.svg" alt="Disable panel"/>
-                            <b id="w35"></b>
-                        </label>
-                        </br>
-                    </form>
+                                <input type="radio" name="appearance" id="t3" data-show="3">
+                                <label class="team-cc sov" for="t3"></label>
+                            </form>
+                        </div>
+                    </center>
+
                     <p class="panel__content" id="display"></p>
 
                 </div>
