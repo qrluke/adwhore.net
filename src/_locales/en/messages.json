@@ -81,13 +81,13 @@
     "message": "If the checkbox is checked and the ad segment has a sufficient confidence level for autoskip, it will be skipped."
   },
   "bad_ads_title": {
-    "message": "Condemned ads: scammers, abuse of trust, as well as ads that do not correspond to the topic of the channel"
+    "message": "Unacceptable ad: Segments with an acceptability level below your specified level. Highlighted in blue."
   },
   "acceptable_ads_title": {
-    "message": "Acceptable advertising: admitting the fact of advertising, and advertising other YouTube channels similar to this one"
+    "message": "Acceptable ad: Segments with an acceptability level higher than the level you specify. Highlighted in orange."
   },
   "awesome_ads_title": {
-    "message": "Approved ads: advertising your side projects, collaborations with other bloggers"
+    "message": "Non-commercial advertising: segments in base that the blogger did not receive money for advertising. Highlighted in blue."
   },
   "bad_youtuber": {
     "message": "<b>No ad tagged</b>"
