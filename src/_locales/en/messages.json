@@ -438,13 +438,13 @@
     "message": "Thank you for installing!"
   },
   "w2": {
-    "message": "Start with <span>4</span> simple steps."
+    "message": "Start with <span>6</span> simple steps."
   },
   "w3": {
     "message": "Learn the hard truth!"
   },
   "w4": {
-    "message": "We fight only adwhores a.k.a YouTubers who sell your trust."
+    "message": "We fight adwhores but protect honest and creative YouTubers."
   },
   "w5": {
     "message": "AWN was designed to protect you from adwhores: YouTubers who run illegal, fraudulent or boring in-video ads, try to cheat your trust, and don't disclose the fact that they are being paid for what they say about products."
@@ -528,16 +528,7 @@
     "message": "Select your team."
   },
   "w32": {
-    "message": "Teams are large groups of users that compete with each other."
-  },
-  "w33": {
-    "message": "United Nations"
-  },
-  "w34": {
-    "message": "NATO (OTAN)"
-  },
-  "w35": {
-    "message": "Soviet"
+    "message": "Teams are large groups of users that <a target='_blank' href='https://adwhore.net/stats'>compete</a> with each other."
   },
   "w36": {
     "message": "Configure appearance."
@@ -546,7 +537,7 @@
     "message": "Select how extension will fit best for you!"
   },
   "w38": {
-    "message": "You can choose one of 3 options: default, report button or disable panel."
+    "message": "Segments are supposed to be submitted through a panel built into the YouTube HTML5 player. You can choose one of 3 options."
   },
   "w39": {
     "message": "Default"
@@ -561,16 +552,16 @@
     "message": "Stay in touch with the community."
   },
   "w43": {
-    "message": "Community is everything, and here we do some crazy stuff."
+    "message": "Community is everything, and you have already become a part of it."
   },
   "w44": {
     "message": "<b>AWN is useless without it's community!</b>"
   },
   "w45": {
-    "message": "Do not hesitate to submit new ad segments.</br>It may seem a little complicated, but once you master it - it will take just 20-30 seconds to make a report!</br></br>Your contribution does not go into the void: you can compete in the <a target='_blank' href='https://adwhore.net/stats'>leaderboards</a> and see how much you have contributed, by clicking the extension icon -> fist."
+    "message": "Do not hesitate to submit new ad segments.</br>It may seem a little complicated, but once you master it - it will take just 20-30 seconds to make a report!</br></br>Your contribution does not go into the void: you can compete in the <a target='_blank' href='https://adwhore.net/stats'>leaderboards</a> and see how much you have contributed, by clicking the extension icon -> <img src='https://i.imgur.com/SsVt13v.png'>."
   },
   "w46": {
-    "message": "Do not forget to like ad segment if it was correct. You can also report wrong segments and even correct them!"
+    "message": "Do not forget to <img src='https://i.imgur.com/eFskjM5.png'> ad segment if it was correct. Via <img src = 'https://i.imgur.com/BzsEcbJ.png'> you can moderate the segments: change the borders (<img src = 'https://i.imgur.com/rcI4cBY.png'>), replace them (<img src = 'https://i.imgur.com/5NHdAnY.png'>) and even delete (<img src = 'https://i.imgur.com/k6hmjNc.png'>)! "
   },
   "w47": {
     "message": "Previous"
@@ -579,10 +570,10 @@
     "message": "Next"
   },
   "w49": {
-    "message": "Congratulations, you are now in a world free of ads on YouTube!"
+    "message": "Congratulations, you are now in a world free of ads on YouTube!<br><br>Let me show you..."
   },
   "w50": {
-    "message": "<b>United Nations</b> is a default neutral team."
+    "message": "<b>United Nations</b> is a default team.<br><br>All your actions are credited to your team and taken into account in statistics."
   },
   "w51": {
     "message": "Join the ranks of <b>NATO</b> soldiers to protect the world from the vile communist propaganda!</br></br>The Soviet KGB is actively recruiting YouTubers to lure the citizens of the free world to the side of the Reds!!!</br>Report illegal activities today or it will be too late!</br></br>P.S. It's still cold war which main battlefield is YouTube now."
@@ -592,6 +583,61 @@
   },
   "w53": {
     "message": "Let's roll!"
+  },
+
+  "w33": {
+    "message": "Congratulations!"
+  },
+  "w34": {
+    "message": "You are now protected from YouTube ad integrations!"
+  },
+  "w35": {
+    "message": "<b>ADWHORE.NET</b> is a response to the growing activity of unscrupulous bloggers on Russian-speaking YouTube. AWN spreads all over the world."
+  },
+  "ww0": {
+    "message": "<img src=\"https://raw.githubusercontent.com/qrlk/adwhore.net/master/img/1280x800/en/1.png\" \n  width=\"520\" height=\"295\" alt=\"lorem\">"
+  },
+  "ww1": {
+    "message": "<b>Extension users are updating the database of ad segments so that you can skip in-video ads. </b>"
+  },
+  "ww2": {
+    "message": "A trust level and acceptance level are calculated for each segment. These values affect whether the ad is skipped automatically or by click."
+  },
+  "ww3": {
+    "message": "<b>If there is an advertisement in the video, it will be marked on the progress bar and you can skip it! </b>"
+  },
+  "ww4": {
+    "message": "In addition, we will release investigations into the activities of the largest players in the gray advertising market on YouTube!"
+  },
+  "ww5": {
+    "message": "<b>The main goal of the project is to collect information on HOW and WHAT bloggers advertise in order to divide them into two camps: conscientious and adwhores. </b>"
+  },
+  "ww6": {
+    "message": "When enough data has been collected, the community will be able to identify conscientious bloggers, and the extension will alert you to bloggers who repeatedly advertised controversial products or were involved in cheating their viewers for money."
+  },
+  "ww7": {
+    "message": "<b>The database is updated by thousands of volunteers around the world, and the development of the extension is carried out at <a href=\"https://github.com/qrlk/adwhore.net\">GitHub</a> by <a href=\"https://github.com/qrlk\">@qrlk</a>.</b>"
+  },
+  "ww8": {
+    "message": "Lazy mode"
+  },
+  "ww9": {
+    "message": "'Lazy' is a very strong word, I’d like to call it 'selective activity'.."
+  },
+  "ww10": {
+    "message": "To achieve the main goal of the project, segment timecodes alone are not enough: you need to select an segment category, mark three checkboxes and write a comment."
+  },
+  "ww11": {
+    "message": "This data is very important: it will help to roughly estimate the blogger's 'venality' level, as well as (in some cases) block similar ads automatically."
+  },
+  "ww12": {
+    "message": "For those who are annoyed by this, the \"lazy\" mode was invented. It allows you to limit yourself to the selection of only segment boundaries, and another user can add the missing data for your segment in the future."
+  },
+  "ww13": {
+    "message": "If the system trusts you more than the lazy segment's author, <img src = 'https://i.imgur.com/BzsEcbJ.png'> will change to <img src = 'https://i.imgur.com/t3oeDxy.png'> and you can 'unlazy' it via <img src =' https://i.imgur.com/IU5u98I.png'> without moderation."
+  },
+  "ww14": {
+    "message": "If you have any difficulties, feel free to ask at <a href='https://discord.com/invite/F78mDWj'>Discord</a>."
   },
   "preset": {
     "message": "Preset:"
