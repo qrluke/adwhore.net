@@ -1,5 +1,5 @@
 var mode = 1;
-let baseUrl = "http://127.0.0.1:47977"
+let baseUrl = "https://karma.adwhore.net:47976"
 
 function updateDisplay(mode) {
     if (mode === 5) {

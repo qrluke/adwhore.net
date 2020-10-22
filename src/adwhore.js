@@ -1,4 +1,4 @@
-let baseUrl = "http://127.0.0.1:47977",
+let baseUrl = "https://karma.adwhore.net:47976",
     isReportStage1 = false,
     isReportStage2 = false,
     didWeChangeYouTubeQuestionMark = false,
