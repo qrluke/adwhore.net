@@ -12,6 +12,7 @@ let baseUrl = "http://127.0.0.1:47977",
     isFirstInputSelect = false,
     isSideActive = false,
     isAdFlagActive = false,
+    canUpgradeLazy = false,
     currentUrl = "",
     currentSkipSource = "",
     currentSkipReason = "",
@@ -460,7 +461,6 @@ function resetAndFetch(bar = true) {
     currentVideoId = getYouTubeID(currentUrl);
 
 
-
     $.ajax({
         dataType: "json",
         url: `${baseUrl}/api/v0/getVideoData`,
@@ -813,13 +813,27 @@ function injectOverlay() {
 function switchModes() {
     if (isReportActive) {
         skipImage1.src = getIconPath("resize.svg");
-        skipImage2.src = getIconPath("replace.svg");
+        if (canUpgradeLazy) {
+            skipImage2.src = getIconPath("unlazy.svg");
+            skipImage2.style.filter = ""
+        } else {
+            skipImage2.src = getIconPath("replace.svg");
+            skipImage2.style.filter = "invert(96%)"
+        }
+        skipImage3.style.filter = "invert(96%)"
         skipImage3.src = getIconPath("delete.svg");
         skipImage4.src = getIconPath("undo.svg");
     } else {
         skipImage1.src = getIconPath("backward.svg");
+        skipImage2.style.filter = "invert(96%)"
         skipImage2.src = getIconPath("like.svg");
-        skipImage3.src = getIconPath("dislike.svg");
+        if (canUpgradeLazy) {
+            skipImage3.src = getIconPath("lazy1.svg");
+            skipImage3.style.filter = ""
+        } else {
+            skipImage3.src = getIconPath("dislike.svg");
+            skipImage3.style.filter = "invert(96%)"
+        }
         skipImage4.src = getIconPath("close-button.svg");
     }
 }
@@ -2833,7 +2847,6 @@ function whatShouldIDo(segment) {
             .replace("NEEDED", config["trust"]);
         skip = false;
     }
-    console.log((segment["ambassador"] === 1))
     if (segment["ambassador"] === 1) {
         if (segment["paid"] === 0) {
             if (isAdFlagActive) {
@@ -2956,6 +2969,7 @@ function whatShouldIDo(segment) {
  * @param  {JSON} segment Segment.
  */
 function addSegmentSkip(segment) {
+    canUpgradeLazy = false;
     $.ajax({
         dataType: "json",
         type: "POST",
@@ -2963,6 +2977,8 @@ function addSegmentSkip(segment) {
         data: JSON.stringify({sID: segment[2], secret: settings["secret"]}),
         success: function (sb) {
             //alert(`Success. Reason: ${sb}`);
+            canUpgradeLazy = sb["can_upgrade_lazy"];
+            switchModes();
         },
     });
 }
