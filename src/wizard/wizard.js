@@ -1,3 +1,5 @@
+let baseUrl = "http://127.0.0.1:47977"
+
 class Steps {
     constructor(wizard) {
         this.wizard = wizard;
@@ -184,7 +186,7 @@ function selectSide(id) {
             if (result["secret"] != null) {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/switchUserSide",
+                    url: `${baseUrl}/api/v0/switchUserSide`,
                     type: "POST",
                     data: JSON.stringify({"secret": result["secret"], "side": id}),
                     contentType: 'application/json',
@@ -198,7 +200,7 @@ function selectSide(id) {
             } else {
                 $.ajax
                 ({
-                    url: "https://karma.adwhore.net:47976/addNewUser",
+                    url: `${baseUrl}/api/v0/addNewUser`,
                     type: "POST",
                     data: JSON.stringify({"uuid": result["uuid"]}),
                     contentType: 'application/json',
