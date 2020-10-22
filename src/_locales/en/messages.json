@@ -665,5 +665,8 @@
   },
   "clickLazyOff": {
     "message": "<b>Lazy mode: off!</b><br><br>When 'lazy' mode is enabled, you don't need to select a category, checkboxes or comment: someone else will do it for you!"
+  },
+  "donate": {
+    "message": "https://www.patreon.com/qrlk"
   }
 }
