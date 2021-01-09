@@ -336,7 +336,7 @@ let youtubeMutation = setTimeout(function tick() {
         currentUrl = document.URL;
         $(document).unbindArrive();
         console.log("I'm on youtube and URL has changed");
-        if (currentUrl.includes("watch?v=")) {
+        if (currentUrl.includes("watch") && currentUrl.includes("v=")) {
             console.log("Should be a player somewhere, I'm looking for it");
 
             v = document.querySelectorAll("video")[0];
