@@ -594,7 +594,7 @@ function injectOverlay() {
         adskip = shadow_ad.getElementById("adskip");
         adSkipButton = shadow_ad.getElementById("adSkipButton");
 
-        adspan = shadow_ad.getElementById("adspan");
+        adspan = shadow_ad.getElementById("adspan11");
 
         adButton1 = shadow_ad.getElementById("adButton1");
         skipImage1 = shadow_ad.getElementById("skipImage1");
