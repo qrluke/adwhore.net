@@ -433,8 +433,9 @@ function resetAndFetch(bar = true) {
             console.error(error);
         }
 
-        isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
-
+        //isAdFlagActive = document.getElementsByClassName("ytp-button ytp-paid-content-overlay-text")[0].innerText !== "";
+        isAdFlagActive = false
+        
         flagButtonImage.style.padding = "8px 0px";
 
         if (typeof barList == "object") {
