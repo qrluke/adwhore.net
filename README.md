@@ -34,26 +34,26 @@ When you watch a video that our agents have already studied, all ad inserts will
 
 <details>
   
-The **acceptance level** is also being calculated for each and every ad.  
+The **acceptance level** is also being calculated for every ad.  
 It depends on a blogger's previous behavior and current ad category.  
 
 It will be higher if the blogger is honest with his audience and doesn't advertise questionable products.  
-But if AWN finds out that the blogger sells his audience's trust... he will be marked as an adwhore and will be treated accordingly!  
+But if AWN finds out that the blogger sells his audience's trust... he will be marked as an adwhore and treated accordingly!  
 
 If the acceptance level is below set by you, the ad will be skipped automatically.
 
-By default, the acceptance level is 70% and ads are skipped only if the YouTuber didn't state that there is an ad integration in his video.  
+By default, the acceptance level is 70%, and ads are skipped only if the YouTuber doesn't state an ad integration in his video.  
 You can adjust settings however you want.
 
 **ADWHORE.NET** uses an advanced reputation system to fight vandalism:  
-* Server calculates the trust index for each ad so it will be auto skipped only if the trust calculated is high enough. (set by you)
+* Server calculates the trust index for each ad to be auto skipped if the trust calculated is high enough. (set by you)
 * People with a high reputation act as moderators without even knowing about it.  
 * If the system detects vandalism, all user contributions and impact on other users will be eliminated using a [StalinSort](https://github.com/gustavo-depaula/stalin-sort)-like algorithm.
-* Admin team checks segments from time to time to reward people with a reputation so they can moderate each other.
+* Admin team checks segments from time to time to reward people with a reputation to moderate each other.
 
-The main goal of the project is to collect information on HOW and WHAT bloggers advertise in order to divide them into two camps: conscientious and adwhores.
+The project's primary goal is to collect information on HOW and WHAT bloggers advertise to divide them into two camps: conscientious and adwhores.
 
-When enough data has been collected, the community will be able to identify conscientious bloggers, and the extension will alert you to bloggers who repeatedly advertised controversial products or were involved in cheating their viewers for money.
+When enough data has been collected, the system will be able to identify conscientious bloggers, and the extension will alert you to bloggers who repeatedly advertised controversial products or were involved in creating their viewers for money.
 </details>
 
 ## More screenshots
@@ -71,22 +71,22 @@ When enough data has been collected, the community will be able to identify cons
 ## History
 <details>
   
-I came up with this idea on 23rd May 2020 when I stubled upon a video with a drunk Russian YouTuber complaining about the health of the platform.  
+I came up with this idea on May 23, 2020, when I stumbled upon a video with a drunk Russian YouTuber complaining about the platform's health.  
 
-Many (if not all) Russian YouTubers make money through stealth advertising of really really questionable products.  
-YouTube doesn't pay good money so bloggers sell people's trust for small money not even caring for their reputation.  
+Many (if not all) Russian YouTubers make money through stealth advertising of really questionable products.  
+YouTube doesn't pay good money, so bloggers sell people's trust for little money without caring for their reputation.  
 But there are also good creative guys, but there isn't a lot of them.  
 
 So when this guy tries to recommend something just for fun - he's always getting blamed for it because of his colleagues.  
 
-I was looking for a new project, so I decided to create a solution for this problem: to create a way to differ honest YouTubers from adwhores.  
+I was looking for a new project, so I decided to create a solution for this problem: to make a way to differentiate honest YouTubers from adwhores.  
 
-At first, I wanted to create a SocialBlade-like website where people could report such bad YouTubers so moderators can review ads and calculate trust level: if a blogger can be trusted for words he says. Main goal: highlight good guys in a pile of shit. So I wanted to create a support extension to show this "trust level" near the YouTuber's channel name.  
-With time this idea eventually evolved to a fully functional adblocker with a goal to separate good guys from the bad, blame bad guys with proof, and to force bad guys to be better. I hope that you understood what I was trying to express :D
+At first, I wanted to create a SocialBlade-like website where people could report such bad YouTubers so moderators can review ads and calculate trust level: if you can trust a blogger with his words. Main goal: highlight good guys in a pile of shit. So I wanted to create a support extension to show this "trust level" near the YouTuber's channel name.  
+With time, this idea eventually evolved into a fully functional adblocker to separate good guys from the bad, blame bad guys with proof, and force bad guys to be better. I hope that you understood what I was trying to express :D
 
-So I experimented with collaborative pet-projects on my SA:MP script users and finally started AWN development.
+So I experimented with collaborative pet projects on my SA:MP script users and finally started AWN development.
 
-July 22, 2020 - start of active development.  
+July 22, 2020 - the start of active development.  
 August 4, 2020 - closed alpha version.  
 August 19, 2020 - public alpha release.  
 
@@ -98,42 +98,42 @@ TO-DO: 2020 - 2021 recap
 
 > [SponsorBlock](https://github.com/ajayyy/SponsorBlock) is an open-source crowdsourced browser extension to skip sponsor segments in YouTube videos.
 
-It has gained a lot of popularity due to it's transparency, open source development and integration with [YouTube Vanced](https://vancedapp.com/).
+It has gained popularity due to its transparency, open-source development, and integration with [YouTube Vanced](https://vancedapp.com/).
 
-I have never used sponsorblock as a user and it is not correct for me to compare projects from the user's side.
+I have never used sponsorblock as a user, so it is not suitable for me to compare projects from the user's side.
 
-But I still have something to mention, since I have often been asked why I and the awn exist at all.
+But I still have something to mention since I have often been asked why I and the awn exist at all.
 
 **First of all:**
-* AWN is just a MVP created to test the idea.
-  * It is intended to collect feedback and take them into account when developing the main project, in which the current functionality of the extension will be only a small part. 
-  * Main problem AWN (fraudlent ads in popular channel) is trying to solve doesn't exist in US/EU at all.
-  * This project would not be complete without a chrome extension: for now it's just a mvp written in 2 weeks.    
+* AWN is just an MVP created to test the idea.
+  * It is intended to collect feedback and take them into account when developing the main project, in which the current functionality of the extension will be only a tiny part. 
+  * Main problem AWN (fraudulent ads in the popular channels) is trying to solve doesn't exist in US/EU at all.
+  * This project would not be complete without a chrome extension: for now, it's just an MVP written in 2 weeks.    
 * SponsorBlock seems to be a mature adblocker without any hidden purpose.
 
-As a developer I can say that AWN and SponsorBlock have different goals, approaches to solving the problem of advertising and huge architectural differences.
+As a developer, I can say that AWN and SponsorBlock have different goals, approaches to solving the problem of advertising, and substantial architectural differences.
 
-For example, SponsorBlock is much more radical, while awn is trying to distinguish creative advertising from shit.
+For example, SponsorBlock is much more radical, while awn is distinguishing creative advertising from shit.
   
-For me, the ad segment blocker is just one of the means to achieve the goals of another project, and not the end goal as in the case of SponsorBlock.
+**For me, the ad segment blocker is just one of the means to achieve the goals of another project and not the end goal, as in the case of SponsorBlock.**
 
 Due to some life circumstances, the development of such a big project has been delayed.  
 I made a lot of mistakes while developing it.  
-I'm just an amateur but I hope I will be able to bring the main project live in 2022.  
-When it is finished, the difference between my project and SponsorBlock will be obvious so I will remove this section.
+I'm just an amateur, but I hope I will be able to bring the main project live in 2022.  
+When it is finished, the difference between my project and SponsorBlock will be obvious to remove this section.
   
-As for now, if you are looking for reliable source of ad segments, just use sponsorblock. Then try my extension and give me feedback what you disliked most :)
+As for now, if you are looking for a reliable source of ad segments, use sponsorblock. Then try my extension and give me feedback on what you disliked most :)
 
-### Why don't also use SponsorBlock's open database?
+### Why don't you also use SponsorBlock's open database?
 > SponsorBlock database is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
 
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) means that I'd had to share all my project's private segments database under the same license and promise to never make money with any of my private data because parts of it were adapted from the SponsorBlock's database.  
 
 Ajayyy still owns his project's data and can do whatever he wants, but not me. This is not acceptable for me.
 
-Also, simple segment bounds and sponsorblock's category is not enough for the awn to function: awn much needs more data.
+Also, simple segment bounds and sponsorblock's category are not enough for the awn to function: awn needs much more data.
 
-I had an idea to implement the import of your own segments from the sponsorblock database into the awn's successor database in the future. To do this, you will need to know the private key of the SponsorBlock user. Most likely, this will be possible from a technical, ethical and legal points of view, but it's not a priority at the moment.
+I had an idea to implement the import of your own segments from the sponsorblock database into the awn's successor database in the future. To do this, you will need to know the private key of the SponsorBlock user. This will most likely be possible from a technical, ethical, and legal point of view, but it's not a priority at the moment.
 </details>
 
 ## Credit
