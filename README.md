@@ -6,12 +6,12 @@
 <p align="center">
 <img src="https://img.shields.io/badge/dynamic/json?label=users&query=global.users&url=https%3A%2F%2Fkarma.adwhore.net%3A47976%2FstatsMini" >
   <img src="https://img.shields.io/badge/dynamic/json?label=segments&query=global.reports&url=https%3A%2F%2Fkarma.adwhore.net%3A47976%2FstatsMini" >
-  <a href = "https://chrome.google.com/webstore/detail/emfkjghgdkajicmnicojahgojkemagcm"><img src="https://img.shields.io/chrome-web-store/users/emfkjghgdkajicmnicojahgojkemagcm?label=chrome%20users"></a> 
+  <a href = "https://chrome.google.com/webstore/detail/emfkjghgdkajicmnicojahgojkemagcm"><img src="https://img.shields.io/chrome-web-store/users/emfkjghgdkajicmnicojahgojkemagcm?label=chrome%20users"></a>
 <a href = "https://chrome.google.com/webstore/detail/emfkjghgdkajicmnicojahgojkemagcm"><img src="https://img.shields.io/chrome-web-store/rating/emfkjghgdkajicmnicojahgojkemagcm?label=chrome%20rating"></a>
 <a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/"><img src="https://img.shields.io/amo/users/adwhore-net?label=firefox%20users"></a>
 <a href = "https://addons.mozilla.org/ru/firefox/addon/adwhore-net/"><img src="https://img.shields.io/amo/rating/adwhore-net?label=firefox%20rating"></a>
 <img src="https://img.shields.io/date/1596521629?label=released" >
-  
+
 </p>
 
 **This is a browser extension designed to remove corrupted ads that YouTubers place in their videos**.
@@ -33,9 +33,9 @@ When you watch a video that our agents have already studied, all ad inserts will
 </p>
 
 <details>
-  
+
 The **acceptance level** is also being calculated for every ad.  
-It depends on a blogger's previous behavior and current ad category.  
+It depends on a blogger's previous behaviour and current ad category.  
 
 It will be higher if the blogger is honest with his audience and doesn't advertise questionable products.  
 But if AWN finds out that the blogger sells his audience's trust... he will be marked as an adwhore and treated accordingly!  
@@ -70,7 +70,7 @@ When enough data has been collected, the system will be able to identify conscie
 
 ## History
 <details>
-  
+
 I came up with this idea on May 23, 2020, when I stumbled upon a video with a drunk Russian YouTuber complaining about the platform's health.  
 
 Many (if not all) Russian YouTubers make money through stealth advertising of really questionable products.  
@@ -81,7 +81,7 @@ So when this guy tries to recommend something just for fun - he's always getting
 
 I was looking for a new project, so I decided to create a solution for this problem: to make a way to differentiate honest YouTubers from adwhores.  
 
-At first, I wanted to create a SocialBlade-like website where people could report such bad YouTubers so moderators can review ads and calculate trust level: if you can trust a blogger with his words. Main goal: highlight good guys in a pile of shit. So I wanted to create a support extension to show this "trust level" near the YouTuber's channel name.  
+At first, I wanted to create a SocialBlade-like website. People could report such bad YouTubers so moderators can review ads and calculate trust level: if you can trust a blogger with his words. Main goal: highlight good guys in a pile of shit. So I wanted to create a support extension to show this "trust level" near the YouTuber's channel name.  
 With time, this idea eventually evolved into a fully functional adblocker to separate good guys from the bad, blame bad guys with proof, and force bad guys to be better. I hope that you understood what I was trying to express :D
 
 So I experimented with collaborative pet projects on my SA:MP script users and finally started AWN development.
@@ -91,6 +91,25 @@ August 4, 2020 - closed alpha version.
 August 19, 2020 - public alpha release.  
 
 TO-DO: 2020 - 2021 recap
+</details>
+
+## Contributing
+**The best way to contribute to the AWN is to become an active community member.**  
+
+**Submit sponsor segments you see and review others: every contribution counts.**
+<details>
+ <summary>Other ways to contribute</summary>
+
+* **Your ideas and thoughts are welcome.**
+  * Use GitHub issues to share your bug reports/feedback.
+* **AWN Extension is an Open Source project.**
+  * Extension is licensed under GPLv3.  
+  * AWN server has a closed source code.  
+  * AWN database is not available for public access.
+* **Contribute with code.**
+  * At the moment, I don't need the help of the FOSS community to develop the AWN extension.  
+  * If you want your code in the AWN for some reason, you would need to sign the [CTA](https://en.wikipedia.org/wiki/Copyright_transfer_agreement).  
+  * Otherwise, your PR will not be merged.
 </details>
 
 ## Differences from SponsorBlock
@@ -106,7 +125,7 @@ But I still have something to mention since I have often been asked why I and th
 
 **First of all:**
 * AWN is just an MVP created to test the idea.
-  * It is intended to collect feedback and take them into account when developing the main project, in which the current functionality of the extension will be only a tiny part. 
+  * It is intended to collect feedback and take it into account when developing the main project. Therefore, the current functionality of the extension will be only a tiny part.
   * Main problem AWN (fraudulent ads in the popular channels) is trying to solve doesn't exist in US/EU at all.
   * This project would not be complete without a chrome extension: for now, it's just an MVP written in 2 weeks.    
 * SponsorBlock seems to be a mature adblocker without any hidden purpose.
@@ -114,18 +133,18 @@ But I still have something to mention since I have often been asked why I and th
 As a developer, I can say that AWN and SponsorBlock have different goals, approaches to solving the problem of advertising, and substantial architectural differences.
 
 For example, SponsorBlock is much more radical, while awn is distinguishing creative advertising from shit.
-  
+
 **For me, the ad segment blocker is just one of the means to achieve the goals of another project and not the end goal, as in the case of SponsorBlock.**
 
 Due to some life circumstances, the development of such a big project has been delayed.  
 I made a lot of mistakes while developing it.  
 I'm just an amateur, but I hope I will be able to bring the main project live in 2022.  
 When it is finished, the difference between my project and SponsorBlock will be obvious to remove this section.
-  
+
 As for now, if you are looking for a reliable source of ad segments, use sponsorblock. Then try my extension and give me feedback on what you disliked most :)
 
 ### Why don't you also use SponsorBlock's open database?
-> SponsorBlock database is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
+> SponsorBlock database is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) means that I'd had to share all my project's private segments database under the same license and promise to never make money with any of my private data because parts of it were adapted from the SponsorBlock's database.  
 
