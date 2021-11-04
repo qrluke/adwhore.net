@@ -108,7 +108,7 @@ TO-DO: 2020 - 2021 recap
   * AWN database is not available for public access.
 * **Contribute with code.**
   * At the moment, I don't need the help of the FOSS community to develop the AWN extension.  
-  * If you want your code in the AWN for some reason, you would need to sign the [CTA](https://en.wikipedia.org/wiki/Copyright_transfer_agreement).  
+  * If you want your code in the AWN for some reason, you would need to sign the [CLA](https://en.wikipedia.org/wiki/Contributor_License_Agreement).  
   * Otherwise, your PR will not be merged.
 </details>
 
