@@ -330,7 +330,10 @@ I decided to bring my software projects at least to some acceptable form later.
   * It has the ability to connect interlocutors with each other and interfere in their conversations.
 
 ## October 2021
-I haven't done anything useful for awn, but I've started playing with the technologies I want to use to implement the awn successor.
+I haven't done anything useful for awn, but I've started playing with the technologies I want to use to implement the awn successor.  
+
+**As an experiment, I created an [ASKfm account](https://ask.fm/qrluke).**  
+There you can ask me an anonymous question if you are interested in something
 
 ## November 2021
 **Currently, I'm returning to the active development full of energy and new ideas.**  
