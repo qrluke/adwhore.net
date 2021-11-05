@@ -1,4 +1,4 @@
-> **Please don't judge me for English is not my native language.**
+> **Please note: English is not my native language.**
 
 # History.
 **In this file, I am writing a chronicle of the development of the project.**
@@ -339,4 +339,4 @@ I haven't done anything useful for awn, but I've started playing with the techno
 
 I think that the best way to apologize for a year of inactivity is to continuously work on a project for a year and more.
 
-Now just fight till the end...
+TO BE CONTINUED
