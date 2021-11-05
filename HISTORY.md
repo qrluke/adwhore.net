@@ -333,7 +333,8 @@ I decided to bring my software projects at least to some acceptable form later.
 I haven't done anything useful for awn, but I've started playing with the technologies I want to use to implement the awn successor.  
 
 **As an experiment, I created an [ASKfm account](https://ask.fm/qrluke).**  
-There you can ask me an anonymous question if you are interested in something.
+There you can ask me an anonymous question if you are interested in something.  
+To do this you would need to register, but it's fast as you can enter random e-mail address.
 
 ## November 2021
 **Currently, I'm returning to the active development full of energy and new ideas.**  
