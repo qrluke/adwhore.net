@@ -69,29 +69,7 @@ When enough data has been collected, the system will be able to identify conscie
 </details>
 
 ## History
-<details>
-
-I came up with this idea on May 23, 2020, when I stumbled upon a video with a drunk Russian YouTuber complaining about the platform's health.  
-
-Many (if not all) Russian YouTubers make money through stealth advertising of really questionable products.  
-YouTube doesn't pay good money, so bloggers sell people's trust for little money without caring for their reputation.  
-But there are also good creative guys, but there isn't a lot of them.  
-
-So when this guy tries to recommend something just for fun - he's always getting blamed for it because of his colleagues.  
-
-I was looking for a new project, so I decided to create a solution for this problem: to make a way to differentiate honest YouTubers from adwhores.  
-
-At first, I wanted to create a SocialBlade-like website. People could report such bad YouTubers so moderators can review ads and calculate trust level: if you can trust a blogger with his words. Main goal: highlight good guys in a pile of shit. So I wanted to create a support extension to show this "trust level" near the YouTuber's channel name.  
-With time, this idea eventually evolved into a fully functional adblocker to separate good guys from the bad, blame bad guys with proof, and force bad guys to be better. I hope that you understood what I was trying to express :D
-
-So I experimented with collaborative pet projects on my SA:MP script users and finally started AWN development.
-
-July 22, 2020 - the start of active development.  
-August 4, 2020 - closed alpha version.  
-August 19, 2020 - public alpha release.  
-
-TO-DO: 2020 - 2021 recap
-</details>
+[I am chronicling events related to the development of the project.](HISTORY.md)
 
 ## Contributing
 **The best way to contribute to the AWN is to become an active community member.**  
@@ -152,6 +130,8 @@ Ajayyy still owns his project's data and can do whatever he wants, but not me. T
 
 Also, simple segment bounds and sponsorblock's category are not enough for the awn to function: awn needs much more data.
 
+There was also a SponsorBlock API integration which [was removed](https://github.com/qrlk/adwhore.net/blob/master/HISTORY.md#sponsorblock-api-removal).
+  
 I had an idea to implement the import of your own segments from the sponsorblock database into the awn's successor database in the future. To do this, you will need to know the private key of the SponsorBlock user. This will most likely be possible from a technical, ethical, and legal point of view, but it's not a priority at the moment.
 </details>
 
