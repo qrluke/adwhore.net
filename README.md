@@ -119,7 +119,8 @@ I made a lot of mistakes while developing it.
 I'm just an amateur, but I hope I will be able to bring the main project live in 2022.  
 When it is finished, the difference between my project and SponsorBlock will be obvious to remove this section.
 
-As for now, if you are looking for a reliable source of ad segments, use sponsorblock. Then try my extension and give me feedback on what you disliked most :)
+As for now, if you are looking for a reliable source of ad segments, use sponsorblock.  
+Then try my extension and give me feedback on what you disliked most :)
 
 ### Why don't you also use SponsorBlock's open database?
 > SponsorBlock database is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
