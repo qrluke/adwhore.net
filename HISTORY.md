@@ -333,7 +333,7 @@ I decided to bring my software projects at least to some acceptable form later.
 I haven't done anything useful for awn, but I've started playing with the technologies I want to use to implement the awn successor.  
 
 **As an experiment, I created an [ASKfm account](https://ask.fm/qrluke).**  
-There you can ask me an anonymous question if you are interested in something
+There you can ask me an anonymous question if you are interested in something.
 
 ## November 2021
 **Currently, I'm returning to the active development full of energy and new ideas.**  
@@ -342,4 +342,4 @@ There you can ask me an anonymous question if you are interested in something
 
 I think that the best way to apologize for a year of inactivity is to continuously work on a project for a year and more.
 
-TO BE CONTINUED
+> **TO BE CONTINUED**
