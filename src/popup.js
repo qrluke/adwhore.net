@@ -395,6 +395,7 @@ chrome.storage.sync.get("stats", function (result) {
 
 document.getElementById('switchSide').href = chrome.extension.getURL("wizard/wizard.html");
 var whitelist = [];
+document.getElementById("ukr").onclick = () => {chrome.tabs.create({url: chrome.i18n.getMessage("ukraineNotice")});}
 
 function updateWhitelistTable() {
     chrome.storage.sync.get(["whitelist", "last_channel"], function (result) {

@@ -320,6 +320,9 @@
   "askingForHelpPage": {
     "message": "static/help-us-en.html"
   },
+  "ukraineNotice": {
+    "message": "static/ukraine-en.html"
+  },
   "whitelistDesc": {
     "message": "<b>This is your personal 'whitelist'</b></br>Segments for these channels will not be skipped automatically.</br>Only you are in control of this list: add your favorite bloggers."
   },
