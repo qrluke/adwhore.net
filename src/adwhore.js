@@ -307,20 +307,6 @@ chrome.storage.sync.get(null, function (result) {
  */
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     chrome.storage.sync.get(null, function (result) {
-        if (result["askedForHelp"] === 0) {
-            if (result["segments"] + result["likes"] > 2) {
-                try {
-                    v.pause();
-                } catch (error) {
-                    console.error(error);
-                }
-
-                chrome.runtime.sendMessage({message: "open_help"}, function (response) {
-                    console.log(response.status);
-                });
-                chrome.storage.sync.set({askedForHelp: 1});
-            }
-        }
         updateSettings(result);
     });
 });
