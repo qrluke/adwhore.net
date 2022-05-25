@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extension_name__",
   "version": "0.0.7.8",
-  "version_name": "Public Alfa",
+  "version_name": "Public Alfa (mv3)",
   "description": "__MSG_extension_description__",
   "manifest_version": 3,
   "default_locale": "en",
