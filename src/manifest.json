@@ -40,7 +40,7 @@
     "open_in_tab": false
   },
   "permissions": [
-    "activeTab", "storage", "https://karma.adwhore.net/*"
+    "activeTab", "storage"
   ],
   "background": {
     "scripts": [
