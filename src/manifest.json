@@ -21,11 +21,6 @@
       "run_at": "document_start"
     }
   ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{97a94cb5-bae9-4a72-ac7a-e7fbe5940adf}"
-    }
-  },
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
