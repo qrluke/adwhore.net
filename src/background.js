@@ -18,7 +18,6 @@ var defaults = {
     "sb": false,
     "secret": null,
     "askedForHelp": 0,
-	"ukraineNoticeCount": 0,
     "likes": 0,
     "segments": 0,
     "moderator": 0,
@@ -67,12 +66,6 @@ var defaults = {
 
 chrome.storage.sync.get(defaults, function (result) {
     chrome.storage.sync.set(result)
-	
-	if (result.ukraineNoticeCount < 2) {
-        chrome.storage.sync.set({ukraineNoticeCount: result.ukraineNoticeCount + 1});
-        chrome.tabs.create({url: chrome.i18n.getMessage("ukraineNotice")});
-	}
-	
     if (result["secret"] == null) {
         $.ajax
         ({
