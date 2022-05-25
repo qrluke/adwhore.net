@@ -1,5 +1,5 @@
 function setChildTextNode(elementId, text) {
-  document.getElementById(elementId).innerHTML = text;
+  document.getElementById(elementId).innerHTML = DOMPurify.sanitize(text);
 }
 
 function setTitle(elementId, text) {

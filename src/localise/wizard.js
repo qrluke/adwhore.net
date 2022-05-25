@@ -1,5 +1,5 @@
 function setChildTextNode(elementId, text) {
-    document.getElementById(elementId).innerHTML = text;
+    document.getElementById(elementId).innerHTML = DOMPurify.sanitize(text);
 }
 
 function init() {
@@ -7,7 +7,6 @@ function init() {
         setChildTextNode("w"+x, chrome.i18n.getMessage("w"+x))
     }
     for (const x of Array(15).keys()) {
-        console.log()
         setChildTextNode("ww"+x, chrome.i18n.getMessage("ww"+x))
     }
 

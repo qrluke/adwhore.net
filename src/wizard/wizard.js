@@ -118,13 +118,13 @@ class Wizard {
 
     handleNextStepButton() {
         if (this.currentStep === this.stepsQuantity - 1) {
-            this.nextControl.innerHTML = chrome.i18n.getMessage("w53");
+            this.nextControl.innerHTML = DOMPurify.sanitize(chrome.i18n.getMessage("w53"));
 
             this.nextControl.removeEventListener('click', this.nextControlMoveStepMethod);
             this.nextControl.addEventListener('click', this.concludeControlMoveStepMethod);
             this.nextControl.addEventListener('click', this.wizardConclusionMethod);
         } else {
-            this.nextControl.innerHTML = chrome.i18n.getMessage("w48");
+            this.nextControl.innerHTML = DOMPurify.sanitize(chrome.i18n.getMessage("w48"));
 
             this.nextControl.addEventListener('click', this.nextControlMoveStepMethod);
             this.nextControl.removeEventListener('click', this.concludeControlMoveStepMethod);
@@ -266,7 +266,7 @@ const descriptions = {
 teamsForm.addEventListener('change', function (evt) {
     let descriptionId = evt.target.dataset.show
     selectSide(+descriptionId)
-    display.innerHTML = descriptions[descriptionId]
+    display.innerHTML = DOMPurify.sanitize(descriptions[descriptionId])
     wizard.panels.updatePanelsContainerHeight()
 })
 
@@ -284,7 +284,7 @@ chrome.storage.sync.get(["mode", "show_flags", "show_panel", "side"], function (
     updateModesDisplay()
     try {
         document.getElementById('t' + result['side']).checked = true
-        display.innerHTML = descriptions[+result['side']]
+        display.innerHTML = DOMPurify.sanitize(descriptions[+result['side']])
         wizard.panels.updatePanelsContainerHeight()
     } catch (e) {
         console.log(e)

@@ -15,6 +15,7 @@
       "js": [
         "js/jquery.min.js",
         "js/arrive.min.js",
+        "js/purify.min.js",
         "adwhore.js"
       ],
       "run_at": "document_start"

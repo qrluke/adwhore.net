@@ -222,7 +222,7 @@ document.getElementById("switchButtonAction1").addEventListener("click", functio
     if (document.getElementById("blockSettings").style.display.includes("block")) {
         document.getElementById("blockSettings").style.display = "none"
         document.getElementById("blockSecret").style.display = "block"
-        document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+        document.getElementById("switchButtonAction1").innerHTML = DOMPurify.sanitize("<img class='icon' src='img/popup/home.svg'>")
         document.getElementById("note_the_alpha").style.display = "none"
         document.getElementById("links").style.display = "none"
         document.getElementById("acceptable_table").style.display = "none"
@@ -234,7 +234,7 @@ document.getElementById("switchButtonAction1").addEventListener("click", functio
     } else {
         document.getElementById("blockSecret").style.display = "none"
         document.getElementById("blockSettings").style.display = "block"
-        document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/cog.svg'>"
+        document.getElementById("switchButtonAction1").innerHTML = DOMPurify.sanitize("<img class='icon' src='img/popup/cog.svg'>")
         document.getElementById("note_the_alpha").style.display = ""
         document.getElementById("links").style.display = ""
         if (mode === 5) {
@@ -252,7 +252,7 @@ document.getElementById("switchButtonAction1").addEventListener("click", functio
 
 document.getElementById("switchButtonAction3").addEventListener("click", function () {
     document.getElementById("switchButtonAction1").focus()
-    document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+    document.getElementById("switchButtonAction1").innerHTML = DOMPurify.sanitize("<img class='icon' src='img/popup/home.svg'>")
     document.getElementById("note_the_alpha").style.display = "none"
     document.getElementById("links").style.display = "none"
     document.getElementById("blockSettings").style.display = "none"
@@ -277,7 +277,7 @@ function formatTime(time) {
 
 document.getElementById("switchButtonAction2").addEventListener("click", function () {
     document.getElementById("switchButtonAction1").focus()
-    document.getElementById("switchButtonAction1").innerHTML = "<img class='icon' src='img/popup/home.svg'>"
+    document.getElementById("switchButtonAction1").innerHTML = DOMPurify.sanitize("<img class='icon' src='img/popup/home.svg'>")
     document.getElementById("note_the_alpha").style.display = "none"
     document.getElementById("links").style.display = "none"
     document.getElementById("blockSettings").style.display = "none"
@@ -403,12 +403,12 @@ function updateWhitelistTable() {
         let list = []
         for (let item of result["whitelist"]) {
             if (!list.includes(item["cID"])) {
-                $('#whitelistTable > tbody:last-child').append("<tr><td><small>" + item["cID"] + "</small></td><td><small>" + item["name"] + "</small></td><td><input type='button' class='RemoveRow' value='" + chrome.i18n.getMessage("RemoveRow") + "'></td></tr>");
+                $('#whitelistTable > tbody:last-child').append(DOMPurify.sanitize("<tr><td><small>" + item["cID"] + "</small></td><td><small>" + item["name"] + "</small></td><td><input type='button' class='RemoveRow' value='" + chrome.i18n.getMessage("RemoveRow") + "'></td></tr>"));
                 list.push(item["cID"])
             }
         }
         if (!list.includes(result["last_channel"]["cID"])) {
-            $('#whitelistTable > tbody:last-child').append("<tr><td><small>" + result["last_channel"]["cID"] + "</small></td><td><small>" + result["last_channel"]["name"] + "</small></td><td><input type='button' class='AddNew' value='" + chrome.i18n.getMessage("AddRow") + "'></td></tr>");
+            $('#whitelistTable > tbody:last-child').append(DOMPurify.sanitize("<tr><td><small>" + result["last_channel"]["cID"] + "</small></td><td><small>" + result["last_channel"]["name"] + "</small></td><td><input type='button' class='AddNew' value='" + chrome.i18n.getMessage("AddRow") + "'></td></tr>"));
         }
     })
 }
