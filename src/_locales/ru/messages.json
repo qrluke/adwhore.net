@@ -591,7 +591,7 @@
   },
 
   "ww0": {
-    "message": "  <iframe width=\"520\" height=\"295\" src=\"https://www.youtube-nocookie.com/embed/ze3YVsI1gpc\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n"
+    "message": "<img src=\"https://raw.githubusercontent.com/qrlk/adwhore.net/master/img/1280x800/ru/1.png\" \n  width=\"520\" height=\"295\" alt=\"lorem\">"
   },
   "ww1": {
     "message": "<b>Пользователи расширения пополняют базу рекламных интеграций, чтобы Вы смогли пропустить рекламу.</b>"
@@ -602,9 +602,6 @@
   "ww3": {
     "message": "<b>Если в видео есть реклама, она будет отмечена на прогресс баре и Вы сможете пропустить её!</b>"
   },
-  "ww4": {
-    "message": "Помимо этого, мы будем выпускать расследования деятельности самых крупных игроков рынка \"серой\" рекламы на YouTube!"
-  },
   "ww5": {
     "message": "<b>Главная цель проекта - собрать информацию о том, КАК и ЧТО рекламируют блогеры, чтобы разделить их на два лагеря: добросовестные и адвхоры.</b>"
   },
@@ -612,7 +609,7 @@
     "message": "Когда будет собрано достаточно данных, сообщество сможет выделить добросовестных блогеров, а расширение - будет предупреждать вас о блогерах, которые неоднократно рекламировали спорные продукты или были замешаны в разводе своих зрителей на деньги."
   },
   "ww7": {
-    "message": "<b>База данных пополняется силами тысяч волонтеров по всему миру, а разработка расширения происходит на <a href=\"https://github.com/qrlk/adwhore.net\">GitHub</a> силами <a href=\"https://github.com/qrlk\">@qrlk</a>.</b>"
+    "message": "<b>База данных пополняется силами сотен волонтеров по всему миру, а разработка расширения происходит на <a href=\"https://github.com/qrlk/adwhore.net\">GitHub</a> силами <a href=\"https://github.com/qrlk\">@qrlk</a>.</b>"
   },
   "ww8": {
     "message": "Ленивый режим"

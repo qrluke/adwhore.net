@@ -603,9 +603,6 @@
   "ww3": {
     "message": "<b>If there is an advertisement in the video, it will be marked on the progress bar and you can skip it! </b>"
   },
-  "ww4": {
-    "message": "In addition, we will release investigations into the activities of the largest players in the gray advertising market on YouTube!"
-  },
   "ww5": {
     "message": "<b>The main goal of the project is to collect information on HOW and WHAT bloggers advertise in order to divide them into two camps: conscientious and adwhores. </b>"
   },
@@ -613,7 +610,7 @@
     "message": "When enough data has been collected, the community will be able to identify conscientious bloggers, and the extension will alert you to bloggers who repeatedly advertised controversial products or were involved in cheating their viewers for money."
   },
   "ww7": {
-    "message": "<b>The database is updated by thousands of volunteers around the world, and the development of the extension is carried out at <a href=\"https://github.com/qrlk/adwhore.net\">GitHub</a> by <a href=\"https://github.com/qrlk\">@qrlk</a>.</b>"
+    "message": "<b>The database is updated by hundreds of volunteers around the world, and the development of the extension is carried out at <a href=\"https://github.com/qrlk/adwhore.net\">GitHub</a> by <a href=\"https://github.com/qrlk\">@qrlk</a>.</b>"
   },
   "ww8": {
     "message": "Lazy mode"
