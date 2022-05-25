@@ -7,13 +7,6 @@ function getUserId() {
     }))), userId
 }
 
-function httpGet(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, true); // false for synchronous request
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
-}
-
 var defaults = {
     "sb": false,
     "secret": null,
@@ -66,30 +59,41 @@ var defaults = {
 chrome.storage.sync.get(defaults, function (result) {
     chrome.storage.sync.set(result)
     if (result["secret"] == null) {
-        $.ajax
-        ({
-            url: `${baseUrl}/api/v0/addNewUser`,
-            type: "POST",
-            data: JSON.stringify({"uuid": result["uuid"]}),
-            contentType: 'application/json',
-            success: function (data) {
-                chrome.storage.sync.set({"secret": data["secret"], "name": data["name"], "side": data["side"]});
-                // alert("ADN user registered\n"+JSON.stringify(data));
+        fetch(`${baseUrl}/api/v0/addNewUser`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            error: function (s, status, error) {
-                alert('error\n' + status + '\n' + error);
+            body: JSON.stringify({"uuid": result["uuid"]})
+        }).then(
+            function (response) {
+                response.json().then(
+                    function (data) {
+                        chrome.storage.sync.set({"secret": data["secret"], "name": data["name"], "side": data["side"]});
+                        console.log(data)
+                    }
+                )
             }
-        })
+        ).catch(
+            function (error) {
+                console.dir(error)
+            }
+        )
     } else {
         setTimeout(function getServiceStatus() {
-            $.getJSON(`${baseUrl}/api/v0/getStatus`, function (data) {
-                console.log(data)
-            });
+            fetch(`${baseUrl}/api/v0/getStatus`).then(
+                function (response) {
+                    response.json().then(
+                        function (data) {
+                            console.log(data)
+                        }
+                    )
+                }
+            )
             setTimeout(getServiceStatus, 300000);
         }, 1000);
     }
 });
-
 
 //why not?
 chrome.runtime.setUninstallURL(`${baseUrl}/api/v0/onUnInstall?locale=${chrome.i18n.getMessage('@@ui_locale')}`)
@@ -97,9 +101,9 @@ chrome.runtime.setUninstallURL(`${baseUrl}/api/v0/onUnInstall?locale=${chrome.i1
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === "install") {
 
-        httpGet(`${baseUrl}/onInstall`)
+        fetch(`${baseUrl}/onInstall`)
 
-        chrome.tabs.create({url: `${chrome.extension.getURL("wizard/wizard.html")}`})
+        chrome.tabs.create({url: `${chrome.runtime.getURL("wizard/wizard.html")}`})
 
     } else if (details.reason === "update") {
         var thisVersion = chrome.runtime.getManifest().version;

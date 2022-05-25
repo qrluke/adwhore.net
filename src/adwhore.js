@@ -534,7 +534,7 @@ function getChannelID() {
  */
 function injectOverlay() {
     const request = new XMLHttpRequest();
-    request.open("GET", chrome.extension.getURL("/static/overlay.html"), false); // `false` makes the request synchronous
+    request.open("GET", chrome.runtime.getURL("/static/overlay.html"), false); // `false` makes the request synchronous
     request.send(null);
 
     if (request.status === 200) {
@@ -553,7 +553,7 @@ function injectOverlay() {
         let style_ad = document.createElement("style");
 
         const request1 = new XMLHttpRequest();
-        request1.open("GET", chrome.extension.getURL("/static/overlay.css"), false); // `false` makes the request synchronous
+        request1.open("GET", chrome.runtime.getURL("/static/overlay.css"), false); // `false` makes the request synchronous
         request1.send(null);
 
         if (request1.status === 200) {
@@ -819,7 +819,7 @@ function switchModes() {
  */
 function injectToolTip() {
     const request = new XMLHttpRequest();
-    request.open("GET", chrome.extension.getURL("/static/tooltip.html"), false); // `false` makes the request synchronous
+    request.open("GET", chrome.runtime.getURL("/static/tooltip.html"), false); // `false` makes the request synchronous
     request.send(null);
 
     if (request.status === 200) {
@@ -838,7 +838,7 @@ function injectToolTip() {
         let style_tooltip = document.createElement("style");
 
         const request1 = new XMLHttpRequest();
-        request1.open("GET", chrome.extension.getURL("/static/tooltip.css"), false); // `false` makes the request synchronous
+        request1.open("GET", chrome.runtime.getURL("/static/tooltip.css"), false); // `false` makes the request synchronous
         request1.send(null);
 
         if (request1.status === 200) {
@@ -862,7 +862,7 @@ function injectToolTip() {
  */
 function injectControls() {
     const request = new XMLHttpRequest();
-    request.open("GET", chrome.extension.getURL("/static/controls.html"), false); // `false` makes the request synchronous
+    request.open("GET", chrome.runtime.getURL("/static/controls.html"), false); // `false` makes the request synchronous
     request.send(null);
 
     if (request.status === 200) {
@@ -884,7 +884,7 @@ function injectControls() {
         let style_controls = document.createElement("style");
 
         const request1 = new XMLHttpRequest();
-        request1.open("GET", chrome.extension.getURL("/static/controls.css"), false); // `false` makes the request synchronous
+        request1.open("GET", chrome.runtime.getURL("/static/controls.css"), false); // `false` makes the request synchronous
         request1.send(null);
 
         if (request1.status === 200) {
@@ -1587,7 +1587,7 @@ function injectControls() {
  * @return {String} path to icon.
  */
 function getIconPath(filename) {
-    return chrome.extension.getURL("/img/" + filename);
+    return chrome.runtime.getURL("/img/" + filename);
 }
 
 /**
@@ -1598,9 +1598,9 @@ function getIconPath(filename) {
  */
 function getFlagByCode(code) {
     if (countries.includes(code)) {
-        return chrome.extension.getURL("/img/flags/" + code + ".svg");
+        return chrome.runtime.getURL("/img/flags/" + code + ".svg");
     } else {
-        return chrome.extension.getURL("/img/flags/_flag.svg");
+        return chrome.runtime.getURL("/img/flags/_flag.svg");
     }
 }
 
@@ -1612,9 +1612,9 @@ function getFlagByCode(code) {
  */
 function getParty(partyName) {
     if (parties.includes(partyName)) {
-        return chrome.extension.getURL("/img/parties/" + partyName + ".svg");
+        return chrome.runtime.getURL("/img/parties/" + partyName + ".svg");
     } else {
-        return chrome.extension.getURL("/img/parties/_flag.svg");
+        return chrome.runtime.getURL("/img/parties/_flag.svg");
     }
 }
 

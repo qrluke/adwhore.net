@@ -393,7 +393,7 @@ chrome.storage.sync.get("stats", function (result) {
     get_mini_stats();
 });
 
-document.getElementById('switchSide').href = chrome.extension.getURL("wizard/wizard.html");
+document.getElementById('switchSide').href = chrome.runtime.getURL("wizard/wizard.html");
 var whitelist = [];
 
 function updateWhitelistTable() {
