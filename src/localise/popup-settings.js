@@ -80,7 +80,7 @@ function init() {
   setChildTextNode("t1", chrome.i18n.getMessage("t1"))
   setChildTextNode("t2", chrome.i18n.getMessage("t2"))
   setChildTextNode("t3", chrome.i18n.getMessage("t3"))
-  document.getElementById("donate").href = chrome.i18n.getMessage("donate")
+  //document.getElementById("donate").href = chrome.i18n.getMessage("donate")
 }
 
 init();
