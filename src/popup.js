@@ -403,12 +403,12 @@ function updateWhitelistTable() {
         let list = []
         for (let item of result["whitelist"]) {
             if (!list.includes(item["cID"])) {
-                $('#whitelistTable > tbody:last-child').append(DOMPurify.sanitize("<tr><td><small>" + item["cID"] + "</small></td><td><small>" + item["name"] + "</small></td><td><input type='button' class='RemoveRow' value='" + chrome.i18n.getMessage("RemoveRow") + "'></td></tr>"));
+                $('#whitelistTable > tbody:last-child').append("<tr><td><small>" + DOMPurify.sanitize(item["cID"]) + "</small></td><td><small>" + DOMPurify.sanitize(item["name"]) + "</small></td><td><input type='button' class='RemoveRow' value='" + DOMPurify.sanitize(chrome.i18n.getMessage("RemoveRow")) + "'></td></tr>");
                 list.push(item["cID"])
             }
         }
         if (!list.includes(result["last_channel"]["cID"])) {
-            $('#whitelistTable > tbody:last-child').append(DOMPurify.sanitize("<tr><td><small>" + result["last_channel"]["cID"] + "</small></td><td><small>" + result["last_channel"]["name"] + "</small></td><td><input type='button' class='AddNew' value='" + chrome.i18n.getMessage("AddRow") + "'></td></tr>"));
+            $('#whitelistTable > tbody:last-child').append("<tr><td><small>" + DOMPurify.sanitize(result["last_channel"]["cID"]) + "</small></td><td><small>" + DOMPurify.sanitize(result["last_channel"]["name"]) + "</small></td><td><input type='button' class='AddNew' value='" + DOMPurify.sanitize(chrome.i18n.getMessage("AddRow")) + "'></td></tr>");
         }
     })
 }
