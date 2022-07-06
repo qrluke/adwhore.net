@@ -658,6 +658,7 @@ function injectOverlay() {
                     $.ajax({
                         dataType: "json",
                         type: "POST",
+                        contentType: "application/json",
                         url: `${baseUrl}/api/v0/addSegmentLike`,
                         data: JSON.stringify({sID: currentSkip[2], secret: settings["secret"]}),
                         success: function (sb) {
@@ -669,6 +670,7 @@ function injectOverlay() {
                                     $.ajax({
                                         dataType: "json",
                                         type: "POST",
+                                        contentType: "application/json",
                                         url: `${baseUrl}/api/v0/addReward`,
                                         data: JSON.stringify({
                                             sID: currentSkip[2],
@@ -705,6 +707,7 @@ function injectOverlay() {
                     $.ajax({
                         dataType: "json",
                         type: "POST",
+                        contentType: "application/json",
                         url: `${baseUrl}/api/v0/addSegmentReport`,
                         data: JSON.stringify({sID: currentSkip[2], text: comment, secret: settings["secret"]}),
                         success: function (sb) {
@@ -2425,6 +2428,7 @@ function addSegmentSkip(segment) {
     $.ajax({
         dataType: "json",
         type: "POST",
+        contentType: "application/json",
         url: `${baseUrl}/api/v0/addSegmentSkip`,
         data: JSON.stringify({sID: segment[2], secret: settings["secret"]}),
         success: function (sb) {
