@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.0.7.9",
+  "version": "0.7.10",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
   "default_locale": "en",
